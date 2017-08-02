@@ -55,7 +55,7 @@ $header_box_shadow:  0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0,
 $sidebar_footer_height:     44px;
 
 // = Default dark background sidebar =
-$sidebar_bg_color:                    $dark;
+$sidebar_bg_color:                    $flm-dark;
 $sidebar_text_color:                  #a1a1a1;
 $nav_link_hover_bg:                   transparent;
 $nav_link_hover_color:                #fafafa;
@@ -63,7 +63,7 @@ $nav_link_hover_color:                #fafafa;
 // the reason .active bg is different from .open bg is becasue there's no border between li
 // if one li is .active, and sibiling is .open, then they have same bg, which is confusing
 $nav_link_active_bg:                  transparent;
-$nav_link_open_bg:                    rgba(0,0,0,.1);
+$nav_link_open_bg:                    $flm-dark;
 $nav_link_active_color:               $nav_link_hover_color;
 
 $nav_sub_bg:                          $nav_link_open_bg;

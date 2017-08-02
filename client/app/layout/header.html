@@ -21,7 +21,12 @@
 
         <div class="top-nav-left hidden-xs hidden-sm">
             <ul class="list-unstyled list-inline">
-                <li><md-button class="header-btn" open-search-overlay><i class="material-icons">search</i></md-button></li>
+                <!-- poner informacion junto al logo -->
+            </ul>
+        </div>
+
+        <div class="top-nav-right">
+            <ul class="list-unstyled pull-right">
                 <li>
                     <md-menu md-position-mode="left bottom">
                         <md-button class="header-btn" aria-label="menu" ng-click="$mdOpenMenu($event)">
@@ -55,26 +60,6 @@
                         </md-menu-content>
                     </md-menu>
                 </li>
-            </ul>
-        </div>
-
-        <div class="top-nav-right">
-            <ul class="list-unstyled pull-right">
-                <li class="hidden-xs hidden-sm" data-ng-controller="LangCtrl as ctrl">
-                    <md-menu md-position-mode="target-right target">
-                        <md-button class="header-btn" aria-label="menu"" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                            {{lang}}
-                        </md-button>
-                        <md-menu-content width="3">
-                            <md-menu-item ng-repeat="lang in langs">
-                                <md-button ng-click="setLang($index)">
-                                    {{lang}}
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </li>
-                <li><a href="" class="header-btn hidden-md hidden-lg" md-button open-search-overlay><i class="material-icons">search</i></a></li>
                 <li>
                     <md-menu md-position-mode="target-right target">
                         <md-button class="header-btn" aria-label="menu" ng-click="$mdOpenMenu($event)">
@@ -87,7 +72,6 @@
                         </md-menu-content>
                     </md-menu>
                 </li>
-                <li><a href="" class="header-btn" md-button ng-click="toggleRight()" ng-hide="isOpenRight()"><i class="material-icons">more_vert</i></a></li>
             </ul>
         </div>
 

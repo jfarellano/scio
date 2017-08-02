@@ -6,11 +6,23 @@ $image_pathdemo:        "../assets/images-demo/" !default;
 
 $skin:                  $brand-primary;
 $skin-light:            #42A5F5 !default; // Blue 400
-$dark:                  #333C44 !default; // darken Blue 100 > #343E46
+$dark:                  #485058 !default; // darken Blue 100 > #343E46
 $dark-light:            lighten($dark, 5%) !default;
 $bright:                #fafafa !default;
 $white:                 #fff !default;
 $gray-light2:           #999 !default;
+
+//FLM color set
+
+//Dark scale
+$flm-dark: #485058;
+$flm-ligth: #646E7A;
+$flm-gray: #6B6A6A;
+
+//Light scale
+$flm-dark-blue: #8DCEE0;
+$flm-ligth-blue: #8DCEE0;
+$flm-white: #F4F4F4;
 
 $page-bg:               #f5f5f5 !default; // background color of .app-page-container
 

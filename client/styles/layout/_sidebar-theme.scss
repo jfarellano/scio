@@ -33,7 +33,7 @@
         right: 0;
         height: $sidebar_footer_height;
         border-top: 1px solid rgba(0,0,0,.1);
-        background-color: $sidebar_bg_color;
+        background-color: $flm-ligth;
     }
 }
 
@@ -132,6 +132,7 @@
     .nav {
         // General
         color: $sidebar_text_color;
+        transform: translate(0%, 40%);
         a {
             color: $sidebar_text_color;
         }
