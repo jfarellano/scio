@@ -1,8 +1,8 @@
 
 angular.module('app')
-    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider',
+    .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', 'URL',
 
-        function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider) {
+        function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, URL) {
             $urlRouterProvider
                 .otherwise('/app/dashboard');
 
@@ -18,8 +18,20 @@ angular.module('app')
                     templateUrl: "app/dev/templates/dashboard/dashboard.html"
                 })
 
+                //Conciliacion
+                .state('app.conciliacion',{
+                    url: '/conciliacion',
+                    templateUrl: URL.dev.template + '/conciliacion/conciliacion.html'
+                })
+                .state('app.conciliacion.index',{
+                    url: '/index',
+                    templateUrl: URL.dev.template + '/conciliacion/index.html'
+                })
+                .state('app.conciliacion.show',{
+                    url: '/conciliacion/:id',
+                    templateUrl: URL.dev.template + '/conciliacion/show.html'
+                })
                
-
                 // Extra
                 .state('404', {
                     url: '/404',

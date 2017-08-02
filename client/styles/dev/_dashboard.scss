@@ -1,0 +1,21 @@
+.dash_logo{
+    width:60%; 
+    padding-top:20%;
+    text-align: center;
+}
+
+.centered_info{
+    text-align: center;
+}
+
+@media (max-width: 1350px){
+    .dash_logo{
+        width:100%; 
+        padding-left: 10%;
+        padding-top:35%;
+    }
+    .centered_info{
+        width: 70%;
+        padding-left: 33%;
+    }
+}

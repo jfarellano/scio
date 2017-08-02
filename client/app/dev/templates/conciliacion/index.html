@@ -1,0 +1,20 @@
+<div ng-controller="ConcIndexCtlr" class="index_area">
+<h2>Conciliaciones</h2>
+<md-input-container class="md-block" flex-gt-sm>
+    <label for="search">Buscar</label>
+    <input class="ng-pristine ng-valid md-input ng-empty ng-touched" id="search">
+</md-input-container>
+<div class="divider divider-lg divider-dashed"></div>
+<div ng-repeat="conc in data">
+    <div class="card_display_conc">
+        <div class="box box-default">
+            <div class="box-header box_name">{{conc.name}}</div>
+            <div class="box-body box_content">
+                <h5>Estado: {{conc.state}}</h5>
+                <div class="col-sm-9"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+                <div class="col-sm-3"><h5>{{conc.days}} Dias</h5></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
