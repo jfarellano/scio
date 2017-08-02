@@ -1,0 +1,29 @@
+<nav class="app-sidebar"
+     ng-controller="CustomizerCtrl"
+     auto-close-mobile-sidebar
+     data-ng-class="{'bg-light': ['31','32','33','34','35','36'].indexOf(app.colorOption) >= 0,
+                     'bg-dark': ['31','32','33','34','35','36'].indexOf(app.colorOption) < 0 }">
+
+    <section class="sidebar-header"
+             ng-class="{ 'bg-dark': ['11','31'].indexOf(app.colorOption) >= 0,
+                         'bg-light': app.colorOption === '21',
+                         'bg-primary': ['12','22','32'].indexOf(app.colorOption) >= 0,
+                         'bg-success': ['13','23','33'].indexOf(app.colorOption) >= 0,
+                         'bg-info': ['14','24','34'].indexOf(app.colorOption) >= 0,
+                         'bg-warning': ['15','25','35'].indexOf(app.colorOption) >= 0,
+                         'bg-danger': ['16','26','36'].indexOf(app.colorOption) >= 0}">
+
+        <span class="logo-icon material-icons">view_compact</span>
+        <a href="#/" class="brand">{{::app.brand}}</a>
+        <a href="" class="collapsednav-toggler" ng-click="toggleCollapsedNav()" ><i class="material-icons">{{app.togglerIconVal}}</i></a>
+    </section>
+
+    
+    <section class="sidebar-content" ng-include src=" 'app/layout/sidebar-content.html' "></section>
+
+    <section class="sidebar-footer">
+        <ul class="nav">
+            <li><a md-button aria-label="menu" target="_blank" ng-href="{{app.link}}"><i class="nav-icon material-icons">help</i><span class="nav-text"><span data-translate="HELP"></span> & <span data-translate="SUPPORT"></span></span></a></li>
+        </ul>
+    </section>
+</nav>

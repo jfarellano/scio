@@ -1,0 +1,20 @@
+<section ng-include=" 'app/layout/md-sidebar-right.html'"></section>
+
+<section class="no-app-sidebar"></section>
+
+<section id="page-container" class="app-page-container" ng-class="{'scroll-disabled': isOpenRight()}">
+    <div ng-include=" 'app/layout/header.html' "></div>
+
+    <div class="app-content-wrapper">
+        <div class="app-content">
+            <div class="full-height {{app.pageTransition.class}}" ui-view></div>
+        </div>
+
+        <section ng-include=" 'app/layout/footer.html'"></section>
+    </div>
+
+</section>
+
+<section ng-include=" 'app/layout/customizer.html'"></section>
+
+<section ng-include src=" 'app/layout/overlay-search.html' "></section>

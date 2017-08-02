@@ -1,0 +1,10 @@
+<div id="mail">
+
+    <md-sidenav class="mail-sidenav"
+                md-component-id="email-sidenav"
+                md-is-locked-open="$mdMedia('gt-md')"
+                ng-include="'app/email/partials/sidenav.html'"></md-sidenav>
+
+    <div ng-include="'app/email/partials/list.html'" class="mail-list-container"></div>
+    <div ng-include="'app/email/partials/read.html'" class="mail-read-container"></div>
+</div>

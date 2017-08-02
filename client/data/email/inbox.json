@@ -1,0 +1,229 @@
+{
+    "data": [
+        {
+            "from": {
+                "name": "Jason Bourne",
+                "avatar": "assets/images-demo/avatars/1.jpg",
+                "email": "jasonbourne@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Lorem ipsum dolor sit amet",
+            "excerpt": "Consectetur adipisicing elit. Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis!",
+            "message": "<p>Consectetur adipisicing elit. Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis! Numquam eum delectus ad, voluptates quis tenetur earum nemo aliquam eveniet neque voluptatibus fugit! </p><p>Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "09/28",
+            "status": "unread",
+            "hasAttachments": true,
+            "attachments": [
+                {
+                    "type": "image",
+                    "fileName": "flower",
+                    "preview": "assets/images-demo/assets/600_400-1.jpg",
+                    "url": "",
+                    "size": "1.2Mb"
+                },
+                {
+                    "type": "image",
+                    "fileName": "waterfall",
+                    "preview": "assets/images-demo/assets/600_400-2.jpg",
+                    "url": "",
+                    "size": "300kb"
+                }
+            ]
+        },
+        {
+            "from": {
+                "name": "Bella Swan",
+                "avatar": "assets/images-demo/avatars/2.jpg",
+                "email": "bellaswan@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Consectetur adipisicing elit",
+            "excerpt": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis!",
+            "message": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis! Numquam eum delectus ad, voluptates quis tenetur earum nemo aliquam eveniet neque voluptatibus fugit! </p><p>Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "08/26",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Min Chan",
+                "avatar": "assets/images-demo/avatars/3.jpg",
+                "email": "minchan@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Eveniet natus dicta, eligendi maiores.",
+            "excerpt": "Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis! Numquam eum delectus ad",
+            "message": "<p>Voluptatum doloribus earum nisi hic laborum neque unde quo dolorem reiciendis! Numquam eum delectus ad, voluptates quis tenetur earum nemo aliquam eveniet neque voluptatibus fugit! </p><p>Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "07/15",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Sophia Doe",
+                "avatar": "assets/images-demo/avatars/4.jpg",
+                "email": "sophiadoe@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Tempore soluta voluptate esse quia nulla quis",
+            "excerpt": "Quis tenetur earum nemo aliquam eveniet neque voluptatibus fugit! Explicabo rerum repudiandae ex vel molestiae.",
+            "message": "<p>Quis tenetur earum nemo aliquam eveniet neque voluptatibus fugit! Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "07/01",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Adam Lyons",
+                "avatar": "",
+                "email": "adminlyons@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Libero enim. Ad culpa nostrum quaerat dicta totam assumenda",
+            "excerpt": "Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem",
+            "message": "<p>Explicabo rerum repudiandae ex vel molestiae. Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "06/20",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Luna Doe",
+                "avatar": "assets/images-demo/avatars/5.jpg",
+                "email": "danielleobrien@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "lunadoe@gmail.com"
+                }
+            ],
+            "subject": "Inventore ratione aut cumque quo dignissimos consequuntur",
+            "excerpt": "Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam",
+            "message": "<p>Consequuntur iste necessitatibus perspiciatis quas magni pariatur minima autem, aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "05/20",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Peter Libert",
+                "avatar": "",
+                "email": "peterlibert@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Porro nesciunt temporibus repellat laborum",
+            "excerpt": "Aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae",
+            "message": "<p>Aut aliquam et maiores voluptatum nam. Necessitatibus illum quam quasi. Recusandae enim tempora molestiae, voluptatum numquam, aut veniam sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "05/11",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Bella Swan",
+                "avatar": "assets/images-demo/avatars/2.jpg",
+                "email": "bellaswan@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Ad placeat sunt molestias illo. Nam minus soluta",
+            "excerpt": "necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt",
+            "message": "<p>necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "04/30",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Luna Doe",
+                "avatar": "assets/images-demo/avatars/4.jpg",
+                "email": "lunadoe@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Minima, ipsam fuga consequatur atque hic",
+            "excerpt": "Modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem",
+            "message": "<p>Modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "03/05",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Belly Brooks",
+                "avatar": "",
+                "email": "belly@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Officiis ipsum eos rem ab vitae modi necessitatibus quis",
+            "excerpt": "Sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid",
+            "message": "<p>Sed aliquid quo est necessitatibus fugiat modi quibusdam vero. Totam, quos. Doloremque nostrum architecto atque aliquid dolore libero possimus nesciunt asperiores voluptatem delectus, maxime blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "1 Jun",
+            "status": "read",
+            "hasAttachments": false
+        },
+        {
+            "from": {
+                "name": "Kate Perry",
+                "avatar": "",
+                "email": "kate@gmail.com"
+            },
+            "to": [
+                {
+                    "name": "me",
+                    "email": "andrew@gmail.com"
+                }
+            ],
+            "subject": "Voluptates aspernatur magni",
+            "excerpt": "Blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel",
+            "message": "<p>Blanditiis nobis, eaque excepturi? </p><p>Reprehenderit omnis minima aperiam laudantium cumque, error quasi vero numquam ipsam mollitia vel neque exercitationem quas, repellat nostrum velit aut totam itaque incidunt delectus, possimus deleniti facilis esse. Dicta quae voluptates saepe nemo explicabo, distinctio facilis ipsa et doloribus blanditiis dolore veritatis magni temporibus vero pariatur, aliquid sapiente laboriosam ducimus tenetur nobis minus, sequi.</p><p>Consectetur ipsum nam, consequatur excepturi velit odio neque illum ab in a laboriosam perferendis iusto libero quisquam. Consequuntur ab reiciendis eum, mollitia excepturi aut enim magnam minima odit placeat iusto cupiditate vero numquam voluptatum praesentium! Impedit dolorum delectus iure non sequi repellat obcaecati totam dignissimos provident? Iure laboriosam esse animi dicta, optio?</p>",
+            "time": "03/20",
+            "status": "read",
+            "hasAttachments": false
+        }
+    ]
+}

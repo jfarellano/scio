@@ -1,0 +1,12 @@
+<section class="page-blog container-fluid no-breadcrumbs with-maxwidth-md chapter" ng-controller="DemoDataCtrl">
+    <article class="blog-item" ng-repeat="blog in blogs">
+        <h2><a href="javascript:;">{{::blog.title}}</a></h2>
+        <div class="blog-info">
+            <span><img ng-src="{{::blog.avatar}}" alt="avatar" class="avatar"></span>
+            <span><a href="javascript:;" class="author">{{::blog.author}}</a></span>
+            <span class="date">10 June {{::app.year}}</span>
+            <span class="category"><a href="javascript::">{{::blog.category}}</a></span>
+        </div>
+        <p class="desc">Consequuntur hic eum ab consequatur, veniam laudantium placeat pariatur numquam quo voluptatem velit, labore voluptas tempore temporibus vitae tenetur porro eligendi exercitationem fugiat ipsum in ullam. Necessitatibus laboriosam enim ea eos, eveniet corporis impedit. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+    </article>
+</section>

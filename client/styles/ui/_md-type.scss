@@ -1,0 +1,14 @@
+
+// override Bootstrap 
+blockquote {
+    border-left: 0;
+}
+.blockquote-reverse,
+blockquote.pull-right {
+    border-right: 0;
+}
+
+// overrides mdl
+address {
+    line-height: $line-height-base;
+}

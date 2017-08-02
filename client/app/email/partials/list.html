@@ -1,0 +1,72 @@
+
+<div class="toolbar list-toolbar">
+    <md-checkbox aria-label="{{allChecked?'Uncheck All':'Check All'}}"
+                 class="no-margin-bottom"
+                 ng-checked="allChecked"
+                 ng-click="checkAll()"></md-checkbox>
+    <md-button class="md-icon-button" aria-label="refresh">
+        <md-icon class="material-icons">refresh</md-icon>
+    </md-button>
+    <md-menu md-position-mode="left bottom">
+        <md-button class="md-icon-button" aria-label="more" ng-click="$mdOpenMenu($event)">
+            <md-icon class="material-icons">more_vert</md-icon>
+        </md-button>
+        <md-menu-content width="4">
+            <md-menu-item>
+                <md-button ng-click="null">Archive</md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="null">Report spam</md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="null">Delete</md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="null">Mark as unread</md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="null">Mark as important</md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+    <md-button class="md-icon-button sidenav-toggle" 
+               ng-click="toggleSidenav('email-sidenav')"
+               hide-gt-md
+               aria-label="Toggle sidenav">
+        <md-icon class="material-icons">menu</md-icon>
+    </md-button>
+
+    <span class="pull-right">
+        <span class="visible-lg-inline">1 - 20 of 500</span>
+        <md-button class="md-icon-button" aria-label="more" ng-click="$mdOpenMenu($event)">
+            <md-icon class="material-icons">keyboard_arrow_left</md-icon>
+        </md-button>
+        <md-button class="md-icon-button" aria-label="more" ng-click="$mdOpenMenu($event)">
+            <md-icon class="material-icons">keyboard_arrow_right</md-icon>
+        </md-button>
+    </span>
+</div>
+
+<div class="mail-list-content">
+    <md-list class="mail-list" slim-scroll>
+        <md-list-item class="mail-list-item md-3-line {{::mail.status}}"
+                      ng-repeat="mail in inbox"
+                      ng-class="{'selected': selectedMail === mail, 'checked': isChecked(mail)}">
+            <md-checkbox ng-checked="isChecked(mail)"
+                         class="md-secondary"
+                         ng-click="toggleCheck(mail, $event)"
+                         aria-label="{{isChecked(mail)? 'Uncheck':'check'}}">
+            </md-checkbox>
+            <div class="md-list-item-text" layout="column" ng-click="selectMail(mail)">
+                <h3>
+                    <img class="avatar" ng-if="mail.from.avatar" alt="{{mail.from.name}}" ng-src="{{mail.from.avatar}}"/>
+                    <span class="avatar" ng-if="!mail.from.avatar">{{mail.from.name[0]}}</span>
+                    {{mail.from.name}}
+                    <span class="pull-right email-time">{{mail.time}}</span>
+                </h3>
+                <h4 class="subject">{{mail.subject| limitTo:50}}{{mail.subject.length > 50 ? '...' : ''}}</h4>
+                <p class="message">{{mail.excerpt | limitTo:90}}{{mail.excerpt.length > 90 ? '...' : ''}}</p>
+            </div>
+        </md-list-item>
+    </md-list>
+</div>

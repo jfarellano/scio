@@ -1,0 +1,124 @@
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right">
+    <div class="md-sidenav-inner" ng-controller="AppSidenavRightCtrl">
+        <md-tabs>
+            <md-tab>
+                <md-tab-label><i class="material-icons">people</i></md-tab-label>
+                <md-tab-body>
+                    <!-- height must be set in order to make subheader work, "55px" is the height of md-tab-label -->
+                    <md-content style="height: calc(100vh - 55px);">
+                        <section>
+                            <md-subheader class="color-primary">Tech</md-subheader>
+                            <md-list class="md-dense">
+                                <md-list-item class="md-2-line" ng-repeat="message in messages" ng-click="null">
+                                    <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+                                    <div class="md-list-item-text">
+                                        <h3>{{message.who}}</h3>
+                                        <p>{{message.notes}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-success">Support</md-subheader>
+                            <md-list class="md-dense">
+                                <md-list-item class="md-2-line" ng-repeat="message in messages" ng-click="null">
+                                    <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+                                    <div class="md-list-item-text">
+                                        <h3>{{message.who}}</h3>
+                                        <p>{{message.notes}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-info">Sales</md-subheader>
+                            <md-list class="md-dense">
+                                <md-list-item class="md-2-line" ng-repeat="message in messages" ng-click="null">
+                                    <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+                                    <div class="md-list-item-text">
+                                        <h3>{{message.who}}</h3>
+                                        <p>{{message.notes}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-danger">Marketing</md-subheader>
+                            <md-list class="md-dense">
+                                <md-list-item class="md-2-line" ng-repeat="message in messages" ng-click="null">
+                                    <img ng-src="{{message.face}}" class="md-avatar" alt="{{message.who}}">
+                                    <div class="md-list-item-text">
+                                        <h3>{{message.who}}</h3>
+                                        <p>{{message.notes}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label><i class="material-icons">notifications</i></md-tab-label>
+                <md-tab-body>
+                    <!-- height must be set in order to make subheader work, "55px" is the height of md-tab-label -->
+                    <md-content style="height: calc(100vh - 55px);">
+                        <section>
+                            <md-subheader class="color-primary">Today</md-subheader>
+                            <md-list class="ui-md-list">
+                                <md-list-item class="md-2-line" ng-repeat="notification in notifications" ng-click="null">
+                                    <md-icon class="material-icons">{{notification.icon}}</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>{{notification.what}}</h3>
+                                        <p>{{notification.detail}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-success">Yesterday</md-subheader>
+                            <md-list class="ui-md-list">
+                                <md-list-item class="md-2-line" ng-repeat="notification in notifications" ng-click="null">
+                                    <md-icon class="material-icons">{{notification.icon}}</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>{{notification.what}}</h3>
+                                        <p>{{notification.detail}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-warning">2 days ago</md-subheader>
+                            <md-list class="ui-md-list">
+                                <md-list-item class="md-2-line" ng-repeat="notification in notifications" ng-click="null">
+                                    <md-icon class="material-icons">{{notification.icon}}</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>{{notification.what}}</h3>
+                                        <p>{{notification.detail}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+
+                        <section>
+                            <md-subheader class="color-danger">3 days ago</md-subheader>
+                            <md-list class="ui-md-list">
+                                <md-list-item class="md-2-line" ng-repeat="notification in notifications" ng-click="null">
+                                    <md-icon class="material-icons">{{notification.icon}}</md-icon>
+                                    <div class="md-list-item-text">
+                                        <h3>{{notification.what}}</h3>
+                                        <p>{{notification.detail}}</p>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </section>
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+    </div>
+</md-sidenav>

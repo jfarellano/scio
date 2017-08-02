@@ -1,0 +1,91 @@
+<section class="quickview-wrapper customizer hidden-sm hidden-xs"
+     id="quickview-customizer"
+     ng-controller="CustomizerCtrl" 
+     >
+    <a class="customizer-close" href="" data-toggle-quickview data-target="customizer"><span class="material-icons">close</span></a>
+    <a class="customizer-toggle" href="" data-toggle-quickview data-target="customizer"><span class="material-icons">settings</span></a>
+
+    <div class="quickview-inner" slim-scroll>
+        <div>
+            <p class="customizer-header">Customizer</p>
+            <p class="small no-margin">Customize and preview in real time.</p>
+
+            <div class="divider divider-lg divider-solid"></div>
+            <h4 class="section-header">Layout Options</h4>
+            <div class="divider divider-sm"></div>
+
+            <md-list>
+                <md-list-item>
+                    <p>Fixed Header</p>
+                    <md-switch class="md-secondary" ng-model="app.fixedHeader"></md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <p>Collapsed Sidebar</p>
+                    <md-switch class="md-secondary" ng-model="app.navCollapsed"></md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <p>Full Width Header</p>
+                    <md-switch class="md-secondary" ng-model="app.navBehind"></md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <p>Boxed Layout</p>
+                    <md-switch class="md-secondary" ng-model="app.layoutBoxed"></md-switch>
+                </md-list-item>
+                <md-list-item>
+                    <p>Sidebar Width</p>
+                    <md-select class="no-margin" ng-model="app.sidebarWidth" aria-label="sidebar width">
+                        <md-option value="small">small</md-option>
+                        <md-option value="middle" >middle</md-option>
+                        <md-option value="large" >large</md-option>
+                    </md-select>
+                </md-list-item>
+            </md-list>
+
+            <div class="divider divider-lg divider-solid"></div>
+            <h4 class="section-header">Color Options</h4>
+            <p class="small no-margin">Tip: Additionally, you can active "Full Width Header" above</p>
+            <div class="divider"></div>
+
+            <section ng-include=" 'app/layout/customizer-color.html'"> </section>
+
+            <div class="divider divider-lg divider-solid"></div>
+            <h4 class="section-header">Theme Options</h4>
+            <div class="divider"></div>
+
+            <div class="theme-options clearfix">
+                <div class="col-xs-4">
+                    <label class="theme-option-check">
+                        <input type="radio" name="theme" value="dark" ng-model="app.theme">
+                        <span class="theme-option-item bg-dark">
+                            <span class="overlay"><span class="material-icons">check</span></span>
+                            <span>Dark</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="col-xs-4">
+                    <label class="theme-option-check">
+                        <input type="radio" name="theme" value="gray" ng-model="app.theme">
+                        <span class="theme-option-item bg-gray">
+                            <span class="overlay"><span class="material-icons">check</span></span>
+                            <span>Gray</span>
+                        </span>
+                    </label>
+                </div>
+                <div class="col-xs-4">
+                    <label class="theme-option-check">
+                        <input type="radio" name="theme" value="light" ng-model="app.theme">
+                        <span class="theme-option-item bg-page">
+                            <span class="overlay"><span class="material-icons">check</span></span>
+                            <span>Light</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+            <div class="divider divider-lg divider-solid"></div>
+            <div class="text-right">
+                <a target="_blank" ng-href="{{app.link}}">Download it Now</a>
+            </div>
+
+        </div>
+    </div>
+</section>

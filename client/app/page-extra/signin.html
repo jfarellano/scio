@@ -1,0 +1,52 @@
+<div class="page-auth">
+    <div class="main-body">
+        <div class="card bg-white" ng-controller="MaterialLoginCtrl">
+            <div class="card-content">
+                <div class="logo">
+                    <a href="#/">Login</a>
+                </div>
+
+                <form name="material_login_form" class="md-form-auth form-validation">
+                    <fieldset>
+                        <md-input-container class="md-block">
+                            <label>Email</label>
+                            <md-icon class="material-icons">mail_outline</md-icon>
+                            <input required 
+                                   type="email"
+                                   name="email" 
+                                   ng-model="user.email"
+                                   ng-pattern="/^.+@.+\..+$/" />
+                            <div ng-messages="material_login_form.email.$error" multiple ng-if='material_login_form.email.$dirty'>
+                                <div ng-message="required">This is required.</div>
+                                <div ng-message="pattern">It must be an e-mail address.</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <md-icon class="material-icons">lock_outline</md-icon>
+                            <input required 
+                                   type="password"
+                                   name="password" 
+                                   ng-model="user.password">
+                            <div ng-messages="material_login_form.password.$error" multiple ng-if='material_login_form.password.$dirty'>
+                                <div ng-message="required">This is required.</div>
+                            </div>
+                        </md-input-container>
+
+                        <md-button type="submit"
+                                   href="#/"
+                                   class="md-raised pull-right md-primary"
+                                   data-ng-disabled="!canSubmit()">Login</md-button>
+                    </fieldset>
+                </form>
+
+                <div class="additional-info">
+                    <a href="#/signup">Register</a>
+                    <span class="divider-h"></span>
+                    <a href="#/forgot-password">Forgot your password?</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

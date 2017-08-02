@@ -1,0 +1,24 @@
+.container-fluid {
+    padding-left: 30px;
+    padding-right: 30px;
+    &.padding-lg-h {
+        padding-left: $grid-gutter-width;
+        padding-right: $grid-gutter-width;
+    }
+    &.with-maxwidth {
+        max-width: $container_fluid_maxwidth;
+    }
+    &.with-maxwidth-lg {
+        max-width: $container-md;
+    }
+    &.with-maxwidth-md {
+        max-width: $container-md;
+    }
+    &.with-maxwidth-sm {
+        max-width: $container-sm;
+    }
+    &.no-breadcrumbs {
+        padding-top: 2em;
+        padding-bottom: 1em;
+    }
+}

@@ -1,0 +1,67 @@
+<div class="toolbar read-toolbar">
+    <md-button class="md-icon-button" aria-label="back">
+        <md-icon class="material-icons">keyboard_backspace</md-icon>
+    </md-button>
+    <span class="pull-right">
+        <md-menu md-position-mode="right bottom">
+            <md-button class="md-icon-button" aria-label="more" ng-click="$mdOpenMenu($event)">
+                <md-icon class="material-icons">more_vert</md-icon>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item>
+                    <md-button ng-click="null">Replay</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="null">Forward</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="null">Delete</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="null">Mark as unread</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button ng-click="null">Mark as important</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </span>
+</div>
+
+<div class="mail-read-content">
+    <div class="mail-content" slim-scroll>
+        <div class="mail-header">
+            <div class="subject">{{selectedMail.subject}}</div>
+        </div>
+
+        <div class="info">
+            <img ng-if="selectedMail.from.avatar" alt="{{selectedMail.from.name}}" ng-src="{{selectedMail.from.avatar}}" class="avatar"/>
+            <span class="avatar" ng-if="!selectedMail.from.avatar">{{selectedMail.from.name[0]}}</span>
+
+            <strong>{{selectedMail.from.name}}</strong>
+            <span>({{selectedMail.from.email}})</span>
+            <span class="to-text">to</span>
+            <strong>{{selectedMail.to[0].name}}</strong>
+            <span class="email-time">{{selectedMail.time}}</span>
+        </div>
+
+        <div ng-bind-html="selectedMail.message | to_trusted"></div>
+
+        <div ng-if="selectedMail.attachments" class="attachments">
+            <div class="title">
+                <span>Attachments</span> ({{selectedMail.attachments.length}})
+            </div>
+            <div class="attachment-list" layout-wrap layout="row">
+                <div class="attachment" layout="column"
+                     ng-repeat="attachment in selectedMail.attachments">
+                    <img class="preview" ng-src="{{attachment.preview}}">
+
+                    <div layout="column">
+                        <a href="javascript:;" class="md-accent-color link">Download</a>
+                        <div class="size">({{attachment.size}})</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,60 @@
+<section class="container-fluid with-maxwidth chapter">
+
+    <article class="article" ng-controller="DatepickerCtrl">
+        <h2 class="article-title">Material Datepicker</h2>
+        <div class="box box-default">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Standard date-picker</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Disabled date-picker</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date" disabled=""></md-datepicker>
+                    </div>
+                </div>
+                
+                <div class="divider divider-lg divider-dashed"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Date-picker with min date and max date</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Only weekends are selectable</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+                    </div>
+                </div>
+                
+                <div class="divider divider-lg divider-dashed"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>Only weekends within given range are selectable</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Opening the calendar when the input is focused</p>
+                        <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-open-on-focus=""></md-datepicker>
+                    </div>
+                </div>
+                
+                <div class="divider divider-lg divider-dashed"></div>
+                <p>With ngMessages</p>
+                <form name="myForm">
+                    <md-datepicker name="dateField" ng-model="myDate" md-placeholder="Enter date" required="" md-min-date="minDate" md-max-date="maxDate" md-date-filter="onlyWeekendsPredicate"></md-datepicker>
+
+                    <div class="validation-messages" ng-messages="myForm.dateField.$error">
+                        <div ng-message="valid">The entered value is not a date!</div>
+                        <div ng-message="required">This date is required!</div>
+                        <div ng-message="mindate">Date is too early!</div>
+                        <div ng-message="maxdate">Date is too late!</div>
+                        <div ng-message="filtered">Only weekends are allowed!</div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </article>
+
+</section>
