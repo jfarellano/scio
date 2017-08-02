@@ -25,6 +25,7 @@
         var year = date.getFullYear();
         var app = {
             brand: 'FLM',
+            logo: 'agregar logo',
             user: 'Scio',
             year: 2017,
             pageTransition: pageTransitionOpts[0],          // 0, 1, 2, 3... and build your own

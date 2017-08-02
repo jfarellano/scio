@@ -25,6 +25,7 @@
 .bg-primary { @include bg-style($brand-primary, #fff); }
 .bg-success { @include bg-style($brand-success, #fff); }
 .bg-info { @include bg-style($brand-info, #fff); }
+.bg-flm {@include bg-style($brand-info, $flm-dark-blue)}
 .bg-warning { @include bg-style($brand-warning, $text-color); }
 .bg-danger { @include bg-style($brand-danger, #fff); }
 

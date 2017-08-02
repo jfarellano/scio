@@ -1,17 +1,6 @@
-<nav class="app-sidebar"
-     ng-controller="CustomizerCtrl"
-     auto-close-mobile-sidebar
-     data-ng-class="{'bg-light': ['31','32','33','34','35','36'].indexOf(app.colorOption) >= 0,
-                     'bg-dark': ['31','32','33','34','35','36'].indexOf(app.colorOption) < 0 }">
+<nav class="app-sidebar bg-flm" ng-controller="CustomizerCtrl" auto-close-mobile-sidebar>
 
-    <section class="sidebar-header"
-             ng-class="{ 'bg-dark': ['11','31'].indexOf(app.colorOption) >= 0,
-                         'bg-light': app.colorOption === '21',
-                         'bg-primary': ['12','22','32'].indexOf(app.colorOption) >= 0,
-                         'bg-success': ['13','23','33'].indexOf(app.colorOption) >= 0,
-                         'bg-info': ['14','24','34'].indexOf(app.colorOption) >= 0,
-                         'bg-warning': ['15','25','35'].indexOf(app.colorOption) >= 0,
-                         'bg-danger': ['16','26','36'].indexOf(app.colorOption) >= 0}">
+    <section class="sidebar-header bg-flm" >
 
         <span class="logo-icon material-icons">view_compact</span>
         <a href="#/" class="brand">{{::app.brand}}</a>

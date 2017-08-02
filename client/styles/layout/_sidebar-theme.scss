@@ -57,8 +57,9 @@
         }
     }
     .nav-header {
+        color: #8DCEE0;
         margin: 15px 15px 10px;
-        font-size: $font-size-small;
+        font-size: $font-size-medium;
     }
 
     // first level li 
@@ -71,6 +72,7 @@
         display: inline-block;
 
         &.material-icons {
+            color: #8DCEE0;
             width: 24px;
             height: 24px; // with font-size 20px, material-icons will be at least 25px high
             font-size: 20px;
