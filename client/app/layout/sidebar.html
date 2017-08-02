@@ -1,9 +1,7 @@
 <nav class="app-sidebar bg-flm" ng-controller="CustomizerCtrl" auto-close-mobile-sidebar>
 
     <section class="sidebar-header bg-flm" >
-
-        <span class="logo-icon material-icons">view_compact</span>
-        <a href="#/" class="brand">{{::app.brand}}</a>
+        <a href="#/" class="brand"><img class="logo" ng-src="{{app.logo}}"></a>
         <a href="" class="collapsednav-toggler" ng-click="toggleCollapsedNav()" ><i class="material-icons">{{app.togglerIconVal}}</i></a>
     </section>
 

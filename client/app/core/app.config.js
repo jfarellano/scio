@@ -2,10 +2,10 @@
     'use strict';
 
     angular.module('app')
-        .factory('appConfig', [appConfig])
+        .factory('appConfig', ['URL', appConfig])
         .config(['$mdThemingProvider', mdConfig])
 
-    function appConfig() {
+    function appConfig(URL) {
         var pageTransitionOpts = [
             {
                 name: 'Fade up',
@@ -25,7 +25,7 @@
         var year = date.getFullYear();
         var app = {
             brand: 'FLM',
-            logo: 'agregar logo',
+            logo:   URL.image + '/logo.png',
             user: 'Scio',
             year: 2017,
             pageTransition: pageTransitionOpts[0],          // 0, 1, 2, 3... and build your own

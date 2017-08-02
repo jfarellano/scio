@@ -74,7 +74,11 @@ figure {
 // Images
 
 img {
-  vertical-align: middle;
+  vertical-align: middle;  
+}
+
+.logo {
+    height: 50px;
 }
 
 // Responsive images (ensure images don't scale beyond their parents)
