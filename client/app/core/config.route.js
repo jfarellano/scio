@@ -19,17 +19,21 @@ angular.module('app')
                 })
 
                 //Conciliacion
+                // .state('app.conciliacion',{
+                //     url: '/conciliacion',
+                //     templateUrl: URL.dev.template + '/conciliacion/conciliacion.html'
+                // })
                 .state('app.conciliacion',{
                     url: '/conciliacion',
-                    templateUrl: URL.dev.template + '/conciliacion/conciliacion.html'
-                })
-                .state('app.conciliacion.index',{
-                    url: '/index',
                     templateUrl: URL.dev.template + '/conciliacion/index.html'
                 })
                 .state('app.conciliacion.show',{
-                    url: '/conciliacion/:id',
-                    templateUrl: URL.dev.template + '/conciliacion/show.html'
+                    url: '/:id',
+                    views:{
+                        'show':{
+                            templateUrl: URL.dev.template + '/conciliacion/show.html'
+                        }
+                    }
                 })
                
                 // Extra

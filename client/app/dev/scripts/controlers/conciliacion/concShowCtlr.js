@@ -1,11 +1,4 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', function($scope){
-        $scope.name = 'juan';
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', function($scope, $state,Conciliacion){
+        $scope.conc = Conciliacion.show($state.params.id);
  }]);
-
-    angular.module('app')
-    .controller('DashCtrl', ['$scope', 'URL', function($scope, URL){
-        //Dashboard controller important for future tasks
-        $scope.info = "Juan";
-        $scope.roundLogo = URL.image + '/round_logo.png';
-    }]);
