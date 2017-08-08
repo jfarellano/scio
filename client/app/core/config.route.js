@@ -25,7 +25,8 @@ angular.module('app')
                 // })
                 .state('app.conciliacion',{
                     url: '/conciliacion',
-                    templateUrl: URL.dev.template + '/conciliacion/index.html'
+                    templateUrl: URL.dev.template + '/conciliacion/index.html',
+                    controller: 'ConcIndexCtlr'
                 })
                 .state('app.conciliacion.show',{
                     url: '/:id',

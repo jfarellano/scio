@@ -1,3 +1,38 @@
 <div ng-controller="ConcShowCtlr">
-    <h2>{{conc.name}}</h2>   
+    <div class="box box-default show-scroll">
+        <div class="show_content">
+            <h2>{{conc.name}}</h2>
+            <h4>{{conc.id}}</h4>
+            <div class="barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+            <h3>{{conc.full_state}}</h3>
+            <h3>Hechos</h3>
+            <div ng-repeat="hecho in conc.hechos">
+                <p><b>{{$index + 1}}</b> {{hecho.cuerpo}}</p><div ng-if="hecho.evidencias.length != 0">Evidencias</div>
+            </div>
+            <h3>Pretensiones</h3>
+            <div ng-repeat="pret in conc.pretensiones">
+                <p><b>{{$index + 1}}</b> {{pret.cuerpo}}</p>
+            </div>
+            <h3>Cuantia</h3>
+            <h4>$ {{conc.cuantia}}</h4>
+            <section class="box box-default">
+                <div class="box-body no-padding">                
+                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+                        <md-tab ng-repeat="tab in tabs"
+                                ng-disabled="tab.disabled"
+                                label="{{tab.title}}">
+                            <div class="demo-tab tab{{$index%0}}" style="padding: 25px; text-align: center;">
+                                <div ng-repeat="item in tab.info">
+                                    <ul>
+                                    <div ng-bind="item.nombre" ng-click="click()"></div>
+                                    </ul>
+                                </div>
+                                <br/>
+                            </div>
+                        </md-tab>
+                    </md-tabs> 
+                </div>
+            </section>
+        </div>
+    </div>
 </div>

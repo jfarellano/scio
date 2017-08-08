@@ -13,8 +13,6 @@
 ,   "libs/angular-wizard"
 ,   "libs/text-angular"
 ,   "libs/fullcalendar"
-,   "dev/dashboard"
-,   "dev/conciliacion"
 ;
 
 
@@ -37,4 +35,9 @@
 @import
     "app/tasks"
 ,   "app/email"
+;
+
+@import
+    "dev/dashboard"
+,   "dev/conciliacion"
 ;
