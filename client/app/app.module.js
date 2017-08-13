@@ -2,8 +2,11 @@
     'use strict';
 
     angular.module('app', [
+        //Dev modules
+        'matchMedia'
+
         // Angular modules
-         'ui.router'
+        ,'ui.router'
         ,'ngAnimate'
         ,'ngAria'
         ,'ngMessages'

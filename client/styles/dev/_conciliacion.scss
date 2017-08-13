@@ -11,9 +11,8 @@
 }
 
 .scrolleable-content {
-    height: 63vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    height: 62vh;
+    overflow: hidden;
 }
 
 .barra-prog {
@@ -22,8 +21,7 @@
 
 .show-scroll{
     height: 88vh;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
     margin: 25px 10px 0px 5px;
     
     h2{
@@ -41,6 +39,31 @@
     transform: translate(-50%, 1290%);
     //no funciona
     background-color: #8DCEE0;
+}
+
+@media (max-height: 900px){
+    .add_button {
+        float:right;
+        transform: translate(-50%, 830%);
+        //no funciona
+        background-color: #8DCEE0;
+    }
+    .scrolleable-content {
+        height: 50vh;
+    }
+}
+
+@media (max-width: 795px){
+    .add_button {
+        float:right;
+        transform: translate(-50%, 830%);
+        //no funciona
+        background-color: #8DCEE0;
+    }
+    .scrolleable-content {
+        height: 47vh;
+        overflow: hidden;
+    }
 }
 
 .show_content{

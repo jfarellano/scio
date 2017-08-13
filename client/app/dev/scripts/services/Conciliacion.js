@@ -641,7 +641,7 @@ angular.module('app')
                 },
             ];
         var state = true;
-
+        var index = true;    
             
         return{
             index: function(){
@@ -663,6 +663,12 @@ angular.module('app')
             },
             setState: function(val){
                 state = val;
+            },
+            getIndex: function(){
+                return index;
+            },
+            setIndex: function(info){
+                index = info;
             }
-        }
-    }]);
+    }
+}]);

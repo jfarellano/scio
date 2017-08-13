@@ -1,7 +1,12 @@
 <div ng-controller="ConcShowCtlr">
     <div class="box box-default show-scroll">
-        <div class="show_content">
-            <h2>{{conc.name}}</h2>
+        <div class="show_content" data-slim-scroll data-scroll-height="auto">
+            <div class="row">
+                <md-button class="md-icon-button md-primary" aria-label="Back" ng-if="mobile" ng-click="switchIndex()">
+                                <md-icon class="material-icons">arrow_back</md-icon>
+                </md-button>
+                <h2>{{conc.name}}</h2>
+            </div>
             <h4>{{conc.id}}</h4>
             <div class="barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
             <h3>{{conc.full_state}}</h3>
@@ -21,7 +26,7 @@
                         <md-tab ng-repeat="tab in tabs"
                                 ng-disabled="tab.disabled"
                                 label="{{tab.title}}">
-                            <div class="demo-tab tab{{$index%0}}" style="padding: 25px; text-align: center;">
+                            <div class="tab{{$index}}" style="padding: 25px; text-align: center;">
                                 <div ng-repeat="item in tab.info">
                                     <ul>
                                     <div ng-bind="item.nombre" ng-click="click()"></div>

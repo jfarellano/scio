@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-4" ng-if="getIndex() || !mobile">
     <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación"style="background-color: #8DCEE0;">+</md-button>
     <div class="box box-default">
         <div class="index_area">
@@ -8,17 +8,20 @@
                 <input class="ng-pristine ng-valid md-input ng-empty ng-touched" id="search">
             </md-input-container>
             <div class="scrolleable-content">
-                <div ng-repeat="conc in data" class="md-whiteframe-5dp content">
-                    <div class="card_display_conc" ng-click="toShow($index)">
-                        <div class="box box-default">
-                            <div class="box-header box_name">{{conc.name}}</div>
-                            <div class="box-body box_content">
-                                <h5>Estado: {{conc.state}}</h5>
-                                <div class="col-sm-9 barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
-                                <div class="col-sm-3"><h5 class="card_days">{{conc.days}} Dias</h5></div>
+                <div data-slim-scroll data-scroll-height="auto">
+                    <div ng-repeat="conc in data" class="md-whiteframe-5dp content">
+                        <div class="card_display_conc" ng-click="toShow($index)">
+                            <div class="box box-default">
+                                <div class="box-header box_name">{{conc.name}}</div>
+                                <div class="box-body box_content">
+                                    <h5>Estado: {{conc.state}}</h5>
+                                    <div class="col-sm-9 barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+                                    <div class="col-sm-3"><h5 class="card_days">{{conc.days}} Dias</h5></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <div style="height: 30px"></div>
                 </div>
             </div>
         </div>
@@ -33,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="col-md-8">
+<div class="col-md-8" ng-if="(!getIndex() && mobile) || !mobile">
     <ui-view name="show">
     </ui-view>
 </div>
