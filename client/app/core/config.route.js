@@ -17,12 +17,7 @@ angular.module('app')
                     url: '/dashboard',
                     templateUrl: "app/dev/templates/dashboard/dashboard.html"
                 })
-
-                //Conciliacion
-                // .state('app.conciliacion',{
-                //     url: '/conciliacion',
-                //     templateUrl: URL.dev.template + '/conciliacion/conciliacion.html'
-                // })
+                
                 .state('app.conciliacion',{
                     url: '/conciliacion',
                     templateUrl: URL.dev.template + '/conciliacion/index.html',

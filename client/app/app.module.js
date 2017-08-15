@@ -9,7 +9,7 @@
         ,'ui.router'
         ,'ngAnimate'
         ,'ngAria'
-        ,'ngMessages'
+        // ,'ngMessages'
 
         // 3rd Party Modules
         ,'oc.lazyLoad'
