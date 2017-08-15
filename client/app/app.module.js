@@ -3,7 +3,7 @@
 
     angular.module('app', [
         //Dev modules
-        'matchMedia'
+        'matchMedia'//Este modulo sirve para ejecutar funciones segun el tamaño de la pantalla
 
         // Angular modules
         ,'ui.router'
@@ -19,16 +19,6 @@
         ,'app.layout'
         ,'app.ui'
         ,'app.i18n'
-
-        ,'app.chart'
-        ,'app.table'
-        ,'app.form'
-        ,'app.form.validation'
-        ,'app.page'
-
-        // App
-        ,'app.calendar'
-        ,'app.task'
     ]);
 
 })();
