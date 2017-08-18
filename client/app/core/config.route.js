@@ -31,6 +31,14 @@ angular.module('app')
                         }
                     }
                 })
+
+                //userAuth
+
+                .state('registro', {
+                    url: '/registro',
+                    templateUrl: "app/dev/templates/userAuth/signup.html",
+                    //controller: 'SignupCtrl'
+                })
                
                 // Extra
                 .state('404', {
