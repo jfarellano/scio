@@ -42,7 +42,7 @@ angular.module('app')
     $scope.abogado = false;
     $scope.logo = URL.image + '/logo.png';
     $scope.register = function(){
-        console.log('Registrado');
+        $window.location = '#/iniciosecion'
     }
     $scope.valid = function(){
         u = $scope.user;

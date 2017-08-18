@@ -4,7 +4,7 @@ angular.module('app')
 
         function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, URL) {
             $urlRouterProvider
-                .otherwise('/app/dashboard');
+                .otherwise('/iniciosecion');
 
             $stateProvider
                 // Overall
@@ -36,8 +36,12 @@ angular.module('app')
 
                 .state('registro', {
                     url: '/registro',
-                    templateUrl: "app/dev/templates/userAuth/signup.html",
+                    templateUrl: "app/dev/templates/userAuth/signup.html"
                     //controller: 'SignupCtrl'
+                })
+                .state('iniciosecion', {
+                    url: '/iniciosecion',
+                    templateUrl: "app/dev/templates/userAuth/login.html"
                 })
                
                 // Extra

@@ -1,0 +1,19 @@
+<div ng-controller="loginCtrl" class="box box-default login">
+    <form name="loginForm">
+        <figure>
+            <img src="{{app.logo}}">
+        </figure>
+        <fieldset>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Correo electronico</label>
+                    <input ng-model="user.mail" type="email" required>
+                </md-input-container>
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Contraseña</label>
+                    <input ng-model="user.pass" type="password" required>
+                </md-input-container>
+                <br><md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar seción</md-button>
+        </fieldset>
+    </form>
+    <a href="#/registro" class="options">Registarse</a>
+</div>
