@@ -6,7 +6,7 @@
     "angular": "~1.5.7",
     "angular-animate": "~1.5.7",
     "angular-aria": "~1.5.7",
-    // "angular-messages": "^1.5.7",
+    "angular-messages": "^1.5.7",
     "angular-ui-router": "^0.3.1",
     "angular-translate": "~2.12.0",
     "angular-translate-loader-static-files": "~2.12.0",
@@ -21,7 +21,6 @@
     "fullcalendar": "~2.3.1",
     "textAngular": "~1.5.12",
     "font-awesome": "^4.6.3",
-    "angular-wizard": "^0.9.0",
     "angular-validation-match": "^1.9.0",
     "angular-material-data-table": "^0.10.9",
     "ngmap": "^1.17.3",
@@ -31,11 +30,12 @@
     "angular-sanitize": "^1.5.8",
     "angular-utf8-base64": "^0.0.5",
     "angular-jk-carousel": "^0.1.6",
-    "ng-file-upload": "^12.2.13",
+    "ng-file-upload": "^12.2.12",
     "ng-device-detector": "^3.0.1",
     "re-tree": "^0.0.2",
     "moment": "^2.16.0",
-    "angular-media-queries": "^0.6.1"
+    "angular-media-queries": "^0.6.1",
+    "angular-wizard": "^1.1.1"
   },
   "devDependencies": {
     "bootstrap-sass-official": "~3.3.7",

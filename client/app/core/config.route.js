@@ -43,6 +43,13 @@ angular.module('app')
                         'conciliacion':{
                             templateUrl: URL.dev.template + '/conciliacion/create.html',
                             // controller: 'ConcCreateCtrl'
+                            resolve: {
+                                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                                    return $ocLazyLoad.load([
+                                        'angular-wizard'
+                                    ]);
+                                }]
+                            }
                         }
                     }
                 })

@@ -8,8 +8,6 @@ angular.module('app')
         return Conciliacion.getIndex();
     }
 
-    console.log('Esta');
-
 
     //Wizard
     $scope.canExit = false;
