@@ -22,7 +22,6 @@ module.exports = function() {
             client + '/bower_components/weather-icons/font/*', 
             client + '/bower_components/weather-icons/fonts/*', 
             client + '/bower_components/angular-material-data-table/dist/md-data-table.min.js',
-            client + '/bower_components/angular-wizard/dist/angular-wizard.min.js',
             client + '/bower_components/ngmap/build/scripts/ng-map.min.js',
             client + '/bower_components/moment/min/moment.min.js',
             client + '/bower_components/fullcalendar/dist/fullcalendar.min.js',

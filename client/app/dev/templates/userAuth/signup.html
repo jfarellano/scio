@@ -1,37 +1,39 @@
-<div ng-controller="SignupCtrl" class="box box-default signUp">
-<form name="signupForm">
+<div class="box box-default signUp">
+
     <figure>
         <img src="{{app.logo}}">
     </figure>
     <h5>Este es el formulario de registro para poder acceder a los sercicios prestados por Scio, diligencielo con veracidad ya que estos seran sus datos de contacto en cualquier proceso que se lleve a cabo.</h5>
+
+<form name="signupForm" novalidate data-ng-submit="submitForm()">
     <fieldset>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Primer nombre</label>
-            <input ng-model="user.first_first_name" type="text" required>
+            <input data-ng-model="user.first_first_name" type="text" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Segundo nombre</label>
-            <input ng-model="user.second_first_name" type="text" required>
+            <input data-ng-model="user.second_first_name" type="text" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Primer apellido</label>
-            <input ng-model="user.first_last_name" type="text" required>
+            <input data-ng-model="user.first_last_name" type="text" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Segundo apellido</label>
-            <input ng-model="user.second_last_name" type="text" required>
+            <input data-ng-model="user.second_last_name" type="text" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>E-mail</label>
-            <input ng-model="user.email" type="email" required>
+            <input data-ng-model="user.email" type="email" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Telefono de contacto</label>
-            <input ng-model="user.phone" type="number" required>
+            <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Tipo de documento</label>
-            <md-select ng-model="user.id_type">
+            <md-select ng-model="user.id_type" required>
                 <md-option ng-repeat="type in idType" value="{{type}}" requiered>
                     {{type}}
                 </md-option>
@@ -39,25 +41,25 @@
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Numero de identificación</label>
-            <input ng-model="user.id_number" type="number" required>
+            <input ng-model="user.id_number" type="number" data-ng-minlength=8 ng-disabled="!user.id_type" required>
         </md-input-container>
         <p>Fecha de expedición</p>
-        <md-datepicker ng-model="user.id_expedition_date" md-placeholder="Fecha de expedición"></md-datepicker>
+        <md-datepicker ng-model="user.id_expedition_date" md-placeholder="Fecha de expedición" required></md-datepicker>
         <md-input-container class="md-block" flex-gt-sm>
                 <label>Departamento de expedicion</label>
-                <md-select ng-model="department">
+                <md-select ng-model="department" required>
                     <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
                 </md-select>
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Ciudad de expedicion</label>
-                <md-select ng-model="user.id_expedition_city">
+                <md-select ng-model="user.id_expedition_city" ng-disabled="!department" required>
                     <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
                 </md-select>
             </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Genero</label>
-            <md-select ng-model="user.gender">
+            <md-select ng-model="user.gender" required>
                 <md-option ng-repeat="g in gender" value="{{g}}">
                     {{g}}
                 </md-option>
@@ -65,14 +67,14 @@
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Departamento de residencia</label>
-            <md-select ng-model="user.resident_department">
+            <md-select ng-model="user.resident_department" required>
                 <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
             </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Ciudad de residencia</label>
-            <md-select ng-model="user.resident_city">
-                <md-option ng-repeat="city in departments[user.resident_department]" value="{{city}}">{{city}}</md-option>
+            <md-select ng-model="user.resident_city" required>
+                <md-option ng-repeat="city in departments[user.resident_department]" ng-disabled="!user.resident_department" value="{{city}}">{{city}}</md-option>
             </md-select>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
@@ -87,7 +89,7 @@
             </md-input-container>
             <md-input-container class="full-width">
                 <label>Años de experiencia</label>
-                <md-select ng-model="user.experience_years" aria-label="select">
+                <md-select ng-model="user.experience_years" aria-label="select" required>
                     <md-option ng-repeat="n in numbers" value="{{n}}"> {{n}} </md-option>
                 </md-select>
             </md-input-container>
@@ -101,12 +103,17 @@
             </md-input-container>
             <md-input-container class="full-width">
                 <label>Ultimo nivel de estudio</label>
-                <md-select ng-model="user.study_level" aria-label="select">
+                <md-select ng-model="user.study_level" aria-label="select" required>
                     <md-option ng-repeat="l in level" value="{{l}}"> {{l}} </md-option>
                 </md-select>
             </md-input-container>
         </div>
-        <br><md-button class="md-raised btn-w-md md-primary" ng-click="register()" ng-disabled="!signupForm.$valid && !valid()">Registrarse</md-button>
+        <br>
+        <md-button type="submit"
+        ui-wave
+        class="md-raised btn-w-md md-primary"
+        data-ng-disabled="!canSubmit()"
+        >Registrarse</button>
     </fieldset>
 </form>
 </div>

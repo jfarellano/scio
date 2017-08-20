@@ -36,7 +36,6 @@ angular.module('app')
         'Boyaca': ['Tunja']
     };
     $scope.gender = ['Masculino', 'Femenino'];
-    // $scope.gender = ['Masculino', 'Femenino'];
     $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
     $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
     $scope.abogado = false;
@@ -44,14 +43,22 @@ angular.module('app')
     $scope.register = function(){
         $window.location = '#/iniciosecion'
     }
-    $scope.valid = function(){
-        u = $scope.user;
-        if(!u.id_type === '' && !u.id_expedition_city === '' && !u.id_expedition_date === '' && !u.genero === '' && !u.resident_city === '' && !u.resident_department === ''){
-            return true;
-        };
-        if($scope.lawyer && u.experience_years != '' && u.study_level != ''){
-            return true;
-        };
-        return false;
-    }
+
+    //Validation
+    original = angular.copy($scope.user);
+    $scope.revert = function() {
+        $scope.user = angular.copy(original);
+        return $scope.signupForm.$setPristine();
+    };
+    $scope.canRevert = function() {
+        return !angular.equals($scope.user, original) || !$scope.signupForm.$pristine;
+    };
+    $scope.canSubmit = function() {
+        return $scope.signupForm.$valid && !angular.equals($scope.user, original);
+    };    
+    $scope.submitForm = function() {
+        $scope.showInfoOnSubmit = true;
+        $window.location = '#/iniciosecion'
+        return $scope.revert();
+    }; 
 }]);

@@ -9,6 +9,7 @@
         ,'ui.router'
         ,'ngAnimate'
         ,'ngAria'
+        ,'mgo-angular-wizard'
         // ,'ngMessages'
 
         // 3rd Party Modules

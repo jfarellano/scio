@@ -1,6 +1,6 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$1', '$timeout', 'WizardHandler','Conciliacion' , function($scope, $q, $timeout, WizardHandler, Conciliacion){
-    //Working controller
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion' , function($scope, $q, $timeout, WizardHandler, Conciliacion){
+
     $scope.data = Conciliacion.index();
     $scope.state = Conciliacion.state();
 
@@ -8,7 +8,7 @@ angular.module('app')
         return Conciliacion.getIndex();
     }
 
-
+    console.log('Esta');
 
 
     //Wizard

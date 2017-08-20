@@ -26,12 +26,6 @@
                         ]
                     },
                     {
-                        name: 'angular-wizard',
-                        files: [
-                            'bower_components/angular-wizard/dist/angular-wizard.min.js'
-                        ]
-                    },
-                    {
                         name: 'email',
                         files: [
                             'app/email/email.module.js',

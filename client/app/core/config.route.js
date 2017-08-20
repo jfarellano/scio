@@ -17,7 +17,7 @@ angular.module('app')
                     url: '/dashboard',
                     templateUrl: "app/dev/templates/dashboard/dashboard.html"
                 })
-                
+                //Conciliacion
                 .state('app.conciliacion',{
                     url: '/conciliacion',
                     templateUrl: URL.dev.template + '/conciliacion/index.html',
@@ -27,56 +27,35 @@ angular.module('app')
                     url: '/:id',
                     views:{
                         'show':{
-                            templateUrl: URL.dev.template + '/conciliacion/show.html'
+                            templateUrl: URL.dev.template + '/conciliacion/show.html',
+                            controller: 'ConcShowCtlr'
                         }
                     }
                 })
-
+                //Create
+                .state('app.create', {
+                    url: '/create',
+                    templateUrl: URL.dev.template + '/create/conciliacion.html'
+                })
+                .state('app.create.conciliacion',{
+                    url: '/conciliacion',
+                    views:{
+                        'conciliacion':{
+                            templateUrl: URL.dev.template + '/conciliacion/create.html',
+                            // controller: 'ConcCreateCtrl'
+                        }
+                    }
+                })
                 //userAuth
-
                 .state('registro', {
                     url: '/registro',
-                    templateUrl: "app/dev/templates/userAuth/signup.html"
-                    //controller: 'SignupCtrl'
+                    templateUrl: "app/dev/templates/userAuth/signup.html",
+                    controller: 'SignupCtrl'
                 })
                 .state('iniciosecion', {
                     url: '/iniciosecion',
-                    templateUrl: "app/dev/templates/userAuth/login.html"
+                    templateUrl: "app/dev/templates/userAuth/login.html",
+                    controller: 'loginCtrl'
                 })
-               
-                // Extra
-                .state('404', {
-                    url: '/404',
-                    templateUrl: "app/page-extra/404.html"
-                })
-                .state('500', {
-                    url: '/500',
-                    templateUrl: "app/page-extra/500.html"
-                })
-                .state('signin', {
-                    url: '/signin',
-                    templateUrl: 'app/page-extra/signin.html'
-                })
-                .state('signup', {
-                    url: '/signup',
-                    templateUrl: 'app/page-extra/signup.html'
-                })
-                .state('forgot-password', {
-                    url: '/forgot-password',
-                    templateUrl: 'app/page-extra/forgot-password.html'
-                })
-                .state('confirm-email', {
-                    url: '/confirm-email',
-                    templateUrl: 'app/page-extra/confirm-email.html'
-                })
-                .state('lock-screen', {
-                    url: '/lock-screen',
-                    templateUrl: 'app/page-extra/lock-screen.html'
-                })
-                .state('maintenance', {
-                    url: '/maintenance',
-                    templateUrl: "app/page-extra/maintenance.html"
-                })
-            ;
         }
     ]);
