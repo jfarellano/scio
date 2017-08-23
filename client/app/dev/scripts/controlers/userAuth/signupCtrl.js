@@ -15,6 +15,7 @@ angular.module('app')
         resident_department: '',
         resident_city: '',
         direccion: '',
+        estrato: '',
         //Lawyer
         lawyer_id: '',
         experience_years: '',

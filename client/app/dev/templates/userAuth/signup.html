@@ -46,17 +46,17 @@
         <p>Fecha de expedición</p>
         <md-datepicker ng-model="user.id_expedition_date" md-placeholder="Fecha de expedición" required></md-datepicker>
         <md-input-container class="md-block" flex-gt-sm>
-                <label>Departamento de expedicion</label>
-                <md-select ng-model="department" required>
-                    <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Ciudad de expedicion</label>
-                <md-select ng-model="user.id_expedition_city" ng-disabled="!department" required>
-                    <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
-                </md-select>
-            </md-input-container>
+            <label>Departamento de expedicion</label>
+            <md-select ng-model="department" required>
+                <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Ciudad de expedicion</label>
+            <md-select ng-model="user.id_expedition_city" ng-disabled="!department" required>
+                <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
+            </md-select>
+        </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
             <label>Genero</label>
             <md-select ng-model="user.gender" required>
@@ -80,6 +80,10 @@
         <md-input-container class="md-block" flex-gt-sm>
             <label>Direccion de residencia</label>
             <input ng-model="user.direccion" type="text" required>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Estrato de residencia</label>
+            <input ng-model="user.estrato" type="number" data-min=1 data-max=6 required>
         </md-input-container>
         <md-checkbox ng-model="lawyer" aria-label="Es abogado">Es usted abogado?</md-checkbox>
         <div ng-if="lawyer">
