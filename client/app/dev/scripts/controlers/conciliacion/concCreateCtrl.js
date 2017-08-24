@@ -158,7 +158,19 @@ angular.module('app')
         }
         $scope.hecho_pretension.text = '';
     };
-
+    //Validations
+    $scope.convocantes_validation = function(){
+        return $scope.convocantes().length != 0;
+    }
+    $scope.convocados_validation = function(){
+        return $scope.convocados().length != 0;
+    }
+    $scope.hechos_validation = function(){
+        return $scope.solicitude.conciliation.facts.length != 0;
+    }
+    $scope.pretensiones_validation = function(){
+        return $scope.solicitude.conciliation.pretensions.length != 0;
+    }
     //Wizard
     $scope.canExit = false;
     $scope.stepActive = true;

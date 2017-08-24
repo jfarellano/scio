@@ -44,13 +44,6 @@ angular.module('app')
 
     //Validation
     original = angular.copy($scope.user);
-    $scope.revert = function() {
-        $scope.user = angular.copy(original);
-        return $scope.signupForm.$setPristine();
-    };
-    $scope.canRevert = function() {
-        return !angular.equals($scope.user, original) || !$scope.signupForm.$pristine;
-    };
     $scope.canSubmit = function() {
         return $scope.signupForm.$valid && !angular.equals($scope.user, original);
     };    
