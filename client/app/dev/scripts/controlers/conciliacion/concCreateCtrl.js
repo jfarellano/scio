@@ -8,7 +8,6 @@ angular.module('app')
         return Conciliacion.getIndex();
     }
 
-
     $scope.solicitude = {
         solicitude_type:"CONCILIACION",
         conciliation:{
@@ -24,11 +23,11 @@ angular.module('app')
         }
     }
 
-    $scope.convovantes = function(){
-        return solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocante');
+    $scope.convocantes = function(){
+        return $scope.solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocante');
     }
     $scope.convocados = function(){
-        return solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocado');
+        return $scope.solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocado');
     }
 
     $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
@@ -39,45 +38,7 @@ angular.module('app')
         naturaleza: ''
     }
 
-    $scope.persona = {
-        rol:'',
-        naturaleza: 'pesona',
-        first_first_name: '',
-        second_first_name: '',
-        first_last_name: '',
-        second_last_name: '',
-        email: '',
-        phone: '',
-        origin_country: '',
-        birth_date: '',
-        id_type: '',
-        id_numeber: '',
-        id_expedition_city: '',
-        id_expedition_date: '',
-        genero: '',
-        resident_department: '',
-        resident_city: '',
-        direccion: '',
-        estrato: '',
-        study_level: ''
-    }
     $scope.convtype = ['Persona', 'Organizacion']
-    $scope.organization = {
-        rol: '',
-        naturaleza: 'Organizacion',
-        organization_type: '',
-        public_entity_type: '',
-        id_type: '',
-        id_numeber: '',
-        name: '',
-        economic_sector: '',
-        origin_country: '',
-        resident_department: '',
-        resident_city: '',
-        direccion: '',
-        email: '',
-        phone: ''
-    }
 
     $scope.area_topic = {
         'CIVIL y COMERCIAL':['BIENES', 'COMPETENCIA DESLEAL', 'CONSUMO', 'CONTRATOS'],
@@ -100,7 +61,103 @@ angular.module('app')
     $scope.gender = ['Masculino', 'Femenino'];
     $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
     $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
+    $scope.firstN = function(str, n){
+        return str.substring(0, n);
+    }
 
+    $scope.hecho_pretension = {text: ''};
+
+    //Logic
+    //Convocante
+    $scope.convocante = false;
+    $scope.switch_convocante = function(){
+        $scope.convocante = !$scope.convocante;
+    }
+    $scope.new_convocante = function (){
+        $scope.switch_convocante();
+        WizardHandler.wizard().goTo(3);
+    }
+    $scope.add_convocante = function(){
+        $scope.involucrado.rol = 'Convocante';
+        $scope.solicitude.conciliation.involucrados.push(angular.copy($scope.involucrado));
+        $scope.involucrado = {
+            rol: '',
+            naturaleza: ''
+        };
+        $scope.switch_convocante();
+    }
+    $scope.cancel_convocante = function () {
+        $scope.involucrado = {
+            rol: '',
+            naturaleza: ''
+        };
+        $scope.switch_convocante();
+    };
+    //Convocado
+    $scope.convocado = false;
+    $scope.switch_convocado = function(){
+        $scope.convocado = !$scope.convocado;
+    }
+    $scope.new_convocado = function(){
+        $scope.switch_convocado();
+        WizardHandler.wizard().goTo(4);
+    }
+    $scope.add_convocado = function(){
+        $scope.involucrado.rol = 'Convocado';
+        $scope.solicitude.conciliation.involucrados.push(angular.copy($scope.involucrado));
+        $scope.involucrado = {
+            rol: '',
+            naturaleza: ''
+        };
+        $scope.switch_convocado();
+    }
+    $scope.cancel_convocado = function () {
+        $scope.involucrado = {
+            rol: '',
+            naturaleza: ''
+        };
+        $scope.switch_convocado();
+    };
+    //Hechos_pretensiones
+    $scope.hechos = false;
+    $scope.pretensiones = false;
+    $scope.switch_hp = function(type){
+        if(type == 1){
+            $scope.hechos = !$scope.hechos;
+        }else{
+            $scope.pretensiones = !$scope.pretensiones;
+        }
+    }
+    $scope.new_hp = function(type){
+       if(type == 1){
+            $scope.switch_hp(1);
+            WizardHandler.wizard().goTo(5);
+        }
+        else{
+            $scope.switch_hp(2);
+            WizardHandler.wizard().goTo(6);
+        }
+    }
+    $scope.add_hp = function(type){
+        if(type == 1){
+            $scope.solicitude.conciliation.facts.push(angular.copy($scope.hecho_pretension.text));
+            $scope.switch_hp(1);
+        }
+        else{
+            $scope.solicitude.conciliation.pretensions.push(angular.copy($scope.hecho_pretension.text));
+            $scope.switch_hp(2);
+        }
+        $scope.hecho_pretension.text = '';
+    }
+    $scope.cancel_hp = function (type) {
+        if(type == 1){
+            $scope.switch_hp(1);
+        }
+        else{
+            $scope.switch_hp(2);
+        }
+        $scope.hecho_pretension.text = '';
+    };
 
     //Wizard
     $scope.canExit = false;

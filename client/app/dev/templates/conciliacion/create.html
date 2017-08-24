@@ -1,8 +1,7 @@
 <section class="container-fluid with-maxwidth chapter">     
     <article class="article">
         <div class="box box-default" ng-controller="ConcCreateCtlr">
-            <div class="box-body">
-                        
+            <div class="box-body">       
                 <section class="ui-angular-wizard" >
                     <div class="divider divider-lg"></div>
                     <wizard on-finish="finished()" indicators-position="top">
@@ -59,25 +58,25 @@
                             <h2>Listado de convocantes</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="c in convocantes()">
-                                    <div ng-if="c.naturaleza === 'Persona'">
-                                        <h4>{{c.fist_first_name}} {{c.first_last_name}}</h4>
+                                    <div ng-if="c.naturaleza == 'Persona'">
+                                        <h4>{{c.first_first_name}} {{c.first_last_name}}</h4>
                                     </div>
-                                    <div ng-if="c.naturaleza === 'Organizacion'">
-                                            <h4>{{c.nombre}}</h4>
-                                        </div>
+                                    <div ng-if="c.naturaleza == 'Organizacion'">
+                                        <h4>{{c.name}}</h4>
+                                    </div>
                                 </div>
-                                <md-button class="md-raised btn-w-md md-primary">Agregar nuevo convocado</md-button>
+                                <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocante()">Agregar nuevo convocante</md-button>
                             </div>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
                                 <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">Siguiente</md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Convocante">
+                        <wz-step wz-title="Convocante" wz-disabled="{{!convocante}}">
                             <h2>Agregar nuevo convocante</h2>
                             <div class="ui-wizard-content">
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Tipo de convocado</label>
+                                    <label>Tipo de convocante</label>
                                     <md-select ng-model="involucrado.naturaleza">
                                         <md-option ng-repeat="c in convtype" value="{{c}}">
                                             {{c}}
@@ -234,29 +233,29 @@
                                 </md-input-container>
                             </div>
                             <div class="ui-wizard-actions">
-                                <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">Guardar</md-button>
+                                <md-button wz-previous="cancel_convocante()"  class="md-raised btn-w-md">Cancelar</md-button>
+                                <md-button wz-previous="add_convocante()" class="md-raised btn-w-md md-primary">Guardar</md-button>
                             </div>
                         </wz-step>
 <wz-step wz-title="Convocados">
                             <h2>Listado de convocados</h2>
                             <div class="ui-wizard-content">
-                                <div ng-repeat="c in convocantes()">
-                                    <div ng-if="c.naturaleza === 'Persona'">
-                                        <h4>{{c.fist_first_name}} {{c.first_last_name}}</h4>
+                                <div ng-repeat="c in convocados()">
+                                    <div ng-if="c.naturaleza == 'Persona'">
+                                        <h4>{{c.first_first_name}} {{c.first_last_name}}</h4>
                                     </div>
-                                    <div ng-if="c.naturaleza === 'Organizacion'">
-                                            <h4>{{c.nombre}}</h4>
-                                        </div>
+                                    <div ng-if="c.naturaleza == 'Organizacion'">
+                                        <h4>{{c.name}}</h4>
+                                    </div>
                                 </div>
-                                <md-button class="md-raised btn-w-md md-primary">Agregar nuevo convocado</md-button>
+                                <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocado()">Agregar nuevo convocado</md-button>
                             </div>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
                                 <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">Siguiente</md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Convocado">
+                        <wz-step wz-title="Convocado" wz-disabled="{{!convocado}}">
                             <h2>Agregar nuevo convocado</h2>
                             <div class="ui-wizard-content">
                                 <md-input-container class="md-block" flex-gt-sm>
@@ -417,8 +416,8 @@
                                 </md-input-container>
                             </div>
                             <div class="ui-wizard-actions">
-                                <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary">Guardar</md-button>
+                                <md-button wz-previous="cancel_convocado()"  class="md-raised btn-w-md">Cancelar</md-button>
+                                <md-button wz-previous="add_convocado()" class="md-raised btn-w-md md-primary">Guardar</md-button>
                             </div>
                         </wz-step>
                         <wz-step wz-title="Hechos">
@@ -427,50 +426,50 @@
                                 <div ng-repeat="f in solicitude.conciliation.facts">
                                     <h4>{{firstN(f, 20)}}</h4>
                                 </div>
-                                <md-button class="md-raised btn-w-md md-primary">Agregar nuevo hecho</md-button>
+                                <md-button class="md-raised btn-w-md md-primary" ng-click="new_hp(1)">Agregar nuevo hecho</md-button>
                             </div>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
                                 <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" >Siguiente </md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Hecho">
+                        <wz-step wz-title="Hecho" wz-disabled="{{!hechos}}">
                             <h2>Nuevo hecho</h2>
                             <div class="ui-wizard-content">
                                 <md-input-container class="md-block">
                                     <label>Desriba el hecho</label>
-                                    <textarea ng-model="fact" rows="20" md-select-on-focus></textarea>
+                                    <textarea ng-model="hecho_pretension.text" rows="10" md-select-on-focus></textarea>
                                 </md-input-container>
                             </div>
                             <div class="ui-wizard-actions">
-                                <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" >Guardar</md-button>
+                                <md-button wz-previous="cancel_hp(1)"  class="md-raised btn-w-md">Cancelar</md-button>
+                                <md-button wz-previous="add_hp(1)" class="md-raised btn-w-md md-primary" >Guardar</md-button>
                             </div>
                         </wz-step>
                         <wz-step wz-title="Pretensiones">
-                            <h2>Listado de hechos</h2>
+                            <h2>Listado de pretensiones</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="p in solicitude.conciliation.pretensions">
                                     <h4>{{firstN(p, 20)}}</h4>
                                 </div>
-                                <md-button class="md-raised btn-w-md md-primary">Agregar nueva pretension</md-button>
+                                <md-button class="md-raised btn-w-md md-primary" ng-click="new_hp(2)">Agregar nueva pretension</md-button>
                             </div>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
                                 <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" >Siguiente </md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Pretension">
+                        <wz-step wz-title="Pretension" wz-disabled="{{!pretensiones}}">
                             <h2>Nueva pretension</h2>
                             <div class="ui-wizard-content">
                                 <md-input-container class="md-block">
                                     <label>Desriba la pretension</label>
-                                    <textarea ng-model="fact" rows="20" md-select-on-focus></textarea>
+                                    <textarea ng-model="hecho_pretension.text" rows="20" md-select-on-focus></textarea>
                                 </md-input-container>
                             </div>
                             <div class="ui-wizard-actions">
-                                <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" >Guardar</md-button>
+                                <md-button wz-previous="cancel_hp(2)"  class="md-raised btn-w-md">Cancelar</md-button>
+                                <md-button wz-previous="add_hp(2)" class="md-raised btn-w-md md-primary" >Guardar</md-button>
                             </div>
                         </wz-step>
 

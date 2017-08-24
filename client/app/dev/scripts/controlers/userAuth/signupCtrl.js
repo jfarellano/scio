@@ -23,12 +23,9 @@ angular.module('app')
         univercity_title: '',
         study_level: ''
     };
-
-    $scope.department = '';
-
     $scope.lawyer = false;
+    $scope.department = '';
     $scope.idType = ['cc', 'pasaporte'];
-
     $scope.departments = {
         'Amazonas': ['Leticia'],
         'Antioquia': ['Medellin', 'Envigado'],
