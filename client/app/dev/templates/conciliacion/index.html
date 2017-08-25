@@ -1,5 +1,5 @@
 <div class="col-md-4" ng-if="getIndex() || !mobile">
-    <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación"style="background-color: #8DCEE0;">+</md-button>
+    <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación"style="background-color: #8DCEE0;" ng-click="openCreate('lg')">+</md-button>
     <div class="box box-default">
         <div class="index_area">
             <h2>Conciliaciones</h2>
@@ -10,13 +10,13 @@
             <div class="scrolleable-content">
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-repeat="conc in data" class="md-whiteframe-5dp content">
-                        <div class="card_display_conc" ng-click="toShow($index)">
+                        <div class="card_display_conc" ng-click="toShow(conc.id)">
                             <div class="box box-default">
-                                <div class="box-header box_name">{{conc.name}}</div>
+                                <div class="box-header box_name">{{getConvNames($index)}}</div>
                                 <div class="box-body box_content">
-                                    <h5>Estado: {{conc.state}}</h5>
-                                    <div class="col-sm-9 barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="{{conc.days}}" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
-                                    <div class="col-sm-3"><h5 class="card_days">{{conc.days}} Dias</h5></div>
+                                    <h5>Estado: Info pendiente por servidor</h5>
+                                    <div class="col-sm-9 barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="14" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+                                    <div class="col-sm-3"><h5 class="card_days">14 Dias</h5></div>
                                 </div>
                             </div>
                         </div>
@@ -27,17 +27,16 @@
         </div>
         <div class="divider divider-lg divider-dashed"></div>
         <div class="row" style="padding-left:10%;">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <md-button class="btn-w-md md-accent" data-ng-click="switchState(1)">Activas</md-button><div class="divider divider-xs"></div>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <md-button class="btn-w-md md-primary" data-ng-click="switchState(2)">Archivo</md-button><div class="divider divider-xs"></div>
-                </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <md-button class="btn-w-md md-accent" data-ng-click="switchState(1)">Activas</md-button><div class="divider divider-xs"></div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <md-button class="btn-w-md md-primary" data-ng-click="switchState(2)">Archivo</md-button><div class="divider divider-xs"></div>
+            </div>
         </div>
     </div>
 </div>
 <div class="col-md-8" ng-if="(!getIndex() && mobile) || !mobile">
     <ui-view name="show">
     </ui-view>
-    <ui-view name="create"></ui-view>
 </div>

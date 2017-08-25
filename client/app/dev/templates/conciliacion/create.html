@@ -1,4 +1,4 @@
-<section class="container-fluid with-maxwidth chapter">     
+r<section class="container-fluid with-maxwidth chapter">     
     <article class="article">
         <div class="box box-default" ng-controller="ConcCreateCtlr">
             <div class="box-body">       
@@ -25,6 +25,14 @@
                                             </md-option>
                                         </md-select>
                                     </md-input-container>
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Cuanto tiempo lleva el conflicto:</label>
+                                        <md-select ng-model="solicitude.conciliation.conflict_time" required>
+                                            <md-option ng-repeat="a in conflict_time" value="{{a}}">
+                                                {{a}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
                                 </form>
                             </div>
                             <div class="ui-wizard-actions">
@@ -37,7 +45,7 @@
                                 <form name="areaForm" novalidate>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label>Area del derecho:</label>
-                                        <md-select ng-model="solicitude.conciliatio.area" required>
+                                        <md-select ng-model="solicitude.conciliation.area" required>
                                             <md-option ng-repeat="(area, topic) in area_topic" value="{{area}}">
                                                 {{area}}
                                             </md-option>
@@ -45,8 +53,8 @@
                                     </md-input-container>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label>Tema del derecho:</label>
-                                        <md-select ng-model="solicitude.conciliatio.topic" required>
-                                            <md-option ng-repeat="topic in area_topic[solicitude.conciliatio.area]" value="{{topic}}">
+                                        <md-select ng-model="solicitude.conciliation.topic" required>
+                                            <md-option ng-repeat="topic in area_topic[solicitude.conciliation.area]" value="{{topic}}">
                                                 {{topic}}
                                             </md-option>
                                         </md-select>
@@ -62,11 +70,11 @@
                             <h2>Listado de convocantes</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="c in convocantes()">
-                                    <div ng-if="c.naturaleza == 'Persona'">
-                                        <h4>{{c.first_first_name}} {{c.first_last_name}}</h4>
+                                    <div ng-if="c.involved.nature == 'natural'">
+                                        <h4>{{c.involved.nature_instance.first_name}} {{c.involved.nature_instance.first_lastname}}</h4>
                                     </div>
-                                    <div ng-if="c.naturaleza == 'Organizacion'">
-                                        <h4>{{c.name}}</h4>
+                                    <div ng-if="c.involved.nature == 'juridical'">
+                                        <h4>{{c.involved.nature_instance.name}}</h4>
                                     </div>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocante()">Agregar nuevo convocante</md-button>
@@ -82,40 +90,44 @@
                                 <div class="ui-wizard-content">
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label>Tipo de convocante</label>
-                                        <md-select ng-model="involucrado.naturaleza" required>
+                                        <md-select ng-model="involucrado.involved.nature" required>
                                             <md-option ng-repeat="c in convtype" value="{{c}}">
                                                 {{c}}
                                             </md-option>
                                         </md-select>
-                                        <div ng-if="involucrado.naturaleza == 'Persona'">
+                                        <div ng-if="involucrado.involved.nature == 'natural'">
                                             <fieldset>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Primer nombre</label>
-                                                    <input data-ng-model="involucrado.first_first_name" type="text" required>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.first_name" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Segundo nombre</label>
-                                                    <input data-ng-model="involucrado.second_first_name" type="text" required>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.second_name" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Primer apellido</label>
-                                                    <input data-ng-model="involucrado.first_last_name" type="text" required>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.first_lastname" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Segundo apellido</label>
-                                                    <input data-ng-model="involucrado.second_last_name" type="text" required>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.second_lastname" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>E-mail</label>
-                                                    <input data-ng-model="involucrado.email" type="email" required>
+                                                    <input data-ng-model="involucrado.involved.email" type="email" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Pagina web</label>
+                                                    <input data-ng-model="involucrado.involved.web_site" type="text">
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Telefono de contacto</label>
-                                                    <input ng-model="involucrado.phone" data-ng-minlength=7 type="number" required>
+                                                    <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Tipo de documento</label>
-                                                    <md-select ng-model="involucrado.id_type" required>
+                                                    <md-select ng-model="involucrado.involved.nature_instance.identifier_type" required>
                                                         <md-option ng-repeat="type in idType" value="{{type}}" requiered>
                                                             {{type}}
                                                         </md-option>
@@ -123,115 +135,35 @@
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Numero de identificación</label>
-                                                    <input ng-model="involucrado.id_number" type="number" data-ng-minlength=8 ng-disabled="!involucrado.id_type" required>
-                                                </md-input-container>
-                                                <p>Fecha de expedición</p>
-                                                <md-datepicker ng-model="involucrado.id_expedition_date" md-placeholder="Fecha de expedición" required></md-datepicker>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Departamento de expedicion</label>
-                                                    <md-select ng-model="department" required>
-                                                        <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Ciudad de expedicion</label>
-                                                    <md-select ng-model="involucrado.id_expedition_city" ng-disabled="!department" required>
-                                                        <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Genero</label>
-                                                    <md-select ng-model="involucrado.gender" required>
-                                                        <md-option ng-repeat="g in gender" value="{{g}}">
-                                                            {{g}}
-                                                        </md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Departamento de residencia</label>
-                                                    <md-select ng-model="involucrado.resident_department" required>
-                                                        <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Ciudad de residencia</label>
-                                                    <md-select ng-model="involucrado.resident_city" required>
-                                                        <md-option ng-repeat="city in departments[involucrado.resident_department]" ng-disabled="!involucrado.resident_department" value="{{city}}">{{city}}</md-option>
-                                                    </md-select>
+                                                    <input ng-model="involucrado.involved.nature_instance.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.nature_instance.identifier_type" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Direccion de residencia</label>
-                                                    <input ng-model="involucrado.direccion" type="text" required>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Estrato de residencia</label>
-                                                    <input ng-model="involucrado.estrato" type="number" data-min=1 data-max=6 required>
+                                                    <input ng-model="involucrado.involved.address" type="text" required>
                                                 </md-input-container>
                                             </fieldset>
                                         </div>
-                                        <div ng-if="involucrado.naturaleza == 'Organizacion'">
+                                        <div ng-if="involucrado.involved.nature == 'juridical'">
                                              <fieldset>
                                                 <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Tipo de organizacion</label>
-                                                    <md-select ng-model="involucrado.organization_type" required>
-                                                        <md-option ng-repeat="type in org_type" value="{{type}}">{{type}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm ng-if="involucrado.organization_type == 'Publica'">
-                                                    <label>Tipo de organizacion publica</label>
-                                                    <md-select ng-model="involucrado.public_entity_type" required>
-                                                        <md-option ng-repeat="type in public_type" value="{{type}}">{{type}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Tipo de identificacion</label>
-                                                    <md-select ng-model="involucrado.id_type" required>
-                                                        <md-option ng-repeat="type in org_idtype" value="{{type}}">{{type}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Numero de identificacion</label>
-                                                    <input ng-model="involucrado.id_number" type="number" required>
+                                                    <input ng-model="involucrado.involved.nature_instance.nit" type="number" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Nombre</label>
-                                                    <input ng-model="involucrado.name" type="text" required>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Sector economico</label>
-                                                    <md-select ng-model="involucrado.economic_sector" required>
-                                                        <md-option ng-repeat="sector in economic_sector" value="{{sector}}">{{sector}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Pais de origen</label>
-                                                    <md-select ng-model="involucrado.origin_country" required>
-                                                        <md-option ng-repeat="country in countries" value="{{country}}">{{country}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Departamento de residencia</label>
-                                                    <md-select ng-model="involucrado.resident_department" required>
-                                                        <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container class="md-block" flex-gt-sm>
-                                                    <label>Ciudad de residencia</label>
-                                                    <md-select ng-model="involucrado.resident_city" required>
-                                                        <md-option ng-repeat="city in departments[involucrado.resident_department]" ng-disabled="!involucrado.resident_department" value="{{city}}">{{city}}</md-option>
-                                                    </md-select>
+                                                    <input ng-model="involucrado.involved.nature_instance.name" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Direccion de residencia</label>
-                                                    <input ng-model="involucrado.direccion" type="text" required>
+                                                    <input ng-model="involucrado.involved.address" type="text" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>E-mail</label>
-                                                    <input data-ng-model="involucrado.email" type="email" required>
+                                                    <input data-ng-model="involucrado.involved.email" type="email" required>
                                                 </md-input-container>
                                                 <md-input-container class="md-block" flex-gt-sm>
                                                     <label>Telefono de contacto</label>
-                                                    <input ng-model="involucrado.phone" data-ng-minlength=7 type="number" required>
+                                                    <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                                                 </md-input-container>
                                              </fieldset>
                                         </div>
@@ -240,18 +172,18 @@
                             </form>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="cancel_convocante()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-previous="add_convocante()" class="md-raised btn-w-md md-primary" ng-disabled="!convocanteForm.$valid">Guardar</md-button>
+                                <md-button wz-previous="add_convocante()" class="md-raised btn-w-md md-primary" ng-disabled="!convocanteForm.$valid">Agregar</md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Convocados">
+                        <wz-step wz-title="convocados">
                             <h2>Listado de convocados</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="c in convocados()">
-                                    <div ng-if="c.naturaleza == 'Persona'">
-                                        <h4>{{c.first_first_name}} {{c.first_last_name}}</h4>
+                                    <div ng-if="c.involved.nature == 'natural'">
+                                        <h4>{{c.involved.nature_instance.first_name}} {{c.involved.first_lastname}}</h4>
                                     </div>
-                                    <div ng-if="c.naturaleza == 'Organizacion'">
-                                        <h4>{{c.name}}</h4>
+                                    <div ng-if="c.involved.nature == 'juridical'">
+                                        <h4>{{c.involved.nature_instance.name}}</h4>
                                     </div>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocado()">Agregar nuevo convocado</md-button>
@@ -261,171 +193,95 @@
                                 <md-button wz-next="logStep()" class="md-raised btn-w-md md-primary" ng-disabled="!convocados_validation()">Siguiente</md-button>
                             </div>
                         </wz-step>
-                        <wz-step wz-title="Convocado" wz-disabled="{{!convocado}}">
-                            <h2>Agregar nuevo convocado</h2>
-                            <div class="ui-wizard-content">
-                                <form name="convocadoForm">
+                        <wz-step wz-title="convocado" wz-disabled="{{!convocado}}">
+                            <form name="convocadoForm">
+                                <h2>Agregar nuevo convocado</h2>
+                                <div class="ui-wizard-content">
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label>Tipo de convocado</label>
-                                        <md-select ng-model="involucrado.naturaleza">
+                                        <md-select ng-model="involucrado.involved.nature" required>
                                             <md-option ng-repeat="c in convtype" value="{{c}}">
                                                 {{c}}
                                             </md-option>
                                         </md-select>
+                                        <div ng-if="involucrado.involved.nature == 'natural'">
+                                            <fieldset>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Primer nombre</label>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.first_name" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Segundo nombre</label>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.second_name" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Primer apellido</label>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.first_lastname" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Segundo apellido</label>
+                                                    <input data-ng-model="involucrado.involved.nature_instance.second_lastname" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>E-mail</label>
+                                                    <input data-ng-model="involucrado.involved.email" type="email" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Pagina web</label>
+                                                    <input data-ng-model="involucrado.involved.web_site" type="text">
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Telefono de contacto</label>
+                                                    <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Tipo de documento</label>
+                                                    <md-select ng-model="involucrado.involved.nature_instance.identifier_type" required>
+                                                        <md-option ng-repeat="type in idType" value="{{type}}" requiered>
+                                                            {{type}}
+                                                        </md-option>
+                                                    </md-select>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Numero de identificación</label>
+                                                    <input ng-model="involucrado.involved.nature_instance.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.nature_instance.identifier_type" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Direccion de residencia</label>
+                                                    <input ng-model="involucrado.involved.address" type="text" required>
+                                                </md-input-container>
+                                            </fieldset>
+                                        </div>
+                                        <div ng-if="involucrado.involved.nature == 'juridical'">
+                                             <fieldset>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Numero de identificacion</label>
+                                                    <input ng-model="involucrado.involved.nature_instance.nit" type="number" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Nombre</label>
+                                                    <input ng-model="involucrado.involved.nature_instance.name" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Direccion de residencia</label>
+                                                    <input ng-model="involucrado.involved.address" type="text" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>E-mail</label>
+                                                    <input data-ng-model="involucrado.involved.email" type="email" required>
+                                                </md-input-container>
+                                                <md-input-container class="md-block" flex-gt-sm>
+                                                    <label>Telefono de contacto</label>
+                                                    <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                                                </md-input-container>
+                                             </fieldset>
+                                        </div>
                                     </md-input-container>
-                                    <div ng-if="involucrado.naturaleza == 'Persona'">
-                                        <fieldset>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Primer nombre</label>
-                                                <input data-ng-model="involucrado.first_first_name" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Segundo nombre</label>
-                                                <input data-ng-model="involucrado.second_first_name" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Primer apellido</label>
-                                                <input data-ng-model="involucrado.first_last_name" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Segundo apellido</label>
-                                                <input data-ng-model="involucrado.second_last_name" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>E-mail</label>
-                                                <input data-ng-model="involucrado.email" type="email" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Telefono de contacto</label>
-                                                <input ng-model="involucrado.phone" data-ng-minlength=7 type="number" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Tipo de documento</label>
-                                                <md-select ng-model="involucrado.id_type" required>
-                                                    <md-option ng-repeat="type in idType" value="{{type}}" requiered>
-                                                        {{type}}
-                                                    </md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Numero de identificación</label>
-                                                <input ng-model="involucrado.id_number" type="number" data-ng-minlength=8 ng-disabled="!involucrado.id_type" required>
-                                            </md-input-container>
-                                            <p>Fecha de expedición</p>
-                                            <md-datepicker ng-model="involucrado.id_expedition_date" md-placeholder="Fecha de expedición" required></md-datepicker>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Departamento de expedicion</label>
-                                                <md-select ng-model="department" required>
-                                                    <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Ciudad de expedicion</label>
-                                                <md-select ng-model="involucrado.id_expedition_city" ng-disabled="!department" required>
-                                                    <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Genero</label>
-                                                <md-select ng-model="involucrado.gender" required>
-                                                    <md-option ng-repeat="g in gender" value="{{g}}">
-                                                        {{g}}
-                                                    </md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Departamento de residencia</label>
-                                                <md-select ng-model="involucrado.resident_department" required>
-                                                    <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Ciudad de residencia</label>
-                                                <md-select ng-model="involucrado.resident_city" required>
-                                                    <md-option ng-repeat="city in departments[involucrado.resident_department]" ng-disabled="!involucrado.resident_department" value="{{city}}">{{city}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Direccion de residencia</label>
-                                                <input ng-model="involucrado.direccion" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Estrato de residencia</label>
-                                                <input ng-model="involucrado.estrato" type="number" data-min=1 data-max=6 required>
-                                            </md-input-container>
-                                        </fieldset>
-                                    </div>
-                                    <div ng-if="involucrado.naturaleza == 'Organizacion'">
-                                         <fieldset>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Tipo de organizacion</label>
-                                                <md-select ng-model="involucrado.organization_type" required>
-                                                    <md-option ng-repeat="type in org_type" value="{{type}}">{{type}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm ng-if="involucrado.organization_type == 'Publica'">
-                                                <label>Tipo de organizacion publica</label>
-                                                <md-select ng-model="involucrado.public_entity_type" required>
-                                                    <md-option ng-repeat="type in public_type" value="{{type}}">{{type}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Tipo de identificacion</label>
-                                                <md-select ng-model="involucrado.id_type" required>
-                                                    <md-option ng-repeat="type in org_idtype" value="{{type}}">{{type}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Numero de identificacion</label>
-                                                <input ng-model="involucrado.id_number" type="number" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Nombre</label>
-                                                <input ng-model="involucrado.name" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Sector economico</label>
-                                                <md-select ng-model="involucrado.economic_sector" required>
-                                                    <md-option ng-repeat="sector in economic_sector" value="{{sector}}">{{sector}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Pais de origen</label>
-                                                <md-select ng-model="involucrado.origin_country" required>
-                                                    <md-option ng-repeat="country in countries" value="{{country}}">{{country}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Departamento de residencia</label>
-                                                <md-select ng-model="involucrado.resident_department" required>
-                                                    <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Ciudad de residencia</label>
-                                                <md-select ng-model="involucrado.resident_city" required>
-                                                    <md-option ng-repeat="city in departments[involucrado.resident_department]" ng-disabled="!involucrado.resident_department" value="{{city}}">{{city}}</md-option>
-                                                </md-select>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Direccion de residencia</label>
-                                                <input ng-model="involucrado.direccion" type="text" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>E-mail</label>
-                                                <input data-ng-model="involucrado.email" type="email" required>
-                                            </md-input-container>
-                                            <md-input-container class="md-block" flex-gt-sm>
-                                                <label>Telefono de contacto</label>
-                                                <input ng-model="involucrado.phone" data-ng-minlength=7 type="number" required>
-                                            </md-input-container>
-                                         </fieldset>
-                                    </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="cancel_convocado()"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-previous="add_convocado()" class="md-raised btn-w-md md-primary" ng-disabled="!convocadoForm.$valid">Guardar</md-button>
+                                <md-button wz-previous="add_convocado()" class="md-raised btn-w-md md-primary" ng-disabled="!convocadoForm.$valid">Agregar</md-button>
                             </div>
                         </wz-step>
                         <wz-step wz-title="Hechos">
@@ -453,7 +309,7 @@
                             </div>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="cancel_hp(1)"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-previous="add_hp(1)" class="md-raised btn-w-md md-primary" ng-disabled="!hechoForm.$valid">Guardar</md-button>
+                                <md-button wz-previous="add_hp(1)" class="md-raised btn-w-md md-primary" ng-disabled="!hechoForm.$valid">Agregar</md-button>
                             </div>
                         </wz-step>
                         <wz-step wz-title="Pretensiones">
@@ -481,11 +337,9 @@
                             </form>
                             <div class="ui-wizard-actions">
                                 <md-button wz-previous="cancel_hp(2)"  class="md-raised btn-w-md">Cancelar</md-button>
-                                <md-button wz-previous="add_hp(2)" class="md-raised btn-w-md md-primary" ng-disabled="!pretensionForm.$valid">Guardar</md-button>
+                                <md-button wz-previous="add_hp(2)" class="md-raised btn-w-md md-primary" ng-disabled="!pretensionForm.$valid">Agregar</md-button>
                             </div>
                         </wz-step>
-
-
                         <wz-step wz-title="Final">
                             <h2>Fin de solicitud</h2>
                             <div class="ui-wizard-content">

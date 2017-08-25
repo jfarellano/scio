@@ -1,55 +1,53 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion' , function($scope, $q, $timeout, WizardHandler, Conciliacion){
-
-    $scope.data = Conciliacion.index();
-    $scope.state = Conciliacion.state();
-
-    $scope.getIndex = function(){
-        return Conciliacion.getIndex();
-    }
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', function($scope, $q, $timeout, WizardHandler, Conciliacion, $http){
 
     $scope.solicitude = {
-        solicitude_type:"CONCILIACION",
-        conciliation:{
-            applicant: "",
-            service_goal:"",
-            conflict_time: "",
-            definable:true,
-            area:"",
-            topic:"",
-            facts:[],
-            pretensions:[],
-            involucrados: []
-        }
+      solicitude_type:'conciliation',
+      case_number: '1',
+      conciliation:{
+        applicant: '',
+        service_goal:'',
+        conflict_time:'',
+        definable:true,
+        area:'',
+        topic:'',
+        pretensions:[],
+        facts:[]
+      },
+      solicitude_participations:[]
     }
 
     $scope.convocantes = function(){
-        return $scope.solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocante');
+        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocante');
     }
     $scope.convocados = function(){
-        return $scope.solicitude.conciliation.involucrados.filter(i => i.rol == 'Convocado');
+        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocado');
     }
 
     $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
-    $scope.service_goal = ['RESOLVER DE MANERA ALTERNATIVA EL CONFLICTO', 'CUMPLIR CONFLICTO DE PROCEDIBILIDAD']
+    $scope.service_goal = ["RESOLVER DE MANERA ALTERNATIVA EL CONFLICTO", "CUMPLIR REQUISITO DE PROCEDIBILIDAD"]
 
     $scope.involucrado = {
-        rol: '',
-        naturaleza: ''
+        participation_type: '',
+        involved: {
+            nature: ''
+        }
     }
 
-    $scope.convtype = ['Persona', 'Organizacion']
+    $scope.conflict_time = ["DE 1 A 30 DÍAS (HASTA 1 MES)", "DE 31 DÍAS A 180 DÍAS (ENTRE 2 Y 6 MESES)", "SUPERIOR A 180 DÍAS (ENTRE 7 Y 12 MESES)", "SUPERIOR A 365 DÍAS (SUPERIOR A 1 AÑO)", "NO INFORMA"]
+
+    $scope.convtype = ['natural', 'juridical']
 
     $scope.area_topic = {
-        'CIVIL y COMERCIAL':['BIENES', 'COMPETENCIA DESLEAL', 'CONSUMO', 'CONTRATOS'],
+        'CIVIL Y COMERCIAL':['BIENES', 'COMPETENCIA DESLEAL', 'CONSUMO', 'CONTRATOS'],
         'CONTENCIOSO ADMINISTRATIVO': ['CONTROVERCIAS CONTRACTUALES', 'EJECUTIVO', 'NULIDAD Y RESTABLECIMIENTO DE DERECHO']
     };
     $scope.org_type = ['Privada', 'Publica']
-    $scope.public_type = ['Organismo de control', 'Rama judicial', 'Rama legislativa', 'Rama ejecutiva']
+    $scope.public_type = ['Organismo de contparticipation_type', 'Rama judicial', 'Rama legislativa', 'Rama ejecutiva']
     $scope.org_idtype = ['NIT', 'Numero de identificacion de sociedad extranjera'];
     $scope.economic_sector = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5'];
     $scope.department = '';
-    $scope.idType = ['cc', 'pasaporte'];
+    $scope.idType = ['cedula', 'pasaporte'];
     $scope.countries = ['Pais1', 'Pais2', 'Pais3', 'Pais4'];
     $scope.departments = {
         'Amazonas': ['Leticia'],
@@ -78,17 +76,19 @@ angular.module('app')
         WizardHandler.wizard().goTo(3);
     }
     $scope.add_convocante = function(){
-        $scope.involucrado.rol = 'Convocante';
-        $scope.solicitude.conciliation.involucrados.push(angular.copy($scope.involucrado));
+        $scope.involucrado.participation_type = 'convocante';
+        $scope.solicitude.solicitude_participations.push(angular.copy($scope.involucrado));
         $scope.involucrado = {
-            rol: '',
-            naturaleza: ''
+            participation_type: '',
+            involved: {
+                nature: ''
+            }
         };
         $scope.switch_convocante();
     }
     $scope.cancel_convocante = function () {
         $scope.involucrado = {
-            rol: '',
+            participation_type: '',
             naturaleza: ''
         };
         $scope.switch_convocante();
@@ -103,18 +103,22 @@ angular.module('app')
         WizardHandler.wizard().goTo(4);
     }
     $scope.add_convocado = function(){
-        $scope.involucrado.rol = 'Convocado';
-        $scope.solicitude.conciliation.involucrados.push(angular.copy($scope.involucrado));
+        $scope.involucrado.participation_type = 'convocado';
+        $scope.solicitude.solicitude_participations.push(angular.copy($scope.involucrado));
         $scope.involucrado = {
-            rol: '',
-            naturaleza: ''
+            participation_type: '',
+            involved: {
+                nature: ''
+            }
         };
         $scope.switch_convocado();
     }
     $scope.cancel_convocado = function () {
         $scope.involucrado = {
-            rol: '',
-            naturaleza: ''
+            participation_type: '',
+            involved: {
+                nature: ''
+            }
         };
         $scope.switch_convocado();
     };
@@ -176,7 +180,12 @@ angular.module('app')
     $scope.stepActive = true;
 
     $scope.finished = function() {
-        alert("Wizard finished :)");
+        Conciliacion.create($scope.solicitude).then(function(respuesta){
+        console.log(respuesta.data)
+        window.location = '#/app/conciliacion';
+    },function(respuesta){
+        console.log(respuesta.data)
+    });
     };
     $scope.logStep = function() {
         console.log("Step continued");

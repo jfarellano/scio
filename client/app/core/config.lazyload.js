@@ -8,6 +8,13 @@
                 events: false,
                 modules: [
                     {
+                        name: 'bootstrap',
+                        files: [
+                            'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                            'bower_components/bootstrap/dist/css/bootstrap.min.css'
+                        ]
+                    },
+                    {
                         name: 'fontawesome',
                         files: [
                             'bower_components/font-awesome/css/font-awesome.css'
