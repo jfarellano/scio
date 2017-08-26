@@ -1,6 +1,6 @@
 @if $target-elements-directly == true {
   html, body {
-    font-family: $performance_font;
+    font-family: "flm_font";
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -9,6 +9,7 @@
   h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
+    font-family: "flm_font";
   }
 
   /**
@@ -17,7 +18,7 @@
 
   h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
     @include typo-display-3($colorContrast: true);
-
+    font-family: "flm_font";
     font-size: 0.6em;
   }
 
@@ -30,7 +31,6 @@
 
   h2 {
     @include typo-display-2;
-
     margin-top: 24px;
     margin-bottom: 24px;
   }

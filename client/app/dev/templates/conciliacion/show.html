@@ -7,18 +7,21 @@
                 </md-button>
                 <h2>{{getConvNames()}}</h2>
             </div>
-            <div class="barra-prog"><md-progress-linear class="md-accent md-hue-10" md-mode="determinate" value="14" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
-            <h3>Estado {{conc.state}}</h3>
-            <h3>Hechos</h3>
-            <div ng-repeat="hecho in conc.conciliation.facts">
-                <p><b>{{$index + 1}}</b> {{hecho.description}}</p>
+            <div class="barra-prog"><md-progress-linear md-mode="determinate" value="14" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+            <h5 class="estado">Estado {{conc.state}}</h5>
+            <h4><b>Hechos</b></h4>
+            <div class="infoContainer">
+                <div ng-repeat="hecho in conc.conciliation.facts">
+                    <p><b>{{$index + 1}}.</b> {{hecho.description}}</p>
+                </div>
             </div>
-            <h3>Pretensiones</h3>
+            <h4><b>Pretensiones</b></h4>
             <div ng-repeat="pret in conc.conciliation.pretensions">
-                <p><b>{{$index + 1}}</b> {{pret.description}}</p>
+                <div class="infoContainer">
+                    <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
+                </div>
             </div>
-            <h3>Cuantia</h3>
-            <h4>$ cuantia por servidor</h4>
+            <h3><b>Cuantia</b> $ cuantia por servidor</h3>
             <!-- <section class="box box-default">
                 <div class="box-body no-padding">                
                     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>

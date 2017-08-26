@@ -71,10 +71,10 @@ r<section class="container-fluid with-maxwidth chapter">
                             <div class="ui-wizard-content">
                                 <div ng-repeat="c in convocantes()">
                                     <div ng-if="c.involved.nature == 'natural'">
-                                        <h4>{{c.involved.nature_instance.first_name}} {{c.involved.nature_instance.first_lastname}}</h4>
+                                        <h4><b>{{$index + 1}}.</b> {{c.involved.nature_instance.first_name}} {{c.involved.nature_instance.first_lastname}}</h4>
                                     </div>
                                     <div ng-if="c.involved.nature == 'juridical'">
-                                        <h4>{{c.involved.nature_instance.name}}</h4>
+                                        <h4><b>{{$index + 1}}.</b>{{c.involved.nature_instance.name}}</h4>
                                     </div>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocante()">Agregar nuevo convocante</md-button>
@@ -180,10 +180,10 @@ r<section class="container-fluid with-maxwidth chapter">
                             <div class="ui-wizard-content">
                                 <div ng-repeat="c in convocados()">
                                     <div ng-if="c.involved.nature == 'natural'">
-                                        <h4>{{c.involved.nature_instance.first_name}} {{c.involved.first_lastname}}</h4>
+                                        <h4><b>{{$index + 1}}. </b>{{c.involved.nature_instance.first_name}} {{c.involved.nature_instance.first_lastname}}</h4>
                                     </div>
                                     <div ng-if="c.involved.nature == 'juridical'">
-                                        <h4>{{c.involved.nature_instance.name}}</h4>
+                                        <h4><b>{{$index + 1}}. </b>{{c.involved.nature_instance.name}}</h4>
                                     </div>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_convocado()">Agregar nuevo convocado</md-button>
@@ -288,7 +288,7 @@ r<section class="container-fluid with-maxwidth chapter">
                             <h2>Listado de hechos</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="f in solicitude.conciliation.facts">
-                                    <h4>{{firstN(f, 20)}}</h4>
+                                    <h4><b>{{$index + 1}}. </b>{{firstN(f, 80)}}</h4>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_hp(1)">Agregar nuevo hecho</md-button>
                             </div>
@@ -316,7 +316,7 @@ r<section class="container-fluid with-maxwidth chapter">
                             <h2>Listado de pretensiones</h2>
                             <div class="ui-wizard-content">
                                 <div ng-repeat="p in solicitude.conciliation.pretensions">
-                                    <h4>{{firstN(p, 20)}}</h4>
+                                    <h4><b>{{$index + 1}}. </b>{{firstN(p, 80)}}</h4>
                                 </div>
                                 <md-button class="md-raised btn-w-md md-primary" ng-click="new_hp(2)">Agregar nueva pretension</md-button>
                             </div>

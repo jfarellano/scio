@@ -5,24 +5,26 @@ angular.module('app')
         var index = true;    
         var success = false;
 
+        var ip = 'http://192.168.1.81:3000'
+
         //Retun function 
         return{
             index: function(){
                 if (state){
-                    return $http.get('http://192.168.1.77:3000/solicitudes');
+                    return $http.get(ip + '/solicitudes');
                 }else{
                     return archive;
                 }
             },
             show: function(id){
                 if(state){
-                    return $http.get('http://192.168.1.77:3000/solicitudes/'+id);
+                    return $http.get(ip + '/solicitudes/'+id);
                 }else{
                     return archive[id];
                 }
             },
             create: function (conc) {
-                return $http.post('http://192.168.1.77:3000/solicitudes',{solicitude: conc})
+                return $http.post(ip + '/solicitudes',{solicitude: conc})
             },
             create_success: function(){
                 return success;

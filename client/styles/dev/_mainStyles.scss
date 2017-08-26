@@ -1,0 +1,16 @@
+*{
+	font-family: "flm_font";
+}
+
+@font-face {
+	font-family: "flm_font";
+	src: url('/styles/dev/font-Medium.otf');
+}
+
+progress {
+  background: #ffffff;
+  color: #ffffff;
+  border: 0;
+  height: 18px;
+  border-radius: 9px;
+}
