@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', function($scope, $state,Conciliacion, window, screenSize){
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', function($scope, $state,Conciliacion, window, screenSize, $mdDialog){
 
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
@@ -7,23 +7,60 @@ angular.module('app')
         $scope.conc = {}
     })
 
-    $scope.getConvNames = function() {
-        var c = $scope.conc.solicitude_participations.filter(i => i.participation_type == 'convocante');
-        var s = ''
-        c.forEach(function(element, i) {
-            var info = ''
-            if(element.involved.nature == 'natural'){
-                info = element.involved.natural.first_name + ' ' + element.involved.natural.first_lastname
-            }else{
-                info = element.involved.juridical.name
-            }
-            if(i == 0){
-                s = s + info
-            }else{
-                s = s + ', ' + info
-            }
+    $scope.showParticipant = function(part, ev){
+        $scope.part = part
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/convocante.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            fullscreen: $scope.customFullscreen,
+            clickOutsideToClose:true
+        }).then(function(answer) {
+            console.log('Guardado con exito.')
+        }, function() {
+            console.log('Evento cancelado')
         });
-        return s;
+    }
+
+    $scope.esConvocante = function(p){
+        return p.participation_type == 'convocante'
+    }
+
+    $scope.esNatural = function(p){
+        return p.involved.nature == 'natural'
+    }
+
+    $scope.getConvocantes = function(){
+        return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
+    }
+
+    $scope.getConvocados = function(){
+        return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+    }
+
+    $scope.getName = function(ele) {
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.first_name + ' ' + ele.involved.natural.first_lastname
+        }else{
+            return ele.involved.juridical.name
+        }
+    }
+
+    $scope.getID = function(ele){
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.identifier_type + ': ' + ele.involved.natural.identifier
+        }else{
+            return 'Nit: ' + ele.involved.juridical.nit
+        }
+    }
+
+    $scope.getIcon = function(ele){
+        if($scope.esNatural(ele)){
+            return 'perm_identity'
+        }else{
+            return 'account_balance'
+        }
     }
 
     $scope.switchIndex = function(){

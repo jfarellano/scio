@@ -38,7 +38,7 @@ angular.module('app')
                     templateUrl: URL.dev.template + '/create/conciliacion.html'
                 })
                 .state('app.create.conciliacion',{
-                    url: '/conciliacion',
+                    url: '/conciliacion/:id',
                     views:{
                         'conciliacion':{
                             templateUrl: URL.dev.template + '/conciliacion/create.html',

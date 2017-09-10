@@ -126,7 +126,7 @@ gulp.task('optimize', ['inject', 'sass-min'], function() {
         .src(config.index)
         .pipe($.plumber({errorHandler: swallowError}))
         .pipe($.useref())
-        .pipe($.if('scripts/app.js', $.uglify()))
+        //.pipe($.if('scripts/app.js', $.uglify()))
         .pipe(gulp.dest( config.dist ));
 
 });

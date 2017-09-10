@@ -1,31 +1,62 @@
 angular.module('app')
-    .factory('Conciliacion', ['$http', function ConciliacionFactory($http) {
+    .factory('Conciliacion', ['$http', 'IP', function ConciliacionFactory($http, IP) {
         //Panel shared logic
         var state = true;
         var index = true;    
         var success = false;
 
-        var ip = 'http://192.168.1.81:3000'
-
         //Retun function 
         return{
+            //Conciliation routes
             index: function(){
                 if (state){
-                    return $http.get(ip + '/solicitudes');
+                    return $http.get(IP + '/solicitudes/conciliacion');
                 }else{
                     return archive;
                 }
             },
-            show: function(id){
+            show: function(solID){
                 if(state){
-                    return $http.get(ip + '/solicitudes/'+id);
+                    return $http.get(IP + '/solicitudes/' + solID);
                 }else{
                     return archive[id];
                 }
             },
-            create: function (conc) {
-                return $http.post(ip + '/solicitudes',{solicitude: conc})
+            create:{
+                solicitude:function(sol){
+                    return $http.post(IP + '/solicitudes', sol)
+                },
+                conciliation:function(id, conc){
+                    return $http.post(IP + '/solicitudes/' + id + '/conciliations', conc)
+                },
+                involved:function(id, type, inv){
+                    return $http.post(IP + '/solicitudes/' + id + '/involveds/' + type, inv)
+                },
+                natural:function(solId, invId, nat){
+                    return $http.post(IP + '/solicitudes/' + solId + '/involveds/' + invId + '/naturals', nat)
+                },
+                juridical:function(solID, invId,jur){
+                    return $http.post(IP + '/solicitudes/' + solID + '/involveds/' + invId + '/juridicals', jur)
+                },
+                fact:function(solID, concID, fact){
+                    return $http.post(IP + '/solicitudes/'+solID+'/conciliations/'+concID+'/facts', fact)
+                },
+                pret:function(solID, concID, pret){
+                    return $http.post(IP + '/solicitudes/'+ solID +'/conciliations/'+concID+'/pretensions', pret)
+                }
             },
+            update:{
+                solicitude:function(id, sol){
+                    return $http.put(IP + '/solicitudes/' + id, sol)
+                }
+            },
+            get:{
+                solicitude:function(id){
+                    return $http.get(IP + '/solicitudes/' + id)
+                }
+            },
+
+            //Logic helpers in conciliations
             create_success: function(){
                 return success;
             },

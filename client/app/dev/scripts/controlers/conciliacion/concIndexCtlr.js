@@ -1,11 +1,10 @@
 angular.module('app')
     .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', function($scope, $state, $window, Conciliacion, screenSize){
-        //Working controller
-
         Conciliacion.index().then(function(response) {
             $scope.data = response.data.solicitudes;
         },function(response){
             $scope.data = [];
+            console.log(response.data)
         })
 
         $scope.state = Conciliacion.state();
@@ -29,8 +28,14 @@ angular.module('app')
             return s;
         }
 
-        $scope.openCreate = function(size){
-            window.location = '#/app/create/conciliacion'
+        $scope.openCreate = function(){
+            Conciliacion.create.solicitude({"solicitude":{ "user_id":"1","solicitude_type":"conciliacion"}}).then(function(response){
+                console.log(response.data)
+                window.location = '#/app/create/conciliacion/' + response.data.solicitude.id    
+            },function(response){
+                console.log('Entro aca')
+                console.log(response.data)
+            })  
         }
 
         $scope.getIndex = function(){

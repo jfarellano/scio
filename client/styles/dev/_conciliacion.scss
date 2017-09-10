@@ -111,3 +111,17 @@
         font-size: 1.5em;
     }
 }
+
+.concCreate{
+    margin: 30px;
+    padding: 10px;
+}
+
+//Fix select on md-dialog
+.md-select-menu-container {
+    z-index: 99999 !important;
+}
+
+.modal_form{
+    padding: 10px;
+}

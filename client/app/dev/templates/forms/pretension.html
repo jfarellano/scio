@@ -1,0 +1,17 @@
+<div class="modal_form">
+    <md-dialog-content>
+    	<h2>Nueva pretension</h2>
+        <div class="ui-wizard-content">
+            <form name="hechoForm">
+                <md-input-container class="md-block">
+                    <label>Desriba la pretension</label>
+                    <textarea ng-model="hecho_pretension.text" rows="10" md-select-on-focus required=""></textarea>
+                </md-input-container>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">Agregar</md-button>  
+    </md-dialog-actions>
+ </div>
