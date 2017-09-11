@@ -1,11 +1,11 @@
 
     <div class="box box-default show-scroll">
         <div class="show_content" data-slim-scroll data-scroll-height="auto">
-            <h2>ESTADO DE CONCILIACION</h2>
-            <h3>DETALLE DEL ESTADO</h3>
-            <md-subheader class="md-no-sticky">Convocantes</md-subheader>
+            <h2>Solicitud de conciliacion No.1342</h2>
+            <h3>{{conc.state.toUpperCase()}}</h3>
+            <h4><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="null">
-                <div>
+                <div class="showParticipant(conv, $event)">
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                     <div class="md-list-item-text" layout="column">
                         <h3>{{getName(conv)}}</h3>
@@ -14,9 +14,9 @@
                     </div>
                 </div>
             </md-list-item>
-            <md-subheader class="md-no-sticky">Convocados</md-subheader>
+            <h4><b>Convocados</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="null">
-                <div>
+                <div ng-click="showParticipant(conv, $event)">
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                     <div class="md-list-item-text" layout="column">
                         <h3>{{getName(conv)}}</h3>
@@ -37,7 +37,7 @@
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
-            <h3><b>Cuantia</b> $ cuantia por servidor</h3>
+            <h3><b>Cuantia</b> $ {{conc.payment_amount}}</h3>
             <!-- <section class="box box-default">
                 <div class="box-body no-padding">                
                     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>

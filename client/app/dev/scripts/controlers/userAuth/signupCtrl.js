@@ -22,10 +22,10 @@ angular.module('app')
         univercity_name: '',
         univercity_title: '',
         study_level: ''
-    };
-    $scope.lawyer = false;
-    $scope.department = '';
-    $scope.idType = ['cc', 'pasaporte'];
+    }
+    $scope.lawyer = false
+    $scope.department = ''
+    $scope.idType = ['cc', 'pasaporte']
     $scope.departments = {
         'Amazonas': ['Leticia'],
         'Antioquia': ['Medellin', 'Envigado'],
@@ -34,8 +34,8 @@ angular.module('app')
         'Boyaca': ['Tunja']
     };
     $scope.gender = ['Masculino', 'Femenino'];
-    $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
-    $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
+    $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+    $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado']
     $scope.abogado = false;
     $scope.logo = URL.image + '/logo.png';
     $scope.register = function(){

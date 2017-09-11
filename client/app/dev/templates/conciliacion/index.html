@@ -5,16 +5,16 @@
             <h2 class="title">Conciliaciones</h2>
             <md-input-container class="md-block" flex-gt-sm>
                 <label for="search">Buscar</label>
-                <input class="ng-pristine ng-valid md-input ng-empty ng-touched" id="search">
+                <input class="ng-pristine ng-valid md-input ng-empty ng-touched" id="search" ng-model="busqueda">
             </md-input-container>
             <div class="scrolleable-content">
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-repeat="conc in data" class="md-whiteframe-5dp content">
-                        <div class="card_display_conc" ng-click="toShow(conc.id)">
+                        <div class="card_display_conc" ng-click="toShow(conc)">
                             <div class="box box-default">
                                 <div class="box-header box_name"><b>{{getConvNames($index)}}</b> <wbr>14 Días</div>
                                 <div class="box-body box_content">
-                                    <h5>Estado: Info pendiente por servidor</h5>
+                                    <h5>Estado: {{conc.state}}</h5>
                                     <div class="col-sm-12 barra-prog"><md-progress-linear md-mode="determinate" value="14" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
                                 </div>
                             </div>

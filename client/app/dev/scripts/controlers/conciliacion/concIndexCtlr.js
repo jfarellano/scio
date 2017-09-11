@@ -10,6 +10,9 @@ angular.module('app')
         $scope.state = Conciliacion.state();
 
         $scope.getConvNames = function(id) {
+            if ($scope.data[id].solicitude_participations == null) {
+                return 'Conciliacion'
+            }
             var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocante');
             var s = ''
             c.forEach(function(element, i) {
@@ -29,11 +32,11 @@ angular.module('app')
         }
 
         $scope.openCreate = function(){
-            Conciliacion.create.solicitude({"solicitude":{ "user_id":"1","solicitude_type":"conciliacion"}}).then(function(response){
-                console.log(response.data)
+            var solicitude = { "user_id":"1","solicitude_type":"conciliacion", "payment_amount": 0}
+            console.log(solicitude)
+            Conciliacion.create.solicitude(solicitude).then(function(response){
                 window.location = '#/app/create/conciliacion/' + response.data.solicitude.id    
             },function(response){
-                console.log('Entro aca')
                 console.log(response.data)
             })  
         }
@@ -56,9 +59,13 @@ angular.module('app')
         $scope.fetchData = function(){
             $scope.data = Conciliacion.index();
         }
-        $scope.toShow = function(id){
-            Conciliacion.setIndex(false);
-            window.location = '#/app/conciliacion/' + id;
+        $scope.toShow = function(conc){
+            Conciliacion.setIndex(false)
+            if(conc.state.includes('incompleta')){
+                window.location = '#/app/create/conciliacion/' + conc.id
+            }else{
+                window.location = '#/app/conciliacion/' + conc.id
+            }
         }
         $scope.click = function(){
             console.log('Hizo click');

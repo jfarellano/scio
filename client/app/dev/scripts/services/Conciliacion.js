@@ -10,7 +10,7 @@ angular.module('app')
             //Conciliation routes
             index: function(){
                 if (state){
-                    return $http.get(IP + '/solicitudes/conciliacion');
+                    return $http.get(IP + '/solicitudes/tipo/conciliacion');
                 }else{
                     return archive;
                 }
@@ -48,6 +48,21 @@ angular.module('app')
             update:{
                 solicitude:function(id, sol){
                     return $http.put(IP + '/solicitudes/' + id, sol)
+                },
+                natural:function(solID, invID, natID, nat){
+                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID+ '/naturals/'+ natID , nat)
+                },
+                juridical:function(solID, invID, jurID, jur){
+                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID+ '/juridicals/'+jurID , jur)
+                },
+                involved:function(solID, invID, inv){
+                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID, inv)
+                },
+                fact:function(solID, concID, factID, fact){
+                    return $http.put(IP + '/solicitudes/' +solID+ '/conciliations/' +concID+ '/facts/' +factID, fact)
+                },
+                pret:function(solID, concID, pretID, pret){
+                    return $http.put(IP + '/solicitudes/' +solID+ '/conciliations/' +concID+ '/pretensions/' +pretID, pret)
                 }
             },
             get:{

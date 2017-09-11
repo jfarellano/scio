@@ -53,72 +53,92 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Cuantia</label>
+                            <input data-ng-model="solicitude.payment_amount" type="number" required>
+                        </md-input-container>
                     </form>
                 </div>
                 <div class="ui-wizard-actions">
-                    <md-button type="submit" wz-next="nextStep('INFO')" class="md-raised btn-w-md md-primary" ng-disabled="!infoForm.$valid">Siguiente</md-button>
+                    <md-button type="submit" wz-next="nextStep('info')" class="md-raised btn-w-md md-primary" ng-disabled="!infoForm.$valid">Siguiente</md-button>
                 </div>
             </wz-step>
             <wz-step wz-title="Convocantes">
                 <h2>Listado de convocantes</h2>
                 <div class="ui-wizard-content">
-                    <div ng-repeat="c in convocantes()">
-                        <div ng-if="c.involved.nature == 'natural'">
-                            <h4><b>{{$index + 1}}.</b> {{c.involved.natural.first_name}} {{c.involved.natural.first_lastname}}</h4>
+                    <md-subheader class="md-no-sticky">Convocantes</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="editConvocante(conv, $event)">
+                        <div>
+                            <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{getName(conv)}}</h3>
+                                <h4>{{getID(conv)}}</h4>
+                                <p>Telefono: {{conv.involved.phone}}</p>
+                            </div>
                         </div>
-                        <div ng-if="c.involved.nature == 'juridica'">
-                            <h4><b>{{$index + 1}}.</b>{{c.involved.juridical.name}}</h4>
-                        </div>
-                    </div>
+                    </md-list-item>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <md-button wz-previous=""  class="md-raised btn-w-md">Atras</md-button>
-                    <md-button wz-next="nextStep(CONVOCANTES)" class="md-raised btn-w-md md-primary" ng-disabled="!convocantes_validation()">Siguiente</md-button>
+                    <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary" ng-disabled="!convocantes_validation()">Siguiente</md-button>
                 </div>
             </wz-step>
             <wz-step wz-title="convocados">
                 <h2>Listado de convocados</h2>
                 <div class="ui-wizard-content">
-                    <div ng-repeat="c in convocados()">
-                        <div ng-if="c.involved.nature == 'natural'">
-                            <h4><b>{{$index + 1}}.</b> {{c.involved.natural.first_name}} {{c.involved.natural.first_lastname}}</h4>
+                    <md-subheader class="md-no-sticky">Convocados</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="editConvocado(conv, $event)">
+                        <div>
+                            <md-icon class="material-icons md-avatar">{{getIcon(conv)}}</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{getName(conv)}}</h3>
+                                <h4>{{getID(conv)}}</h4>
+                                <p>Telefono: {{conv.involved.phone}}</p>
+                            </div>
                         </div>
-                        <div ng-if="c.involved.nature == 'juridica'">
-                            <h4><b>{{$index + 1}}.</b>{{c.involved.juridical.name}}</h4>
-                        </div>
-                    </div>
+                    </md-list-item>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
-                    <md-button wz-next="nextStep('CONVOCADOS')" class="md-raised btn-w-md md-primary" ng-disabled="!convocados_validation()">Siguiente</md-button>
+                    <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary" ng-disabled="!convocados_validation()">Siguiente</md-button>
                 </div>
             </wz-step>
             <wz-step wz-title="Hechos">
                 <h2>Listado de hechos</h2>
                 <div class="ui-wizard-content">
-                    <div ng-repeat="f in solicitude.conciliation.facts">
-                        <h4><b>{{$index + 1}}. </b>{{firstN(f.description, 80)}}</h4>
-                    </div>
+                    <md-subheader class="md-no-sticky">Hechos</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="f in solicitude.conciliation.facts" ng-click="editHecho(f, $event)">
+                        <div>
+                            <div class="md-list-item-text" layout="column">
+                                <p><b>{{$index + 1}}. </b>{{firstN(f.description, 80)}}</p>
+                            </div>
+                        </div>
+                    </md-list-item>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showHecho($event)">Agregar nuevo hecho</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
-                    <md-button wz-next="nextStep('HECHOS')" class="md-raised btn-w-md md-primary" ng-disabled="!hechos_validation()">Siguiente </md-button>
+                    <md-button wz-next="nextStep('hechos')" class="md-raised btn-w-md md-primary" ng-disabled="!hechos_validation()">Siguiente </md-button>
                 </div>
             </wz-step>
             <wz-step wz-title="Pretensiones">
                 <h2>Listado de pretensiones</h2>
                 <div class="ui-wizard-content">
-                    <div ng-repeat="p in solicitude.conciliation.pretensions">
-                        <h4><b>{{$index + 1}}. </b>{{firstN(p.description, 80)}}</h4>
-                    </div>
+                    <md-subheader class="md-no-sticky">Pretensiones</md-subheader>
+                    <md-list-item class="md-3-line" ng-repeat="p in solicitude.conciliation.pretensions" ng-click="editPretension(p, $event)">
+                        <div>
+                            <div class="md-list-item-text" layout="column">
+                                <p><b>{{$index + 1}}. </b>{{firstN(p.description, 80)}}</p>
+                            </div>
+                        </div>
+                    </md-list-item>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showPretension($event)">Agregar nueva pretension</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
-                    <md-button wz-next="nextStep('PRETENSIONES')" class="md-raised btn-w-md md-primary" ng-disabled="!pretensiones_validation()">Siguiente </md-button>
+                    <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary" ng-disabled="!pretensiones_validation()">Siguiente </md-button>
                 </div>
             </wz-step>
             <wz-step wz-title="Final">
@@ -128,7 +148,7 @@
                 </div>
                 <div class="ui-wizard-actions">
                     <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atras</md-button>
-                    <md-button wz-next="logStep('PAGANDO')" class="md-raised btn-w-md md-primary">Pagar</md-button>
+                    <md-button wz-next="finished()" class="md-raised btn-w-md md-primary">Pagar</md-button>
                 </div>
             </wz-step>
         </wizard>

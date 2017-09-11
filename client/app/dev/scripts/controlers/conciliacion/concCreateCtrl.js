@@ -1,9 +1,15 @@
 angular.module('app')
 .controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state){
 
+    var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
+        if(!response.data.solicitude.state.includes('incompleta')){
+            window.location = '#/app/conciliacion'
+        }
         $scope.solicitude = response.data.solicitude
+        WizardHandler.wizard().goTo(step[$scope.solicitude.state.split('/')[1]])
     },function(response){
+        window.location = '#/app/conciliacion'
         console.log(response)
     })
 
@@ -11,8 +17,20 @@ angular.module('app')
         Conciliacion.get.solicitude($state.params.id).then(function(response){
             $scope.solicitude = response.data.solicitude
         },function(response){
+            window.location = '#/app/conciliacion'
             console.log(response)
         })
+    }
+    $scope.esConvocante = function(p){
+        return p.participation_type == 'convocante'
+    }
+
+    $scope.getConvocantes = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => $scope.esConvocante(i));
+    }
+
+    $scope.getConvocados = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => !$scope.esConvocante(i));
     }
 
     $scope.convocantes = function(){
@@ -20,6 +38,34 @@ angular.module('app')
     }
     $scope.convocados = function(){
         return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocado');
+    }
+
+    $scope.esNatural = function(p){
+        return p.involved.nature == 'natural'
+    }
+
+    $scope.getName = function(ele) {
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.first_name + ' ' + ele.involved.natural.first_lastname
+        }else{
+            return ele.involved.juridical.name
+        }
+    }
+
+    $scope.getID = function(ele){
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.identifier_type + ': ' + ele.involved.natural.identifier
+        }else{
+            return 'Nit: ' + ele.involved.juridical.nit
+        }
+    }
+
+    $scope.getIcon = function(ele){
+        if($scope.esNatural(ele)){
+            return 'perm_identity'
+        }else{
+            return 'account_balance'
+        }
     }
 
     $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
@@ -60,10 +106,12 @@ angular.module('app')
         return str.substring(0, n);
     }
 
-    $scope.hecho_pretension = {text: ''};
+    $scope.hecho_pretension = {description: ''};
 
     //Logic
     //Modals
+    $scope.edit = false
+
     $scope.cancel = function() {
       $mdDialog.cancel();
     };
@@ -80,12 +128,24 @@ angular.module('app')
             targetEvent: ev,
             fullscreen: $scope.customFullscreen
         }).then(function(answer) {
-            $scope.add_convocante();
+            if($scope.edit){
+                console.log('Edit')
+                $scope.edit_convocante()
+            }else{
+                console.log('create')
+                $scope.add_convocante()
+            }
             console.log('Guardado con exito.')
         }, function() {
+            $scope.edit = false
             console.log('Evento cancelado')
         });
     };
+    $scope.editConvocante = function(inv, ev){
+        $scope.involucrado = inv
+        $scope.edit = true
+        $scope.showConvocante(ev)
+    }
     
     //Convocado
     $scope.showConvocado = function(ev) {
@@ -96,12 +156,27 @@ angular.module('app')
             targetEvent: ev,
             fullscreen: $scope.customFullscreen
         }).then(function(answer) {
-            $scope.add_convocado();
+            if($scope.edit){
+                $scope.edit_convocado()
+            }else{
+                $scope.add_convocado()
+            }
+            console.log('Guardado con exito.')
+            if($scope.edit){
+                $scope.edit_convocado()
+            }else{
+                $scope.add_convocado()
+            }
             console.log('Guardado con exito.')
         }, function() {
             console.log('Evento cancelado')
         });
     };
+    $scope.editConvocado = function(inv, ev){
+        $scope.involucrado = inv
+        $scope.edit = true
+        $scope.showConvocado(ev)
+    }
     //Hechos
     $scope.showHecho = function(ev) {
         $mdDialog.show({
@@ -111,13 +186,22 @@ angular.module('app')
             targetEvent: ev,
             fullscreen: $scope.customFullscreen
         }).then(function(answer) {
-            $scope.add_hp(1)
+            if($scope.edit){
+                $scope.edit_hp(1)
+            }else{
+                $scope.add_hp(1)
+            }
             console.log('Guardado con exito.')
         }, function() {
-            $scope.cancel_hp(1)
             console.log('Evento cancelado')
         });
     };
+    $scope.editHecho = function(hecho, ev){
+        console.log(hecho)
+        $scope.hecho_pretension = hecho
+        $scope.edit = true
+        $scope.showHecho(ev)
+    }
     //Pretensiones
     $scope.showPretension = function(ev) {
         $mdDialog.show({
@@ -127,13 +211,21 @@ angular.module('app')
             targetEvent: ev,
             fullscreen: $scope.customFullscreen
         }).then(function(answer) {
-            $scope.add_hp(2)
+            if($scope.edit){
+                $scope.edit_hp(2)
+            }else{
+                $scope.add_hp(2)
+            }
             console.log('Guardado con exito.')
         }, function() {
-            $scope.cancel_hp(2)
             console.log('Evento cancelado')
         });
     };
+    $scope.editPretension = function(pret, ev){
+        $scope.hecho_pretension = pret
+        $scope.edit = true
+        $scope.showPretension(ev)
+    }
 
     //FinModal
     $scope.resetInvolucrado = function(){
@@ -152,13 +244,43 @@ angular.module('app')
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
-                }, function(response){console.log(response.data)})
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                })
             }else{
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
                 },function(response){
                     console.log(response.data)
+                    $scope.resetInvolucrado()
+                })
+            }
+        })
+    }
+     $scope.edit_convocante = function(){
+        Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
+            if($scope.involucrado.involved.nature == 'natural'){
+                Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
+                    console.log(response.data)
+                    $scope.getSolicitude()
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                })
+            }else{
+                Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
+                    $scope.getSolicitude()
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
                 })
             }
         })
@@ -171,13 +293,43 @@ angular.module('app')
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
-                }, function(response){console.log(response.data)})
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                })
             }else{
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
                 },function(response){
                     console.log(response.data)
+                    $scope.resetInvolucrado()
+                })
+            }
+        })
+    }
+    $scope.edit_convocado = function(){
+        Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
+            if($scope.involucrado.involved.nature == 'natural'){
+                Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
+                    console.log(response.data)
+                    $scope.getSolicitude()
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                })
+            }else{
+                Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
+                    $scope.getSolicitude()
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
+                }, function(response){
+                    console.log(response.data)
+                    $scope.resetInvolucrado()
+                    $scope.edit = false
                 })
             }
         })
@@ -185,18 +337,41 @@ angular.module('app')
     //Hechos_pretensiones
     $scope.add_hp = function(type){
         if(type == 1){
-            Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, {description: $scope.hecho_pretension.text}).then(function(response){
+            Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
                 console.log(response.data)
-                $scope.hecho_pretension.text = '';
+                $scope.hecho_pretension.description = '';
                 $scope.getSolicitude()
             },function(response){
                 console.log(response.data)
             })
         }
         else{
-            Conciliacion.create.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, {description: $scope.hecho_pretension.text}).then(function(response){
+            Conciliacion.create.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
                 console.log(response.data)
-                $scope.hecho_pretension.text = '';
+                $scope.hecho_pretension.description = '';
+                $scope.getSolicitude()
+            },function(response){
+                console.log(response.data)
+            })
+        }
+    }
+    $scope.edit_hp = function(type){
+        if(type == 1){
+            console.log('Entro   ---')
+            Conciliacion.update.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id , $scope.hecho_pretension).then(function(response){
+                console.log(response.data)
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
+                $scope.getSolicitude()
+            },function(response){
+                console.log(response.data)
+            })
+        }else{
+            console.log('Entro2')
+            Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
+                console.log(response.data)
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
                 $scope.getSolicitude()
             },function(response){
                 console.log(response.data)
@@ -217,44 +392,45 @@ angular.module('app')
         return $scope.solicitude.conciliation.pretensions.length != 0;
     }
     //Wizard
-    $scope.canExit = false;
-    $scope.stepActive = true;
 
     $scope.finished = function() {
-        $scope.solicitude.state = 'Pagado'
-        Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.solicitude).then(function(response){
-            window.location = '#/app/conciliacion';
-        },function(response){})
+        $scope.solicitude.state = 'pagada'
+        console.log($scope.solicitude)
+        Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+            $scope.getSolicitude()
+            window.location = '#/app/conciliacion'
+        },function(response){console.log(response.data)})
     };
     $scope.nextStep = function(state) {
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state
             $scope.solicitude.conciliation.definable = true
-            console.log($scope.solicitude.conciliation)
-            Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
+            console.log($scope.solicitude)
+            Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                 console.log(response.data)
-                console.log($scope.solicitude)
-                Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.solicitude).then(function(response){
+                Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     $scope.getSolicitude()
-                },function(response){})
-            },function(response){console.log(response.data)})
+                },function(response){console.log(response.data)})
+            },function(response){})
         }else{
             $scope.solicitude.state = 'incompleta/' + state
-            Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.solicitude).then(function(response){
+            Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+                console.log(response.data)
                 $scope.getSolicitude()
             },function(response){console.log(response.data)})
         }
     };
-    $scope.goBack = function() {
-        WizardHandler.wizard().goTo(0);
-    };
-    $scope.exitToggle = function() {
-        $scope.canExit = !$scope.canExit;
-    };
-    $scope.stepToggle = function() {
-        $scope.stepActive = !$scope.stepActive;
-    }
-    $scope.exitValidation = function() {
-        return $scope.canExit;
+}]);
+
+angular.module('app').directive('input', [function(){
+    return {
+        require: '?ngModel',
+        link: function(scope, elem, attrs, ngModel){
+            if(attrs.type == 'number'){
+                ngModel.$formatters.push(function(value){
+                    return parseFloat(value);
+                });
+            }
+        }
     };
 }]);
