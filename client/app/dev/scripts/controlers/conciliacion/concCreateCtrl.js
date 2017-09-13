@@ -8,114 +8,19 @@ angular.module('app')
         }
         $scope.solicitude = response.data.solicitude
         WizardHandler.wizard().goTo(step[$scope.solicitude.state.split('/')[1]])
-    },function(response){
+        },function(response){
         window.location = '#/app/conciliacion'
         console.log(response)
     })
-
-    $scope.getSolicitude = function(){
-        Conciliacion.get.solicitude($state.params.id).then(function(response){
-            $scope.solicitude = response.data.solicitude
-        },function(response){
-            window.location = '#/app/conciliacion'
-            console.log(response)
-        })
-    }
-    $scope.esConvocante = function(p){
-        return p.participation_type == 'convocante'
-    }
-
-    $scope.getConvocantes = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => $scope.esConvocante(i));
-    }
-
-    $scope.getConvocados = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => !$scope.esConvocante(i));
-    }
-
-    $scope.convocantes = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocante');
-    }
-    $scope.convocados = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocado');
-    }
-
-    $scope.esNatural = function(p){
-        return p.involved.nature == 'natural'
-    }
-
-    $scope.getName = function(ele) {
-        if($scope.esNatural(ele)){
-            return ele.involved.natural.first_name + ' ' + ele.involved.natural.first_lastname
-        }else{
-            return ele.involved.juridical.name
-        }
-    }
-
-    $scope.getID = function(ele){
-        if($scope.esNatural(ele)){
-            return ele.involved.natural.identifier_type + ': ' + ele.involved.natural.identifier
-        }else{
-            return 'Nit: ' + ele.involved.juridical.nit
-        }
-    }
-
-    $scope.getIcon = function(ele){
-        if($scope.esNatural(ele)){
-            return 'perm_identity'
-        }else{
-            return 'account_balance'
-        }
-    }
-
-    $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
-    $scope.service_goal = ["RESOLVER DE MANERA ALTERNATIVA EL CONFLICTO", "CUMPLIR REQUISITO DE PROCEDIBILIDAD"]
-
-    $scope.involucrado = {
-        participation_type: '',
-        involved: {
-            nature: ''
-        }
-    }
-
-    $scope.conflict_time = ["DE 1 A 30 DÍAS (HASTA 1 MES)", "DE 31 DÍAS A 180 DÍAS (ENTRE 2 Y 6 MESES)", "SUPERIOR A 180 DÍAS (ENTRE 7 Y 12 MESES)", "SUPERIOR A 365 DÍAS (SUPERIOR A 1 AÑO)", "NO INFORMA"]
-
-    $scope.convtype = ['natural', 'juridica']
-
-    $scope.area_topic = {
-        'CIVIL Y COMERCIAL':{ 'BIENES':['DONACIONES Y MODOS DE ADQUIRIR EL DOMINIO DISTINTOS DE LA COMPRAVENTA O LA SUCESIÓN POR CAUSA DE MUERTE'], 'COMPETENCIA DESLEAL':['ACTOS DE COMPARACIÓN', 'ACTOS DE CONFUSIÓN']}
-    };
-    $scope.org_type = ['Privada', 'Publica']
-    $scope.public_type = ['Organismo de contparticipation_type', 'Rama judicial', 'Rama legislativa', 'Rama ejecutiva']
-    $scope.org_idtype = ['NIT', 'Numero de identificacion de sociedad extranjera'];
-    $scope.economic_sector = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5'];
-    $scope.department = '';
-    $scope.idType = ['cedula', 'pasaporte'];
-    $scope.countries = ['Pais1', 'Pais2', 'Pais3', 'Pais4'];
-    $scope.departments = {
-        'Amazonas': ['Leticia'],
-        'Antioquia': ['Medellin', 'Envigado'],
-        'Bolivar': ['Cartagena', 'Turbaco'],
-        'Bogota': ['Bogota DC'],
-        'Boyaca': ['Tunja']
-    };
-    $scope.gender = ['masculino', 'femenino'];
-    $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
-    $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
-    $scope.firstN = function(str, n){
-        return str.substring(0, n);
-    }
-
-    $scope.hecho_pretension = {description: ''};
-
-    //Logic
-    //Modals
+//LOGIC
+//Modals
     $scope.edit = false
-
     $scope.cancel = function() {
-      $mdDialog.cancel();
+        $scope.edit = false
+        $scope.hecho_pretension.description = ''
+        $mdDialog.cancel()
+        $scope.resetInvolucrado()
     };
-
     $scope.save = function(answer) {
       $mdDialog.hide(answer);
     };
@@ -146,7 +51,6 @@ angular.module('app')
         $scope.edit = true
         $scope.showConvocante(ev)
     }
-    
     //Convocado
     $scope.showConvocado = function(ev) {
         $mdDialog.show({
@@ -177,6 +81,51 @@ angular.module('app')
         $scope.edit = true
         $scope.showConvocado(ev)
     }
+    //Apoderado
+    $scope.showApoderado = function(inv, ev, edit) {
+        $scope.involucrado = inv
+        $scope.edit = edit
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/apoderado.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            fullscreen: $scope.customFullscreen
+        }).then(function(answer) {
+            if($scope.edit){
+                $scope.edit_apoderado()
+            }else{
+                console.log('Entro')
+                $scope.add_apoderado()
+            }
+            console.log('Guardado con exito.')
+        }, function() {
+            $scope.edit = false
+            console.log('Evento cancelado')
+        });
+    };
+    //Representante
+    $scope.showRepresentante = function(inv, ev, edit) {
+        $scope.involucrado = inv
+        $scope.edit = edit
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/representante.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            fullscreen: $scope.customFullscreen
+        }).then(function(answer) {
+            if($scope.edit){
+                $scope.edit_representante()
+            }else{
+                $scope.add_representante()
+            }
+            console.log('Guardado con exito.')
+        }, function() {
+            $scope.edit = false
+            console.log('Evento cancelado')
+        });
+    };
     //Hechos
     $scope.showHecho = function(ev) {
         $mdDialog.show({
@@ -226,15 +175,41 @@ angular.module('app')
         $scope.edit = true
         $scope.showPretension(ev)
     }
-
-    //FinModal
-    $scope.resetInvolucrado = function(){
-        $scope.involucrado = {
-            participation_type: '',
-            involved: {
-                nature: ''
-            }
-        };
+//FinModal
+//CRUDS
+    //Apoderado
+    $scope.add_apoderado = function(){
+        Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee).then(function(response){
+            console.log(response.data)
+            $scope.resetInvolucrado()
+        },function(response){
+            console.log(response.data)
+        })
+    }
+    $scope.edit_apoderado = function(){
+        Conciliacion.update.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.involucrado.involved.assignee).then(function(response){
+            console.log(response.data)
+            $scope.resetInvolucrado()
+        },function(response){
+            console.log(response.data)
+        })
+    }
+    //Rrepresentante
+    $scope.add_representante = function(){
+        Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative).then(function(response){
+            console.log(response.data)
+            $scope.resetInvolucrado()
+        },function(response){
+            console.log(response.data)
+        })
+    }
+    $scope.edit_representante = function(){
+        Conciliacion.update.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative.id, $scope.involucrado.involved.representative).then(function(response){
+            console.log(response.data)
+            $scope.resetInvolucrado()
+        },function(response){
+            console.log(response.data)
+        })
     }
     //Convocante
     $scope.add_convocante = function(){
@@ -259,7 +234,7 @@ angular.module('app')
             }
         })
     }
-     $scope.edit_convocante = function(){
+    $scope.edit_convocante = function(){
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
@@ -292,7 +267,16 @@ angular.module('app')
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
-                    $scope.resetInvolucrado()
+                    if($scope.involucrado.apoderado){
+                        Conciliacion.create.assignee($scope.solicitude.id, response.data.involved.id, $scope.involucrado).then(function(response){
+                            console.log(response.data)
+                            $scope.resetInvolucrado()
+                        },function(response){
+                            console.log(response.data)
+                        })
+                    }else{
+                        $scope.resetInvolucrado()
+                    }
                 }, function(response){
                     console.log(response.data)
                     $scope.resetInvolucrado()
@@ -300,7 +284,16 @@ angular.module('app')
             }else{
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
-                    $scope.resetInvolucrado()
+                    if($scope.involucrado.apoderado){
+                        Conciliacion.create.assignee($scope.solicitude.id, response.data.involved.id, $scope.involucrado).then(function(response){
+                            console.log(response.data)
+                            $scope.resetInvolucrado()
+                        },function(response){
+                            console.log(response.data)
+                        })
+                    }else{
+                        $scope.resetInvolucrado()
+                    }
                 },function(response){
                     console.log(response.data)
                     $scope.resetInvolucrado()
@@ -357,9 +350,7 @@ angular.module('app')
     }
     $scope.edit_hp = function(type){
         if(type == 1){
-            console.log('Entro   ---')
             Conciliacion.update.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id , $scope.hecho_pretension).then(function(response){
-                console.log(response.data)
                 $scope.hecho_pretension.description = '';
                 $scope.edit = false
                 $scope.getSolicitude()
@@ -367,9 +358,7 @@ angular.module('app')
                 console.log(response.data)
             })
         }else{
-            console.log('Entro2')
             Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
-                console.log(response.data)
                 $scope.hecho_pretension.description = '';
                 $scope.edit = false
                 $scope.getSolicitude()
@@ -378,7 +367,9 @@ angular.module('app')
             })
         }
     }
-    //Validations
+//FinCRUDS
+
+//Validations
     $scope.convocantes_validation = function(){
         return $scope.convocantes().length != 0;
     }
@@ -391,8 +382,7 @@ angular.module('app')
     $scope.pretensiones_validation = function(){
         return $scope.solicitude.conciliation.pretensions.length != 0;
     }
-    //Wizard
-
+//Wizard
     $scope.finished = function() {
         $scope.solicitude.state = 'pagada'
         console.log($scope.solicitude)
@@ -405,9 +395,7 @@ angular.module('app')
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state
             $scope.solicitude.conciliation.definable = true
-            console.log($scope.solicitude)
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-                console.log(response.data)
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     $scope.getSolicitude()
                 },function(response){console.log(response.data)})
@@ -420,8 +408,123 @@ angular.module('app')
             },function(response){console.log(response.data)})
         }
     };
-}]);
+//FinLOGIC
+//VARIABLES
+    $scope.getSolicitude = function(){
+        Conciliacion.get.solicitude($state.params.id).then(function(response){
+            $scope.solicitude = response.data.solicitude
+        },function(response){
+            window.location = '#/app/conciliacion'
+            console.log(response)
+        })
+    }
+    $scope.esConvocante = function(p){
+        return p.participation_type == 'convocante'
+    }
+    $scope.getConvocantes = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => $scope.esConvocante(i));
+    }
+    $scope.getConvocados = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => !$scope.esConvocante(i));
+    }
+    $scope.convocantes = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocante');
+    }
+    $scope.convocados = function(){
+        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocado');
+    }
+    $scope.esNatural = function(p){
+        return p.involved.nature == 'natural'
+    }
+    $scope.getName = function(ele) {
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.first_name + ' ' + ele.involved.natural.first_lastname
+        }else{
+            return ele.involved.juridical.name
+        }
+    }
+    $scope.apoderadoEdition = function(inv){
+        return inv.involved.assignee != null
+    }
+    $scope.representanteEdition = function(inv){
+        return inv.involved.representative != null
+    }
 
+    $scope.getID = function(ele){
+        if($scope.esNatural(ele)){
+            return ele.involved.natural.identifier_type + ': ' + ele.involved.natural.identifier
+        }else{
+            return 'Nit: ' + ele.involved.juridical.nit
+        }
+    }
+    $scope.getIcon = function(ele){
+        if($scope.esNatural(ele)){
+            return 'perm_identity'
+        }else{
+            return 'account_balance'
+        }
+    }
+
+    $scope.getApoderadoText = function(inv){
+        if(inv.assignee == null){
+            return 'Agregar apoderado'
+        }else{
+            return 'Editar apoderado'
+        }
+    }
+    $scope.getRepresentanteText = function(inv){
+        if(inv.representative == null){
+            return 'Agregar representante'
+        }else{
+            return 'Editar representante'
+        }
+    }    
+    $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
+    $scope.service_goal = ["RESOLVER DE MANERA ALTERNATIVA EL CONFLICTO", "CUMPLIR REQUISITO DE PROCEDIBILIDAD"]
+
+    $scope.involucrado = {
+        participation_type: '',
+        involved: {
+            nature: ''
+        }
+    }
+    $scope.resetInvolucrado = function(){
+        $scope.involucrado = {
+            participation_type: '',
+            involved: {
+                nature: ''
+            }
+        };
+    }
+    $scope.assignee = {}
+    $scope.conflict_time = ["DE 1 A 30 DÍAS (HASTA 1 MES)", "DE 31 DÍAS A 180 DÍAS (ENTRE 2 Y 6 MESES)", "SUPERIOR A 180 DÍAS (ENTRE 7 Y 12 MESES)", "SUPERIOR A 365 DÍAS (SUPERIOR A 1 AÑO)", "NO INFORMA"]
+    $scope.convtype = ['natural', 'juridica']
+    $scope.area_topic = {
+        'CIVIL Y COMERCIAL':{ 'BIENES':['DONACIONES Y MODOS DE ADQUIRIR EL DOMINIO DISTINTOS DE LA COMPRAVENTA O LA SUCESIÓN POR CAUSA DE MUERTE'], 'COMPETENCIA DESLEAL':['ACTOS DE COMPARACIÓN', 'ACTOS DE CONFUSIÓN']}
+    };
+    $scope.org_type = ['Privada', 'Publica']
+    $scope.public_type = ['Organismo de contparticipation_type', 'Rama judicial', 'Rama legislativa', 'Rama ejecutiva']
+    $scope.org_idtype = ['NIT', 'Numero de identificacion de sociedad extranjera'];
+    $scope.economic_sector = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5'];
+    $scope.department = '';
+    $scope.idType = ['cedula', 'pasaporte'];
+    $scope.countries = ['Pais1', 'Pais2', 'Pais3', 'Pais4'];
+    $scope.departments = {
+        'Amazonas': ['Leticia'],
+        'Antioquia': ['Medellin', 'Envigado'],
+        'Bolivar': ['Cartagena', 'Turbaco'],
+        'Bogota': ['Bogota DC'],
+        'Boyaca': ['Tunja']
+    };
+    $scope.gender = ['masculino', 'femenino'];
+    $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
+    $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
+    $scope.firstN = function(str, n){
+        return str.substring(0, n);
+    }
+    $scope.hecho_pretension = {description: ''};
+//FinVARIABLES
+}]);
 angular.module('app').directive('input', [function(){
     return {
         require: '?ngModel',

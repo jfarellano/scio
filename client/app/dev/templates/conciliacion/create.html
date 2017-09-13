@@ -55,7 +55,7 @@
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Cuantia</label>
-                            <input data-ng-model="solicitude.payment_amount" type="number" required>
+                            <input data-ng-model="solicitude.conciliation.payment_amount" type="number" required>
                         </md-input-container>
                     </form>
                 </div>
@@ -66,17 +66,21 @@
             <wz-step wz-title="Convocantes">
                 <h2>Listado de convocantes</h2>
                 <div class="ui-wizard-content">
-                    <md-subheader class="md-no-sticky">Convocantes</md-subheader>
-                    <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="editConvocante(conv, $event)">
-                        <div>
-                            <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{getName(conv)}}</h3>
-                                <h4>{{getID(conv)}}</h4>
-                                <p>Telefono: {{conv.involved.phone}}</p>
+                    <md-list>
+                        <md-subheader class="md-no-sticky">Convocantes</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="editConvocante(conv, $event)">
+                            <div>
+                                <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{::getName(conv)}}</h3>
+                                    <h4>{{::getID(conv)}}</h4>
+                                    <p>Telefono: {{conv.involved.phone}}</p>
+                                </div>
+                                <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
+                                <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
                             </div>
-                        </div>
-                    </md-list-item>
+                        </md-list-item>
+                    </md-list>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
                 </div>
                 <div class="ui-wizard-actions">
@@ -92,10 +96,12 @@
                         <div>
                             <md-icon class="material-icons md-avatar">{{getIcon(conv)}}</md-icon>
                             <div class="md-list-item-text" layout="column">
-                                <h3>{{getName(conv)}}</h3>
-                                <h4>{{getID(conv)}}</h4>
-                                <p>Telefono: {{conv.involved.phone}}</p>
+                                <h3>{{::getName(conv)}}</h3>
+                                <h4>{{::getID(conv)}}</h4>
+                                <p>Telefono: {{::conv.involved.phone}}</p>
                             </div>
+                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
+                            <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
                         </div>
                     </md-list-item>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
@@ -112,7 +118,7 @@
                     <md-list-item class="md-3-line" ng-repeat="f in solicitude.conciliation.facts" ng-click="editHecho(f, $event)">
                         <div>
                             <div class="md-list-item-text" layout="column">
-                                <p><b>{{$index + 1}}. </b>{{firstN(f.description, 80)}}</p>
+                                <p><b>{{$index + 1}}. </b>{{::firstN(f.description, 80)}}</p>
                             </div>
                         </div>
                     </md-list-item>
@@ -130,7 +136,7 @@
                     <md-list-item class="md-3-line" ng-repeat="p in solicitude.conciliation.pretensions" ng-click="editPretension(p, $event)">
                         <div>
                             <div class="md-list-item-text" layout="column">
-                                <p><b>{{$index + 1}}. </b>{{firstN(p.description, 80)}}</p>
+                                <p><b>{{$index + 1}}. </b>{{::firstN(p.description, 80)}}</p>
                             </div>
                         </div>
                     </md-list-item>

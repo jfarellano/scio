@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', function($scope, $state,Conciliacion, window, screenSize, $mdDialog){
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL){
 
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
@@ -9,8 +9,9 @@ angular.module('app')
 
     $scope.showParticipant = function(part, ev){
         $scope.part = part
+        console.log(part)
         $mdDialog.show({
-            templateUrl: URL.dev.template + '/forms/convocante.html',
+            templateUrl: URL.dev.template + '/forms/showParticipant.html',
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
@@ -37,6 +38,12 @@ angular.module('app')
 
     $scope.getConvocados = function(){
         return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+    }
+    $scope.apoderado = function(inv){
+        return inv.involved.assignee != null
+    }
+    $scope.representante = function(inv){
+        return inv.involved.representative != null
     }
 
     $scope.getName = function(ele) {

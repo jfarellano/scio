@@ -43,6 +43,12 @@ angular.module('app')
                 },
                 pret:function(solID, concID, pret){
                     return $http.post(IP + '/solicitudes/'+ solID +'/conciliations/'+concID+'/pretensions', pret)
+                },
+                assignee:function(solID, invID, assignee){
+                    return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees', assignee)
+                },
+                representative:function(solID, invID, rep){
+                    return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives', rep)
                 }
             },
             update:{
@@ -63,6 +69,12 @@ angular.module('app')
                 },
                 pret:function(solID, concID, pretID, pret){
                     return $http.put(IP + '/solicitudes/' +solID+ '/conciliations/' +concID+ '/pretensions/' +pretID, pret)
+                },
+                assignee:function(solID, invID, assigID,assignee){
+                    return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID, assignee)
+                },
+                representative:function(solID, invID, repID, rep){
+                    return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives/' +repID, rep)
                 }
             },
             get:{
