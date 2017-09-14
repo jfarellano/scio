@@ -49,6 +49,9 @@ angular.module('app')
                 },
                 representative:function(solID, invID, rep){
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives', rep)
+                },
+                study:function(solID, invID, assigID, study){
+                    return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study)
                 }
             },
             update:{
@@ -75,11 +78,19 @@ angular.module('app')
                 },
                 representative:function(solID, invID, repID, rep){
                     return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives/' +repID, rep)
+                },
+                study:function(solID, invID, assigID, studyID,study){
+                    return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies/' +studyID, study)
                 }
             },
             get:{
                 solicitude:function(id){
                     return $http.get(IP + '/solicitudes/' + id)
+                }
+            },
+            delete:{
+                study:function(solID, invID, assigID, studyID){
+                    return $http.delete(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies/' +studyID)
                 }
             },
 

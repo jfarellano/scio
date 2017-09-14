@@ -1,4 +1,3 @@
-
 angular.module('app')
     .config(['$stateProvider', '$urlRouterProvider', '$ocLazyLoadProvider', 'URL',
 

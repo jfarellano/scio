@@ -194,6 +194,34 @@ angular.module('app')
             console.log(response.data)
         })
     }
+    //Estudios
+    $scope.add_estudio = function(){
+        Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study).then(function(response){
+            $scope.involucrado.involved.assignee.studies.push(response.data.study)
+            $scope.resetStudy()
+            $scope.getSolicitude()
+        },function(response){
+            console.log(response.data)
+        })
+    }
+    $scope.edit_estudio = function(){
+        Conciliacion.update.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id, $scope.study).then(function(response){
+            console.log(response.data)
+            $scope.resetStudy()
+        },function(response){
+            console.log(response.data)
+        })
+    }
+    $scope.delete_estudio = function(index){
+        $scope.study = $scope.involucrado.involved.assignee.studies[index]
+        Conciliacion.delete.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id).then(function(response){
+            console.log(response.data)
+            $scope.involucrado.involved.assignee.studies.splice( index, 1 )
+            $scope.resetStudy()
+        },function(response){
+            console.log(response.data)
+        })
+    }
     //Rrepresentante
     $scope.add_representante = function(){
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative).then(function(response){
@@ -410,8 +438,15 @@ angular.module('app')
     };
 //FinLOGIC
 //VARIABLES
+
+    $scope.study = {}
+    $scope.resetStudy = function(){
+        $scope.study = {}
+    }
     $scope.getSolicitude = function(){
+        $('#loader-container').fadeIn('fast');
         Conciliacion.get.solicitude($state.params.id).then(function(response){
+            $('#loader-container').fadeOut('slow');
             $scope.solicitude = response.data.solicitude
         },function(response){
             window.location = '#/app/conciliacion'
