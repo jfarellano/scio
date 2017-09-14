@@ -1,0 +1,104 @@
+<div class="modal_form">
+    <md-dialog-content>
+	    <form name="appForm">
+	    <h2>Apoderado</h2>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Primer nombre</label>
+		        <input data-ng-model="involucrado.involved.assignee.first_name" type="text" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Segundo nombre</label>
+		        <input data-ng-model="involucrado.involved.assignee.second_name" type="text">
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Primer apellido</label>
+		        <input data-ng-model="involucrado.involved.assignee.first_lastname" type="text" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Segundo apellido</label>
+		        <input data-ng-model="involucrado.involved.assignee.second_lastname" type="text">
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+                <label>E-mail</label>
+                <input data-ng-model="involucrado.involved.assignee.email" type="email" required>
+            </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Tipo de documento</label>
+		        <md-select ng-model="involucrado.involved.assignee.identifier_type" required>
+		            <md-option ng-repeat="type in idType" value="{{type}}" requiered>
+		                {{type}}
+		            </md-option>
+		        </md-select>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Numero de identificación</label>
+		        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Telefono de contacto</label>
+		        <input ng-model="involucrado.involved.assignee.telephone" data-ng-minlength=7 type="number" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Celular de contacto</label>
+		        <input ng-model="involucrado.involved.assignee.cellphone" data-ng-minlength=7 type="number" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Pais</label>
+		        <md-select ng-model="involucrado.involved.assignee.country" required>
+		            <md-option ng-repeat="c in countries" value="{{c}}" requiered>
+		                {{c}}
+		            </md-option>
+		        </md-select>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Direccion de residencia</label>
+		        <input ng-model="involucrado.involved.assignee.address" type="text" required>
+		    </md-input-container>
+		    <h3>Estudios</h3>
+		    <div class="container-fluid">
+				<form name="oldStudies" layout-gt-xs="row" class="layout-gt-xs-row">
+				    <div ng-repeat="st in involucrado.involved.assignee.studies">
+				    	<md-input-container class="flex-gt-xs" flex-gt-xs>
+					        <label>Universidad</label>
+					        <input ng-model="st.university" type="text" required>
+					    </md-input-container>
+					    <md-input-container class="flex-gt-xs" flex-gt-xs>
+					        <label>Nivel de estudio</label>
+					        <input ng-model="st.level" type="text" required>
+					    </md-input-container>
+					    <md-input-container class="flex-gt-xs" flex-gt-xs>
+					        <label>Titulo</label>
+					        <input ng-model="st.title" type="text" required>
+					    </md-input-container>
+					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="showStudy(st, true)">Guardar</md-button>
+					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="delete_estudio($index)">Eliminar</md-button>
+					    <br>
+				    </div>
+				</form>
+			</div>
+
+			<div class="container-fluid">
+				<form name="newStudies" layout-gt-xs="row" class="layout-gt-xs-row">
+				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+				        <label>Universidad</label>
+				        <input ng-model="study.university" type="text" required>
+				    </md-input-container>
+				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+				        <label>Nivel de estudio</label>
+				        <input ng-model="study.level" type="text" required>
+				    </md-input-container>
+				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+				        <label>Titulo</label>
+				        <input ng-model="study.title" type="text" required>
+				    </md-input-container>
+				    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="!newStudies.$valid" ng-click="showStudy(study, false)">Agregar</md-button>
+				</form>
+			</div>
+		    <br>
+		</form>
+	</md-dialog-content>
+	<md-dialog-actions>
+        <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
+        <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">Agregar</md-button>  
+    </md-dialog-actions>
+</div> 
