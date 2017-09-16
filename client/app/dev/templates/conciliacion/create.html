@@ -8,48 +8,48 @@
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Solicitnte del servicio:</label>
                             <md-select ng-model="solicitude.conciliation.applicant" required>
-                                <md-option ng-repeat="a in applicant" value="{{a}}">
-                                    {{a}}
+                                <md-option ng-repeat="a in applicant" value="{{a.value}}">
+                                    {{a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Finalidad de adquisición del servicio:</label>
                             <md-select ng-model="solicitude.conciliation.service_goal" required>
-                                <md-option ng-repeat="a in service_goal" value="{{a}}">
-                                    {{a}}
+                                <md-option ng-repeat="a in service_goal" value="{{a.value}}">
+                                    {{a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Cuanto tiempo lleva el conflicto:</label>
                             <md-select ng-model="solicitude.conciliation.conflict_time" required>
-                                <md-option ng-repeat="a in conflict_time" value="{{a}}">
-                                    {{a}}
+                                <md-option ng-repeat="a in conflict_time" value="{{a.value}}">
+                                    {{a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Area del derecho:</label>
                             <md-select ng-model="solicitude.conciliation.area" required>
-                                <md-option ng-repeat="(area, topic) in area_topic" value="{{area}}">
-                                    {{area}}
+                                <md-option ng-repeat="area in area" value="{{area.value}}">
+                                    {{area.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Tema del derecho:</label>
                             <md-select ng-model="solicitude.conciliation.topic" required>
-                                <md-option ng-repeat="(topic, subtopic) in area_topic[solicitude.conciliation.area]" value="{{topic}}">
-                                    {{topic}}
+                                <md-option ng-repeat="top in topic" value="{{top.value}}">
+                                    {{top.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Subtema del derecho:</label>
                             <md-select ng-model="solicitude.conciliation.subtopic" required>
-                                <md-option ng-repeat="subtopic in area_topic[solicitude.conciliation.area][solicitude.conciliation.topic]" value="{{subtopic}}">
-                                    {{subtopic}}
+                                <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
+                                    {{sub.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

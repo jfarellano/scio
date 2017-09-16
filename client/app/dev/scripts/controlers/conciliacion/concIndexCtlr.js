@@ -35,8 +35,11 @@ angular.module('app')
             var solicitude = { "user_id":"1","solicitude_type":"conciliacion", "payment_amount": 0}
             console.log(solicitude)
             Conciliacion.create.solicitude(solicitude).then(function(response){
+                console.log(response.data)
+                console.log("Entro")
                 window.location = '#/app/create/conciliacion/' + response.data.solicitude.id    
             },function(response){
+                console.log("Entro 2")
                 console.log(response.data)
             })  
         }

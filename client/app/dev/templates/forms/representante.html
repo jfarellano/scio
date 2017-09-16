@@ -43,16 +43,32 @@
 		        <input ng-model="involucrado.involved.representative.cellphone" data-ng-minlength=7 type="number" required>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Direccion de residencia</label>
+		        <input ng-model="involucrado.involved.representative.address" type="text" required>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
 		        <label>Pais</label>
 		        <md-select ng-model="involucrado.involved.representative.country" required>
-		            <md-option ng-repeat="c in countries" value="{{c}}" requiered>
-		                {{c}}
+		            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
+		                {{c.value}}
 		            </md-option>
 		        </md-select>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Direccion de residencia</label>
-		        <input ng-model="involucrado.involved.representative.address" type="text" required>
+		        <label>Departamento</label>
+		        <md-select ng-model="involucrado.involved.representative.department" ng-change="getAssigneeCity()" required>
+		            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
+		                {{c.value}}
+		            </md-option>
+		        </md-select>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Ciudad</label>
+		        <md-select ng-model="involucrado.involved.representative.city" required>
+		            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
+		                {{c.value}}
+		            </md-option>
+		        </md-select>
 		    </md-input-container>
 		</form>
 	</md-dialog-content>

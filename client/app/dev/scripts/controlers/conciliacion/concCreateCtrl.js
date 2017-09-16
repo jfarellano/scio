@@ -7,6 +7,7 @@ angular.module('app')
             window.location = '#/app/conciliacion'
         }
         $scope.solicitude = response.data.solicitude
+        console.log($scope.solicitude)
         WizardHandler.wizard().goTo(step[$scope.solicitude.state.split('/')[1]])
         },function(response){
         window.location = '#/app/conciliacion'
@@ -24,6 +25,15 @@ angular.module('app')
     $scope.save = function(answer) {
       $mdDialog.hide(answer);
     };
+    $scope.showStudy = function(st, edit){
+        console.log('Entro')
+        if(edit){
+            $scope.study = st
+            $scope.edit_estudio()
+        }else{
+            $scope.add_estudio()
+        }
+    }
     //Convocante
     $scope.showConvocante = function(ev) {
         $mdDialog.show({
@@ -40,7 +50,6 @@ angular.module('app')
                 console.log('create')
                 $scope.add_convocante()
             }
-            console.log('Guardado con exito.')
         }, function() {
             $scope.edit = false
             console.log('Evento cancelado')
@@ -48,6 +57,15 @@ angular.module('app')
     };
     $scope.editConvocante = function(inv, ev){
         $scope.involucrado = inv
+        Conciliacion.get.constant_child(47 ,'department').then(function(response){
+            $scope.departments = response.data.constants
+            var r2 = $scope.departments.filter(function(d){
+                return d.value == $scope.involucrado.department
+            })
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        })
         $scope.edit = true
         $scope.showConvocante(ev)
     }
@@ -78,12 +96,33 @@ angular.module('app')
     };
     $scope.editConvocado = function(inv, ev){
         $scope.involucrado = inv
+        Conciliacion.get.constant_child(47 ,'department').then(function(response){
+            $scope.departments = response.data.constants
+            var r2 = $scope.departments.filter(function(d){
+                return d.value == $scope.involucrado.department
+            })
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        })
         $scope.edit = true
         $scope.showConvocado(ev)
     }
     //Apoderado
     $scope.showApoderado = function(inv, ev, edit) {
         $scope.involucrado = inv
+        $scope.studies = []
+        if(edit){
+            $scope.studies = inv.involved.assignee.studies
+            var r2 = $scope.departments.filter(function(d){
+                return d.value == $scope.involucrado.involved.assignee.department
+            })
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.city = response.data.constants
+            }, function(response){
+                console.log(response.data)
+            })
+        }
         $scope.edit = edit
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/apoderado.html',
@@ -180,8 +219,15 @@ angular.module('app')
     //Apoderado
     $scope.add_apoderado = function(){
         Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee).then(function(response){
-            console.log(response.data)
+            $scope.studies.forEach(function(elem){
+                Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, response.data.assignee.id, elem).then(function(response){
+                    console.log(response.data)
+                },function(response){
+                    console.log(response.data)
+                })
+            })
             $scope.resetInvolucrado()
+            $scope.getSolicitude()
         },function(response){
             console.log(response.data)
         })
@@ -196,13 +242,18 @@ angular.module('app')
     }
     //Estudios
     $scope.add_estudio = function(){
-        Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study).then(function(response){
-            $scope.involucrado.involved.assignee.studies.push(response.data.study)
+        if($scope.edit){
+            Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study).then(function(response){
+                $scope.studies.push(response.data.study)
+                $scope.resetStudy()
+            },function(response){
+                console.log(response.data)
+            })
+        }else{
+            console.log( $scope.studies)
+            $scope.studies.push($scope.study)
             $scope.resetStudy()
-            $scope.getSolicitude()
-        },function(response){
-            console.log(response.data)
-        })
+        }
     }
     $scope.edit_estudio = function(){
         Conciliacion.update.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id, $scope.study).then(function(response){
@@ -213,14 +264,18 @@ angular.module('app')
         })
     }
     $scope.delete_estudio = function(index){
-        $scope.study = $scope.involucrado.involved.assignee.studies[index]
-        Conciliacion.delete.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id).then(function(response){
-            console.log(response.data)
-            $scope.involucrado.involved.assignee.studies.splice( index, 1 )
-            $scope.resetStudy()
-        },function(response){
-            console.log(response.data)
-        })
+        if($scope.edit){
+            $scope.study = $scope.involucrado.involved.assignee.studies[index]
+            Conciliacion.delete.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id).then(function(response){
+                console.log(response.data)
+                $scope.studies.splice( index, 1 )
+                $scope.resetStudy()
+            },function(response){
+                console.log(response.data)
+            })
+        }else{
+            $scope.studies.splice( index, 1 )
+        }
     }
     //Rrepresentante
     $scope.add_representante = function(){
@@ -242,6 +297,7 @@ angular.module('app')
     //Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
+        console.log($scope.involucrado)
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
@@ -252,6 +308,7 @@ angular.module('app')
                     $scope.resetInvolucrado()
                 })
             }else{
+                console.log($scope.involucrado.involved)
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
@@ -260,6 +317,8 @@ angular.module('app')
                     $scope.resetInvolucrado()
                 })
             }
+        },function(response){
+            console.log(response.data)
         })
     }
     $scope.edit_convocante = function(){
@@ -513,13 +572,22 @@ angular.module('app')
         }else{
             return 'Editar representante'
         }
-    }    
-    $scope.applicant= ['LAS DOS PARTES', 'SOLO UNA DE LAS PARTES', 'MEDIANTE APODERADO']
-    $scope.service_goal = ["RESOLVER DE MANERA ALTERNATIVA EL CONFLICTO", "CUMPLIR REQUISITO DE PROCEDIBILIDAD"]
-
+    }
+    $scope.getConstant = function(name){
+        Conciliacion.get.constant(name).then(function(response){
+            return response.data.constants
+        })
+    }  
+    Conciliacion.get.constant('conciliation_applicant').then(function(response){
+        $scope.applicant = response.data.constants
+    })
+    Conciliacion.get.constant('conciliation_goal').then(function(response){
+        $scope.service_goal = response.data.constants
+    })
     $scope.involucrado = {
         participation_type: '',
         involved: {
+            country: 'COLOMBIA',
             nature: ''
         }
     }
@@ -527,33 +595,103 @@ angular.module('app')
         $scope.involucrado = {
             participation_type: '',
             involved: {
+                country: 'COLOMBIA',
                 nature: ''
             }
         };
     }
     $scope.assignee = {}
-    $scope.conflict_time = ["DE 1 A 30 DÍAS (HASTA 1 MES)", "DE 31 DÍAS A 180 DÍAS (ENTRE 2 Y 6 MESES)", "SUPERIOR A 180 DÍAS (ENTRE 7 Y 12 MESES)", "SUPERIOR A 365 DÍAS (SUPERIOR A 1 AÑO)", "NO INFORMA"]
-    $scope.convtype = ['natural', 'juridica']
-    $scope.area_topic = {
-        'CIVIL Y COMERCIAL':{ 'BIENES':['DONACIONES Y MODOS DE ADQUIRIR EL DOMINIO DISTINTOS DE LA COMPRAVENTA O LA SUCESIÓN POR CAUSA DE MUERTE'], 'COMPETENCIA DESLEAL':['ACTOS DE COMPARACIÓN', 'ACTOS DE CONFUSIÓN']}
-    };
-    $scope.org_type = ['Privada', 'Publica']
-    $scope.public_type = ['Organismo de contparticipation_type', 'Rama judicial', 'Rama legislativa', 'Rama ejecutiva']
-    $scope.org_idtype = ['NIT', 'Numero de identificacion de sociedad extranjera'];
-    $scope.economic_sector = ['Type1', 'Type2', 'Type3', 'Type4', 'Type5'];
-    $scope.department = '';
-    $scope.idType = ['cedula', 'pasaporte'];
-    $scope.countries = ['Pais1', 'Pais2', 'Pais3', 'Pais4'];
-    $scope.departments = {
-        'Amazonas': ['Leticia'],
-        'Antioquia': ['Medellin', 'Envigado'],
-        'Bolivar': ['Cartagena', 'Turbaco'],
-        'Bogota': ['Bogota DC'],
-        'Boyaca': ['Tunja']
-    };
-    $scope.gender = ['masculino', 'femenino'];
-    $scope.numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
-    $scope.level = ['Pregrado', 'Diplomado', 'Especialización', 'Maestria', 'Doctorado'];
+    Conciliacion.get.constant('conciliation_period').then(function(response){
+        $scope.conflict_time = response.data.constants
+    })
+    Conciliacion.get.constant('involved_nature').then(function(response){
+        $scope.convtype = response.data.constants
+    })
+    Conciliacion.get.constant('conciliation_area').then(function(response){
+        $scope.area = response.data.constants
+        var r1 = $scope.area.filter(function(a) {
+            return a.value == $scope.solicitude.conciliation.area
+        })
+        Conciliacion.get.constant_child(r1[0].id, 'conciliation_topic').then(function(response){
+            $scope.topic = response.data.constants
+            var r2 = $scope.topic.filter(function(t){
+                return t.value == $scope.solicitude.conciliation.topic
+            })
+            Conciliacion.get.constant_child(r2[0].id, 'conciliation_subtopic').then(function(response){
+                $scope.subtopic = response.data.constants
+            }, function(response){
+                console.log(response.data)
+            })
+        })
+    })
+    
+    $scope.$watch('solicitude.conciliation.area', function(){
+        var r = $scope.area.filter(function(a) {
+            return a.value == $scope.solicitude.conciliation.area
+        })
+        Conciliacion.get.constant_child(r[0].id, 'conciliation_topic').then(function(response){
+            $scope.topic = response.data.constants
+        })
+    })
+
+    $scope.getAssigneeCity = function(){
+        var r = $scope.departments.filter(function(a) {
+            return a.value == $scope.involucrado.involved.assignee.department
+        })
+        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+            $scope.city = response.data.constants
+        })
+    }
+    $scope.$watch('solicitude.conciliation.topic', function(){
+        var r = $scope.topic.filter(function(t){
+            return t.value == $scope.solicitude.conciliation.topic
+        })
+        Conciliacion.get.constant_child(r[0].id, 'conciliation_subtopic').then(function(response){
+            $scope.subtopic = response.data.constants
+        })
+    })
+    Conciliacion.get.constant('organization_type').then(function(response){
+        $scope.org_type = response.data.constants
+    })
+    Conciliacion.get.constant('economic_sector').then(function(response){
+        $scope.economic_sector = response.data.constants
+    })
+    Conciliacion.get.constant('identifier_type').then(function(response){
+        $scope.idType = response.data.constants
+    }) 
+    Conciliacion.get.constant('country').then(function(response){
+        $scope.countries = response.data.constants
+    }) 
+    Conciliacion.get.constant_child(47 ,'department').then(function(response){
+        $scope.departments = response.data.constants
+        var r2 = $scope.departments.filter(function(d){
+            return d.value == $scope.involucrado.department
+        })
+        Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+            $scope.cities = response.data.constants
+        })
+    })
+    $scope.$watch('involucrado.involved.department', function(){
+        var r = $scope.departments.filter(function(a) {
+            return a.value == $scope.involucrado.involved.department
+        })
+        console.log(r)
+        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+            $scope.cities = response.data.constants
+        })
+    })
+    Conciliacion.get.constant('gender').then(function(response){
+        $scope.gender = response.data.constants
+    }) 
+    Conciliacion.get.constant('scholarly_level').then(function(response){
+        $scope.level = response.data.constants
+    })
+    Conciliacion.get.constant('strata').then(function(response){
+        $scope.estratos = response.data.constants
+    })
+    Conciliacion.get.constant('city').then(function(response){
+        $scope.all_cities = response.data.constants
+    })  
     $scope.firstN = function(str, n){
         return str.substring(0, n);
     }

@@ -6,8 +6,8 @@
                 <md-input-container class="md-block" ng-if="!edit"> 
                     <label>Tipo de convocante</label>
                     <md-select ng-model="involucrado.involved.nature" ng-if="!edit" required>
-                        <md-option ng-repeat="c in convtype" value="{{c}}">
-                            {{c}}
+                        <md-option ng-repeat="c in convtype" value="{{c.value}}">
+                            {{c.value}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -32,11 +32,13 @@
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Genero</label>
                             <md-select ng-model="involucrado.involved.natural.gender" required>
-                                <md-option ng-repeat="g in gender" value="{{g}}" requiered>
-                                    {{g}}
+                                <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+                                    {{g.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                        <p>Fecha de nacimiento</p>
+                        <md-datepicker ng-model="involucrado.involved.natural.birthdate" md-placeholder="Fecha de nacimiento" required></md-datepicker>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>E-mail</label>
                             <input data-ng-model="involucrado.involved.email" type="email" required>
@@ -52,8 +54,16 @@
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Tipo de documento</label>
                             <md-select ng-model="involucrado.involved.natural.identifier_type" required>
-                                <md-option ng-repeat="type in idType" value="{{type}}" requiered>
-                                    {{type}}
+                                <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
+                                    {{type.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ciudad de expedicion</label>
+                            <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
+                                <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
+                                    {{c.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -65,6 +75,22 @@
                             <label>Direccion de residencia</label>
                             <input ng-model="involucrado.involved.address" type="text" required>
                         </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Estrato</label>
+                            <md-select ng-model="involucrado.involved.natural.strata" required>
+                                <md-option ng-repeat="c in estratos" value="{{c.value}}" requiered>
+                                    {{c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Nivel escolar: </label>
+                            <md-select ng-model="involucrado.involved.natural.scholarly_level" required>
+                                <md-option ng-repeat="c in level" value="{{c.value}}" requiered>
+                                    {{c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
                     </fieldset>
                 </div>
                 <div ng-if="involucrado.involved.nature == 'juridica'">
@@ -72,6 +98,22 @@
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Nit</label>
                             <input ng-model="involucrado.involved.juridical.nit" type="number" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Tipo de organización</label>
+                            <md-select ng-model="involucrado.involved.juridical.organization_type" required>
+                                <md-option ng-repeat="g in org_type" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Sector economico</label>
+                            <md-select ng-model="involucrado.involved.juridical.economic_sector" required>
+                                <md-option ng-repeat="g in economic_sector" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Nombre</label>
@@ -82,6 +124,14 @@
                             <input ng-model="involucrado.involved.address" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
+                            <label>Pais de origen</label>
+                            <md-select ng-model="involucrado.involved.juridical.origin_country" required>
+                                <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
                             <label>E-mail</label>
                             <input data-ng-model="involucrado.involved.email" type="email" required>
                         </md-input-container>
@@ -90,6 +140,24 @@
                             <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                         </md-input-container>
                      </fieldset>
+                </div>
+                <div ng-if="involucrado.involved.nature != ''">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Departamento</label>
+                        <md-select ng-model="involucrado.involved.department" required>
+                            <md-option ng-repeat="g in departments" value="{{g.value}}" requiered>
+                                {{g.value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ciudad</label>
+                        <md-select ng-model="involucrado.involved.city" required>
+                            <md-option ng-repeat="g in cities" value="{{g.value}}" requiered>
+                                {{g.value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
             </div>
         </form>

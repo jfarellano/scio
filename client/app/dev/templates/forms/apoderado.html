@@ -25,8 +25,8 @@
 		    <md-input-container class="md-block" flex-gt-sm>
 		        <label>Tipo de documento</label>
 		        <md-select ng-model="involucrado.involved.assignee.identifier_type" required>
-		            <md-option ng-repeat="type in idType" value="{{type}}" requiered>
-		                {{type}}
+		            <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
+		                {{type.value}}
 		            </md-option>
 		        </md-select>
 		    </md-input-container>
@@ -45,8 +45,24 @@
 		    <md-input-container class="md-block" flex-gt-sm>
 		        <label>Pais</label>
 		        <md-select ng-model="involucrado.involved.assignee.country" required>
-		            <md-option ng-repeat="c in countries" value="{{c}}" requiered>
-		                {{c}}
+		            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
+		                {{c.value}}
+		            </md-option>
+		        </md-select>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Departamento</label>
+		        <md-select ng-model="involucrado.involved.assignee.department" ng-change="getAssigneeCity()" required>
+		            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
+		                {{c.value}}
+		            </md-option>
+		        </md-select>
+		    </md-input-container>
+		    <md-input-container class="md-block" flex-gt-sm>
+		        <label>Ciudad</label>
+		        <md-select ng-model="involucrado.involved.assignee.city" required>
+		            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
+		                {{c.value}}
 		            </md-option>
 		        </md-select>
 		    </md-input-container>
@@ -57,7 +73,7 @@
 		    <h3>Estudios</h3>
 		    <div class="container-fluid">
 				<form name="oldStudies" layout-gt-xs="row" class="layout-gt-xs-row">
-				    <div ng-repeat="st in involucrado.involved.assignee.studies">
+				    <div ng-repeat="st in studies">
 				    	<md-input-container class="flex-gt-xs" flex-gt-xs>
 					        <label>Universidad</label>
 					        <input ng-model="st.university" type="text" required>
@@ -70,7 +86,7 @@
 					        <label>Titulo</label>
 					        <input ng-model="st.title" type="text" required>
 					    </md-input-container>
-					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="showStudy(st, true)">Guardar</md-button>
+					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="showStudy(st, true)" ng-if="edit">Guardar</md-button>
 					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="delete_estudio($index)">Eliminar</md-button>
 					    <br>
 				    </div>

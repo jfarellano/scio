@@ -86,6 +86,12 @@ angular.module('app')
             get:{
                 solicitude:function(id){
                     return $http.get(IP + '/solicitudes/' + id)
+                },
+                constant:function(con){
+                    return $http.get(IP + '/constants/' + con)
+                },
+                constant_child:function(id, con){
+                    return $http.get(IP + '/constants/children/'+id+'/'+con)
                 }
             },
             delete:{
