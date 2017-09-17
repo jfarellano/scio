@@ -13,8 +13,8 @@ angular.module('app')
             sign_up:function(info){
                 return $http.post(IP + '/users', info)
             },
-            sign_out:function(info){
-                
+            sign_out:function(){
+
             }
         }
 }]);

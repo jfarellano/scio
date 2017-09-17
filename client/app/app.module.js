@@ -4,7 +4,8 @@
     angular.module('app', [
         //Dev modules
         'matchMedia'//Este modulo sirve para ejecutar funciones segun el tamaño de la pantalla
-
+        ,'ngStorage'
+        ,'validation.match'
         // Angular modules
         ,'ui.router'
         ,'ngAnimate'

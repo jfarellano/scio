@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('SignupCtrl', ['$scope', '$window', 'URL', function($scope, $window, URL){
+.controller('SignupCtrl', ['$scope', '$window', 'URL', 'Session',function($scope, $window, URL, Session){
     $scope.user = {
         first_first_name: '',
         second_first_name: '',
@@ -48,8 +48,11 @@ angular.module('app')
         return $scope.signupForm.$valid && !angular.equals($scope.user, original);
     };    
     $scope.submitForm = function() {
-        $scope.showInfoOnSubmit = true;
-        $window.location = '#/iniciosecion'
-        return $scope.revert();
+        Session.signUp($scope.user).then(function(response){
+            $window.location = '#/iniciosecion'
+        },function(response){
+            console.log(response.data)
+            console.log('Datos invalidos')
+        })
     }; 
 }]);

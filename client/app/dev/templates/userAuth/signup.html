@@ -7,7 +7,7 @@
 
 <form name="signupForm" novalidate ng-submit="submitForm()">
     <fieldset>
-        <md-input-container class="md-block" flex-gt-sm>
+        <!-- <md-input-container class="md-block" flex-gt-sm>
             <label>Primer nombre</label>
             <input ng-model="user.first_first_name" type="text" required>
         </md-input-container>
@@ -22,12 +22,20 @@
         <md-input-container class="md-block" flex-gt-sm>
             <label>Segundo apellido</label>
             <input ng-model="user.second_last_name" type="text" required>
-        </md-input-container>
+        </md-input-container> -->
         <md-input-container class="md-block" flex-gt-sm>
             <label>E-mail</label>
             <input ng-model="user.email" type="email" required>
         </md-input-container>
         <md-input-container class="md-block" flex-gt-sm>
+            <label>Contraseña</label>
+            <input ng-model="user.password" name="pass" type="password" required>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Verifique su contraseña</label>
+            <input ng-model="user.password_c" data-match="signupForm.pass" type="password" required>
+        </md-input-container>
+        <!-- <md-input-container class="md-block" flex-gt-sm>
             <label>Telefono de contacto</label>
             <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
         </md-input-container>
@@ -111,7 +119,7 @@
                     <md-option ng-repeat="l in level" value="{{l}}"> {{l}} </md-option>
                 </md-select>
             </md-input-container>
-        </div>
+        </div> -->
         <br>
         <md-button type="submit"
         ui-wave

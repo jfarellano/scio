@@ -2,10 +2,29 @@
     'use strict';
 
     angular.module('app')
-        .controller('AppCtrl', [ '$scope', '$rootScope', '$document', 'appConfig', '$state', '$mdSidenav', '$mdComponentRegistry', AppCtrl]) // overall control
+        .controller('AppCtrl', [ '$scope', '$rootScope', '$document', 'appConfig', '$state', '$mdSidenav', '$mdComponentRegistry', 'Session', '$window', '$location', AppCtrl]) // overall control
         .controller('SidenavRightCtrl', ['$scope', '$mdSidenav', SidenavRightCtrl])
     
-    function AppCtrl($scope, $rootScope, $document, appConfig, $state, $mdSidenav, $mdComponentRegistry) {
+    function AppCtrl($scope, $rootScope, $document, appConfig, $state, $mdSidenav, $mdComponentRegistry, Session, $window, $location) {
+
+    //DEV
+        $scope.logout = function(){
+            Session.logout()
+            $window.location = '#/iniciosecion'
+        }
+        if(!Session.isAuth()){
+            $window.location = '#/iniciosecion'
+        }
+
+        $rootScope.$on('$stateChangeSuccess', function (event) {
+            if($window.location.hash != '#/iniciosecion' && $window.location.hash != '#/registro'){
+                if(!Session.isAuth()){
+                    $window.location = '#/iniciosecion'
+                }
+            }
+        })
+
+    //DEV
 
         $scope.pageTransitionOpts = appConfig.pageTransitionOpts;
         $scope.app = appConfig.app;
