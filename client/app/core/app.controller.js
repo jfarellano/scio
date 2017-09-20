@@ -12,8 +12,13 @@
             Session.logout()
             $window.location = '#/iniciosecion'
         }
+
         if(!Session.isAuth()){
+            console.log('Entro en no auth')
             $window.location = '#/iniciosecion'
+        }else{
+            console.log('Entro en auth')
+            $window.location = '#/app/dashboard'
         }
 
         $rootScope.$on('$stateChangeSuccess', function (event) {

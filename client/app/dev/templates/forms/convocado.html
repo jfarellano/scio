@@ -1,7 +1,7 @@
 <div class="modal_form">
     <md-dialog-content>
         <form name="convocanteForm">
-            <h2>Agregar nuevo convocado</h2>
+            <h2>Convocado</h2>
                         <div class="ui-wizard-content">
                 <md-input-container class="md-block" ng-if="!edit"> 
                     <label>Tipo de convocante</label>
@@ -27,7 +27,7 @@
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Segundo apellido</label>
-                            <input data-ng-model="involucrado.involved.natural.second_lastname" type="text">
+                            <input data-ng-model="involucrado.involved.natural.second_lastname" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Genero</label>
@@ -37,8 +37,10 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <p>Fecha de nacimiento</p>
-                        <md-datepicker ng-model="involucrado.involved.natural.birthdate" md-placeholder="Fecha de nacimiento" required></md-datepicker>
+                        <md-input-container>
+                            <label>Fecha de nacimiento ( DD/MM/AAAA )</label>
+                            <input data-ng-model="involucrado.involved.natural.birthdate" data-ng-pattern="/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/" required>
+                        </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>E-mail</label>
                             <input data-ng-model="involucrado.involved.email" type="email" required>
@@ -54,16 +56,18 @@
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Tipo de documento</label>
                             <md-select ng-model="involucrado.involved.natural.identifier_type" required>
-                                <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
-                                    {{type.value}}
-                                </md-option>
+                                <div ng-if="g.id != 1416">
+                                    <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
+                                        {{::type.value}}
+                                    </md-option>
+                                </div>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Ciudad de expedicion</label>
                             <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
                                 <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
-                                    {{c.value}}
+                                    {{::c.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>

@@ -3,7 +3,7 @@ angular.module('app')
 
         function($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, URL) {
             $urlRouterProvider
-                .otherwise('/iniciosecion');
+                .otherwise('/app/dashboard');
 
             $stateProvider
                 // Overall

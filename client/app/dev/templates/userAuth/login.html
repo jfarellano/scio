@@ -3,6 +3,7 @@
         <figure>
             <img src="{{app.logo}}">
         </figure>
+        <p class="error" ng-if="error">{{message}}</p>
         <fieldset>
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Correo electronico</label>
@@ -15,5 +16,5 @@
                 <br><md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar sesión</md-button>
         </fieldset>
     </form>
-    <a href="#/registro" class="options">Registarse</a>
+    <p><a href="#/registro" class="options">Registarse</a></p>
 </div>

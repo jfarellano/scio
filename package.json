@@ -42,5 +42,7 @@
   "engines": {
     "node": ">=4.4.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-sass": "^4.5.3"
+  }
 }

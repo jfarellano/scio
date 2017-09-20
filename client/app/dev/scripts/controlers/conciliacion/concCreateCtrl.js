@@ -13,6 +13,15 @@ angular.module('app')
         window.location = '#/app/conciliacion'
         console.log(response)
     })
+    $scope.printDate = function(){
+        console.log($scope.involucrado.involved.natural.birthdate)
+    }
+
+    Date.prototype.formatDate = function(){
+        return ("0" + this.getDate()).slice(-2) + 
+        "/" +  ("0" + (this.getMonth() + 1)).slice(-2) +
+        "/" +  this.getFullYear();
+    }
 //LOGIC
 //Modals
     $scope.edit = false
@@ -322,6 +331,7 @@ angular.module('app')
         })
     }
     $scope.edit_convocante = function(){
+        $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
@@ -389,6 +399,7 @@ angular.module('app')
         })
     }
     $scope.edit_convocado = function(){
+        $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){

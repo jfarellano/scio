@@ -3,7 +3,7 @@
 
     angular.module('app')
         .factory('appConfig', ['URL', appConfig])
-        .config(['$mdThemingProvider', mdConfig])
+        .config(['$mdThemingProvider', '$mdDateLocaleProvider', mdConfig])
 
     function appConfig(URL) {
         var pageTransitionOpts = [
@@ -55,7 +55,7 @@
         }
     }
 
-    function mdConfig($mdThemingProvider) {
+    function mdConfig($mdThemingProvider, $mdDateLocaleProvider) {
         var cyanAlt = $mdThemingProvider.extendPalette('cyan', {
             'contrastLightColors': '500 600 700 800 900',
             'contrastStrongLightColors': '500 600 700 800 900'
@@ -63,7 +63,15 @@
         var greenAlt = $mdThemingProvider.extendPalette('green', {
             'contrastLightColors': '400 500 600 700 800 900',
             'contrastStrongLightColors': '400 500 600 700 800 900'
-        })        
+        })
+        
+        $mdDateLocaleProvider.formatDate = function (date) {
+            return date ? moment(date).format('DD/MM/YYYY') : '';
+        }
+        $mdDateLocaleProvider.parseDate = function (dateString) {
+            var m = moment(dateString, 'DD/MM/YYYY', true);
+            return m.isValid() ? m.toDate() : new Date(NaN);
+        } 
 
         $mdThemingProvider
             .definePalette('cyanAlt', cyanAlt)

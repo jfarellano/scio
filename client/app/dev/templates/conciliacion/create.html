@@ -9,7 +9,7 @@
                             <label>Solicitnte del servicio:</label>
                             <md-select ng-model="solicitude.conciliation.applicant" required>
                                 <md-option ng-repeat="a in applicant" value="{{a.value}}">
-                                    {{a.value}}
+                                    {{::a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -17,7 +17,7 @@
                             <label>Finalidad de adquisición del servicio:</label>
                             <md-select ng-model="solicitude.conciliation.service_goal" required>
                                 <md-option ng-repeat="a in service_goal" value="{{a.value}}">
-                                    {{a.value}}
+                                    {{::a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -25,7 +25,7 @@
                             <label>Cuanto tiempo lleva el conflicto:</label>
                             <md-select ng-model="solicitude.conciliation.conflict_time" required>
                                 <md-option ng-repeat="a in conflict_time" value="{{a.value}}">
-                                    {{a.value}}
+                                    {{::a.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -33,7 +33,7 @@
                             <label>Area del derecho:</label>
                             <md-select ng-model="solicitude.conciliation.area" required>
                                 <md-option ng-repeat="area in area" value="{{area.value}}">
-                                    {{area.value}}
+                                    {{::area.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -41,15 +41,15 @@
                             <label>Tema del derecho:</label>
                             <md-select ng-model="solicitude.conciliation.topic" required>
                                 <md-option ng-repeat="top in topic" value="{{top.value}}">
-                                    {{top.value}}
+                                    {{::top.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Subtema del derecho:</label>
-                            <md-select ng-model="solicitude.conciliation.subtopic" required>
+                            <md-select ng-model="solicitude.conciliation.subtopic">
                                 <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
-                                    {{sub.value}}
+                                    {{::sub.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
@@ -74,7 +74,7 @@
                                 <div class="md-list-item-text" layout="column">
                                     <h3>{{::getName(conv)}}</h3>
                                     <h4>{{::getID(conv)}}</h4>
-                                    <p>Telefono: {{conv.involved.phone}}</p>
+                                    <p>Telefono: {{::conv.involved.phone}}</p>
                                 </div>
                                 <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
                                 <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
