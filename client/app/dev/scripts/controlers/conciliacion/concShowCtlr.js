@@ -78,9 +78,41 @@ angular.module('app')
         $scope.mobile = isMatch;
     });
 
-    $scope.getAvailableHours = function(Date, hours){
-        Conciliacion.get.rooms().then(function(response))
-    }
+    // $scope.roomSchedule = []
+    // Conciliacion.get.rooms().then(function(response){
+    //     $scope.rooms = response.data.rooms
+    //     $scope.rooms.forEach(function(room){
+    //         var roomHours = {room_id: room.id, audiences: []}
+    //         var availableHours = ['7:00':{'available': true}, '8:00':{'available': true}, '9:00':{'available': true}, '10:00':{'available': true}, '11:00':{'available': true}, '12:00':{'available': true}, '13:00':{'available': true}, '14:00':{'available': true},'15:00':{'available': true},'15:00':{'available': true},'16:00':{'available': true},'17:00':{'available': true},'18:00':{'available': true},'19:00':{'available': true},'20:00':{'available': true},'21:00':{'available': true},'22:00':{'available': true}]
+    //         Conciliacion.get.audiences_room(room.id).then(function(response){
+    //             var audiences = response.data.audiences
+    //             audiences.forEach(function(aud){
+    //                 availableHours[aud.hour].available = false
+    //             })
+    //             roomHours.audiences = availableHours
+    //             $scope.roomSchedule.push(roomHours)
+    //         })
+    //     })
+    // })
+
+    // $scope.getRoomsSchedule = function(){
+    //     $scope.roomSchedule = []
+    //     Conciliacion.get.rooms().then(function(response){
+    //         $scope.rooms = response.data.rooms
+    //         $scope.rooms.forEach(function(room){
+    //             var roomHours = {room_id: room.id, audiences: []}
+    //             var availableHours = ['7:00':{'available': true}, '8:00':{'available': true}, '9:00':{'available': true}, '10:00':{'available': true}, '11:00':{'available': true}, '12:00':{'available': true}, '13:00':{'available': true}, '14:00':{'available': true},'15:00':{'available': true},'15:00':{'available': true},'16:00':{'available': true},'17:00':{'available': true},'18:00':{'available': true},'19:00':{'available': true},'20:00':{'available': true},'21:00':{'available': true},'22:00':{'available': true}]
+    //             Conciliacion.get.audiences_room(room.id).then(function(response){
+    //                 var audiences = response.data.audiences
+    //                 audiences.forEach(function(aud){
+    //                     availableHours[aud.hour].available = false
+    //                 })
+    //                 roomHours.audiences = availableHours
+    //                 $scope.roomSchedule.push(roomHours)
+    //             })
+    //         })
+    //     })
+    // }
 
     // selected = null,
     // previous = null;
