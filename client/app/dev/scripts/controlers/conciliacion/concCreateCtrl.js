@@ -66,6 +66,7 @@ angular.module('app')
     };
     $scope.editConvocante = function(inv, ev){
         $scope.involucrado = inv
+        $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
         Conciliacion.get.constant_child(47 ,'department').then(function(response){
             $scope.departments = response.data.constants
             var r2 = $scope.departments.filter(function(d){
@@ -105,6 +106,7 @@ angular.module('app')
     };
     $scope.editConvocado = function(inv, ev){
         $scope.involucrado = inv
+        $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
         Conciliacion.get.constant_child(47 ,'department').then(function(response){
             $scope.departments = response.data.constants
             var r2 = $scope.departments.filter(function(d){
@@ -508,7 +510,6 @@ angular.module('app')
     };
 //FinLOGIC
 //VARIABLES
-
     $scope.study = {}
     $scope.resetStudy = function(){
         $scope.study = {}

@@ -78,6 +78,10 @@ angular.module('app')
         $scope.mobile = isMatch;
     });
 
+    $scope.getAvailableHours = function(Date, hours){
+        Conciliacion.get.rooms().then(function(response))
+    }
+
     // selected = null,
     // previous = null;
     // $scope.tabs = $scope.conc.documentos;

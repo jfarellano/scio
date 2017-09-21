@@ -92,6 +92,12 @@ angular.module('app')
                 },
                 constant_child:function(id, con){
                     return $http.get(IP + '/constants/children/'+id+'/'+con)
+                },
+                rooms:function(){
+                    return $http.get(IP + '/rooms')
+                },
+                audiences_room:function(id){
+                    return $http.get(IP + '/rooms/'+id+'/audiences')
                 }
             },
             delete:{
