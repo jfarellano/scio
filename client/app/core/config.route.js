@@ -62,5 +62,17 @@ angular.module('app')
                     templateUrl: "app/dev/templates/userAuth/login.html",
                     controller: 'loginCtrl'
                 })
+                //Test
+                .state('calendar', {
+                    url: '/calendar',
+                    templateUrl: URL.dev.template + '/test/calendar.html',
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'fullcalendar'
+                            ]);
+                        }]
+                    }
+                })
         }
     ]);

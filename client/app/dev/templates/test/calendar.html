@@ -1,0 +1,13 @@
+
+<section class="container-fluid no-breadcrumbs" ng-controller="calendarCtrl">
+
+    <section>
+        <div class="divider"></div>
+        <div ng-model="events" calendar="myCalendar" config="uiConfig.calendar" ui-calendar="uiConfig.calendar"></div>
+    </section>
+    <h3>Se muestra el array de eventos que muestra el calendario</h3>
+	<p>{{events}}</p>
+	<h3>Cuando se crea un nuevo evento haciendo click en el calendario se muestra el objeto evento, este se puede mover en la pantalla, cambiar duracion y no se le permite ocupar espacios ya ocupados</h3>
+	<p>{{newEvent}}</p>
+</section>
+

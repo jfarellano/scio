@@ -21,6 +21,10 @@
             $window.location = '#/app/dashboard'
         }
 
+        $scope.openCal = function(){
+            $window.location = '#/calendar'
+        }
+
         $rootScope.$on('$stateChangeSuccess', function (event) {
             if($window.location.hash != '#/iniciosecion' && $window.location.hash != '#/registro'){
                 if(!Session.isAuth()){
