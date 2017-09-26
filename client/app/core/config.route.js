@@ -29,6 +29,13 @@ angular.module('app')
                             templateUrl: URL.dev.template + '/conciliacion/show.html',
                             controller: 'ConcShowCtlr'
                         }
+                    },
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'fullcalendar'
+                            ]);
+                        }]
                     }
                 })
                 //Create

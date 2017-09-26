@@ -2,7 +2,7 @@
     <md-dialog-content>
         <form name="convocanteForm">
             <h2>Convocado</h2>
-                        <div class="ui-wizard-content">
+            <div class="ui-wizard-content">
                 <md-input-container class="md-block" ng-if="!edit"> 
                     <label>Tipo de convocante</label>
                     <md-select ng-model="involucrado.involved.nature" ng-if="!edit" required>
@@ -30,27 +30,25 @@
                             <input data-ng-model="involucrado.involved.natural.second_lastname" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Genero</label>
+                            <label>Género</label>
                             <md-select ng-model="involucrado.involved.natural.gender" required>
                                 <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
                                     {{g.value}}
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <md-input-container>
-                            <label>Fecha de nacimiento ( DD/MM/AAAA )</label>
-                            <input data-ng-model="involucrado.involved.natural.birthdate" data-ng-pattern="/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/" required>
-                        </md-input-container>
+                        <label>Fecha de nacimiento</label>
+                        <md-datepicker ng-model="involucrado.involved.natural.birthdate" placeholder="Fecha de nacimiento" required></md-datepicker>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>E-mail</label>
                             <input data-ng-model="involucrado.involved.email" type="email" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Pagina web</label>
+                            <label>Página web</label>
                             <input data-ng-model="involucrado.involved.web_site" type="text">
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Telefono de contacto</label>
+                            <label>Teléfono de contacto</label>
                             <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
@@ -64,7 +62,7 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Ciudad de expedicion</label>
+                            <label>Ciudad de expedición</label>
                             <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
                                 <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
                                     {{::c.value}}
@@ -72,11 +70,11 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Numero de identificación</label>
+                            <label>Número de identificación</label>
                             <input input-num ng-model="involucrado.involved.natural.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.natural.identifier_type" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Direccion de residencia</label>
+                            <label>Dirección de residencia</label>
                             <input ng-model="involucrado.involved.address" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
@@ -97,10 +95,10 @@
                         </md-input-container>
                     </fieldset>
                 </div>
-                <div ng-if="involucrado.involved.nature == 'juridica'">
+                <div ng-if="involucrado.involved.nature == 'juridico'">
                      <fieldset>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Nit</label>
+                            <label>NIT</label>
                             <input ng-model="involucrado.involved.juridical.nit" type="number" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
@@ -112,7 +110,7 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Sector economico</label>
+                            <label>Sector económico</label>
                             <md-select ng-model="involucrado.involved.juridical.economic_sector" required>
                                 <md-option ng-repeat="g in economic_sector" value="{{g.value}}" requiered>
                                     {{g.value}}
@@ -124,11 +122,11 @@
                             <input ng-model="involucrado.involved.juridical.name" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Direccion de judicial</label>
+                            <label>Dirección judicial</label>
                             <input ng-model="involucrado.involved.address" type="text" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Pais de origen</label>
+                            <label>País de origen</label>
                             <md-select ng-model="involucrado.involved.juridical.origin_country" required>
                                 <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
                                     {{g.value}}
@@ -140,7 +138,7 @@
                             <input data-ng-model="involucrado.involved.email" type="email" required>
                         </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label>Telefono de contacto</label>
+                            <label>Teléfono de contacto</label>
                             <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                         </md-input-container>
                      </fieldset>
@@ -168,6 +166,6 @@
     </md-dialog-content>
     <md-dialog-actions>
         <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!convocanteForm.$valid">Agregar</md-button>  
+        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!convocanteForm.$valid">{{getButtonLable()}}</md-button>  
     </md-dialog-actions>
 </div>

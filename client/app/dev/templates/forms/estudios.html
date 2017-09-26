@@ -11,13 +11,13 @@
 		        <input data-ng-model="study.level" type="text">
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Titulo</label>
+		        <label>Título</label>
 		        <input data-ng-model="study.title" type="text" required>
 		    </md-input-container>
 		</form>
 	</md-dialog-content>
 	<md-dialog-actions>
         <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">Agregar</md-button>  
+        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">{{getButtonLable()}}</md-button>  
     </md-dialog-actions>
 </div> 

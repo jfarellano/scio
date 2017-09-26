@@ -14,3 +14,27 @@ progress {
   height: 18px;
   border-radius: 9px;
 }
+
+
+.horizontal_align{
+	
+	ul {
+	    text-align: justify;
+	}
+	ul:after {
+	    content: '';
+	    display: inline-block;
+	    width: 100%;
+	}
+	ul:before {
+	    content: '';
+	    display: block;
+	    margin-top: -1.25em;
+	}
+	li {
+	    display: inline-block;
+	    margin-right: -.25em;
+	    position: relative;
+	    top: 1.25em;
+	}
+}

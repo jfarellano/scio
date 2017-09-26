@@ -1,8 +1,44 @@
 
     <div class="box box-default show-scroll">
         <div class="show_content" data-slim-scroll data-scroll-height="auto">
-            <h2>Solicitud de conciliacion No.1342</h2>
+            <h2>Solicitud de conciliación No.1342</h2>
             <h3>{{conc.state.toUpperCase()}}</h3>
+
+            <div ng-if="conc.state == 'pagada'">
+                <h4>¿El centro de conciliacion acepta esta solicitud como valida?</h4>
+                <ul class="horizontal_align">
+                    <li><button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="coordAccept('aceptada')">Aceptar</button></li>
+                    <li><button class="md-raised btn-w-md md-warn md-button md-ink-ripple" ng-click="coordAccept('denegada')">Denegar</button></li>
+                </ul>
+            </div>
+
+            <div ng-if="conc.state == 'aceptada'">
+                <h4>Asignacion de conciliador</h4>
+                <p>Seleccione un conciliador de la lista para asignarlo a esta solicitud.</p>
+                <md-list-item class="md-3-line" ng-repeat="con in conciliators" ng-click="setConciliator(con)">
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{con.name}}</h3>
+                    </div>
+                </md-list-item>
+                
+            </div>
+
+            <div ng-if="conc.state == 'pendiente_por_aceptacion_de_conciliador'">
+                <h4>¿Usted acepta esta conciliación?</h4>
+                <ul class="horizontal_align">
+                    <li><button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="">Aceptar</button></li>
+                    <li><button class="md-raised btn-w-md md-warn md-button md-ink-ripple" ng-click="">Denegar</button></li>
+                </ul>
+            </div>
+
+
+            <div ng-if="true">
+                <h4>Programar audiencia</h4>
+                <p>Seleccione en el siguiente horario una hora disponible y en el cuadro nueva audiencia arrastrelo de la parte inferior para cambiar la longitud de la audiencia, cuando la quiera programar en la fecha y hora deseada oprima el boton programar.</p>
+                <div id="programCalendar" ng-model="events" calendar="programCalendar" config="uiConfig.programCalendar" ui-calendar="uiConfig.programCalendar"></div>
+                <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="programAudience()">Aceptar</button>
+            </div>
+
             <h4><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
@@ -10,7 +46,7 @@
                     <div class="md-list-item-text" layout="column">
                         <h3>{{getName(conv)}}</h3>
                         <h4>{{getID(conv)}}</h4>
-                        <p>Telefono: {{conv.involved.phone}}</p>
+                        <p>Teléfono: {{conv.involved.phone}}</p>
                     </div>
                 </div>
             </md-list-item>
@@ -21,7 +57,7 @@
                     <div class="md-list-item-text" layout="column">
                         <h3>{{getName(conv)}}</h3>
                         <h4>{{getID(conv)}}</h4>
-                        <p>Telefono: {{conv.involved.phone}}</p>
+                        <p>Teléfono: {{conv.involved.phone}}</p>
                     </div>
                 </div>
             </md-list-item>
@@ -37,7 +73,7 @@
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
-            <h3><b>Cuantia</b> $ {{conc.conciliation.payment_amount}}</h3>
+            <h3><b>Cuantía</b> $ {{conc.conciliation.payment_amount}}</h3>
             <!-- <section class="box box-default">
                 <div class="box-body no-padding">                
                     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>

@@ -1,5 +1,5 @@
 angular.module('app')
-    .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', function($scope, $state, $window, Conciliacion, screenSize){
+    .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize',function($scope, $state, $window, Conciliacion, screenSize){
         Conciliacion.index().then(function(response) {
             $scope.data = response.data.solicitudes;
         },function(response){

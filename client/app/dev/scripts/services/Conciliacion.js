@@ -81,6 +81,12 @@ angular.module('app')
                 },
                 study:function(solID, invID, assigID, studyID,study){
                     return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies/' +studyID, study)
+                },
+                coordinator_solicitude:function(solID, sol){
+                    return $http.put(IP + '/coordinator/solicitudes/' + solID, sol)
+                },
+                set_conciliator: function(solID, conID){
+                    return $http.get(IP + '/coordinator/users/'+conID+'/solicitudes/'+solID)
                 }
             },
             get:{

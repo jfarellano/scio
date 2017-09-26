@@ -1,11 +1,73 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL){
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Audiencias', 'Session', '$compile', 'uiCalendarConfig', function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Audiencias, Session, $compile, uiCalendarConfig){
 
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
+        if($scope.conc.state == 'aceptada'){
+            Session.getConciliators().then(function(response){
+                $scope.conciliators = response.data.users
+            },function(response){
+                console.log(response.data)
+            })
+        }
     },function (request) {
         $scope.conc = {}
     })
+
+    $scope.reFetchConc = function(){
+        Conciliacion.show($state.params.id).then(function (request) {
+            $scope.conc = request.data.solicitude;
+            if($scope.conc.state == 'aceptada'){
+                Session.getConciliators().then(function(response){
+                    $scope.conciliators = response.data.users
+                },function(response){
+                    console.log(response.data)
+                })
+            }
+        },function (request) {
+            $scope.conc = {}
+        })
+    }
+
+    $scope.programAudience = function(){
+        if(!$scope.program){
+            var eve = uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents')
+            var prog = eve[eve.length - 1]
+            var sDate = prog.start._d
+            var sHH = sDate.getHours()
+            var sMM = sDate.getMinutes()
+            var eDate = prog.end._d
+            var eHH = eDate.getHours()
+            var eMM = eDate.getMinutes()
+            var aud = {
+                date: sDate.sendFormat(),
+                starting_hour: (sHH>9 ? '' : '0') + sHH + ':' + (sMM>9 ? '' : '0') + sMM,
+                ending_hour: (eHH>9 ? '' : '0') + eHH + ':' + (eMM>9 ? '' : '0') + eMM
+            }
+            Audiencias.create.audience($scope.conc.id, {audience: aud}).then(function(response){
+                console.log(response.data)
+            }, function(response){
+                console.log(response.data)
+            })
+        }
+    }
+
+    $scope.coordAccept = function(response){
+        $scope.conc.state = response
+        Conciliacion.update.coordinator_solicitude($scope.conc.id, $scope.conc).then(function(response){
+            $scope.reFetchConc()
+        }, function(response){
+            console.log(response.data)
+        })
+    }
+
+    $scope.setConciliator = function(conciliator){
+        Conciliacion.update.set_conciliator($scope.conc.id, conciliator.id).then(function(response){
+            $scope.reFetchConc()
+        }, function(response){
+            console.log(response.data)
+        })
+    }
 
     $scope.showParticipant = function(part, ev){
         $scope.part = part
@@ -77,6 +139,77 @@ angular.module('app')
     $scope.mobile = screenSize.on('xs, sm', function(isMatch){
         $scope.mobile = isMatch;
     });
+
+//CALENDAR
+    
+
+    Audiencias.get.user_audiences(Session.getUserID()).then(function(response){
+        var audiencias = response.data.audiences
+        audiencias.forEach(function(aud){
+            var a = {
+                title: aud.title,
+                start: new Date(aud.start),
+                end: new Date(aud.end),
+                allDay: false, 
+                editable: false
+            }
+            $scope.audiencias.push(a)
+        })
+    }, function(response){console.log(response.data)})
+    $scope.program = true
+    $scope.uiConfig = {
+        programCalendar:{
+            height: 450,
+            editable: true,
+            eventOverlap: false,
+            defaultView: 'agendaWeek',
+            timezone: 'local',
+            allDaySlot: false,
+            header: {
+                left: 'Calendario de audiencias',
+                center: '',
+                right: 'today prev,next'
+            },
+            dayClick: function(date, allDay, jsEvent, view){
+                console.log('Click')
+                var selectDate = new Date(date.format())
+                var endDate = new Date(selectDate.setHours(selectDate.getHours() + 1) + 60*60*1000)
+                if($scope.program){
+                    console.log('Entro')
+                    $scope.newEvent = {
+                        title: 'Nueva audiencia',
+                        start: selectDate,
+                        end: endDate,
+                        allDay:false,
+                        editable: true,
+                        eventDurationEditable: true,
+                        _itsUTC: false
+                    }
+                    $scope.audiencias.push($scope.newEvent)
+                    console.log($scope.audiencias)
+                    console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
+                    $scope.program = false
+                    //uiCalendarConfig.calendars.programCalendar.fullCalendar('refetchEvents')
+                }
+            },
+            eventDragStop: function(){
+                
+            },
+            eventResizeStop: function(){
+                console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
+            }
+        }
+    }
+
+    Date.prototype.sendFormat = function() {
+      var mm = this.getMonth() + 1; // getMonth() is zero-based
+      var dd = this.getDate();
+      return [(dd>9 ? '' : '0') + dd,'/',(mm>9 ? '' : '0') + mm,'/',this.getFullYear()].join('');
+    };
+
+    $scope.audiencias = []
+    $scope.events = [$scope.audiencias]
+//ENDCALENDAR
 
     // $scope.roomSchedule = []
     // Conciliacion.get.rooms().then(function(response){

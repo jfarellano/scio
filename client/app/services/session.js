@@ -10,7 +10,8 @@ angular.module('app')
       }catch(err){
         $localStorage.auth = {
           token: null,
-          role: null
+          role: null,
+          user_id: null
         }
         return false;
       }
@@ -18,10 +19,11 @@ angular.module('app')
     signUp: function(info){
       return $http.post(IP + '/users', info)
     },
-    setToken: function(token, role){
+    setToken: function(token, role, user_id){
       $localStorage.auth = {
         token: token,
-        role: role
+        role: role,
+        user_id: user_id
       }
     },
     logout: function(){
@@ -31,7 +33,8 @@ angular.module('app')
       });
       $localStorage.auth = {
         token: null,
-        role: null
+        role: null,
+        user_id: null
       }
       $rootScope.$broadcast('sessionDestroyed');
     },
@@ -40,6 +43,12 @@ angular.module('app')
     },
     getRole: function(){
       return this.isAuth() ? $localStorage.auth.role : false;
+    },
+    getUserID: function(){
+      return this.isAuth() ? $localStorage.auth.user_id : false;
+    },
+    getConciliators: function(){
+      return $http.get(IP + '/users')
     }
   }
 }]);

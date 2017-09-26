@@ -31,11 +31,11 @@
 		        </md-select>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Numero de identificación</label>
+		        <label>Número de identificación</label>
 		        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Telefono de contacto</label>
+		        <label>Teléfono de contacto</label>
 		        <input ng-model="involucrado.involved.assignee.telephone" data-ng-minlength=7 type="number" required>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
@@ -43,7 +43,7 @@
 		        <input ng-model="involucrado.involved.assignee.cellphone" data-ng-minlength=7 type="number" required>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Pais</label>
+		        <label>País</label>
 		        <md-select ng-model="involucrado.involved.assignee.country" required>
 		            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
 		                {{c.value}}
@@ -67,7 +67,7 @@
 		        </md-select>
 		    </md-input-container>
 		    <md-input-container class="md-block" flex-gt-sm>
-		        <label>Direccion de residencia</label>
+		        <label>Dirección de residencia</label>
 		        <input ng-model="involucrado.involved.assignee.address" type="text" required>
 		    </md-input-container>
 		    <h3>Estudios</h3>
@@ -83,7 +83,7 @@
 					        <input ng-model="st.level" type="text" required>
 					    </md-input-container>
 					    <md-input-container class="flex-gt-xs" flex-gt-xs>
-					        <label>Titulo</label>
+					        <label>Título</label>
 					        <input ng-model="st.title" type="text" required>
 					    </md-input-container>
 					    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="showStudy(st, true)" ng-if="edit">Guardar</md-button>
@@ -115,6 +115,6 @@
 	</md-dialog-content>
 	<md-dialog-actions>
         <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
-        <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">Agregar</md-button>  
+        <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">{{getButtonLable()}}</md-button>  
     </md-dialog-actions>
 </div> 
