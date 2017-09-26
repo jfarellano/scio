@@ -46,7 +46,25 @@ angular.module('app')
             }
             Audiencias.create.audience($scope.conc.id, {audience: aud}).then(function(response){
                 console.log(response.data)
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('Audiencia programada')
+                    .textContent('La audiencia se programo exitosamente.')
+                    .ariaLabel('Programacion exitosa')
+                    .ok('Continuar')
+                );
             }, function(response){
+                $mdDialog.show(
+                  $mdDialog.alert()
+                    .parent(angular.element(document.querySelector('#popupContainer')))
+                    .clickOutsideToClose(true)
+                    .title('No hay salas disponibles')
+                    .textContent('Lo sentimos no hay salas disponibles en el periodo de tiempo que selecciono. Seleccione otro horario.')
+                    .ariaLabel('Programacion invalida')
+                    .ok('Volver a programar')
+                );
                 console.log(response.data)
             })
         }

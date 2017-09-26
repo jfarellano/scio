@@ -42,6 +42,7 @@ angular.module('app')
         $window.location = '#/iniciosecion'
     }
 
+    $scope.error = false
     //Validation
     original = angular.copy($scope.user);
     $scope.canSubmit = function() {
@@ -51,6 +52,7 @@ angular.module('app')
         Session.signUp($scope.user).then(function(response){
             $window.location = '#/iniciosecion'
         },function(response){
+            $scope.error = true
             console.log(response.data)
             console.log('Datos invalidos')
         })

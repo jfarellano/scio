@@ -40,18 +40,13 @@ angular.module('app')
     //Convocante
     $scope.showConvocante = function(ev) {
         $('#loader-container').fadeIn('fast');
+        var parentEl = angular.element(document.body);
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/convocante.html',
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true,
-            onRemoving: function(event, removePromise){
-                $scope.edit = false
-                $scope.hecho_pretension.description = ''
-                $scope.resetInvolucrado()
-            }
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_convocante()
@@ -89,8 +84,7 @@ angular.module('app')
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_convocado()
@@ -146,8 +140,7 @@ angular.module('app')
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_apoderado()
@@ -169,8 +162,7 @@ angular.module('app')
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_representante()
@@ -190,8 +182,7 @@ angular.module('app')
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_hp(1)
@@ -216,8 +207,7 @@ angular.module('app')
             scope: $scope,        
             preserveScope: true,
             targetEvent: ev,
-            fullscreen: $scope.customFullscreen,
-            clickOutsideToClose:true
+            escapeToClose: false
         }).then(function(answer) {
             if($scope.edit){
                 $scope.edit_hp(2)
@@ -321,7 +311,7 @@ angular.module('app')
     //Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
-        console.log($scope.involucrado.involved)
+        console.log($scope.involucrado)
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
             console.log(response.data.involved)
             if($scope.involucrado.involved.nature == 'natural'){

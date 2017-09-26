@@ -1,7 +1,15 @@
-<div class="modal_form">
-    <md-dialog-content>
+<div>
+    <md-toolbar>
+      <div class="md-toolbar-tools scio-bar">
+        <h2>Apoderado</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="modal_form">
 	    <form name="appForm">
-	    <h2>Apoderado</h2>
 		    <md-input-container class="md-block" flex-gt-sm>
 		        <label>Primer nombre</label>
 		        <input data-ng-model="involucrado.involved.assignee.first_name" type="text" required>
