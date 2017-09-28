@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('SignupCtrl', ['$scope', '$window', 'URL', 'Session',function($scope, $window, URL, Session){
+.controller('SignupCtrl', ['$scope', '$window', 'URL', 'Session', '$mdDialog',function($scope, $window, URL, Session, $mdDialog){
     $scope.user = {
         first_first_name: '',
         second_first_name: '',
@@ -50,11 +50,20 @@ angular.module('app')
     };    
     $scope.submitForm = function() {
         Session.signUp($scope.user).then(function(response){
-            $window.location = '#/iniciosecion'
+            var confirm = $mdDialog.confirm()
+                  .title('Registro exitoso')
+                  .textContent('Su registro ha sido exitoso. Por favor incie sesión a continuación.')
+                  .ariaLabel('Registro exitoso')
+                  .ok('Continuar')
+            $mdDialog.show(confirm).then(function() {
+              $window.location = '#/iniciosecion'
+              alertify.log("Registro exitoso")
+            })
         },function(response){
             $scope.error = true
             console.log(response.data)
             console.log('Datos invalidos')
+            alertify.error("Error en el registro.")
         })
     }; 
 }]);

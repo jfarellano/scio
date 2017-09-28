@@ -229,25 +229,30 @@ angular.module('app')
     //Apoderado
     $scope.add_apoderado = function(){
         Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee).then(function(response){
+            alertify.success("Apoderado agregado con exito")
             $scope.studies.forEach(function(elem){
                 Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, response.data.assignee.id, elem).then(function(response){
                     console.log(response.data)
+                    alertify.success("Estudio agregado con exito")
                 },function(response){
+                    alertify.error("Error agregando estudio")
                     console.log(response.data)
                 })
             })
             $scope.resetInvolucrado()
             $scope.getSolicitude()
         },function(response){
+            alertify.error("Error agregando apoderado")
             $scope.resetInvolucrado()
             console.log(response.data)
         })
     }
     $scope.edit_apoderado = function(){
         Conciliacion.update.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.involucrado.involved.assignee).then(function(response){
-            console.log(response.data)
+            alertify.success("Edicion de apoderado exitosa")
             $scope.resetInvolucrado()
         },function(response){
+            alertify.error("Error en la edición del apoderado")
             $scope.resetInvolucrado()
             console.log(response.data)
         })
@@ -257,8 +262,10 @@ angular.module('app')
         if($scope.edit){
             Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study).then(function(response){
                 $scope.studies.push(response.data.study)
+                alertify.success("Se agrego exitosamente el estudio")
                 $scope.resetStudy()
             },function(response){
+                alertify.error("Error agregando el estudio")
                 $scope.resetStudy()
                 console.log(response.data)
             })
@@ -270,8 +277,10 @@ angular.module('app')
     }
     $scope.edit_estudio = function(){
         Conciliacion.update.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id, $scope.study).then(function(response){
+            alertify.success("La edicion del estudio fue exitosa")
             $scope.resetStudy()
         },function(response){
+            alertify.error("La edicion del estudio no fue exitosa")
             $scope.resetStudy()
             console.log(response.data)
         })
@@ -281,12 +290,15 @@ angular.module('app')
             $scope.study = $scope.involucrado.involved.assignee.studies[index]
             Conciliacion.delete.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id).then(function(response){
                 $scope.studies.splice( index, 1 )
+                alertify.success("Se elimino correctamente el estudio")
                 $scope.resetStudy()
             },function(response){
+                alertify.error("No se pudo eliminar correctamnte el estudio.")
                 $scope.resetStudy()
                 console.log(response.data)
             })
         }else{
+            alertify.success("Se elimino correctamente el estudio")    
             $scope.studies.splice( index, 1 )
             $scope.resetStudy()
         }
@@ -295,16 +307,20 @@ angular.module('app')
     $scope.add_representante = function(){
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative).then(function(response){
             console.log(response.data)
+            alertify.success("Representante agregado con exito")
             $scope.resetInvolucrado()
         },function(response){
+            alertify.error("Error agregando al representante")
             console.log(response.data)
         })
     }
     $scope.edit_representante = function(){
         Conciliacion.update.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative.id, $scope.involucrado.involved.representative).then(function(response){
             console.log(response.data)
+            alertify.success("Representante editado con exito")
             $scope.resetInvolucrado()
         },function(response){
+            alertify.error("Error editado al representante")
             console.log(response.data)
         })
     }
@@ -313,12 +329,13 @@ angular.module('app')
         $scope.involucrado.participation_type = 'convocante';
         console.log($scope.involucrado)
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
-            console.log(response.data.involved)
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
+                    alertify.success("Exito agregando convocante")
                     $scope.resetInvolucrado()
                 }, function(response){
+                    alertify.error("Error agregando convocante")
                     console.log(response.data)
                     $scope.resetInvolucrado()
                 })
@@ -326,14 +343,17 @@ angular.module('app')
                 console.log($scope.involucrado.involved)
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
+                    alertify.success("Exito agregando convocante")
                     $scope.resetInvolucrado()
                 },function(response){
+                    alertify.error("Error agregando convocante")
                     console.log(response.data)
                     $scope.resetInvolucrado()
                 })
             }
         },function(response){
             console.log(response.data)
+            alertify.error("Error agregando convocante")
         })
     }
     $scope.edit_convocante = function(){
@@ -341,11 +361,12 @@ angular.module('app')
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
-                    console.log(response.data)
+                    alertify.success("Edicion exitosa de convocante")
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
                     $scope.edit = false
                 }, function(response){
+                    alertify.error("Error en la edicion de convocante")
                     console.log(response.data)
                     $scope.resetInvolucrado()
                     $scope.edit = false
@@ -353,9 +374,11 @@ angular.module('app')
             }else{
                 Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
+                    alertify.success("Edicion exitosa de convocante")
                     $scope.resetInvolucrado()
                     $scope.edit = false
                 }, function(response){
+                    alertify.error("Error en la edicion de convocante")
                     console.log(response.data)
                     $scope.resetInvolucrado()
                     $scope.edit = false
