@@ -9,36 +9,44 @@
 
 <form name="signupForm" novalidate ng-submit="submitForm()">
     <fieldset>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Nombre</label>
-            <input ng-model="user.name" type="text" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Primer apellido</label>
-            <input ng-model="user.first_lastname" type="text" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Segundo apellido</label>
-            <input ng-model="user.second_lastname" type="text" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Telefono de contacto</label>
-            <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>E-mail</label>
-            <input ng-model="user.email" type="email" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Contraseña</label>
-            <input ng-model="user.password" name="pass" type="password" required>
-        </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Verifique su contraseña</label>
-            <input ng-model="user.password_c" data-match="signupForm.pass" type="password" required>
-        </md-input-container>
-        <!-- 
-        <md-input-container class="md-block" flex-gt-sm>
+        <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Nombre</label>
+                <input ng-model="user.name" type="text" required>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Primer apellido</label>
+                <input ng-model="user.first_lastname" type="text" required>
+            </md-input-container>
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Segundo apellido</label>
+                <input ng-model="user.second_lastname" type="text" required>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Telefono de contacto</label>
+                <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
+            </md-input-container>
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>E-mail</label>
+                <input ng-model="user.email" type="email" required>
+            </md-input-container>
+        </div>
+        <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Contraseña</label>
+                <input ng-model="user.password" name="pass" type="password" required>
+            </md-input-container>
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Verifique su contraseña</label>
+                <input ng-model="user.password_c" data-match="signupForm.pass" type="password" required>
+            </md-input-container>
+        </div>
+        
+ <!--        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Tipo de documento</label>
             <md-select ng-model="user.id_type" required>
                 <md-option ng-repeat="type in idType" value="{{type}}" requiered>
@@ -46,25 +54,25 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Numero de identificación</label>
             <input ng-model="user.id_number" type="number" data-ng-minlength=8 ng-disabled="!user.id_type" required>
         </md-input-container>
         <p>Fecha de expedición</p>
         <md-datepicker ng-model="user.id_expedition_date" md-placeholder="Fecha de expedición" required></md-datepicker>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Departamento de expedicion</label>
             <md-select ng-model="department" required>
                 <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Ciudad de expedicion</label>
             <md-select ng-model="user.id_expedition_city" ng-disabled="!department" required>
                 <md-option ng-repeat="city in departments[department]" value="{{city}}">{{city}}</md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Genero</label>
             <md-select ng-model="user.gender" required>
                 <md-option ng-repeat="g in gender" value="{{g}}">
@@ -72,43 +80,45 @@
                 </md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Departamento de residencia</label>
             <md-select ng-model="user.resident_department" required>
                 <md-option ng-repeat="(department, cities) in departments" value="{{department}}">{{department}}</md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Ciudad de residencia</label>
             <md-select ng-model="user.resident_city" required>
                 <md-option ng-repeat="city in departments[user.resident_department]" ng-disabled="!user.resident_department" value="{{city}}">{{city}}</md-option>
             </md-select>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Direccion de residencia</label>
             <input ng-model="user.direccion" type="text" required>
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
             <label>Estrato de residencia</label>
             <input ng-model="user.estrato" type="number" data-min=1 data-max=6 required>
-        </md-input-container>
+        </md-input-container> -->
         <md-checkbox ng-model="lawyer" aria-label="Es abogado">Es usted abogado?</md-checkbox>
         <div ng-if="lawyer">
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Numero de tarjeta profesional</label>
-                <input ng-model="user.lawyer_id" type="number" required>
-            </md-input-container>
-            <md-input-container class="full-width">
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Numero de tarjeta profesional</label>
+                    <input ng-model="user.professional_card" type="number" required>
+                </md-input-container>
+            </div>
+            <!-- <md-input-container class="full-width">
                 <label>Años de experiencia</label>
                 <md-select ng-model="user.experience_years" aria-label="select" required>
                     <md-option ng-repeat="n in numbers" value="{{n}}"> {{n}} </md-option>
                 </md-select>
             </md-input-container>
-            <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
                 <label>Nombre de la universidad en la que se graduo</label>
                 <input ng-model="user.univercity_name" type="text" required>
             </md-input-container>
-            <md-input-container class="md-block" flex-gt-sm>
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
                 <label>Titulo universitario</label>
                 <input ng-model="user.univercity_title" type="text" required>
             </md-input-container>
@@ -117,8 +127,8 @@
                 <md-select ng-model="user.study_level" aria-label="select" required>
                     <md-option ng-repeat="l in level" value="{{l}}"> {{l}} </md-option>
                 </md-select>
-            </md-input-container>
-        </div> -->
+            </md-input-container> -->
+        </div>
         <br>
         <md-button type="submit"
         ui-wave

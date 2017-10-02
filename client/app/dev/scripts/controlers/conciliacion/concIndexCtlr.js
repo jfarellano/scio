@@ -1,11 +1,28 @@
 angular.module('app')
-    .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize',function($scope, $state, $window, Conciliacion, screenSize){
-        Conciliacion.index().then(function(response) {
-            $scope.data = response.data.solicitudes;
-        },function(response){
-            $scope.data = [];
-            console.log(response.data)
-        })
+    .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', 'Session',function($scope, $state, $window, Conciliacion, screenSize, Session){
+        
+        if(Session.getRole() == 'coordinator'){
+            Conciliacion.coordinator_index().then(function(response){
+                $scope.data = response.data.solicitudes;
+            }, function(response){
+                $scope.data = []
+                console.log(response.data)
+            })
+        }else{
+            Conciliacion.index().then(function(response) {
+                $scope.data = response.data.solicitudes;
+            },function(response){
+                $scope.data = [];
+                console.log(response.data)
+            })
+        }
+
+        $scope.getState = function(conc){
+            return conc.state.toUpperCase().replaceAll('_', ' ')
+        }
+        String.prototype.replaceAll = function(str1, str2, ignore){
+            return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+        }
 
         $scope.state = Conciliacion.state();
 

@@ -8,7 +8,8 @@ angular.module('app')
 
     $scope.login = function(){
     	Session.login($scope.user).then(function(response){
-    		Session.setToken(response.data.token.secret, 0, response.data.token.user_id)
+            var user = response.data.token.user
+    		Session.setToken(response.data.token.secret,user.role,user.id, user.name + ' ' + user.first_lastname + ' ' + user.second_lastname, user.email)
     		window.location = '#/app/dashboard';
     	},function(response){
     		$scope.message = response.data.single_authentication

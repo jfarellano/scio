@@ -17,7 +17,7 @@ angular.module('app')
         direccion: '',
         estrato: '',
         //Lawyer
-        lawyer_id: '',
+        professional_card: '',
         experience_years: '',
         univercity_name: '',
         univercity_title: '',
@@ -50,15 +50,15 @@ angular.module('app')
     };    
     $scope.submitForm = function() {
         Session.signUp($scope.user).then(function(response){
-            var confirm = $mdDialog.confirm()
-                  .title('Registro exitoso')
-                  .textContent('Su registro ha sido exitoso. Por favor incie sesión a continuación.')
-                  .ariaLabel('Registro exitoso')
-                  .ok('Continuar')
-            $mdDialog.show(confirm).then(function() {
-              $window.location = '#/iniciosecion'
-              alertify.log("Registro exitoso")
-            })
+            $mdDialog.alert()
+                .parent(angular.element(document.querySelector('#popupContainer')))
+                .clickOutsideToClose(true)
+                .title('Registro exitoso')
+                .textContent('Su registro ha sido exitoso. Por favor incie sesión a continuación.')
+                .ariaLabel('Registro exitoso')
+                .ok('Continuar')
+                $window.location = '#/iniciosecion'
+                alertify.log("Registro exitoso")
         },function(response){
             $scope.error = true
             console.log(response.data)

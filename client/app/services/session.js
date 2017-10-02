@@ -1,5 +1,6 @@
 angular.module('app')
 .factory('Session', ['$http', '$localStorage', '$sessionStorage', 'IP', '$rootScope', function SessionFactory($http, $localStorage, $sessionStorage, IP, $rootScope) {
+
   return {
     login: function(user){
       return $http({method: 'POST', url: IP + '/sessions', data: {single: user}})
@@ -11,7 +12,9 @@ angular.module('app')
         $localStorage.auth = {
           token: null,
           role: null,
-          user_id: null
+          user_id: null,
+          name: null,
+          email: null
         }
         return false;
       }
@@ -19,11 +22,13 @@ angular.module('app')
     signUp: function(info){
       return $http.post(IP + '/users', info)
     },
-    setToken: function(token, role, user_id){
+    setToken: function(token, role, user_id, name, email){
       $localStorage.auth = {
         token: token,
         role: role,
-        user_id: user_id
+        user_id: user_id,
+        name: name,
+        email: email
       }
     },
     logout: function(){
@@ -34,7 +39,9 @@ angular.module('app')
       $localStorage.auth = {
         token: null,
         role: null,
-        user_id: null
+        user_id: null,
+        name: null,
+        email: null
       }
       $rootScope.$broadcast('sessionDestroyed');
     },
@@ -47,8 +54,17 @@ angular.module('app')
     getUserID: function(){
       return this.isAuth() ? $localStorage.auth.user_id : false;
     },
+    getName: function(){
+      return this.isAuth() ? $localStorage.auth.name : false;
+    },
+    getEmail: function(){
+      return this.isAuth() ? $localStorage.auth.email : false;
+    },
     getConciliators: function(){
       return $http.get(IP + '/users')
+    },
+    getHeaders: function(){
+      return {Authorization: 'Token token='+this.getToken()}
     }
   }
 }]);

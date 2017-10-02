@@ -6,6 +6,7 @@
         'matchMedia'//Este modulo sirve para ejecutar funciones segun el tamaño de la pantalla
         ,'ngStorage'
         ,'validation.match'
+        ,'ngFileUpload'
         // Angular modules
         ,'ui.router'
         ,'ngAnimate'

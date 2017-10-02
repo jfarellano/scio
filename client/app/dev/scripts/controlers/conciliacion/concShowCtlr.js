@@ -1,6 +1,9 @@
 angular.module('app')
 .controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Audiencias', 'Session', '$compile', 'uiCalendarConfig', function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Audiencias, Session, $compile, uiCalendarConfig){
 
+    console.log(Session.getRole())
+    $scope.Session =  Session
+
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
         if($scope.conc.state == 'aceptada'){
@@ -10,6 +13,9 @@ angular.module('app')
                 console.log(response.data)
             })
         }
+        Conciliacion.get.proof($scope.conc.id).then(function(response){
+            $scope.proofs = response.data.proofs
+        })
     },function (request) {
         $scope.conc = {}
     })
@@ -79,6 +85,15 @@ angular.module('app')
         })
     }
 
+    $scope.conAccept = function(response){
+        $scope.conc.state = response
+        Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
+            $scope.reFetchConc()
+        }, function(response){
+            console.log(response.data)
+        })
+    }
+
     $scope.setConciliator = function(conciliator){
         Conciliacion.update.set_conciliator($scope.conc.id, conciliator.id).then(function(response){
             $scope.reFetchConc()
@@ -86,6 +101,13 @@ angular.module('app')
             console.log(response.data)
         })
     }
+
+    $scope.getState = function(){
+        return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
+    }
+    String.prototype.replaceAll = function(str1, str2, ignore){
+        return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
+    } 
 
     $scope.showParticipant = function(part, ev){
         $scope.part = part
@@ -227,43 +249,6 @@ angular.module('app')
 
     $scope.audiencias = []
     $scope.events = [$scope.audiencias]
-//ENDCALENDAR
-
-    // $scope.roomSchedule = []
-    // Conciliacion.get.rooms().then(function(response){
-    //     $scope.rooms = response.data.rooms
-    //     $scope.rooms.forEach(function(room){
-    //         var roomHours = {room_id: room.id, audiences: []}
-    //         var availableHours = ['7:00':{'available': true}, '8:00':{'available': true}, '9:00':{'available': true}, '10:00':{'available': true}, '11:00':{'available': true}, '12:00':{'available': true}, '13:00':{'available': true}, '14:00':{'available': true},'15:00':{'available': true},'15:00':{'available': true},'16:00':{'available': true},'17:00':{'available': true},'18:00':{'available': true},'19:00':{'available': true},'20:00':{'available': true},'21:00':{'available': true},'22:00':{'available': true}]
-    //         Conciliacion.get.audiences_room(room.id).then(function(response){
-    //             var audiences = response.data.audiences
-    //             audiences.forEach(function(aud){
-    //                 availableHours[aud.hour].available = false
-    //             })
-    //             roomHours.audiences = availableHours
-    //             $scope.roomSchedule.push(roomHours)
-    //         })
-    //     })
-    // })
-
-    // $scope.getRoomsSchedule = function(){
-    //     $scope.roomSchedule = []
-    //     Conciliacion.get.rooms().then(function(response){
-    //         $scope.rooms = response.data.rooms
-    //         $scope.rooms.forEach(function(room){
-    //             var roomHours = {room_id: room.id, audiences: []}
-    //             var availableHours = ['7:00':{'available': true}, '8:00':{'available': true}, '9:00':{'available': true}, '10:00':{'available': true}, '11:00':{'available': true}, '12:00':{'available': true}, '13:00':{'available': true}, '14:00':{'available': true},'15:00':{'available': true},'15:00':{'available': true},'16:00':{'available': true},'17:00':{'available': true},'18:00':{'available': true},'19:00':{'available': true},'20:00':{'available': true},'21:00':{'available': true},'22:00':{'available': true}]
-    //             Conciliacion.get.audiences_room(room.id).then(function(response){
-    //                 var audiences = response.data.audiences
-    //                 audiences.forEach(function(aud){
-    //                     availableHours[aud.hour].available = false
-    //                 })
-    //                 roomHours.audiences = availableHours
-    //                 $scope.roomSchedule.push(roomHours)
-    //             })
-    //         })
-    //     })
-    // }
 
     // selected = null,
     // previous = null;

@@ -87,11 +87,13 @@
                             </div>
                         </md-list-item>
                     </md-list>
-                    <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
+                        <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
                 </div>
                 <div class="ui-wizard-actions">
-                    <md-button wz-previous=""  class="md-raised btn-w-md">Atrás</md-button>
-                    <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary" ng-disabled="!convocantes_validation()">Siguiente</md-button>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
+                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                    </div>
                 </div>
             </wz-step>
             <wz-step wz-title="convocados">
@@ -100,21 +102,29 @@
                     <md-subheader class="md-no-sticky">Convocados</md-subheader>
                     <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="editConvocado(conv, $event)">
                         <div>
-                            <md-icon class="material-icons md-avatar">{{getIcon(conv)}}</md-icon>
+                            <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{::getName(conv)}}</h3>
                                 <h4>{{::getID(conv)}}</h4>
                                 <p>Teléfono: {{::conv.involved.phone}}</p>
                             </div>
-                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
-                            <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
+                            <div class="md-secondary">
+                                <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
+                                Apoderado
+                            </div>
+                            <div class="md-secondary">
+                                <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
+                                Representante
+                            </div>
                         </div>
                     </md-list-item>
-                    <md-button class="md-raised btn-w-md md-primary" ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
+                    <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
                 </div>
                 <div class="ui-wizard-actions">
-                    <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atrás</md-button>
-                    <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary" ng-disabled="!convocados_validation()">Siguiente</md-button>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atrás</md-button>
+                        <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary" ng-disabled="!convocados_validation()">Siguiente</md-button>
+                    </div>
                 </div>
             </wz-step>
             <wz-step wz-title="Hechos">
@@ -153,6 +163,20 @@
                     <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary" ng-disabled="!pretensiones_validation()">Siguiente </md-button>
                 </div>
             </wz-step>
+            <!-- <wz-step wz-title="Pruebas">
+                <h2>Agregar pruebas</h2>
+                <md-subheader class="md-no-sticky">Pruebas</md-subheader>
+                <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="">
+                    <div class="md-list-item-text" layout="column">
+                        <p><b>{{$index + 1}}. </b>{{p.name}}</p>
+                    </div>
+                </md-list-item>
+                <md-button class="md-raised btn-w-md md-primary" ngf-select="uploadFiles($files)" multiple="multiple">Subir pruebas</md-button>
+                <div class="ui-wizard-actions">
+                    <md-button wz-previous="logStep()"  class="md-raised btn-w-md">Atrás</md-button>
+                    <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary">Siguiente </md-button>
+                </div>
+            </wz-step> -->
             <wz-step wz-title="Final">
                 <h2>Fin de solicitud</h2>
                 <div class="ui-wizard-content">

@@ -58,6 +58,24 @@ angular.module('app')
                         }
                     }
                 })
+                //Admin
+                .state('app.admin', {
+                    url: '/admin',
+                    templateUrl: URL.dev.template + '/admin/admin.html'
+                })
+
+                .state('app.admin.rooms', {
+                    url: '/salas',
+                    templateUrl: URL.dev.template + '/admin/rooms.html'
+                })
+                .state('app.admin.coordinators', {
+                    url: '/coordinadores',
+                    templateUrl: URL.dev.template + '/admin/coordinators.html'
+                })
+                .state('app.admin.conciliators', {
+                    url: '/conciliadores',
+                    templateUrl: URL.dev.template + '/admin/conciliators.html'
+                })
                 //userAuth
                 .state('registro', {
                     url: '/registro',

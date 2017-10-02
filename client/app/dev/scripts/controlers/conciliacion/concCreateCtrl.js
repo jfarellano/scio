@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state){
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload){
 
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
@@ -7,6 +7,9 @@ angular.module('app')
             window.location = '#/app/conciliacion'
         }
         $scope.solicitude = response.data.solicitude
+        Conciliacion.get.proof($scope.solicitude.id).then(function(response){
+            $scope.proofs = response.data.proofs
+        })
         WizardHandler.wizard().goTo(step[$scope.solicitude.state.split('/')[1]])
     },function(response){
         window.location = '#/app/conciliacion'
@@ -73,7 +76,6 @@ angular.module('app')
             })
         })
         $scope.edit = true
-        console.log('editConvocante')
         $scope.showConvocante(ev)
     }
     //Convocado
@@ -122,7 +124,7 @@ angular.module('app')
     $scope.showApoderado = function(inv, ev, edit) {
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
-        $scope.studies = []
+        $scope.edit = edit
         if(edit){
             $scope.studies = inv.involved.assignee.studies
             var r2 = $scope.departments.filter(function(d){
@@ -133,8 +135,9 @@ angular.module('app')
             }, function(response){
                 console.log(response.data)
             })
+        }else{
+            $scope.studies = []
         }
-        $scope.edit = edit
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/apoderado.html',
             scope: $scope,        
@@ -149,7 +152,6 @@ angular.module('app')
             }
         }, function() {
             $scope.edit = false
-            console.log('Evento cancelado')
         });
     };
     //Representante
@@ -171,7 +173,6 @@ angular.module('app')
             }
         }, function() {
             $scope.edit = false
-            console.log('Evento cancelado')
         });
     };
     //Hechos
@@ -190,7 +191,6 @@ angular.module('app')
                 $scope.add_hp(1)
             }
         }, function() {
-            console.log('Evento cancelado')
         });
     };
     $scope.editHecho = function(hecho, ev){
@@ -215,7 +215,6 @@ angular.module('app')
                 $scope.add_hp(2)
             }
         }, function() {
-            console.log('Evento cancelado')
         });
     };
     $scope.editPretension = function(pret, ev){
@@ -498,6 +497,20 @@ angular.module('app')
             })
         }
     }
+
+    //Pruebas
+
+    $scope.uploadFiles = function(files){
+        for(var i = 0; i < files.length; i++){
+            Conciliacion.create.proof($scope.solicitude.id, files[i]).then(function(response){
+                alertify.success('Prueba añadida correctamente')
+                console.log(response.data)
+            }, function(response){
+                console.log(response.data)
+                alertify.error('Error subiendo la prueba')
+            })
+        }
+    }
 //FinCRUDS
 
 //Validations
@@ -548,15 +561,22 @@ angular.module('app')
     };
 //FinLOGIC
 //VARIABLES
-    $scope.study = {}
+    $scope.study = {university: '', level: '', title: ''}
+    var original_study = angular.copy($scope.study)
     $scope.resetStudy = function(){
-        $scope.study = {}
+        $scope.study = angular.copy(original_study);
+        $scope.newStudies.$setPristine();
+        $scope.newStudies.$setUntouched();
+        return;
     }
     $scope.getSolicitude = function(){
         $('#loader-container').fadeIn('fast');
         Conciliacion.get.solicitude($state.params.id).then(function(response){
             $('#loader-container').fadeOut('slow');
             $scope.solicitude = response.data.solicitude
+            Conciliacion.get.proof($scope.solicitude.id).then(function(response){
+                $scope.proofs = response.data.proofs
+            })
         },function(response){
             window.location = '#/app/conciliacion'
             console.log(response)
@@ -700,6 +720,7 @@ angular.module('app')
             return t.value == $scope.solicitude.conciliation.topic
         })
         Conciliacion.get.constant_child(r[0].id, 'conciliation_subtopic').then(function(response){
+            console.log(response.data)
             $scope.subtopicValid = true
             $scope.subtopic = response.data.constants
             if($scope.subtopic.length == 0){
@@ -723,7 +744,8 @@ angular.module('app')
     Conciliacion.get.constant('country').then(function(response){
         $scope.countries = response.data.constants
     }) 
-    Conciliacion.get.constant_child(47 ,'department').then(function(response){
+    Conciliacion.get.constant_child(51 ,'department').then(function(response){
+        console.log(response.data)
         $scope.departments = response.data.constants
         var r2 = $scope.departments.filter(function(d){
             return d.value == $scope.involucrado.department
