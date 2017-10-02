@@ -5,7 +5,6 @@
         .controller('AppSidenavRightCtrl', ['$scope', 'Session', AppSidenavRightCtrl])
 
     function AppSidenavRightCtrl ($scope, Session) {
-        $scope.Session = Session
         var imagePath = 'assets/images/g1.jpg';
         $scope.messages = [
             {

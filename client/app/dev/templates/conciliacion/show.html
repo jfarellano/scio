@@ -1,4 +1,4 @@
-
+<div ng-controller="ConcShowCtlr">  
     <div class="box box-default show-scroll">
         <div class="show_content" data-slim-scroll data-scroll-height="auto">
             <h2>Solicitud de conciliación No.1342</h2>
@@ -17,7 +17,7 @@
                 <p>Seleccione un conciliador de la lista para asignarlo a esta solicitud.</p>
                 <md-list-item class="md-3-line" ng-repeat="con in conciliators" ng-click="setConciliator(con)">
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{con.name}}</h3>
+                        <h3>{{getUserName(con)}}</h3>
                     </div>
                 </md-list-item>  
             </div>
@@ -72,10 +72,10 @@
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
-            <!-- <h4><b>Pruebas</b></h4>
-            <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="">
-                <h3>{{p.name}}</h3>
-            </md-list-item> -->
+            <h4><b>Pruebas</b></h4>
+            <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="showProof(p)">
+                <h5>{{p.name}}</h5>
+            </md-list-item>
             <h3><b>Cuantía</b> $ {{conc.conciliation.payment_amount}}</h3>
             <!-- <section class="box box-default">
                 <div class="box-body no-padding">                
@@ -97,4 +97,4 @@
             </section> -->
         </div>
     </div>
-
+</div>

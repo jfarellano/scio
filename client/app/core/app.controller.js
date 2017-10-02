@@ -22,7 +22,7 @@
         }
 
         $scope.openCal = function(){
-            $window.location = '#/calendar'
+            $window.location = '#/app/calendar'
         }
 
         $scope.Session = Session
@@ -80,6 +80,8 @@
             // Component lookup should always be available since we are not using `ng-if`
             $mdSidenav('right').close()
         };
+
+        $scope.Session = Session
     }
 
 })(); 

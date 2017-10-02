@@ -1,5 +1,5 @@
 angular.module('app')
-    .factory('Conciliacion',['$http', 'IP', 'Session',function ConciliacionFactory($http, IP, Session) {
+    .factory('Conciliacion',['$http', 'IP', 'Session', 'Upload',function ConciliacionFactory($http, IP, Session, Upload) {
         //Panel shared logic
         var state = true;
         var index = true;    
@@ -57,7 +57,7 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study,{headers: Session.getHeaders()})
                 },
                 proof: function(solID, file){
-                    return $http.post(IP + '/solicitudes/upload/proofs/' + solID, {proof_data: file, name:'Nombre'}, {headers: Session.getHeaders()})
+                    return Upload.upload({ url: IP + '/solicitudes/upload/proofs/' + solID, data: {proof_data: file, name:file.name}, headers: Session.getHeaders()})
                 }
             },
             update:{

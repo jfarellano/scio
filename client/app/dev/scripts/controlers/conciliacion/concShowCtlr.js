@@ -1,14 +1,16 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Audiencias', 'Session', '$compile', 'uiCalendarConfig', function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Audiencias, Session, $compile, uiCalendarConfig){
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Session', '$compile', 'uiCalendarConfig', 'Audiencias', 'IP',function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Session, $compile, uiCalendarConfig, Audiencias, IP){
 
     console.log(Session.getRole())
     $scope.Session =  Session
-
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
+        console.log($scope.conc)
         if($scope.conc.state == 'aceptada'){
             Session.getConciliators().then(function(response){
-                $scope.conciliators = response.data.users
+                $scope.conciliators = response.data.users.filter(function(con){
+                    return con.role == 'conciliator'
+                })
             },function(response){
                 console.log(response.data)
             })
@@ -18,7 +20,16 @@ angular.module('app')
         })
     },function (request) {
         $scope.conc = {}
+        console.log(request.data)
     })
+
+    $scope.showProof = function(proof){
+        window.open(IP + proof.url, '_blank');
+    }
+
+    $scope.getUserName = function(user){
+        return user.name + ' ' + user.first_lastname + ' ' + user.second_lastname
+    }
 
     $scope.reFetchConc = function(){
         Conciliacion.show($state.params.id).then(function (request) {
@@ -185,6 +196,7 @@ angular.module('app')
 
     Audiencias.get.user_audiences(Session.getUserID()).then(function(response){
         var audiencias = response.data.audiences
+        console.log(audiencias)
         audiencias.forEach(function(aud){
             var a = {
                 title: aud.title,

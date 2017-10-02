@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload){
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP){
 
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
@@ -500,12 +500,24 @@ angular.module('app')
 
     //Pruebas
 
+    $scope.getProof = function(){
+        Conciliacion.get.proof($scope.solicitude.id).then(function(response){
+            $scope.proofs = response.data.proofs
+        })
+    }
+
+    $scope.showProof = function(proof){
+        console.log("Enreo")
+        console.log(proof)
+        $window.open(IP + proof.url, '_blank');
+    }
+
     $scope.uploadFiles = function(files){
         for(var i = 0; i < files.length; i++){
             console.log(files[i])
             Conciliacion.create.proof($scope.solicitude.id, files[i]).then(function(response){
                 alertify.success('Prueba añadida correctamente')
-                console.log(response.data)
+                $scope.getProof()
             }, function(response){
                 console.log(response.data)
                 alertify.error('Error subiendo la prueba')

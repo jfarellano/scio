@@ -27,15 +27,14 @@ angular.module('app')
                     views:{
                         'show':{
                             templateUrl: URL.dev.template + '/conciliacion/show.html',
-                            controller: 'ConcShowCtlr'
+                            resolve: {
+                                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                                    return $ocLazyLoad.load([
+                                        'fullcalendar'
+                                    ]);
+                                }]
+                            }
                         }
-                    },
-                    resolve: {
-                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                            return $ocLazyLoad.load([
-                                'fullcalendar'
-                            ]);
-                        }]
                     }
                 })
                 //Create
@@ -47,15 +46,15 @@ angular.module('app')
                     url: '/conciliacion/:id',
                     views:{
                         'conciliacion':{
-                            templateUrl: URL.dev.template + '/conciliacion/create.html',
-                            resolve: {
-                                deps: ['$ocLazyLoad', function($ocLazyLoad) {
-                                    return $ocLazyLoad.load([
-                                        'angular-wizard'
-                                    ]);
-                                }]
-                            }
+                            templateUrl: URL.dev.template + '/conciliacion/create.html'
                         }
+                    },
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'angular-wizard'
+                            ]);
+                        }]
                     }
                 })
                 //Admin
@@ -84,9 +83,9 @@ angular.module('app')
                     controller: 'loginCtrl'
                 })
                 //Test
-                .state('calendar', {
+                .state('app.calendar', {
                     url: '/calendar',
-                    templateUrl: URL.dev.template + '/test/calendar.html',
+                    templateUrl: URL.dev.template + '/calendar/calendar.html',
                     resolve: {
                         deps: ['$ocLazyLoad', function($ocLazyLoad) {
                             return $ocLazyLoad.load([
