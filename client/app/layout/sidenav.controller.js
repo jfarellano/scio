@@ -2,9 +2,10 @@
     'use strict';
 
     angular.module('app.layout')
-        .controller('AppSidenavRightCtrl', ['$scope', AppSidenavRightCtrl])
+        .controller('AppSidenavRightCtrl', ['$scope', 'Session', AppSidenavRightCtrl])
 
-    function AppSidenavRightCtrl ($scope) {
+    function AppSidenavRightCtrl ($scope, Session) {
+        $scope.Session = Session
         var imagePath = 'assets/images/g1.jpg';
         $scope.messages = [
             {

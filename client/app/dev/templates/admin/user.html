@@ -1,0 +1,77 @@
+<md-toolbar>
+  <div class="md-toolbar-tools scio-bar">
+    <h2>Convocante</h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()">
+      <md-icon class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-dialog-content class="modal_form">
+    <form name="userForm" novalidate ng-submit="submitForm()">
+        <fieldset>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs> 
+                        <label>Rol del usuario</label>
+                        <md-select ng-model="user.role" required>
+                            <md-option ng-repeat="r in roles" value="{{r.value}}">
+                                {{r.value}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Nombre</label>
+                    <input ng-model="user.name" type="text" required>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Primer apellido</label>
+                    <input ng-model="user.first_lastname" type="text" required>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Segundo apellido</label>
+                    <input ng-model="user.second_lastname" type="text" required>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Telefono de contacto</label>
+                    <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>E-mail</label>
+                    <input ng-model="user.email" type="email" required>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Contraseña</label>
+                    <input ng-model="user.password" name="pass" type="password" required>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Verifique su contraseña</label>
+                    <input ng-model="user.password_c" data-match="userForm.pass" type="password" required>
+                </md-input-container>
+            </div>
+            <md-checkbox ng-model="lawyer" aria-label="Es abogado">Es usted abogado?</md-checkbox>
+            <div ng-if="lawyer">
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Numero de tarjeta profesional</label>
+                        <input ng-model="user.professional_card" type="number" required>
+                    </md-input-container>
+                </div>
+            </div>
+            <br>
+        </fieldset>
+    </form>
+</md-dialog-content>
+<md-dialog-actions>
+    <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!userForm.$valid">Agregar</md-button>  
+</md-dialog-actions>

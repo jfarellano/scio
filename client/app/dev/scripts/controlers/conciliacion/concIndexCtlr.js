@@ -1,7 +1,7 @@
 angular.module('app')
     .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', 'Session',function($scope, $state, $window, Conciliacion, screenSize, Session){
-        
-        if(Session.getRole() == 'coordinator'){
+        console.log(Session.getRole())
+        if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
             Conciliacion.coordinator_index().then(function(response){
                 $scope.data = response.data.solicitudes;
             }, function(response){

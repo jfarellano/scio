@@ -1,0 +1,23 @@
+<div ng-controller="RoomsCtlr" class="box box-default concCreate">
+	<h2>Administrador de salas</h2>
+	<div layout-gt-xs="row" class="layout-gt-xs-row" >
+		<form name="salas">
+	        <md-input-container class="flex-gt-xs" flex-gt-xs>
+	            <label>Nombre de la sala</label>
+	            <input data-ng-model="room.name" type="text" required>
+	        </md-input-container>
+	        <md-input-container class="flex-gt-xs" flex-gt-xs>
+	            <label>Descripción de la sala</label>
+	            <input data-ng-model="room.description" type="text" required>
+	        </md-input-container>
+	    </form>
+	</div>
+	<md-button class="flex-gt-xs md-raised btn-w-md md-accent" flex-gt-xs ng-disabled="!salas.$valid" ng-click="create()">Agregar</md-button>
+
+	<md-list-item class="md-3-line" ng-repeat="r in rooms" ng-click="">
+		<div class="md-list-item-text" layout="column">
+		    <h3>{{r.name}}</h3>
+		    <p>{{r.description}}</p>
+		</div>
+    </md-list-item>
+</div>

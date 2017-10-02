@@ -1,0 +1,13 @@
+<div ng-controller="UsersCtlr" class="box box-default concCreate">
+	<h2>Administrador de usuarios</h2>
+	<md-button class="flex-gt-xs md-raised btn-w-md md-accent" flex-gt-xs ng-click="showUser($event)">Agregar nuevo usuario</md-button>
+
+	<h3>Usuarios</h3>
+	<md-list-item class="md-3-line" ng-repeat="u in users" ng-click="">
+		<div class="md-list-item-text" layout="column">
+		    <h3>{{getName(u)}}</h3>
+		    <h4>{{u.role}}</h4>
+		    <p>{{u.phone}}</p>
+		</div>
+    </md-list-item>
+</div>

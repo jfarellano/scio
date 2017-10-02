@@ -502,6 +502,7 @@ angular.module('app')
 
     $scope.uploadFiles = function(files){
         for(var i = 0; i < files.length; i++){
+            console.log(files[i])
             Conciliacion.create.proof($scope.solicitude.id, files[i]).then(function(response){
                 alertify.success('Prueba añadida correctamente')
                 console.log(response.data)

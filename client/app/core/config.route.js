@@ -68,13 +68,9 @@ angular.module('app')
                     url: '/salas',
                     templateUrl: URL.dev.template + '/admin/rooms.html'
                 })
-                .state('app.admin.coordinators', {
-                    url: '/coordinadores',
-                    templateUrl: URL.dev.template + '/admin/coordinators.html'
-                })
-                .state('app.admin.conciliators', {
-                    url: '/conciliadores',
-                    templateUrl: URL.dev.template + '/admin/conciliators.html'
+                .state('app.admin.users', {
+                    url: '/usuarios',
+                    templateUrl: URL.dev.template + '/admin/users.html'
                 })
                 //userAuth
                 .state('registro', {

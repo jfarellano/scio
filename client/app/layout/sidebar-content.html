@@ -13,11 +13,11 @@
             <li><a class="prepend-icon" md-button aria-label="menu" href="">Insolvencia</span></a></li>
         </ul>
     </li>
-     <li>
+    <li ng-if="Session.getRole() == 'admin'">
         <a md-button aria-label="menu" href=""><i class="nav-icon material-icons">business</i><span class="nav-text">Administrativo</span></a>
         <ul>
-            <li><a class="prepend-icon" md-button aria-label="menu" href="">Opcion 1</a></li>
-            <li><a class="prepend-icon" md-button aria-label="menu" href="">Opcion 2</span></a></li>
+            <li><a class="prepend-icon" md-button aria-label="menu" href="#/app/admin/salas">Salas</a></li>
+            <li><a class="prepend-icon" md-button aria-label="menu" href="#/app/admin/usuarios">Ususarios</span></a></li>
         </ul>
     </li>
     <!-- <li><a md-button aria-label="menu" href="#/app/widget"><i class="nav-icon material-icons">widgets</i><span class="nav-text">Widgets</span></a></li> -->

@@ -25,6 +25,8 @@
             $window.location = '#/calendar'
         }
 
+        $scope.Session = Session
+
         $rootScope.$on('$stateChangeSuccess', function (event) {
             if($window.location.hash != '#/iniciosecion' && $window.location.hash != '#/registro'){
                 if(!Session.isAuth()){
