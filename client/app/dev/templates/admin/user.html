@@ -58,12 +58,19 @@
                     <input ng-model="user.password_c" data-match="userForm.pass" type="password" required>
                 </md-input-container>
             </div>
-            <md-checkbox ng-model="lawyer" aria-label="Es abogado">Es usted abogado?</md-checkbox>
-            <div ng-if="lawyer">
+            <div ng-if="user.role == 'conciliator'">
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
                         <label>Numero de tarjeta profesional</label>
                         <input ng-model="user.professional_card" type="number" required>
+                    </md-input-container>
+                </div>
+            </div>
+            <div ng-if="user.role == 'conciliator_in_equity'">
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Numero de cedula</label>
+                        <input ng-model="user.identification_card" type="number" required>
                     </md-input-container>
                 </div>
             </div>

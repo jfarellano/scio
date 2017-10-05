@@ -29,30 +29,33 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Área del derecho:</label>
-                            <md-select ng-model="solicitude.conciliation.area" required>
-                                <md-option ng-repeat="area in area" value="{{area.value}}">
-                                    {{::area.value}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Tema del derecho:</label>
-                            <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" required>
-                                <md-option ng-repeat="top in topic" value="{{top.value}}">
-                                    {{::top.value}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Subtema del derecho:</label>
-                            <md-select ng-model="solicitude.conciliation.subtopic" ng-disabled="!subtopicValid">
-                                <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
-                                    {{::sub.value}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
+                        <md-checkbox ng-model="solicitude.conciliation.definable" aria-label="Definible">Area definible del derecho?</md-checkbox>
+                        <div ng-if="solicitude.conciliation.definable">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Área del derecho:</label>
+                                <md-select ng-model="solicitude.conciliation.area" required>
+                                    <md-option ng-repeat="area in area" value="{{area.value}}">
+                                        {{::area.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Tema del derecho:</label>
+                                <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" required>
+                                    <md-option ng-repeat="top in topic" value="{{top.value}}">
+                                        {{::top.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label>Subtema del derecho:</label>
+                                <md-select ng-model="solicitude.conciliation.subtopic" ng-disabled="!subtopicValid">
+                                    <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
+                                        {{::sub.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Cuantía</label>
                             <input data-ng-model="solicitude.conciliation.payment_amount" type="number" required>
@@ -73,8 +76,8 @@
                                 <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                 <div class="md-list-item-text" layout="column">
                                     <h3>{{::getName(conv)}}</h3>
-                                    <h4>{{::getID(conv)}}</h4>
-                                    <p>Teléfono: {{::conv.involved.phone}}</p>
+                                    <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
+                                    <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                 </div>
                                 <div class="md-secondary">
                                     <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
@@ -105,8 +108,8 @@
                             <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{::getName(conv)}}</h3>
-                                <h4>{{::getID(conv)}}</h4>
-                                <p>Teléfono: {{::conv.involved.phone}}</p>
+                                <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
+                                <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                             </div>
                             <div class="md-secondary">
                                 <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
@@ -168,7 +171,7 @@
                 <md-subheader class="md-no-sticky">Pruebas</md-subheader>
                 <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="showProof(p)">
                     <div class="md-list-item-text" layout="column">
-                        <p><b>{{$index + 1}}. </b>{{p.name}}</p>
+                        <p><b>{{::$index + 1}}. </b>{{::p.name}}</p>
                     </div>
                 </md-list-item>
                 <md-button class="md-raised btn-w-md md-primary" ngf-select="uploadFiles($files)" multiple="multiple">Subir pruebas</md-button>

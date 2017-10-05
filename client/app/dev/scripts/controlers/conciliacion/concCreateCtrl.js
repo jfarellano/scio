@@ -576,6 +576,9 @@ angular.module('app')
 //VARIABLES
     $scope.study = {university: '', level: '', title: ''}
     var original_study = angular.copy($scope.study)
+    $scope.getARName = function(app){
+        return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
+    }
     $scope.resetStudy = function(){
         $scope.study = angular.copy(original_study);
         $scope.newStudies.$setPristine();
@@ -757,8 +760,7 @@ angular.module('app')
     Conciliacion.get.constant('country').then(function(response){
         $scope.countries = response.data.constants
     }) 
-    Conciliacion.get.constant_child(51 ,'department').then(function(response){
-        console.log(response.data)
+    Conciliacion.get.constant_child(52 ,'department').then(function(response){
         $scope.departments = response.data.constants
         var r2 = $scope.departments.filter(function(d){
             return d.value == $scope.involucrado.department
@@ -767,6 +769,15 @@ angular.module('app')
             $scope.cities = response.data.constants
         })
     })
+
+    $scope.getRepCities = function(){
+        var r = $scope.departments.filter(function(a) {
+            return a.value == $scope.involucrado.involved.representative.department
+        })
+        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+            $scope.cities = response.data.constants
+        })
+    }
 
     $scope.$watch('involucrado.involved.department', function(){
         var r = $scope.departments.filter(function(a) {

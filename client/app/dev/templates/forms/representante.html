@@ -74,7 +74,7 @@
 			    </md-input-container>
 			    <md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Departamento</label>
-			        <md-select ng-model="involucrado.involved.representative.department" ng-change="getAssigneeCity()" required>
+			        <md-select ng-model="involucrado.involved.representative.department" ng-change="getRepCities()" required>
 			            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
 			                {{c.value}}
 			            </md-option>
@@ -85,7 +85,7 @@
 			    <md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Ciudad</label>
 			        <md-select ng-model="involucrado.involved.representative.city" required>
-			            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
+			            <md-option ng-repeat="c in cities" value="{{c.value}}" requiered>
 			                {{c.value}}
 			            </md-option>
 			        </md-select>
