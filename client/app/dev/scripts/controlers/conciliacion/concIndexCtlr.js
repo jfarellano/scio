@@ -17,6 +17,8 @@ angular.module('app')
             })
         }
 
+        $scope.Session =  Session
+
         $scope.getState = function(conc){
             return conc.state.toUpperCase().replaceAll('_', ' ')
         }

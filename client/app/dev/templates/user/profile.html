@@ -1,0 +1,24 @@
+<div class="col-md-2"></div>
+<div class="col-md-8">
+    <div class="card card-white">
+        <div class="card-image">
+        	<div ng-if="user.profile_picture != null">
+            	<img src="{{getPic()}}">
+            </div>
+            <div ng-if="user.profile_picture == null">
+            	<img src="/assets/images/BG.png">
+            </div>
+            <span class="card-title">{{getName()}}</span>
+        </div>
+        <div class="card-content">
+            <a class="card-button pull-right" ng-click="updatePicture($event)">
+                <button class="btn btn-icon btn-icon-round btn-floating btn-danger" ngf-select="updatePicture($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'"><i class="material-icons mdi-sm">create</i></button>
+            </a>
+            <p>{{user.email}}</p>
+            <p>{{user.phone}}</p>
+        </div>
+        <div class="card-action">
+	        <a ng-click="showUser($event)">Editar perfil</a>
+	    </div>
+    </div>   
+</div>

@@ -1,19 +1,25 @@
 angular.module('app')
 .controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Session', '$compile', 'uiCalendarConfig', 'Audiencias', 'IP',function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Session, $compile, uiCalendarConfig, Audiencias, IP){
-
-    console.log(Session.getRole())
     $scope.Session =  Session
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
-        console.log($scope.conc)
+        Audiencias.get.solicitude($scope.conc.id).then(function(response){
+            $scope.audiences = response.data.audiences
+        })
+        Conciliacion.get.documents($scope.conc.conciliation.id).then(function(response){
+            $scope.documents = response.data.documents
+        }, function(response){
+            console.log(response.data)
+        })
         if($scope.conc.state == 'aceptada'){
             Session.getConciliators().then(function(response){
-                $scope.conciliators = response.data.users.filter(function(con){
-                    return con.role == 'conciliator'
-                })
+                $scope.conciliators = response.data.users
             },function(response){
                 console.log(response.data)
             })
+        }
+        if ($scope.conc.state == 'iniciar_audiencia' && Session.getRole() == 'conciliator') {
+            window.location = '#/app/audiencia/conciliacion/' + $scope.conc.id
         }
         Conciliacion.get.proof($scope.conc.id).then(function(response){
             $scope.proofs = response.data.proofs
@@ -24,7 +30,11 @@ angular.module('app')
     })
 
     $scope.showProof = function(proof){
-        window.open(IP + proof.url, '_blank');
+        window.open(IP +''+ proof.url, '_blank');
+    }
+
+    $scope.showDocument = function(doc){
+        window.open(IP +'/'+ doc.url, '_blank');
     }
 
     $scope.getUserName = function(user){
@@ -43,6 +53,17 @@ angular.module('app')
             }
         },function (request) {
             $scope.conc = {}
+        })
+    }
+
+    $scope.getDocument = function(){
+        Conciliacion.get.solicitude_document($scope.conc.conciliation.id).then(function(response){
+            var data = response.data.document
+            alertify.success('Exito generando documento')
+            window.open(IP +'/'+ data.url, '_blank')  
+        }, function(response){
+            alertify.error('Error generando documento')
+            console.log(response.data)
         })
     }
 
@@ -72,6 +93,12 @@ angular.module('app')
                     .ariaLabel('Programacion exitosa')
                     .ok('Continuar')
                 );
+                $scope.conc.state = 'programada'
+                Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
+                    console.log('Edit exitosa')
+                }, function(response){
+                    console.log('Edit fallo')
+                })
             }, function(response){
                 $mdDialog.show(
                   $mdDialog.alert()
@@ -82,9 +109,29 @@ angular.module('app')
                     .ariaLabel('Programacion invalida')
                     .ok('Volver a programar')
                 );
+                console.log(response)
                 console.log(response.data)
             })
         }
+    }
+
+    $scope.toAudience = function(){
+        $scope.conc.state = 'iniciar_audiencia'
+        Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
+            window.location = '#/app/audiencia/conciliacion/' + $scope.conc.id
+        })
+    }
+
+    $scope.getNotification = function(conv){
+        Audiencias.get.solicitude($scope.conc.id).then(function(response){
+            var auds = response.data.audiences
+            Conciliacion.get.user_notification($scope.conc.conciliation.id, conv.id, auds[auds.length - 1].id).then(function(response){
+                window.open(IP +'/'+ response.data.document.url, '_blank')
+            }, function(response){
+                console.log(response.data)
+                alertify.error('Hubo un error generando el documento vuelve a intentarlo o refresca la pagina')
+            })
+        }) 
     }
 
     $scope.coordAccept = function(response){
@@ -106,6 +153,7 @@ angular.module('app')
     }
 
     $scope.setConciliator = function(conciliator){
+        console.log('Entro en asigancion')
         Conciliacion.update.set_conciliator($scope.conc.id, conciliator.id).then(function(response){
             $scope.reFetchConc()
         }, function(response){
@@ -134,6 +182,18 @@ angular.module('app')
             console.log('Guardado con exito.')
         }, function() {
             console.log('Evento cancelado')
+        });
+    }
+
+    $scope.showAudience = function(audience, ev){
+        $scope.audience = audience
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/showAudience.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            fullscreen: $scope.customFullscreen,
+            clickOutsideToClose:true
         });
     }
 
@@ -194,9 +254,8 @@ angular.module('app')
 //CALENDAR
     
 
-    Audiencias.get.user_audiences(Session.getUserID()).then(function(response){
+    Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
-        console.log(audiencias)
         audiencias.forEach(function(aud){
             var a = {
                 title: aud.title,

@@ -23,6 +23,36 @@
             </div>
             <div ng-if="involucrado.involved.nature == 'natural'">
                 <fieldset>
+                    <h3>Datos de identificación</h3>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Tipo de documento</label>
+                            <md-select ng-model="involucrado.involved.natural.identifier_type" required>
+                                    <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
+                                        {{::type.value}}
+                                    </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Número de identificación</label>
+                            <input input-num ng-model="involucrado.involved.natural.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.natural.identifier_type" required>
+                        </md-input-container>
+                    </div>
+                    <!-- <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="findInvolved()">Verificar</button>
+                        </md-input-container>
+                    </div> -->
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Ciudad de expedición</label>
+                            <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
+                                <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
+                                    {{::c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Primer nombre</label>
@@ -55,44 +85,7 @@
                         <label>Fecha de nacimiento</label>
                         <md-datepicker ng-model="involucrado.involved.natural.birthdate" placeholder="Fecha de nacimiento" required></md-datepicker>
                     </div>
-                    <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>E-mail</label>
-                            <input data-ng-model="involucrado.involved.email" type="email" required>
-                        </md-input-container>
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Página web</label>
-                            <input data-ng-model="involucrado.involved.web_site" type="text">
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Teléfono de contacto</label>
-                            <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
-                        </md-input-container>
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Tipo de documento</label>
-                            <md-select ng-model="involucrado.involved.natural.identifier_type" required>
-                                    <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
-                                        {{::type.value}}
-                                    </md-option>
-                            </md-select>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Ciudad de expedición</label>
-                            <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
-                                <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
-                                    {{::c.value}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Número de identificación</label>
-                            <input input-num ng-model="involucrado.involved.natural.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.natural.identifier_type" required>
-                        </md-input-container>
-                    </div>
+                    <h3>Información de contacto</h3>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Dirección de residencia</label>
@@ -109,6 +102,23 @@
                     </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Teléfono de contacto</label>
+                            <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                        </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>E-mail</label>
+                            <input data-ng-model="involucrado.involved.email" type="email" required>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Página web</label>
+                            <input data-ng-model="involucrado.involved.web_site" type="text">
+                        </md-input-container>
+                    </div>
+                    <h3>Datos de estudio</h3>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Nivel escolar: </label>
                             <md-select ng-model="involucrado.involved.natural.scholarly_level" required>
                                 <md-option ng-repeat="c in level" value="{{c.value}}" requiered>
@@ -121,18 +131,20 @@
             </div>
             <div ng-if="involucrado.involved.nature == 'juridico'">
                  <fieldset>
+                    <h3>Datos de identificación</h3>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>NIT</label>
                             <input ng-model="involucrado.involved.juridical.nit" type="number" required>
                         </md-input-container>
+                        <!-- <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="findInvolved()">Verificar</button>
+                        </md-input-container> -->
+                    </div>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Tipo de organización</label>
-                            <md-select ng-model="involucrado.involved.juridical.organization_type" required>
-                                <md-option ng-repeat="g in org_type" value="{{g.value}}" requiered>
-                                    {{g.value}}
-                                </md-option>
-                            </md-select>
+                            <label>Nombre</label>
+                            <input ng-model="involucrado.involved.juridical.name" type="text" required>
                         </md-input-container>
                     </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -145,10 +157,15 @@
                             </md-select>
                         </md-input-container>
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Nombre</label>
-                            <input ng-model="involucrado.involved.juridical.name" type="text" required>
+                            <label>Tipo de organización</label>
+                            <md-select ng-model="involucrado.involved.juridical.organization_type" required>
+                                <md-option ng-repeat="g in org_type" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
                         </md-input-container>
                     </div>
+                    <h3>Información de contacto</h3>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Dirección judicial</label>
@@ -176,6 +193,7 @@
                  </fieldset>
             </div>
             <div ng-if="involucrado.involved.nature != ''">
+                <h3>Locación</h3>
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
                         <label>Departamento</label>

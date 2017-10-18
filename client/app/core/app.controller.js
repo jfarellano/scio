@@ -25,6 +25,10 @@
             $window.location = '#/app/calendar'
         }
 
+        $scope.openProfile = function(){
+            $window.location = '#/app/perfil'
+        }
+
         $scope.Session = Session
 
         $rootScope.$on('$stateChangeSuccess', function (event) {

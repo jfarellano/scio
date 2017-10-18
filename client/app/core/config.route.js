@@ -82,7 +82,7 @@ angular.module('app')
                     templateUrl: "app/dev/templates/userAuth/login.html",
                     controller: 'loginCtrl'
                 })
-                //Test
+                //Calendar
                 .state('app.calendar', {
                     url: '/calendar',
                     templateUrl: URL.dev.template + '/calendar/calendar.html',
@@ -93,6 +93,22 @@ angular.module('app')
                             ]);
                         }]
                     }
+                })
+                //Audience
+                .state('app.audience', {
+                    url: '/audiencia',
+                    templateUrl: URL.dev.template + '/audiencia/audiencia.html'
+                })
+                .state('app.audience.conciliacion',{
+                    url: '/conciliacion/:id',
+                    templateUrl: URL.dev.template + '/audiencia/conciliacion.html',
+                    controller: 'AudConcCtrl'
+                })
+                //User
+                .state('app.profile', {
+                    url: '/perfil',
+                    templateUrl: URL.dev.template + '/user/profile.html',
+                    controller: 'profileCtrl'
                 })
         }
     ]);

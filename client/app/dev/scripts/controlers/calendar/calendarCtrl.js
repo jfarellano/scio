@@ -7,11 +7,8 @@ angular.module('app')
     	uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
 	};
 
-    
-
-
     $scope.Audiencias = []
-    Audiencias.get.user_audiences(Session.getUserID()).then(function(response){
+    Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
         audiencias.forEach(function(aud){
             var a = {

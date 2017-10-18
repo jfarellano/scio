@@ -1,9 +1,12 @@
 <div class="modal_form">
     <md-dialog-content>
     	<h3>{{getName(part)}}</h3>
-    	<h4>{{part.involved.phone}}</h4>
-    	<h4>{{part.involved.email}}</h4>
-    	<h4>{{part.involved.adress}}</h4>
+        <h4>{{part.participation_type}}</h4>
+        <p>{{getID(part)}}</p>
+    	<p>Teléfono: {{part.involved.phone}}</p>
+    	<p>E-mail: {{part.involved.email}}</p>
+    	<p>Dirección: {{part.involved.adress}}</p>
+        <p>{{part.involved.nature}}</p>
     	<div ng-if="apoderado(part)">
     		<h4>Apoderado</h5>
     		<p>{{part.involved.assignee.first_name}} {{part.involved.assignee.first_lastname}}</p>

@@ -1,0 +1,27 @@
+<div>
+    <md-toolbar>
+      <div class="md-toolbar-tools scio-bar">
+        <h2>Resultados de la solicitud</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="modal_form">
+        <div class="ui-wizard-content">
+            <form name="hechoForm">
+                <md-input-container class="md-block">
+                    <label>Desriba los resultados de la solicitud</label>
+                    <textarea ng-model="description" rows="10" md-select-on-focus required=""></textarea>
+                </md-input-container>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+        <md-button class="md-raised btn-w-md md-warn" ng-click="addResult('no_acuerdo_inasistencia')" ng-disabled="!hechoForm.$valid">No acuerdo por inasistencia</md-button>
+        <md-button class="md-raised btn-w-md md-warn" ng-click="addResult('no_acuerdo')" ng-disabled="!hechoForm.$valid">No acuerdo</md-button>
+        <md-button class="md-raised btn-w-md md-accent" ng-click="addResult('acuerdo')" ng-disabled="!hechoForm.$valid">Acuerdo</md-button> 
+    </md-dialog-actions>
+ </div>

@@ -1,20 +1,22 @@
-<div ng-controller="loginCtrl" class="box box-default login">
-    <form name="loginForm">
-        <figure>
-            <img src="{{app.logo}}">
-        </figure>
-        <p class="error" ng-if="error">{{message}}</p>
-        <fieldset>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Correo electrónico</label>
-                    <input ng-model="user.email" type="email" required>
-                </md-input-container>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <label>Contraseña</label>
-                    <input ng-model="user.password" type="password" ng-enter="login()" required>
-                </md-input-container>
-                <br><md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar sesión</md-button>
-        </fieldset>
-    </form>
-    <p><a href="#/registro" class="options">Registrarse</a></p>
-</div>
+<section class="user-auth-body">
+        <div ng-controller="loginCtrl" class="box box-default login">
+            <form name="loginForm">
+                <figure>
+                    <img src="{{app.logo}}">
+                </figure>
+                <p class="error" ng-if="error">{{message}}</p>
+                <fieldset>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Correo electrónico</label>
+                            <input ng-model="user.email" type="email" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Contraseña</label>
+                            <input ng-model="user.password" type="password" ng-enter="login()" required>
+                        </md-input-container>
+                        <br><md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar sesión</md-button>
+                </fieldset>
+            </form>
+            <p><a href="#/registro" class="options">Registrarse</a></p>
+        </div>
+</section>

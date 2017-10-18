@@ -57,7 +57,13 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study,{headers: Session.getHeaders()})
                 },
                 proof: function(solID, file){
-                    return Upload.upload({ url: IP + '/solicitudes/upload/proofs/' + solID, data: {proof_data: file, name:file.name}, headers: Session.getHeaders()})
+                    return Upload.upload({ url: IP + '/solicitudes/'+solID+'/proofs', data: {proof_data: file, name:file.name}, headers: Session.getHeaders()})
+                },
+                comment: function(){
+                    return null
+                },
+                results: function(concID, results){
+                    return $http.post(IP + '/conciliator/conciliations/'+concID+'/results', {result: {description:results}}, {headers: Session.getHeaders()})
                 }
             },
             update:{
@@ -116,6 +122,24 @@ angular.module('app')
                 },
                 proof: function(solID){
                     return $http.get(IP + '/solicitudes/'+solID+'/proofs', {headers: Session.getHeaders()})
+                },
+                solicitude_document: function(solID){
+                    return $http.get(IP + '/conciliation/'+solID+'/documents/resume', {headers: Session.getHeaders()})
+                },
+                user_notification: function(concID, invID, audID){
+                    return $http.get(IP + '/conciliation/'+concID+'/documents/involved/'+invID+'/audience/'+audID+'/audience_notification', {headers: Session.getHeaders()})
+                },
+                documents(concID){
+                    return $http.get(IP + '/conciliation/'+concID+'/documents', {headers: Session.getHeaders()})
+                },
+                acuerdo: function(concID){
+                    return $http.get(IP + '/conciliation/'+concID+'/documents/act', {headers: Session.getHeaders()})
+                },
+                no_acuerdo: function(concID){
+                    return $http.get(IP + '/conciliation/'+concID+'/documents/no_agreement_constancy', {headers: Session.getHeaders()})
+                },
+                no_acuerdo_inasistencia: function(concID){
+                    return $http.get(IP + '/conciliation/'+concID+'/documents/no_agreement_constancy_due_to_no_assistance', {headers: Session.getHeaders()})
                 }
             },
             delete:{

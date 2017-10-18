@@ -15,6 +15,19 @@ progress {
   border-radius: 9px;
 }
 
+.user-auth-body{
+	background-image: url('/assets/images/BG.png');
+	background-size: auto;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.user-auth-content{
+	overflow-y: auto;
+	position: relative;
+}
+
 
 .horizontal_align{
 	

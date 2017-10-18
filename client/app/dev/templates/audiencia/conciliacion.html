@@ -1,0 +1,109 @@
+<div class="col-md-6" ng-if="getIndex() || !mobile">
+    <div class="box box-default">
+        <div class="index_area" style="padding: 10px;">
+            <h2>Audiencia</h2>
+
+            <div class="scrolleable-content-aud">
+                <div data-slim-scroll data-scroll-height="auto">
+                    <h4><b>Llamado a lista</b></h4>
+                    <md-list-item class="md-3-line" ng-repeat="conv in conc.solicitude_participations" ng-click="showParticipant(conv, $event)">
+                            <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{getName(conv)}}</h3>
+                                <h4>{{getID(conv)}}</h4>
+                                <p>Teléfono: {{conv.involved.phone}}</p>
+                                <md-checkbox class="md-secondary" ng-model="conv.assist" ng-if="asistencia"></md-checkbox>
+                            </div>
+                    </md-list-item>
+                    <md-button class="btn-w-md md-accent" ng-click="saveAssist()" ng-if="asistencia">Guardar listado de asistencia</md-button>
+                    <h4><b>Comentarios</b></h4>
+                    <md-input-container class="md-block">
+                        <label>Comentarios</label>
+                        <textarea ng-model="audience.comment" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                    <md-button class="btn-w-md md-accent" ng-click="saveComment()">Guardar comentarios</md-button>
+                </div>
+            </div>
+        </div>
+        <div class="divider divider-lg divider-dashed"></div>
+        <div class="row" style="padding-left:10%;">
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <md-button class="btn-w-md md-warn" data-ng-click="showResults()" ng-disabled="asistencia">Finalizar proceso</md-button><div class="divider divider-xs"></div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-6">
+                <md-button class="btn-w-md md-primary" data-ng-click="reprogram()" ng-disabled="asistencia">Reprogramar</md-button><div class="divider divider-xs"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" ng-if="(!getIndex() && mobile) || !mobile">
+    <div class="box box-default show-scroll">
+        <div class="show_content" data-slim-scroll data-scroll-height="auto">
+            <h2>Solicitud de conciliación No.1342</h2>
+            <h3>{{getState()}}</h3>
+
+            <h4><b>Convocantes</b></h4>
+            <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
+                <div>
+                    <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{getName(conv)}}</h3>
+                        <h4>{{getID(conv)}}</h4>
+                        <p>Teléfono: {{conv.involved.phone}}</p>
+                    </div>
+                </div>
+            </md-list-item>
+            <h4><b>Convocados</b></h4>
+            <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
+                <div>
+                    <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>{{getName(conv)}}</h3>
+                        <h4>{{getID(conv)}}</h4>
+                        <p>Teléfono: {{conv.involved.phone}}</p>
+                    </div>
+                </div>
+            </md-list-item>
+            <h4><b>Hechos</b></h4>
+            <div class="infoContainer">
+                <div ng-repeat="hecho in conc.conciliation.facts">
+                    <p><b>{{$index + 1}}.</b> {{hecho.description}}</p>
+                </div>
+            </div>
+            <h4><b>Pretensiones</b></h4>
+            <div ng-repeat="pret in conc.conciliation.pretensions">
+                <div class="infoContainer">
+                    <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
+                </div>
+            </div>
+            <h4><b>Anexos y pruebas</b></h4>
+            <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p)">
+                <p><b>{{$index + 1}}.</b> {{p.name}}</p>
+            </md-list-item>
+            <h4><b>Documentos</b></h4>
+            <md-list-item class="md-2-line" ng-repeat="d in documents" ng-click="showDocument(d)">
+                <p><b>{{$index + 1}}.</b> {{d.name}}</p>
+            </md-list-item>
+            <h3><b>Cuantía</b> $ {{conc.conciliation.payment_amount}}</h3>
+            <div style="height: 30px"></div>
+            <!-- <section class="box box-default">
+                <div class="box-body no-padding">                
+                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+                        <md-tab ng-repeat="tab in tabs"
+                                ng-disabled="tab.disabled"
+                                label="{{tab.title}}">
+                            <div class="tab{{$index}}" style="padding: 25px; text-align: center;">
+                                <div ng-repeat="item in tab.info">
+                                    <ul>
+                                        <div ng-bind="item.nombre" ng-click="click()"></div>
+                                    </ul>
+                                </div>
+                                <br/>
+                            </div>
+                        </md-tab>
+                    </md-tabs> 
+                </div>
+            </section> -->
+        </div>
+    </div>
+</div>

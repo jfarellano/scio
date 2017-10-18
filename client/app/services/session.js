@@ -1,5 +1,5 @@
 angular.module('app')
-.factory('Session', ['$http', '$localStorage', '$sessionStorage', 'IP', '$rootScope', function SessionFactory($http, $localStorage, $sessionStorage, IP, $rootScope) {
+.factory('Session', ['$http', '$localStorage', '$sessionStorage', 'IP', '$rootScope', 'Upload',function SessionFactory($http, $localStorage, $sessionStorage, IP, $rootScope, Upload) {
 
   return {
     login: function(user){
@@ -20,7 +20,7 @@ angular.module('app')
       }
     },
     signUp: function(info){
-      return $http.post(IP + '/users', info)
+      return $http.post(IP + '/user', info)
     },
     setToken: function(token, role, user_id, name, email){
       $localStorage.auth = {
@@ -45,6 +45,15 @@ angular.module('app')
       }
       $rootScope.$broadcast('sessionDestroyed');
     },
+    show: function(){
+      return $http.get( IP + '/user', {headers: this.getHeaders()})
+    },
+    update: function(user){
+      return $http.put(IP + '/user', user, {headers: this.getHeaders()})
+    },
+    updatePicture: function(usr){
+      return  Upload.upload({method: 'PUT', url: IP + '/user', data: {profile_picture: usr}, headers: this.getHeaders()})
+    },
     getToken: function(){
       return this.isAuth() ? $localStorage.auth.token : false;
     },
@@ -61,7 +70,7 @@ angular.module('app')
       return this.isAuth() ? $localStorage.auth.email : false;
     },
     getConciliators: function(){
-      return $http.get(IP + '/users')
+      return $http.get(IP + '/coordinator/users', {headers: this.getHeaders()})
     },
     getHeaders: function(){
       return {Authorization: 'Token token='+this.getToken()}
