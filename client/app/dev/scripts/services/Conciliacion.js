@@ -10,7 +10,7 @@ angular.module('app')
             //Conciliation routes
             index: function(){
                 if (state){
-                    return $http.get(IP + '/solicitudes/tipo/conciliacion', {headers: Session.getHeaders()});
+                    return $http.get(IP + '/conciliations', {headers: Session.getHeaders()});
                 }else{
                     return archive;
                 }
@@ -42,10 +42,10 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' + solID + '/involveds/' + invId + '/juridicals', jur,{headers: Session.getHeaders()})
                 },
                 fact:function(solID, concID, fact){
-                    return $http.post(IP + '/solicitudes/'+solID+'/conciliations/'+concID+'/facts', fact,{headers: Session.getHeaders()})
+                    return $http.post(IP + '/conciliations/'+concID+'/facts', fact,{headers: Session.getHeaders()})
                 },
                 pret:function(solID, concID, pret){
-                    return $http.post(IP + '/solicitudes/'+ solID +'/conciliations/'+concID+'/pretensions', pret, {headers: Session.getHeaders()})
+                    return $http.post(IP + '/conciliations/'+concID+'/pretensions', pret, {headers: Session.getHeaders()})
                 },
                 assignee:function(solID, invID, assignee){
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees', assignee,{headers: Session.getHeaders()})
@@ -83,10 +83,10 @@ angular.module('app')
                     return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID, inv, {headers: Session.getHeaders()})
                 },
                 fact:function(solID, concID, factID, fact){
-                    return $http.put(IP + '/solicitudes/' +solID+ '/conciliations/' +concID+ '/facts/' +factID, fact,{headers: Session.getHeaders()})
+                    return $http.put(IP + '/facts/' +factID, fact,{headers: Session.getHeaders()})
                 },
                 pret:function(solID, concID, pretID, pret){
-                    return $http.put(IP + '/solicitudes/' +solID+ '/conciliations/' +concID+ '/pretensions/' +pretID, pret, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/pretensions/' +pretID, pret, {headers: Session.getHeaders()})
                 },
                 assignee:function(solID, invID, assigID,assignee){
                     return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID, pret, {headers: Session.getHeaders()})
@@ -139,7 +139,7 @@ angular.module('app')
                     return $http.get(IP + '/conciliation/'+concID+'/documents', {headers: Session.getHeaders()})
                 },
                 acuerdo: function(concID){
-                    return $http.get(IP + '/conciliation/'+concID+'/documents/act', {headers: Session.getHeaders()})
+                    return $http.get(IP + '/conciliation/'+concID+'/documents/act/total', {headers: Session.getHeaders()})
                 },
                 no_acuerdo: function(concID){
                     return $http.get(IP + '/conciliation/'+concID+'/documents/no_agreement_constancy', {headers: Session.getHeaders()})

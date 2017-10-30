@@ -4,7 +4,10 @@ angular.module('app')
     $scope.asistencia = true
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
-        if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator'){
+        if($scope.conc.state != 'iniciar_audiencia'){
+        
+        //if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator' || Session.getRole() != 'conciliator_in_equity'){
+            //console.log('cambio aca')
             window.location = '#/app/conciliacion/' + $scope.conc.id
         }
         Conciliacion.get.proof($scope.conc.id).then(function(response){
@@ -140,7 +143,10 @@ angular.module('app')
     $scope.reFetchConc = function(){
         Conciliacion.show($state.params.id).then(function (request) {
             $scope.conc = request.data.solicitude;
-            if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator'){
+            if($scope.conc.state != 'iniciar_audiencia'){
+
+            //if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator' || Session.getRole() != 'conciliator_in_equity'){
+                //console.log('Entro aca')
                 window.location = '#/app/conciliacion/' + $scope.conc.id
             }
             Conciliacion.get.proof($scope.conc.id).then(function(response){

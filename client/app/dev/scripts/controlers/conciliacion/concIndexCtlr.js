@@ -3,6 +3,7 @@ angular.module('app')
         console.log(Session.getRole())
         if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
             Conciliacion.coordinator_index().then(function(response){
+
                 $scope.data = response.data.solicitudes;
             }, function(response){
                 $scope.data = []
@@ -10,7 +11,8 @@ angular.module('app')
             })
         }else{
             Conciliacion.index().then(function(response) {
-                $scope.data = response.data.solicitudes;
+                console.log(response.data)
+                $scope.data = response.data.conciliations;
             },function(response){
                 $scope.data = [];
                 console.log(response.data)

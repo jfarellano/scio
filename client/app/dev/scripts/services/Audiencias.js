@@ -11,7 +11,7 @@ angular.module('app')
 		},
 		create:{
 			audience: function(solID, audience){
-				return $http.post(IP + '/solicitudes/'+solID+'/audiences', audience, {headers: Session.getHeaders()})
+				return $http.post(IP + '/conciliator/solicitudes/'+solID+'/audiences', audience, {headers: Session.getHeaders()})
 			},
 			assistance: function(audienceID, ids){
 				return $http.post(IP + '/conciliator/audiences/'+audienceID+'/set_assistance', {involveds: ids}, {headers: Session.getHeaders()} )
@@ -22,7 +22,7 @@ angular.module('app')
 		},
 		update:{
 			audience: function(audienceID, audience){
-				return $http.post(IP + '/conciliator/audiences/'+audienceID+'/set_comment', audience, {headers: Session.getHeaders()})
+				return $http.put(IP + '/conciliator/audiences/'+audienceID, audience, {headers: Session.getHeaders()})
 			}
 		}
 	}        

@@ -26,6 +26,8 @@ angular.module('app')
     $scope.cancel = function() {
         $scope.edit = false
         $scope.hecho_pretension.description = ''
+        $scope.hecho_pretension.department = null
+        $scope.hecho_pretension.city = null
         $mdDialog.cancel()
         $scope.resetInvolucrado()
     };
@@ -527,6 +529,8 @@ angular.module('app')
         if(type == 1){
             Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
                 $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension.department = null
+                $scope.hecho_pretension.city = null
                 $scope.getSolicitude()
             },function(response){
                 $scope.hecho_pretension.description = ''
@@ -614,12 +618,14 @@ angular.module('app')
 //Wizard
     $scope.finished = function() {
         $scope.solicitude.state = 'iniciar_audiencia'
-        Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-            Audiencias.create.audience($scope.solicitude.id, null).then(function(response){
+        Conciliacion.update.conciliator_solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+            Audiencias.create.audience($scope.solicitude.id, {audience:{}}).then(function(response){
                 alertify.success('A la audiencia')
-            })
-            $scope.getSolicitude()
+                $scope.getSolicitude()
             window.location = '#/app/audiencia/conciliacion/' + $scope.solicitude.id
+            }, function(response){
+                console.log(response.data)
+            })
         },function(response){console.log(response.data)})
     };
     $scope.nextStep = function(state) {

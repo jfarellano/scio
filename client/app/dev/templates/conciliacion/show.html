@@ -100,7 +100,7 @@
 
             <h3><b>Cuantía</b> $ {{conc.conciliation.payment_amount}}</h3>
 
-            <button ng-if="Session.getRole() == 'conciliator'" class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="getDocument()">Generar solicitud de conciliacion</button>
+            <button ng-if="Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity'" class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="getDocument()">Generar solicitud de conciliacion</button>
             <!-- <section class="box box-default">
                 <div class="box-body no-padding">                
                     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
