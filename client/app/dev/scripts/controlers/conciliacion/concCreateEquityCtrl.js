@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations){
+.controller('ConcCreateEquityCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations', 'Audiencias',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations, Audiencias){
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
         if(!response.data.solicitude.state.includes('incompleta')){
@@ -613,10 +613,13 @@ angular.module('app')
     }
 //Wizard
     $scope.finished = function() {
-        $scope.solicitude.state = 'pagada'
+        $scope.solicitude.state = 'iniciar_audiencia'
         Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+            Audiencias.create.audience($scope.solicitude.id, null).then(function(response){
+                alertify.success('A la audiencia')
+            })
             $scope.getSolicitude()
-            window.location = '#/app/conciliacion'
+            window.location = '#/app/audiencia/conciliacion/' + $scope.solicitude.id
         },function(response){console.log(response.data)})
     };
     $scope.nextStep = function(state) {
@@ -626,6 +629,7 @@ angular.module('app')
             console.log($scope.solicitude)
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
+                    console.log(response.data)
                     $scope.getSolicitude()
                 },function(response){
                     console.log(response.data)
@@ -785,7 +789,7 @@ angular.module('app')
     Conciliacion.get.constant('involved_nature').then(function(response){
         $scope.convtype = response.data.constants
     })
-    Conciliacion.get.constant('conciliation_area').then(function(response){
+    Conciliacion.get.constant_child(2304, 'conciliation_area').then(function(response){
         $scope.area = response.data.constants
         var r1 = $scope.area.filter(function(a) {
             return a.value == $scope.solicitude.conciliation.area
@@ -794,11 +798,6 @@ angular.module('app')
             $scope.topic = response.data.constants
             var r2 = $scope.topic.filter(function(t){
                 return t.value == $scope.solicitude.conciliation.topic
-            })
-            Conciliacion.get.constant_child(r2[0].id, 'conciliation_subtopic').then(function(response){
-                $scope.subtopic = response.data.constants
-            }, function(response){
-                console.log(response.data)
             })
         })
     })

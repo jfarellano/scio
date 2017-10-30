@@ -1,4 +1,4 @@
-<div ng-controller="ConcCreateCtlr" class="box box-default concCreate">
+<div ng-controller="ConcCreateEquityCtlr" class="box box-default concCreate">
     <div class="box-body">
         <wizard on-finish="finished()" indicators-position="top">
             <wz-step wz-title="Info">
@@ -43,14 +43,6 @@
                                 <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" required>
                                     <md-option ng-repeat="top in topic" value="{{top.value}}">
                                         {{::top.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Subtema del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.subtopic" ng-disabled="!subtopicValid">
-                                    <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
-                                        {{::sub.value}}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
@@ -212,7 +204,7 @@
             <wz-step wz-title="Final">
                 <h2>Fin de solicitud</h2>
                 <div class="ui-wizard-content">
-                    <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de pago del servicio de conciliación. Por favor realice el pago para hacer efectiva la solicitud</p>
+                    <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de audiencia para continuar con la solicitud.</p>
                 </div>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">

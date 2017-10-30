@@ -16,6 +16,25 @@
             </md-input-container>
         </form>
     </div>
+    <h3>Locación de los hechos</h3>
+    <div layout-gt-xs="row" class="layout-gt-xs-row">
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
+            <label>Departamento</label>
+            <md-select ng-model="hecho_pretension.department" ng-change="factCity()" required>
+                <md-option ng-repeat="g in departments" value="{{g.value}}" requiered>
+                    {{g.value}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container class="flex-gt-xs" flex-gt-xs>
+            <label>Ciudad</label>
+            <md-select ng-model="hecho_pretension.city" required>
+                <md-option ng-repeat="g in cities" value="{{g.value}}" requiered>
+                    {{g.value}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
 </md-dialog-content>
 <md-dialog-actions>
     <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>

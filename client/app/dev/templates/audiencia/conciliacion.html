@@ -30,7 +30,7 @@
             <div class="col-md-6 col-sm-6 col-xs-6">
                 <md-button class="btn-w-md md-warn" data-ng-click="showResults()" ng-disabled="asistencia">Finalizar proceso</md-button><div class="divider divider-xs"></div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="col-md-6 col-sm-6 col-xs-6" ng-if="Session.getRole() != 'conciliator_in_equity'">
                 <md-button class="btn-w-md md-primary" data-ng-click="reprogram()" ng-disabled="asistencia">Reprogramar</md-button><div class="divider divider-xs"></div>
             </div>
         </div>

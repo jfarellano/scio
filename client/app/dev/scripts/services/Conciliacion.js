@@ -64,6 +64,9 @@ angular.module('app')
                 },
                 results: function(concID, results){
                     return $http.post(IP + '/conciliator/conciliations/'+concID+'/results', {result: {description:results}}, {headers: Session.getHeaders()})
+                },
+                profession: function(invID, proff){
+                    return $http.post(IP + '/involved/'+invID+'/professions', proff, {headers: Session.getHeaders()})
                 }
             },
             update:{
@@ -102,6 +105,9 @@ angular.module('app')
                 },
                 conciliator_solicitude: function(solID, sol){
                     return $http.put(IP + '/conciliator/solicitudes/' + solID, sol, {headers: Session.getHeaders()})
+                },
+                profession: function(proffID, proff){
+                    return $http.post(IP + '/professions/' + proffID, proff, {headers: Session.getHeaders()})
                 }
             },
             get:{
@@ -140,6 +146,9 @@ angular.module('app')
                 },
                 no_acuerdo_inasistencia: function(concID){
                     return $http.get(IP + '/conciliation/'+concID+'/documents/no_agreement_constancy_due_to_no_assistance', {headers: Session.getHeaders()})
+                },
+                profession: function(invID){
+                    return $http.get(IP + '/involved/'+invID+'/professions')
                 }
             },
             delete:{

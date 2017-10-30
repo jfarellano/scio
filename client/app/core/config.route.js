@@ -57,6 +57,21 @@ angular.module('app')
                         }]
                     }
                 })
+                .state('app.create.conciliacionEquity',{
+                    url: '/conciliacion_equidad/:id',
+                    views:{
+                        'conciliacion':{
+                            templateUrl: URL.dev.template + '/conciliacion/createEquity.html'
+                        }
+                    },
+                    resolve: {
+                        deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                            return $ocLazyLoad.load([
+                                'angular-wizard'
+                            ]);
+                        }]
+                    }
+                })
                 //Admin
                 .state('app.admin', {
                     url: '/admin',

@@ -1,0 +1,27 @@
+<md-toolbar>
+  <div class="md-toolbar-tools scio-bar">
+    <h2>Prueba</h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()">
+      <md-icon class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-dialog-content class="modal_form">
+    <div class="ui-wizard-content">
+        <form name="hechoForm">
+            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                <label>Descripción</label>
+                <input data-ng-model="proof.description" type="text">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Adjuntar prueba</label>
+                <div class="button" ngf-select ng-model="proof.file">Seleccionar archivo</div>
+            </md-input-container>
+        </form>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
+    <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">{{getButtonLable()}}</md-button>  
+</md-dialog-actions>

@@ -1,6 +1,6 @@
 <div class="col-md-4" ng-if="getIndex() || !mobile">
     <div ng-if="Session.getRole() != 'coordinator' && Session.getRole() != 'admin'" >
-        <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación"style="background-color: #8DCEE0;" ng-click="openCreate()">+</md-button>
+        <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación"style="background-color: #8DCEE0;" ng-click="openCreate($event)">+</md-button>
     </div>
     <div class="box box-default">
         <div class="index_area">

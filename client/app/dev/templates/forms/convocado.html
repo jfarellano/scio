@@ -52,6 +52,14 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>País de origen</label>
+                            <md-select ng-model="involucrado.involved.natural.origin_country" required>
+                                <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
@@ -127,6 +135,33 @@
                             </md-select>
                         </md-input-container>
                     </div>
+                    <!-- <h3>Datos de profesión</h3>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Nombre de la profesión: </label>
+                            <md-select ng-model="involucrado.involved.natural.profession.name">
+                                <md-option ng-repeat="c in profession_name" value="{{c.value}}">
+                                    {{c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Institución: </label>
+                            <md-select ng-model="involucrado.involved.natural.profession.institution">
+                                <md-option ng-repeat="c in profession_institution" value="{{c.value}}" >
+                                    {{c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Tarjeta profesional</label>
+                            <input input-num ng-model="involucrado.involved.natural.profession.professional_card" type="number">
+                        </md-input-container>
+                        <label>Fecha de graduación</label>
+                        <md-datepicker ng-model="involucrado.involved.natural.profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
+                    </div> -->
                 </fieldset>
             </div>
             <div ng-if="involucrado.involved.nature == 'juridico'">
@@ -160,6 +195,16 @@
                             <label>Tipo de organización</label>
                             <md-select ng-model="involucrado.involved.juridical.organization_type" required>
                                 <md-option ng-repeat="g in org_type" value="{{g.value}}" requiered>
+                                    {{g.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="involucrado.involved.juridical.organization_type == 'ORGANIZACIÓN PÚBLICA'">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Tipo de entidad publica</label>
+                            <md-select ng-model="involucrado.involved.juridical.type_of_public_entity" required>
+                                <md-option ng-repeat="g in public_type" value="{{g.value}}" requiered>
                                     {{g.value}}
                                 </md-option>
                             </md-select>
