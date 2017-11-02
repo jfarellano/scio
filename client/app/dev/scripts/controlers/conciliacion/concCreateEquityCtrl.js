@@ -931,6 +931,14 @@ angular.module('app')
         })
     })
 
+    $scope.involvedType = function(type){
+        if(type == 'natural'){
+            return 'Persona'
+        }else{
+            return 'Organización'
+        }
+    }
+
     $scope.uniqueCity = function(ele){
         var a = $scope.all_cities.filter(function(elem){
             return ele.value == elem.value
@@ -950,6 +958,10 @@ angular.module('app')
         }else{
             return 'Agregar'
         }
+    }
+
+    $scope.toIndex = function(){
+        window.location = '#/app/conciliacion'
     }
 //FinVARIABLES
 }]);

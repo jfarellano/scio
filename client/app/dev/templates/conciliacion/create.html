@@ -1,5 +1,8 @@
 <div ng-controller="ConcCreateCtlr" class="box box-default concCreate">
     <div class="box-body">
+        <md-button class="md-icon-button md-primary" aria-label="Back" ng-click="toIndex()">
+            <md-icon class="material-icons">arrow_back</md-icon>
+        </md-button>
         <wizard on-finish="finished()" indicators-position="top">
             <wz-step wz-title="Info">
                 <h2>Información de la solicitud</h2>
@@ -86,7 +89,7 @@
                                         </div>
                                         <div class="md-secondary">
                                             <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
-                                            Representante
+                                            Representante Legal
                                         </div>
                                     </div>
                                 </md-list-item>
@@ -122,7 +125,7 @@
                                     </div>
                                     <div class="md-secondary">
                                         <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
-                                        Representante
+                                        Representante Legal
                                     </div>
                             </md-list-item>
                             <div style="height: 30px"></div>

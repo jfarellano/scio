@@ -871,6 +871,14 @@ angular.module('app')
         })
     }
 
+    $scope.involvedType = function(type){
+        if(type == 'natural'){
+            return 'Persona'
+        }else{
+            return 'Organización'
+        }
+    }
+
     $scope.factCity = function(){
 
 
@@ -945,6 +953,10 @@ angular.module('app')
         }else{
             return 'Agregar'
         }
+    }
+
+    $scope.toIndex = function(){
+        window.location = '#/app/conciliacion'
     }
 //FinVARIABLES
 }]);

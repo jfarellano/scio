@@ -31,25 +31,42 @@ angular.module('app')
         $scope.state = Conciliacion.state();
 
         $scope.getConvNames = function(id) {
-            if ($scope.data[id].solicitude_participations == null) {
+            if ($scope.data[id].solicitude_participations.length == 0) {
                 return 'Conciliacion'
             }
             var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocante');
-            var s = ''
-            c.forEach(function(element, i) {
-                var info = ''
-                if(element.involved.nature == 'natural'){
-                    info = element.involved.natural.first_name + ' ' + element.involved.natural.first_lastname
-                }else{
-                    info = element.involved.juridical.name
-                }
-                if(i == 0){
-                    s = s + info
-                }else{
-                    s = s + ', ' + info
-                }
-            });
-            return s;
+            var info = ''
+            if(c[0].involved.nature == 'natural'){
+                info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
+            }else{
+                info = c[0].involved.juridical.name
+            }
+            
+            if (c.length > 1) {
+                info = info + ' y otros.'
+            }
+            return info + ' Convocante';
+        }
+
+        $scope.getConvoNames = function(id) {
+            if ($scope.data[id].solicitude_participations.length == 0) {
+                return ''
+            }
+            var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocado');
+            var info = ''
+            if(c.length == 0){
+                return ''
+            }
+            if(c[0].involved.nature == 'natural'){
+                info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
+            }else{
+                info = c[0].involved.juridical.name
+            }
+            
+            if (c.length > 1) {
+                info = info + ' y otros.'
+            }
+            return info + ' Convocado';
         }
 
         $scope.openCreate = function(ev){

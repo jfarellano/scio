@@ -47,7 +47,7 @@
 			<div layout-gt-xs="row" class="layout-gt-xs-row">
 				<md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Número de identificación</label>
-			        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
+			        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
 			    </md-input-container>
 			    <md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Teléfono de contacto</label>
@@ -93,7 +93,7 @@
 			    </md-input-container>
 			    <md-input-container class="md-block" flex-gt-sm>
 	                <label>Numero de tarjeta profesional</label>
-	                <input ng-model="involucrado.involved.assignee.professional_card" type="number" required>
+	                <input ng-model="involucrado.involved.assignee.professional_card" type="number">
 	            </md-input-container>
 			</div>
 		    <!-- <h3>Estudios</h3>

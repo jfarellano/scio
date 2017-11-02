@@ -1,5 +1,8 @@
 <div ng-controller="ConcCreateEquityCtlr" class="box box-default concCreate">
     <div class="box-body">
+        <md-button class="md-icon-button md-primary" aria-label="Back" ng-click="toIndex()">
+            <md-icon class="material-icons">arrow_back</md-icon>
+        </md-button>
         <wizard on-finish="finished()" indicators-position="top">
             <wz-step wz-title="Info">
                 <h2>Información de la solicitud</h2>
@@ -78,7 +81,7 @@
                                         </div>
                                         <div class="md-secondary">
                                             <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
-                                            Representante
+                                            Representante Legal
                                         </div>
                                     </div>
                                 </md-list-item>
@@ -114,7 +117,7 @@
                                     </div>
                                     <div class="md-secondary">
                                         <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
-                                        Representante
+                                        Representante Legal
                                     </div>
                             </md-list-item>
                             <div style="height: 30px"></div>
@@ -172,6 +175,31 @@
                     </div>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showPretension($event)">Agregar nueva pretensión</md-button>
                 </div>
+                <div class="ui-wizard-actions">
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
+                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                    </div>
+                </div>
+            </wz-step>
+            <!-- <wz-step wz-title="Fundamentos">
+                <h2>Fundamentos del derecho</h2>
+                <div class="ui-wizard-content">
+                    <div class="scrolleable-content-wizard">
+                        <div data-slim-scroll data-scroll-height="auto">
+                            <md-subheader class="md-no-sticky">Fundamentos del derecho</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="p in solicitude.conciliation.pretensions" ng-click="editPretension(p, $event)">
+                                <div>
+                                    <div class="md-list-item-text" layout="column">
+                                        <p><b>{{$index + 1}}. </b>{{::firstN(p.description, 80)}}</p>
+                                    </div>
+                                </div>
+                            </md-list-item>
+                            <div style="height: 30px"></div>
+                        </div>
+                    </div>
+                    <md-button class="md-raised btn-w-md md-primary" ng-click="showPretension($event)">Agregar nueva pretensión</md-button>
+                </div> -->
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>

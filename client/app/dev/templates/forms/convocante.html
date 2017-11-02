@@ -16,7 +16,7 @@
                     <label>Tipo de convocante</label>
                     <md-select ng-model="involucrado.involved.nature" ng-if="!edit" required>
                         <md-option ng-repeat="c in convtype" value="{{c.value}}">
-                            {{c.value}}
+                            {{involvedType(c.value)}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -35,7 +35,7 @@
                         </md-input-container>
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Número de identificación</label>
-                            <input input-num ng-model="involucrado.involved.natural.identifier" type="number" data-ng-minlength=8 ng-disabled="!involucrado.involved.natural.identifier_type" required>
+                            <input input-num ng-model="involucrado.involved.natural.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.natural.identifier_type" required>
                         </md-input-container>
                     </div>
 <!--                     <div layout-gt-xs="row" class="layout-gt-xs-row">
