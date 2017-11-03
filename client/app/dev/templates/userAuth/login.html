@@ -14,9 +14,10 @@
                             <label>Contraseña</label>
                             <input ng-model="user.password" type="password" ng-enter="login()" required>
                         </md-input-container>
-                        <br><md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar sesión</md-button>
+                        <md-button class="md-raised btn-w-md md-primary" ng-click="login()" ng-disabled="!loginForm.$valid">Iniciar sesión</md-button>
                 </fieldset>
             </form>
-            <p><a href="#/registro" class="options">Registrarse</a></p>
+            <p>Ya tienes una cuenta?</p>
+            <p><a href="#/registro" class="options">Crear cuenta</a></p>
         </div>
 </section>

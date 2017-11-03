@@ -7,8 +7,12 @@ angular.module('app')
         }
         $scope.solicitude = response.data.solicitude
         Conciliacion.get.proof($scope.solicitude.conciliation.id).then(function(response){
-            console.log(response.data.proofs)
+            //console.log(response.data.proofs)
             $scope.proofs = response.data.proofs
+        })
+        Conciliacion.get.fundamentals($scope.solicitude.conciliation.id).then(function(response){
+            console.log(response.data)
+            $scope.fundamentals = response.data.fundamentals
         })
         WizardHandler.wizard().goTo(step[$scope.solicitude.state.split('/')[1]])
     },function(response){
@@ -237,6 +241,7 @@ angular.module('app')
         $scope.edit = true
         $scope.showPretension(ev)
     }
+    //Pruebas
     $scope.proof = {file: null, description:null}
     $scope.showProofCreate = function(ev) {
         $('#loader-container').fadeIn('fast');
@@ -261,6 +266,31 @@ angular.module('app')
         }, function() {
         });
     };
+    //Fundamentos
+    $scope.showFundamental = function(ev) {
+        $('#loader-container').fadeIn('fast');
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/fundamental.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            if($scope.edit){
+                $scope.edit_hp(3)
+            }else{
+                $scope.add_hp(3)
+            }
+        }, function() {
+        });
+    };
+    $scope.editFundamental = function(pret, ev){
+        $('#loader-container').fadeIn('fast');
+        $scope.hecho_pretension = pret
+        $scope.edit = true
+        $scope.showPretension(ev)
+    }
+    
 //FinModal
 //CRUDS
     //Apoderado
@@ -533,8 +563,16 @@ angular.module('app')
                 console.log(response.data)
             })
         }
-        else{
+        else if (type == 2){
             Conciliacion.create.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.getSolicitude()
+            },function(response){
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }else{
+            Conciliacion.create.fundamentals($scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
                 $scope.hecho_pretension.description = '';
                 $scope.getSolicitude()
             },function(response){
@@ -554,8 +592,18 @@ angular.module('app')
                 $scope.hecho_pretension.description = ''
                 console.log(response.data)
             })
-        }else{
+        }else if(type == 2){
             Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
+                $scope.getSolicitude()
+            },function(response){
+                $scope.edit = false
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }else{
+            Conciliacion.update.fundamentals($scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
                 $scope.hecho_pretension.description = '';
                 $scope.edit = false
                 $scope.getSolicitude()
@@ -684,6 +732,10 @@ angular.module('app')
             $scope.solicitude = response.data.solicitude
             Conciliacion.get.proof($scope.solicitude.id).then(function(response){
                 $scope.proofs = response.data.proofs
+            })
+            Conciliacion.get.fundamentals($scope.solicitude.conciliation.id).then(function(response){
+                console.log(response.data)
+                $scope.fundamentals = response.data.fundamentals
             })
         },function(response){
             window.location = '#/app/conciliacion'

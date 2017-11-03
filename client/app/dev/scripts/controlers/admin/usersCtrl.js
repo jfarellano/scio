@@ -22,8 +22,17 @@ angular.module('app')
 	        return;
 		}
 
+		$scope.delete = function(user){
+			Admin.delete.user(user.id).then(function(response){
+				alertify.success('Exito eliminando usuario')
+				$scope.reFetch()
+			}, function(response){
+				alertify.error('Error eliminando usuario')
+				console.log(response.data)
+			})
+		}
+
 		$scope.create = function(){
-			console.log($scope.user)
 			Admin.create.user($scope.user).then(function(response){
 				alertify.success('Exito creando el usuario')
 				$scope.reFetch()
@@ -54,8 +63,18 @@ angular.module('app')
 	            targetEvent: ev,
 	            escapeToClose: false
 	        }).then(function(answer) {
-	            $scope.create()
+	        	if($scope.edit){
+	        		$scope.edit()
+	        	}else{
+		            $scope.create()
+		        }
 	        });
 	    };
+	    $scope.edit = false
+	    $scope.editUser = function(user, ev){
+	    	$scope.user = user
+	    	$scope.edit = false;
+	    	$scope.showUser(ev)
+	    }
 
 }])

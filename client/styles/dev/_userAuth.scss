@@ -3,9 +3,9 @@
     padding: 50px;
 
     figure{
-        padding: 0% 30%;
+        padding: 0% 0%;
         img{
-            width: 100%;
+            width: 10%;
         }
     }
 
@@ -23,13 +23,21 @@
             width: 100%;
         }
     }
+    p{
+        display: table;
+        margin: 0 auto;
+    }
+    md-button{
+        text-align: center;
+        display: table;
+        margin: 0 auto;
+    }
 }
 
 .options{
     text-align: center;
     font-size: 1.5em;
     color: #424242;
-    padding: 0% 35%;
 }
 .error{
     text-align: center;

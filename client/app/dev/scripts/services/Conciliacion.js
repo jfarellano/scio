@@ -67,6 +67,9 @@ angular.module('app')
                 },
                 profession: function(invID, proff){
                     return $http.post(IP + '/involved/'+invID+'/professions', proff, {headers: Session.getHeaders()})
+                },
+                fundamentals: function(concID, fund){
+                    return $http.post(IP + '/conciliations/'+concID+'/fundamentals', fund, {headers: Session.getHeaders()})
                 }
             },
             update:{
@@ -107,7 +110,10 @@ angular.module('app')
                     return $http.put(IP + '/conciliator/solicitudes/' + solID, sol, {headers: Session.getHeaders()})
                 },
                 profession: function(proffID, proff){
-                    return $http.post(IP + '/professions/' + proffID, proff, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/professions/' + proffID, proff, {headers: Session.getHeaders()})
+                },
+                fundamentals: function(fundamentalID, fund){
+                    return $http.put(IP + '/fundamentals/'+ fundamentalID, fund, {headers: Session.getHeaders()})
                 }
             },
             get:{
@@ -149,6 +155,18 @@ angular.module('app')
                 },
                 profession: function(invID){
                     return $http.get(IP + '/involved/'+invID+'/professions')
+                },
+                fundamentals: function(concID){
+                    return $http.get(IP + '/conciliations/'+concID+'/fundamentals', {headers: Session.getHeaders()})
+                },
+                active: function(data){
+                    return $http.post(IP + '/conciliations/activas', data, {headers: Session.getHeaders()})
+                },
+                archive: function(data){
+                    return $http.post(IP + '/conciliations/archivadas', data, {headers: Session.getHeaders()})
+                },
+                draft: function(data){
+                    return $http.post(IP + '/conciliations/borradores', data, {headers: Session.getHeaders()})
                 }
             },
             delete:{

@@ -5,7 +5,7 @@
         </md-button>
         <wizard on-finish="finished()" indicators-position="top">
             <wz-step wz-title="Info">
-                <h2>Información de la solicitud</h2>
+                <h4>Información de la Solicitud</h4>
                 <div class="ui-wizard-content">
                     <form name="infoForm" novalidate>
                         <md-input-container class="md-block" flex-gt-sm>
@@ -69,7 +69,7 @@
                 </div>
             </wz-step>
             <wz-step wz-title="Convocantes">
-                <h2>Listado de convocantes</h2>
+                <h4>Listado de Convocantes</h4>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -107,7 +107,7 @@
                 </div>
             </wz-step>
             <wz-step wz-title="convocados">
-                <h2>Listado de convocados</h2>
+                <h4>Listado de Convocados</h4>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -141,7 +141,7 @@
                 </div>
             </wz-step>
             <wz-step wz-title="Hechos">
-                <h2>Listado de hechos</h2>
+                <h4>Listado de Hechos</h4>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -166,7 +166,7 @@
                 </div>
             </wz-step>
             <wz-step wz-title="Pretensiones">
-                <h2>Listado de pretensiones</h2>
+                <h4>Listado de Pretensiones</h4>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -190,8 +190,33 @@
                     </div>
                 </div>
             </wz-step>
+            <wz-step wz-title="Fundamentos">
+                <h4>Fundamentos del derecho</h4>
+                <div class="ui-wizard-content">
+                    <div class="scrolleable-content-wizard">
+                        <div data-slim-scroll data-scroll-height="auto">
+                            <md-subheader class="md-no-sticky">Fundamentos del derecho</md-subheader>
+                            <md-list-item class="md-3-line" ng-repeat="p in fundamentals" ng-click="editPretension(p, $event)">
+                                <div>
+                                    <div class="md-list-item-text" layout="column">
+                                        <p><b>{{$index + 1}}. </b>{{::firstN(p.description, 80)}}</p>
+                                    </div>
+                                </div>
+                            </md-list-item>
+                            <div style="height: 30px"></div>
+                        </div>
+                    </div>
+                    <md-button class="md-raised btn-w-md md-primary" ng-click="showFundamental($event)">Agregar nuevo fundamento</md-button>
+                </div> 
+                <div class="ui-wizard-actions">
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
+                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                    </div>
+                </div>
+            </wz-step>
             <wz-step wz-title="Pruebas">
-                <h2>Anexos y pruebas</h2>
+                <h4>Anexos y Pruebas</h4>
                 <div class="scrolleable-content-wizard">
                     <div data-slim-scroll data-scroll-height="auto">
                         <md-subheader class="md-no-sticky">Pruebas</md-subheader>
@@ -213,14 +238,14 @@
                 </div>
             </wz-step>
             <wz-step wz-title="Final">
-                <h2>Fin de solicitud</h2>
+                <h4>Fin de Solicitud</h4>
                 <div class="ui-wizard-content">
                     <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de pago del servicio de conciliación. Por favor realice el pago para hacer efectiva la solicitud</p>
                 </div>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Pagar</md-button>
                     </div>
                 </div>
             </wz-step>

@@ -11,7 +11,7 @@ angular.module('app')
             })
         }else{
             Conciliacion.index().then(function(response) {
-                console.log(response.data)
+                //console.log(response.data)
                 $scope.data = response.data.conciliations;
             },function(response){
                 $scope.data = [];

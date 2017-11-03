@@ -16,6 +16,16 @@ angular.module('app')
 			user: function(user){
 				return $http.post(IP + '/admin/users', user, {headers: Session.getHeaders()})
 			}
+		},
+		update:{
+			user: function(userID, user){
+
+			}
+		},
+		delete:{
+			user: function(userID){
+				return $http.delete(IP + '/admin/users/'+userID, {headers: Session.getHeaders()})
+			}
 		}
 	}        
 }]);

@@ -83,7 +83,7 @@ angular.module('app')
                 ending_hour: (eHH>9 ? '' : '0') + eHH + ':' + (eMM>9 ? '' : '0') + eMM
             }
             Audiencias.create.audience($scope.conc.id, {audience: aud}).then(function(response){
-                console.log(response.data)
+                //console.log(response.data)
                 $mdDialog.show(
                   $mdDialog.alert()
                     .parent(angular.element(document.querySelector('#popupContainer')))
@@ -282,7 +282,7 @@ angular.module('app')
                 right: 'today prev,next'
             },
             dayClick: function(date, allDay, jsEvent, view){
-                console.log('Click')
+                //console.log('Click')
                 var selectDate = new Date(date.format())
                 var endDate = new Date(selectDate.setHours(selectDate.getHours() + 1) + 60*60*1000)
                 if($scope.program){
@@ -311,6 +311,8 @@ angular.module('app')
             }
         }
     }
+
+    
 
     Date.prototype.sendFormat = function() {
       var mm = this.getMonth() + 1; // getMonth() is zero-based

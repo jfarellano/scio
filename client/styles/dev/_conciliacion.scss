@@ -4,9 +4,15 @@
     font-weight: bold;
 }
 .box_name{
-    font-size: 2em;
-    padding-top: 20px;
+    font-size: 1.5em;
+    padding-top: 0px;
     padding-bottom: 0px;
+}
+.box-body{
+    h6{
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 }
 .card_days{
     margin-top: 0px;
@@ -33,7 +39,7 @@
 }
 
 .barra-prog {
-    padding: 20px 0px;
+    padding: 3px 0px;
 }
 
 .show-scroll{
