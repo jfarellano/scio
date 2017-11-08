@@ -1,23 +1,108 @@
 angular.module('app')
     .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', 'Session', '$mdDialog',function($scope, $state, $window, Conciliacion, screenSize, Session, $mdDialog){
-        console.log(Session.getRole())
+        $scope.estado = 'activo'
+        $scope.page = 1
+        $scope.searchContent = {}   
+        $scope.searchType = null
+        $scope.moreAvailable = true
+        $scope.types = [
+            {text:'', value: null},
+            {text:'Fecha', value: 'date'},
+            {text:'Involucrado', value: 'involved'},
+            {text:'Numero de Caso', value: 'case_number'}
+        ]
+        $scope.fetchData = function(){
+            var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}
+            if($scope.estado == 'activo'){
+                Conciliacion.get.active(data).then(function(response){
+                    $scope.data = response.data.conciliations
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }else if($scope.estado == 'archivo'){
+                Conciliacion.get.archive(data).then(function(response){
+                    $scope.data = response.data.conciliations
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }else if ($scope.estado == 'borrador') {
+                Conciliacion.get.draft(data).then(function(response){
+                    $scope.data = response.data.conciliations
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }
+        }
+
         if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
             Conciliacion.coordinator_index().then(function(response){
-
                 $scope.data = response.data.solicitudes;
             }, function(response){
                 $scope.data = []
                 console.log(response.data)
             })
         }else{
-            Conciliacion.index().then(function(response) {
-                //console.log(response.data)
-                $scope.data = response.data.conciliations;
-            },function(response){
-                $scope.data = [];
-                console.log(response.data)
-            })
+            $scope.fetchData()
         }
+
+        $scope.nextPage = function(){
+            $scope.page = $scope.page + 1
+            var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}
+            if($scope.estado == 'activo'){
+                Conciliacion.get.active(data).then(function(response){
+                    $scope.data = $scope.data.concat(response.data.conciliations)
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }else if($scope.estado == 'archivo'){
+                Conciliacion.get.archive(data).then(function(response){
+                    $scope.data = $scope.data.concat(response.data.conciliations)
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }else if ($scope.estado == 'borrador') {
+                Conciliacion.get.draft(data).then(function(response){
+                    $scope.data = $scope.data.concat(response.data.conciliations)
+                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                        $scope.moreAvailable = false
+                    }
+                })
+            }
+        }
+
+        $scope.indexType = function(type)   {
+            $scope.estado = type
+            $scope.page = 1
+            $scope.moreAvailable = true
+            $scope.busqueda = {}
+            $scope.searchContent = {}
+            $scope.searchType = null
+            $scope.fetchData()
+        }
+
+        $scope.busqueda = {
+            searchType: null,
+            searchContent: {}
+        }
+        $scope.search = function(){
+            $scope.page = 1
+            $scope.moreAvailable = true
+            $scope.searchType = $scope.busqueda.searchType
+            if($scope.searchType == 'date'){
+                $scope.searchContent.start = $scope.busqueda.searchContent.start
+                $scope.searchContent.end = $scope.busqueda.searchContent.end
+            }else{
+                $scope.searchContent.value = $scope.busqueda.searchContent.value
+            }
+            $scope.fetchData()
+        }
+
+        
 
         $scope.Session =  Session
 
@@ -76,7 +161,6 @@ angular.module('app')
                     console.log(response.data)
                     window.location = '#/app/create/conciliacion/' + response.data.solicitude.id    
                 },function(response){
-                    console.log("Entro 2")
                     console.log(response.data)
                 })
             }else{
@@ -87,8 +171,8 @@ angular.module('app')
         $scope.showConfirm = function(ev) {
             // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
-                .title('Que tipo de conciliacion quiere iniciar?')
-                .textContent('Puede elegir ente conciliacion en derecho o conciliacion en equidad')
+                .title('¿Que tipo de conciliación quiere iniciar?')
+                .textContent('Escoja el tipo de coniliación que desea iniciar')
                 .ariaLabel('Tipo de conciliacion')
                 .targetEvent(ev)
                 .ok('Conciliación en equidad')
@@ -96,42 +180,20 @@ angular.module('app')
             $mdDialog.show(confirm).then(function() {
                 var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion_en_equidad", "payment_amount": 0}
                 Conciliacion.create.solicitude(solicitude).then(function(response){
-                    console.log(response.data)
                     window.location = '#/app/create/conciliacion_equidad/' + response.data.solicitude.id
                 },function(response){
-                    console.log("Entro 2")
                     console.log(response.data)
                 })
             }, function() {
                 var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
                 Conciliacion.create.solicitude(solicitude).then(function(response){
-                    console.log(response.data)
                     window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
                 },function(response){
-                    console.log("Entro 2")
                     console.log(response.data)
                 })
             });
         };
 
-        $scope.getIndex = function(){
-            return Conciliacion.getIndex();
-        }
-        $scope.switchState = function(stat){
-            $('#loader-container').fadeIn('fast');
-            if(stat === 1) {
-                Conciliacion.setState(true);
-            }else {
-                Conciliacion.setState(false);
-            }
-            $scope.fetchData();
-            setTimeout(function() {
-                $('#loader-container').fadeOut('slow');
-            }, 2000);
-        }
-        $scope.fetchData = function(){
-            $scope.data = Conciliacion.index();
-        }
         $scope.toShow = function(conc){
             Conciliacion.setIndex(false)
             if(conc.state.includes('incompleta')){
@@ -145,12 +207,41 @@ angular.module('app')
             }
         }
 
+        $scope.progress = function(conc){
+            switch(conc.state){ 
+                case 'incompleta':
+                    return 0
+                    break
+                case 'incompleta/info':
+                case 'incompleta/convocantes':
+                case 'incompleta/convocados':
+                case 'incompleta/hechos':
+                case 'incompleta/pretensiones':
+                    return 10
+                    break
+                case 'enviada':
+                    return 20
+                    break
+                case 'aceptada':
+                    return 30
+                    break
+                case 'pendiente_por_aceptacion_de_conciliador':
+                case 'aceptada_por_conciliador':
+                    return 50
+                    break
+                case 'programar_audiencia':
+                    return 60
+                    break
+                case 'programada':
+                    return 70
+                    break
+                case 'cerrada':
+                    return 100
+                    break
+            }
+        }
+
         $scope.mobile = screenSize.on('xs, sm', function(isMatch){
             $scope.mobile = isMatch;
-        });
-
-        // angular.element($window).on('resize', function () {
-        //     $window.location.reload();
-        // });
-        
+        });    
     }]);

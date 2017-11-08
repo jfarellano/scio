@@ -50,7 +50,8 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <md-input-container class="md-block" flex-gt-sm>
+                        <md-checkbox ng-model="cuantia.indeterminada" aria-label="Cuantia indeterminada">Cuantia indeterminada?</md-checkbox>
+                        <md-input-container class="md-block" ng-if="!cuantia.indeterminada" flex-gt-sm>
                             <label>Cuantía</label>
                             <input data-ng-model="solicitude.conciliation.payment_amount" type="number" required>
                         </md-input-container>
@@ -220,8 +221,7 @@
                         <div style="height: 30px"></div>
                     </div>
                 </div>
-                <!-- <md-button class="md-raised btn-w-md md-primary" ng-click="showProofCreate($event)">Subir pruebas</md-button> -->
-                <md-button class="md-raised btn-w-md md-primary" ngf-select="uploadFiles($files)" multiple="multiple">Subir pruebas</md-button>
+                <md-button class="md-raised btn-w-md flex-gt-xs" ng-click="showProofCreate($event)">Subir pruebas</md-button>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>

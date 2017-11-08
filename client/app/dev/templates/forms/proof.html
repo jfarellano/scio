@@ -11,12 +11,15 @@
     <div class="ui-wizard-content">
         <form name="hechoForm">
             <md-input-container class="flex-gt-xs" flex-gt-xs>
-                <label>Descripción</label>
-                <input data-ng-model="proof.description" type="text">
+                <label>Nombre</label>
+                <input data-ng-model="proof.name" type="text">
             </md-input-container>
             <md-input-container class="md-block">
-                <label>Adjuntar prueba</label>
-                <div class="button" ngf-select ng-model="proof.file">Seleccionar archivo</div>
+                    <label>Descripción</label>
+                    <textarea ng-model="proof.description" rows="10" md-select-on-focus required=""></textarea>
+                </md-input-container>
+            <md-input-container class="md-block">
+                <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="proof.file">Seleccionar archivos</md-button>
             </md-input-container>
         </form>
     </div>

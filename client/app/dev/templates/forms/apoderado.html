@@ -46,6 +46,16 @@
 			</div>
 			<div layout-gt-xs="row" class="layout-gt-xs-row">
 				<md-input-container class="flex-gt-xs" flex-gt-xs>
+	                <label>Género</label>
+	                <md-select ng-model="involucrado.involved.assignee.gender" required>
+	                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+	                        {{g.value}}
+	                    </md-option>
+	                </md-select>
+	            </md-input-container>
+	        </div>
+			<div layout-gt-xs="row" class="layout-gt-xs-row">
+				<md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Número de identificación</label>
 			        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
 			    </md-input-container>
@@ -91,9 +101,9 @@
 			        <label>Dirección de residencia</label>
 			        <input ng-model="involucrado.involved.assignee.address" type="text" required>
 			    </md-input-container>
-			    <md-input-container class="md-block" flex-gt-sm>
+			    <md-input-container class="flex-gt-xs" flex-gt-sm>
 	                <label>Numero de tarjeta profesional</label>
-	                <input ng-model="involucrado.involved.assignee.professional_card" type="number">
+	                <input ng-model="involucrado.involved.assignee.professional_card" type="number" required>
 	            </md-input-container>
 			</div>
 		    <!-- <h3>Estudios</h3>

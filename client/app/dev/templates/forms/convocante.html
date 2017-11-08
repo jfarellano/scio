@@ -23,7 +23,7 @@
             </div>
             <div ng-if="involucrado.involved.nature == 'natural'">
                 <fieldset>
-                    <h3>Datos de identificación</h3>
+                    <h4>Datos de identificación</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Tipo de documento</label>
@@ -93,7 +93,7 @@
                         <label>Fecha de nacimiento</label>
                         <md-datepicker ng-model="involucrado.involved.natural.birthdate" placeholder="Fecha de nacimiento" required></md-datepicker>
                     </div>
-                    <h3>Información de contacto</h3>
+                    <h4>Información de contacto</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Dirección de residencia</label>
@@ -124,7 +124,7 @@
                             <input data-ng-model="involucrado.involved.web_site" type="text">
                         </md-input-container>
                     </div>
-                    <h3>Datos de estudio</h3>
+                    <h4>Datos de estudio</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Nivel escolar: </label>
@@ -135,11 +135,11 @@
                             </md-select>
                         </md-input-container>
                     </div>
-                    <!-- <h3>Datos de profesión</h3>
+                    <h4>Datos de profesión</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Nombre de la profesión: </label>
-                            <md-select ng-model="involucrado.involved.natural.profession.name">
+                            <md-select ng-model="profession.name">
                                 <md-option ng-repeat="c in profession_name" value="{{c.value}}">
                                     {{c.value}}
                                 </md-option>
@@ -147,7 +147,7 @@
                         </md-input-container>
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Institución: </label>
-                            <md-select ng-model="involucrado.involved.natural.profession.institution">
+                            <md-select ng-model="profession.institution">
                                 <md-option ng-repeat="c in profession_institution" value="{{c.value}}" >
                                     {{c.value}}
                                 </md-option>
@@ -157,16 +157,31 @@
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Tarjeta profesional</label>
-                            <input input-num ng-model="involucrado.involved.natural.profession.professional_card" type="number">
+                            <input input-num ng-model="profession.professional_card" type="number">
                         </md-input-container>
                         <label>Fecha de graduación</label>
-                        <md-datepicker ng-model="involucrado.involved.natural.profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
-                    </div> -->
+                        <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
+                    </div>
+                    <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.id, 'involved')">Agregar profesión</md-button>
+
+                    <div data-slim-scroll data-scroll-height="250px">
+                        <md-subheader class="md-no-sticky">Profesiones</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="p in professions">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{p.name}}</h3>
+                                    <p>Institución: {{p.institution}}</p>
+                                </div>
+                                <div class="md-secondary">
+                                    <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'involved')">delete_forever</md-icon>
+                                </div>
+                        </md-list-item>
+                        <div style="height: 30px"></div>
+                    </div>
                 </fieldset>
             </div>
             <div ng-if="involucrado.involved.nature == 'juridico'">
                  <fieldset>
-                    <h3>Datos de identificación</h3>
+                    <h4>Datos de identificación</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>NIT</label>
@@ -210,7 +225,7 @@
                             </md-select>
                         </md-input-container>
                     </div>
-                    <h3>Información de contacto</h3>
+                    <h4>Información de contacto</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Dirección judicial</label>
@@ -238,7 +253,7 @@
                  </fieldset>
             </div>
             <div ng-if="involucrado.involved.nature != ''">
-                <h3>Locación</h3>
+                <h4>Locación</h4>
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
                         <label>Departamento</label>

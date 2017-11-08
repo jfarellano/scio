@@ -119,6 +119,11 @@ angular.module('app')
                     templateUrl: URL.dev.template + '/audiencia/conciliacion.html',
                     controller: 'AudConcCtrl'
                 })
+                .state('app.audience.result', {
+                    url: '/result/:id',
+                    templateUrl: URL.dev.template + '/audiencia/results.html',
+                    controller: 'ResultConcCtrl'
+                })
                 //User
                 .state('app.profile', {
                     url: '/perfil',

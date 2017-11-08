@@ -19,7 +19,7 @@ angular.module('app')
 		},
 		update:{
 			user: function(userID, user){
-
+				return $http.put(IP + '/admin/users/' + userID, user, {headers: Session.getHeaders()})
 			}
 		},
 		delete:{

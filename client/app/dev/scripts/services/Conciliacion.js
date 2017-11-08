@@ -57,7 +57,7 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study,{headers: Session.getHeaders()})
                 },
                 proof: function(solID, file){
-                    return Upload.upload({ url: IP + '/solicitudes/'+solID+'/proofs', data: {proof_data: file, name:file.name}, headers: Session.getHeaders()})
+                    return Upload.upload({ url: IP + '/solicitudes/'+solID+'/proofs', data: {proof_data: file.file, name:file.name, description:file.description}, headers: Session.getHeaders()})
                 },
                 comment: function(){
                     return null
@@ -65,8 +65,8 @@ angular.module('app')
                 results: function(concID, results){
                     return $http.post(IP + '/conciliator/conciliations/'+concID+'/results', {result: {description:results}}, {headers: Session.getHeaders()})
                 },
-                profession: function(invID, proff){
-                    return $http.post(IP + '/involved/'+invID+'/professions', proff, {headers: Session.getHeaders()})
+                profession: function(invID, type,proff){
+                    return $http.post(IP + '/'+type+'/'+invID+'/professions', proff, {headers: Session.getHeaders()})
                 },
                 fundamentals: function(concID, fund){
                     return $http.post(IP + '/conciliations/'+concID+'/fundamentals', fund, {headers: Session.getHeaders()})
@@ -153,8 +153,8 @@ angular.module('app')
                 no_acuerdo_inasistencia: function(concID){
                     return $http.get(IP + '/conciliation/'+concID+'/documents/no_agreement_constancy_due_to_no_assistance', {headers: Session.getHeaders()})
                 },
-                profession: function(invID){
-                    return $http.get(IP + '/involved/'+invID+'/professions')
+                profession: function(ID, type){
+                    return $http.get(IP + '/'+type+'/'+ID+'/professions')
                 },
                 fundamentals: function(concID){
                     return $http.get(IP + '/conciliations/'+concID+'/fundamentals', {headers: Session.getHeaders()})
@@ -172,6 +172,9 @@ angular.module('app')
             delete:{
                 study:function(solID, invID, assigID, studyID){
                     return $http.delete(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies/' +studyID, {headers: Session.getHeaders()})
+                },
+                profession: function(proffID){
+                    return $http.delete(IP + '/professions/' + proffID, {headers: Session.getHeaders()})
                 }
             },
 

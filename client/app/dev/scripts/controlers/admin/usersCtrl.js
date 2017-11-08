@@ -64,7 +64,8 @@ angular.module('app')
 	            escapeToClose: false
 	        }).then(function(answer) {
 	        	if($scope.edit){
-	        		$scope.edit()
+	        		$scope.edit = false
+	        		$scope.editU()
 	        	}else{
 		            $scope.create()
 		        }
@@ -73,8 +74,23 @@ angular.module('app')
 	    $scope.edit = false
 	    $scope.editUser = function(user, ev){
 	    	$scope.user = user
-	    	$scope.edit = false;
+	    	$scope.edit = true;
 	    	$scope.showUser(ev)
 	    }
 
+	    $scope.editU = function(){
+	    	$scope.edit = false
+	    	delete $scope.user.role
+	    	Admin.update.user($scope.user.id, $scope.user).then(function(response){
+	    		alertify.success('Exito editando usuario')
+	    		$scope.edit = false
+	    		$scope.resetUser()
+	    		$scope.reFetch()
+	    	}, function(response){
+	    		$scope.edit = false
+	    		$scope.resetUser()
+	    		alertify.error('Hubo un error editando el usuario, intente de nuevo')
+	    		console.log(response.data)
+	    	})
+	    }
 }])

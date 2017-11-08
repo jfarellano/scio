@@ -1,11 +1,17 @@
 angular.module('app')
 .controller('ConcCreateEquityCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations', 'Audiencias',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations, Audiencias){
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
+    $scope.cuantia = {indeterminada: false}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
         if(!response.data.solicitude.state.includes('incompleta')){
             window.location = '#/app/conciliacion'
         }
         $scope.solicitude = response.data.solicitude
+        if ($scope.solicitude.conciliation.payment_amount == -1) {
+            $scope.cuantia.indeterminada = true
+        }else{
+            $scope.cuantia.indeterminada = false
+        }
         Conciliacion.get.proof($scope.solicitude.conciliation.id).then(function(response){
             //console.log(response.data.proofs)
             $scope.proofs = response.data.proofs
@@ -38,18 +44,12 @@ angular.module('app')
     $scope.save = function(answer) {
       $mdDialog.hide(answer);
     };
-    // $scope.showStudy = function(st, edit){
-    //     if(edit){
-    //         $scope.study = st
-    //         $scope.edit_estudio()
-    //     }else{
-    //         $scope.add_estudio()
-    //     }
-    // }
     //Convocante
     $scope.showConvocante = function(ev) {
         $('#loader-container').fadeIn('fast');
-        var parentEl = angular.element(document.body);
+        if(!$scope.edit){
+            $scope.getProfession(null, 'involved')
+        }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/convocante.html',
             scope: $scope,        
@@ -68,15 +68,11 @@ angular.module('app')
     };
     $scope.editConvocante = function(inv, ev){
         $('#loader-container').fadeIn('fast');
+        $scope.edit = true
         $scope.involucrado = inv
         if($scope.involucrado.involved.natural != null){
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
-            Conciliacion.get.profession(inv.id).then(function(response){
-                $scope.involucrado.involved.natural.profession = response.data.profession
-                $scope.involucrado.involved.natural.profession.graduation_date = new Date($scope.involucrado.involved.natural.profession.graduation_date)
-            }, function(response){
-                console.log(response.data)
-            })
+            $scope.getProfession(inv.involved.id, 'involved')
         }
         Conciliacion.get.constant_child(COL ,'department').then(function(response){
             $scope.departments = response.data.constants
@@ -87,12 +83,14 @@ angular.module('app')
                 $scope.cities = response.data.constants
             })
         })
-        $scope.edit = true
         $scope.showConvocante(ev)
     }
     //Convocado
     $scope.showConvocado = function(ev) {
         $('#loader-container').fadeIn('fast');
+        if(!$scope.edit){
+            $scope.getProfession(null, 'involved')
+        }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/convocado.html',
             scope: $scope,        
@@ -119,12 +117,7 @@ angular.module('app')
         $scope.involucrado = inv
         if($scope.involucrado.involved.natural != null){
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
-            Conciliacion.get.profession(inv.id).then(function(response){
-                $scope.involucrado.involved.natural.profession = response.data.profession
-                $scope.involucrado.involved.natural.profession.graduation_date = new Date($scope.involucrado.involved.natural.profession.graduation_date)
-            }, function(response){
-                console.log(response.data)
-            })
+            $scope.getProfession(inv.involved.id, 'involved')
         }
         Conciliacion.get.constant_child(COL ,'department').then(function(response){
             $scope.departments = response.data.constants
@@ -268,7 +261,7 @@ angular.module('app')
         $scope.showPretension(ev)
     }
     //proof
-    $scope.proof = {file: null, description:null}
+    $scope.proof = {}
     $scope.showProofCreate = function(ev) {
         $('#loader-container').fadeIn('fast');
         $mdDialog.show({
@@ -281,17 +274,64 @@ angular.module('app')
             Conciliacion.create.proof($scope.solicitude.id, $scope.proof).then(function(response){
                 alertify.success('Prueba añadida correctamente')
                 $('#loader-container').fadeOut('slow');
-                proof = null
+                $scope.proof = {}
                 $scope.getProof()
                 $scope.getSolicitude()
             }, function(response){
+                $scope.proof = {}
                 console.log(response.data)
                 $('#loader-container').fadeOut('slow');
                 alertify.error('Error subiendo la prueba')
             })
         }, function() {
+            $scope.proof = {}
         });
     };
+
+    //profesion
+    $scope.profession = {}
+
+    $scope.addProfession = function(id, type){
+        if ($scope.edit) {
+            Conciliacion.create.profession(id, type, $scope.profession).then(function(response){
+                alertify.success('Exito agregando profesión')
+                $scope.getProfession(id, type)
+                $scope.profession = {}
+            }, function(response){
+                $scope.profession = {}
+                alertify.error('Error agregando profesión')
+                console.log(response.data)
+            })
+        }else{
+            $scope.professions.push($scope.profession)
+            $scope.profession = {}
+        }
+    }
+    $scope.deleteProfession = function(id, type){
+        if ($scope.edit) {
+            Conciliacion.delete.profession($scope.professions[id].id).then(function(response){
+                alertify.success('Exito eliminando profesión')
+                $scope.getProfession($scope.involucrado.involved.id, type)
+            }, function(response){
+                console.log(response.data)
+                alertify.error('Error eliminando profesión')
+            })
+        }else{
+            $scope.professions.splice(id, 1)
+        }
+    }
+    $scope.getProfession = function(id, type){
+        if ($scope.edit) {
+            Conciliacion.get.profession(id, type).then(function(response){
+                console.log(response.data)
+                $scope.professions = response.data.professions
+            }, function(response){
+                console.log(response.data)
+            })
+        }else{
+            $scope.professions = []
+        }
+    }
 //FinModal
 //CRUDS
     //Apoderado
@@ -325,54 +365,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-    //Estudios
-    // $scope.add_estudio = function(){
-    //     if($scope.edit){
-    //         Conciliacion.create.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study).then(function(response){
-    //             $scope.studies.push(response.data.study)
-    //             alertify.success("Se agrego exitosamente el estudio")
-    //             $scope.resetStudy()
-    //             $scope.getSolicitude()
-    //         },function(response){
-    //             alertify.error("Error agregando el estudio")
-    //             $scope.resetStudy()
-    //             console.log(response.data)
-    //         })
-    //     }else{
-    //         console.log( $scope.studies)
-    //         $scope.studies.push($scope.study)
-    //         $scope.resetStudy()
-    //     }
-    // }
-    // $scope.edit_estudio = function(){
-    //     Conciliacion.update.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id, $scope.study).then(function(response){
-    //         alertify.success("La edicion del estudio fue exitosa")
-    //         $scope.resetStudy()
-    //         $scope.getSolicitude()
-    //     },function(response){
-    //         alertify.error("La edicion del estudio no fue exitosa")
-    //         $scope.resetStudy()
-    //         console.log(response.data)
-    //     })
-    // }
-    // $scope.delete_estudio = function(index){
-    //     if($scope.edit){
-    //         $scope.study = $scope.involucrado.involved.assignee.studies[index]
-    //         Conciliacion.delete.study($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee.id, $scope.study.id, $scope.study.id).then(function(response){
-    //             $scope.studies.splice( index, 1 )
-    //             alertify.success("Se elimino correctamente el estudio")
-    //             $scope.resetStudy()
-    //         },function(response){
-    //             alertify.error("No se pudo eliminar correctamnte el estudio.")
-    //             $scope.resetStudy()
-    //             console.log(response.data)
-    //         })
-    //     }else{
-    //         alertify.success("Se elimino correctamente el estudio")    
-    //         $scope.studies.splice( index, 1 )
-    //         $scope.resetStudy()
-    //     }
-    // }
     //Rrepresentante
     $scope.add_representante = function(){
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative).then(function(response){
@@ -400,17 +392,19 @@ angular.module('app')
     //Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
-        console.log($scope.involucrado)
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
+            var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                    // Conciliacion.create.proffesion(response.data.involved.id, $scope.involucrado.involved.natural.proffesion).then(function(response){
-                    //     alertify.success('Profesion creada con exito')
-                    //     console.log(response.data)
-                    // }, function(response){
-                    //     console.log(response.data)
-                    //     alertify.error('Error agregando profesion')
-                    // })
+                    $scope.professions.forEach(function(proff){
+                        Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
+                            alertify.success('Exito agregando profesión')
+                        }, function(response){
+                            $scope.profession = {}
+                            alertify.error('Error agregando profesión')
+                            console.log(response.data)
+                        })
+                    })
                     $scope.getSolicitude()
                     alertify.success("Exito agregando convocante")
                     $scope.resetInvolucrado()
@@ -420,7 +414,6 @@ angular.module('app')
                     $scope.resetInvolucrado()
                 })
             }else{
-                console.log($scope.involucrado.involved)
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
                     alertify.success("Exito agregando convocante")
@@ -451,12 +444,6 @@ angular.module('app')
                     $scope.resetInvolucrado()
                     $scope.edit = false
                 })
-                // Conciliacion.update.proffesion($scope.involucrado.id, $scope.involucrado.involved.natural.proffesion).then(function(response){
-                //     console.log('Exito en la edicion')
-                // }, function(response){
-                //     console.log(response.data)
-                //     alertify.error('Error editando profesion')
-                // })
             }else{
                 Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
@@ -476,25 +463,21 @@ angular.module('app')
     $scope.add_convocado = function(){
         $scope.involucrado.participation_type = 'convocado';
         Conciliacion.create.involved($scope.solicitude.id, 'convocado', $scope.involucrado).then(function(response){
+            var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                    $scope.getSolicitude()
-                    if($scope.involucrado.apoderado){
-                        Conciliacion.create.assignee($scope.solicitude.id, response.data.involved.id, $scope.involucrado).then(function(response){
-                            console.log(response.data)
-                            $scope.resetInvolucrado()
-                        },function(response){
+                    $scope.professions.forEach(function(proff){
+                        Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
+                            alertify.success('Exito agregando profesión')
+                        }, function(response){
+                            $scope.profession = {}
+                            alertify.error('Error agregando profesión')
                             console.log(response.data)
                         })
-                    }else{
-                        $scope.resetInvolucrado()
-                    }
-                    // Conciliacion.create.proffesion(response.data.involved.id, $scope.involucrado.involved.natural.proffesion).then(function(response){
-                    //     alertify.success('Profesion creada con exito')
-                    // }, function(response){
-                    //     console.log(response.data)
-                    //     alertify.error('Error agregando profesion')
-                    // })
+                    })
+                    alertify.success("Exito agregando convocante")
+                    $scope.resetInvolucrado()
+                    $scope.getSolicitude()
                 }, function(response){
                     console.log(response.data)
                     $scope.resetInvolucrado()
@@ -524,13 +507,6 @@ angular.module('app')
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
-                    console.log(response.data)
-                    // Conciliacion.update.proffesion($scope.involucrado.id, $scope.involucrado.involved.natural.proffesion).then(function(response){
-                    //     console.log('Exito en la edicion')
-                    // }, function(response){
-                    //     console.log(response.data)
-                    //     alertify.error('Error editando profesion')
-                    // })
                     $scope.getSolicitude()
                     $scope.resetInvolucrado()
                     $scope.edit = false
@@ -677,7 +653,9 @@ angular.module('app')
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state
             $scope.solicitude.conciliation.definable = true
-            console.log($scope.solicitude)
+            if($scope.cuantia.indeterminada){
+                $scope.solicitude.conciliation.payment_amount = -1
+            }
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     console.log(response.data)
@@ -723,9 +701,9 @@ angular.module('app')
     }
     // $scope.study = {university: '', level: '', title: ''}
     // var original_study = angular.copy($scope.study)
-    // $scope.getARName = function(app){
-    //     return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
-    // }
+    $scope.getARName = function(app){
+        return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
+    }
     // $scope.resetStudy = function(){
     //     $scope.study = angular.copy(original_study);
     //     $scope.newStudies.$setPristine();
@@ -926,8 +904,6 @@ angular.module('app')
     }
 
     $scope.factCity = function(){
-
-
         var r = $scope.departments.filter(function(a) {
             return a.value == $scope.hecho_pretension.department
         })
@@ -996,7 +972,12 @@ angular.module('app')
     }
 
     $scope.firstN = function(str, n){
-        return str.substring(0, n);
+        var s = str.substring(0, n)
+        if(str.length <= n){
+            return  s
+        }else{
+            return s + ' ...'
+        }
     }
     $scope.hecho_pretension = {description: ''}
 

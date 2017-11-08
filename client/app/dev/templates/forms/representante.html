@@ -54,6 +54,16 @@
 			    </md-input-container>
 			</div>
 			<div layout-gt-xs="row" class="layout-gt-xs-row">
+				<md-input-container class="flex-gt-xs" flex-gt-xs>
+	                <label>Género</label>
+	                <md-select ng-model="involucrado.involved.representative.gender" required>
+	                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+	                        {{g.value}}
+	                    </md-option>
+	                </md-select>
+	            </md-input-container>
+	        </div>
+			<div layout-gt-xs="row" class="layout-gt-xs-row">
 			    <md-input-container class="flex-gt-xs" flex-gt-xs>
 			        <label>Celular de contacto</label>
 			        <input ng-model="involucrado.involved.representative.cellphone" data-ng-minlength=7 type="number" required>

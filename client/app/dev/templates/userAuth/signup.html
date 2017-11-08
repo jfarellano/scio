@@ -26,6 +26,16 @@
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>Género</label>
+                                <md-select ng-model="user.gender" required>
+                                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+                                        {{g.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Telefono de contacto</label>
                                 <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
                             </md-input-container>
@@ -44,7 +54,7 @@
                                 <input ng-model="user.password_c" data-match="signupForm.pass" type="password" required>
                             </md-input-container>
                         </div>
-                        <md-checkbox ng-model="lawyer" aria-label="Es abogado">Es usted abogado?</md-checkbox>
+                        <md-checkbox ng-model="lawyer" aria-label="Es abogado">Abogado</md-checkbox>
                         <div ng-if="lawyer">
                             <div layout-gt-xs="row" class="layout-gt-xs-row">
                                 <md-input-container class="flex-gt-xs" flex-gt-xs>

@@ -69,17 +69,7 @@ angular.module('app')
     }
 
     $scope.showResults = function(ev){
-        $mdDialog.show({
-            templateUrl: URL.dev.template + '/audiencia/results.html',
-            scope: $scope,        
-            preserveScope: true,
-            targetEvent: ev,
-            fullscreen: $scope.customFullscreen
-        }).then(function(answer) {
-            $scope.addResults()
-        }, function() {
-            console.log('Evento cancelado')
-        });
+        window.location = '#/app/audiencia/result/' + $scope.conc.id
     }
 
     $scope.showDocument = function(doc){
@@ -97,7 +87,7 @@ angular.module('app')
     }
 
     $scope.endSolicitude = function(acuerdo){
-        $scope.conc.state = 'cerrar_conciliacion'
+        $scope.conc.state = 'cerrada'
         if (acuerdo == 'acuerdo') {
             Conciliacion.get.acuerdo($scope.conc.conciliation.id).then(function(response){
                 alertify.success('Se genero exitosamente el documento de acuerdo')
@@ -252,6 +242,95 @@ angular.module('app')
     $scope.mobile = screenSize.on('xs, sm', function(isMatch){
         $scope.mobile = isMatch;
     });
+
+    //results
+    $scope.showPretension = function(ev) {
+        $('#loader-container').fadeIn('fast');
+        $mdDialog.show({
+            //change to results
+            templateUrl: URL.dev.template + '/forms/pretension.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            if($scope.edit){
+                $scope.edit_hp(2)
+            }else{
+                $scope.add_hp(2)
+            }
+        }, function() {
+        });
+    };
+    $scope.editPretension = function(pret, ev){
+        $('#loader-container').fadeIn('fast');
+        $scope.hecho_pretension = pret
+        $scope.edit = true
+        $scope.showPretension(ev)
+    }
+
+        $scope.add_hp = function(type){
+
+        if(type == 1){
+            Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.getSolicitude()
+            },function(response){
+                $scope.hecho_pretension.description = ''
+                console.log(response.data)
+            })
+        }
+        else if (type == 2){
+            Conciliacion.create.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.getSolicitude()
+            },function(response){
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }else{
+            Conciliacion.create.fundamentals($scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.getSolicitude()
+            },function(response){
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }
+    }
+    $scope.edit_hp = function(type){
+        if(type == 1){
+            Conciliacion.update.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id , $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
+                $scope.getSolicitude()
+            },function(response){
+                $scope.edit = false
+                $scope.hecho_pretension.description = ''
+                console.log(response.data)
+            })
+        }else if(type == 2){
+            Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
+                $scope.getSolicitude()
+            },function(response){
+                $scope.edit = false
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }else{
+            Conciliacion.update.fundamentals($scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
+                $scope.hecho_pretension.description = '';
+                $scope.edit = false
+                $scope.getSolicitude()
+            },function(response){
+                $scope.edit = false
+                $scope.hecho_pretension = ''
+                console.log(response.data)
+            })
+        }
+    }
 
     // selected = null,
     // previous = null;

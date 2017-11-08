@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('SignupCtrl', ['$scope', '$window', 'URL', 'Session', '$mdDialog',function($scope, $window, URL, Session, $mdDialog){
+.controller('SignupCtrl', ['$scope', '$window', 'URL', 'Session', '$mdDialog', 'Conciliacion',function($scope, $window, URL, Session, $mdDialog, Conciliacion){
     $scope.user = {
         first_first_name: '',
         second_first_name: '',
@@ -36,7 +36,10 @@ angular.module('app')
     original = angular.copy($scope.user);
     $scope.canSubmit = function() {
         return $scope.signupForm.$valid && !angular.equals($scope.user, original);
-    };    
+    };
+    Conciliacion.get.constant('gender').then(function(response){
+        $scope.gender = response.data.constants
+    })  
     $scope.submitForm = function() {
         Session.signUp($scope.user).then(function(response){
             $mdDialog.alert()

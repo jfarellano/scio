@@ -14,6 +14,7 @@ angular.module('app')
     	},function(response){
     		$scope.message = response.data.single_authentication
             $scope.error = true
+            console.log(response.data)
     		console.log('No autorizado')
     	})
     }

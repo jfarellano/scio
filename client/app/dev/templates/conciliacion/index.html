@@ -4,11 +4,30 @@
     </div>
     <div class="box box-default">
         <div class="index_area">
-            <h2 class="title">Conciliaciones</h2>
-            <md-input-container class="md-block" flex-gt-sm>
-                <label for="search">Buscar</label>
-                <input class="ng-pristine ng-valid md-input ng-empty ng-touched" id="search" ng-model="busqueda">
-            </md-input-container>
+            <h3 class="title">Conciliaciones</h3>
+            <div layout-gt-xs="row" class="layout-gt-xs-row" ng-show="Session.getRole() != 'coordinator'">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Tipo de busqueda</label>
+                    <md-select ng-model="busqueda.searchType" required>
+                            <md-option ng-repeat="type in types" value="{{type.value}}">
+                                {{::type.text}}
+                            </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" ng-if="busqueda.searchType == 'case_number' || busqueda.searchType == 'involved'" flex-gt-xs>
+                    <label>Busqueda</label>
+                    <input input-num ng-model="busqueda.searchContent.value" type="text">
+                </md-input-container>
+                <div ng-if="busqueda.searchType == 'date'">
+                    <label>Fecha de Inicio</label>
+                    <md-datepicker ng-model="busqueda.searchContent.start" placeholder="Fecha de nacimiento" required></md-datepicker>
+                    <label>Fecha de Fin</label>
+                    <md-datepicker ng-model="busqueda.searchContent.end" placeholder="Fecha de nacimiento" required></md-datepicker>
+                </div>
+                <md-input-container class="flex-gt-xs" ng-if="busqueda.searchType != null" flex-gt-xs>
+                    <md-button class="md-raised btn-w-md md-primary" ng-click="search()">Buscar</md-button>
+                </md-input-container>
+            </div>
             <div class="scrolleable-content">
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-repeat="conc in data" class="md-whiteframe-5dp content">
@@ -19,10 +38,15 @@
                                     <div class="box_content">
                                         <h6>{{getConvoNames($index)}}</h6>
                                         <p>Estado: {{getState(conc)}}</p>
-                                        <div class="col-sm-12 barra-prog"><md-progress-linear md-mode="determinate" value="14" aria-valuemin="0" aria-valuemax="90"></md-progress-linear></div>
+                                        <div class="col-sm-12 barra-prog"><md-progress-linear md-mode="determinate" value="{{progress(conc)}}" aria-valuemin="0" aria-valuemax="100"></md-progress-linear></div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row"  ng-if="moreAvailable">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <md-button class="btn-w-md md-accent" data-ng-click="nextPage()">Mostrar Mas</md-button><div class="divider divider-xs"></div>
                         </div>
                     </div>
                     <div style="height: 30px"></div>
@@ -30,12 +54,15 @@
             </div>
         </div>
         <div class="divider divider-lg divider-dashed"></div>
-        <div class="row" style="padding-left:10%;">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <md-button class="btn-w-md md-accent" data-ng-click="switchState(1)">Activas</md-button><div class="divider divider-xs"></div>
+        <div class="row"  ng-show="Session.getRole() != 'coordinator'">
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <md-button class="btn-w-md md-accent" data-ng-click="indexType('activo')">Activas</md-button><div class="divider divider-xs"></div>
             </div>
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <md-button class="btn-w-md md-primary" data-ng-click="switchState(2)">Archivo</md-button><div class="divider divider-xs"></div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <md-button class="btn-w-md md-primary" data-ng-click="indexType('archivo')">Archivo</md-button><div class="divider divider-xs"></div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <md-button class="btn-w-md md-primary" data-ng-click="indexType('borrador')">Borrador</md-button><div class="divider divider-xs"></div>
             </div>
         </div>
     </div>

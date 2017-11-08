@@ -10,7 +10,7 @@
 <md-dialog-content class="modal_form">
     <form name="userForm" novalidate ng-submit="submitForm()">
         <fieldset>
-            <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="!edit">
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs> 
                         <label>Rol del usuario</label>
@@ -48,7 +48,7 @@
                     <input ng-model="user.email" type="email" required>
                 </md-input-container>
             </div>
-            <div layout-gt-xs="row" class="layout-gt-xs-row">
+            <div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="!edit">
                 <md-input-container class="flex-gt-xs" flex-gt-xs>
                     <label>Contraseña</label>
                     <input ng-model="user.password" name="pass" type="password" required>

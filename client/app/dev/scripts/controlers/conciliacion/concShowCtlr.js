@@ -153,7 +153,7 @@ angular.module('app')
     }
 
     $scope.setConciliator = function(conciliator){
-        console.log('Entro en asigancion')
+        //console.log('Entro en asigancion')
         Conciliacion.update.set_conciliator($scope.conc.id, conciliator.id).then(function(response){
             $scope.reFetchConc()
         }, function(response){
