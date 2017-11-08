@@ -70,7 +70,7 @@ angular.module('app')
       return this.isAuth() ? $localStorage.auth.email : false;
     },
     getConciliators: function(){
-      return $http.get(IP + '/coordinator/users', {headers: this.getHeaders()})
+      return $http.get(IP + '/coordinator/conciliators', {headers: this.getHeaders()})
     },
     getHeaders: function(){
       return {Authorization: 'Token token='+this.getToken()}

@@ -13,6 +13,7 @@ angular.module('app')
         })
         if($scope.conc.state == 'aceptada'){
             Session.getConciliators().then(function(response){
+                console.log(response.data)
                 $scope.conciliators = response.data.users
             },function(response){
                 console.log(response.data)
@@ -65,6 +66,14 @@ angular.module('app')
             alertify.error('Error generando documento')
             console.log(response.data)
         })
+    }
+
+    $scope.cuantia = function(value){
+        if(value == -1){
+            return 'Indeterminada'
+        }else{
+            return '$ ' + value
+        }
     }
 
     $scope.programAudience = function(){

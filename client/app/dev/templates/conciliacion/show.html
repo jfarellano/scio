@@ -63,6 +63,13 @@
                 <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="toAudience()">Ir a Audiencia</button>
             </div>
 
+            <div ng-if="conc.conciliator != null">
+                <h4><b>Conciliador</b></h4>
+                <h5>{{conc.conciliator.name}} {{conc.conciliator.first_lastname}}</h5>
+                <p>Telefono: {{conc.conciliator.phone}}</p>
+                <p>E-Mail: {{conc.conciliator.email}}</p>
+            </div>
+
             <h4><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
@@ -116,7 +123,7 @@
                 <p><b>{{$index + 1}}.</b> {{d.name}}</p>
             </md-list-item>
 
-            <h3><b>Cuantía</b> $ {{conc.conciliation.payment_amount}}</h3>
+            <h3><b>Cuantía</b> {{cuantia(conc.conciliation.payment_amount)}}</h3>
 
             <button ng-if="Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity'" class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="getDocument()">Generar solicitud de conciliacion</button>
             <!-- <section class="box box-default">

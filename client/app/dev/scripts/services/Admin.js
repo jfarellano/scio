@@ -6,7 +6,7 @@ angular.module('app')
 				return $http.get(IP + '/rooms', {headers: Session.getHeaders()})
 			},
 			users: function(){
-				return $http.get(IP + '/admin/users', {headers: Session.getHeaders()})
+				return $http.post(IP + '/admin/users/index', null,{headers: Session.getHeaders()})
 			}
 		},
 		create:{
@@ -20,11 +20,17 @@ angular.module('app')
 		update:{
 			user: function(userID, user){
 				return $http.put(IP + '/admin/users/' + userID, user, {headers: Session.getHeaders()})
+			}, 
+			room: function(roomID, room){
+				return $http.put(IP + '/rooms/' + roomID, room, {headers: Session.getHeaders()})
 			}
 		},
 		delete:{
 			user: function(userID){
 				return $http.delete(IP + '/admin/users/'+userID, {headers: Session.getHeaders()})
+			},
+			room: function(roomID){
+				return $http.delete(IP + '/rooms/' + roomID)
 			}
 		}
 	}        

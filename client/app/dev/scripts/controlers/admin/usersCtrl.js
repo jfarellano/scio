@@ -4,6 +4,8 @@ angular.module('app')
 		Admin.index.users().then(function(response){
 			$scope.users = response.data.users
 			$('#loader-container').fadeOut('slow');
+		}, function(response){
+			console.log(response.data)
 		})
 
 		Conciliacion.get.constant('role').then(function(response){
@@ -67,6 +69,7 @@ angular.module('app')
 	        		$scope.edit = false
 	        		$scope.editU()
 	        	}else{
+	        		$scope.edit = false
 		            $scope.create()
 		        }
 	        });
@@ -77,6 +80,10 @@ angular.module('app')
 	    	$scope.edit = true;
 	    	$scope.showUser(ev)
 	    }
+
+	    Conciliacion.get.constant('gender').then(function(response){
+	        $scope.gender = response.data.constants
+	    }) 
 
 	    $scope.editU = function(){
 	    	$scope.edit = false

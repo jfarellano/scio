@@ -12,7 +12,7 @@ angular.module('app')
     		Session.setToken(response.data.token.secret,user.role,user.id, user.name + ' ' + user.first_lastname + ' ' + user.second_lastname, user.email)
     		window.location = '#/app/dashboard';
     	},function(response){
-    		$scope.message = response.data.single_authentication
+    		//$scope.message = response.data.single_authentication
             $scope.error = true
             console.log(response.data)
     		console.log('No autorizado')
