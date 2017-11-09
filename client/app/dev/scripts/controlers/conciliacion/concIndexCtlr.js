@@ -12,41 +12,59 @@ angular.module('app')
             {text:'Numero de Caso', value: 'case_number'}
         ]
         $scope.fetchData = function(){
-            var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}
-            if($scope.estado == 'activo'){
-                Conciliacion.get.active(data).then(function(response){
-                    $scope.data = response.data.conciliations
-                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
-                        $scope.moreAvailable = false
-                    }
-                })
-            }else if($scope.estado == 'archivo'){
-                Conciliacion.get.archive(data).then(function(response){
-                    $scope.data = response.data.conciliations
-                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
-                        $scope.moreAvailable = false
-                    }
-                })
-            }else if ($scope.estado == 'borrador') {
-                Conciliacion.get.draft(data).then(function(response){
-                    $scope.data = response.data.conciliations
-                    if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
-                        $scope.moreAvailable = false
-                    }
-                })
+            if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
+                var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}
+                if($scope.estado == 'activo'){
+                    Conciliacion.get.active_all(data).then(function(response){
+                        $scope.data = response.data.solicitudes
+                        console.log(response.data)
+                        if (response.data.solicitudes.length == 0 || response.data.solicitudes.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }else if($scope.estado == 'archivo'){
+                    Conciliacion.get.archive_all(data).then(function(response){
+                        $scope.data = response.data.solicitudes
+                        if (response.data.solicitudes.length == 0 || response.data.solicitudes.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }else if ($scope.estado == 'borrador') {
+                    Conciliacion.get.draft_all(data).then(function(response){
+                        $scope.data = response.data.solicitudes
+                        if (response.data.solicitudes.length == 0 || response.data.solicitudes.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }
+            }else{
+                var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}
+                if($scope.estado == 'activo'){
+                    Conciliacion.get.active(data).then(function(response){
+                        $scope.data = response.data.conciliations
+                        if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }else if($scope.estado == 'archivo'){
+                    Conciliacion.get.archive(data).then(function(response){
+                        $scope.data = response.data.conciliations
+                        if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }else if ($scope.estado == 'borrador') {
+                    Conciliacion.get.draft(data).then(function(response){
+                        $scope.data = response.data.conciliations
+                        if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
+                            $scope.moreAvailable = false
+                        }
+                    })
+                }
             }
         }
 
-        if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
-            Conciliacion.coordinator_index().then(function(response){
-                $scope.data = response.data.solicitudes;
-            }, function(response){
-                $scope.data = []
-                console.log(response.data)
-            })
-        }else{
-            $scope.fetchData()
-        }
+        $scope.fetchData()
 
         $scope.nextPage = function(){
             $scope.page = $scope.page + 1

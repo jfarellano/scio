@@ -39,7 +39,7 @@
 			        <label>Tipo de documento</label>
 			        <md-select ng-model="involucrado.involved.assignee.identifier_type" required>
 			            <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
-			                {{type.value}}
+			                {{::type.value}}
 			            </md-option>
 			        </md-select>
 			    </md-input-container>
@@ -49,7 +49,7 @@
 	                <label>Género</label>
 	                <md-select ng-model="involucrado.involved.assignee.gender" required>
 	                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
-	                        {{g.value}}
+	                        {{::g.value}}
 	                    </md-option>
 	                </md-select>
 	            </md-input-container>
@@ -73,7 +73,7 @@
 			        <label>País</label>
 			        <md-select ng-model="involucrado.involved.assignee.country" required>
 			            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
-			                {{c.value}}
+			                {{::c.value}}
 			            </md-option>
 			        </md-select>
 			    </md-input-container>
@@ -83,7 +83,7 @@
 			        <label>Departamento</label>
 			        <md-select ng-model="involucrado.involved.assignee.department" ng-change="getAssigneeCity()" required>
 			            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
-			                {{c.value}}
+			                {{::c.value}}
 			            </md-option>
 			        </md-select>
 			    </md-input-container>
@@ -91,7 +91,7 @@
 			        <label>Ciudad</label>
 			        <md-select ng-model="involucrado.involved.assignee.city" required>
 			            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
-			                {{c.value}}
+			                {{::c.value}}
 			            </md-option>
 			        </md-select>
 			    </md-input-container>
@@ -112,7 +112,7 @@
                     <label>Nombre de la profesión: </label>
                     <md-select ng-model="profession.name">
                         <md-option ng-repeat="c in profession_name" value="{{c.value}}">
-                            {{c.value}}
+                            {{::c.value}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -120,7 +120,7 @@
                     <label>Institución: </label>
                     <md-select ng-model="profession.institution">
                         <md-option ng-repeat="c in profession_institution" value="{{c.value}}" >
-                            {{c.value}}
+                            {{::c.value}}
                         </md-option>
                     </md-select>
                 </md-input-container>
@@ -139,8 +139,8 @@
                 <md-subheader class="md-no-sticky">Profesiones</md-subheader>
                 <md-list-item class="md-3-line" ng-repeat="p in professions">
                         <div class="md-list-item-text" layout="column">
-                            <h3>{{p.name}}</h3>
-                            <p>Institución: {{p.institution}}</p>
+                            <h3>{{::p.name}}</h3>
+                            <p>Institución: {{::p.institution}}</p>
                         </div>
                         <div class="md-secondary">
                             <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'assignee', involucrado.involved.assignee.id)">delete_forever</md-icon>

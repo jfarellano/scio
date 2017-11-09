@@ -1,5 +1,5 @@
 <div ng-controller="RoomsCtlr" class="box box-default concCreate">
-	<h2>Administrador de salas</h2>
+	<h2>Administrador de Salas</h2>
 	<div layout-gt-xs="row" class="layout-gt-xs-row" >
 		<form name="salas">
 	        <md-input-container class="flex-gt-xs" flex-gt-xs>
@@ -19,5 +19,8 @@
 		    <h3>{{r.name}}</h3>
 		    <p>{{r.description}}</p>
 		</div>
+		<div class="md-secondary">
+            <md-icon class="material-icons md-secondary" aria-label="Eliminar usuario" ng-click="deleteRoom(r)">delete_forever</md-icon>
+        </div>
     </md-list-item>
 </div>

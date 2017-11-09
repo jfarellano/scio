@@ -21,6 +21,16 @@ angular.module('app')
 	        return;
 		}
 
+		$scope.deleteRoom = function(room){
+			Admin.delete.room(room.id).then(function(response){
+				alertify.success('Exito eliminando sala')
+				$scope.reFetch()
+			}, function(response){
+				console.log(response.data)
+				alertify.error('Error eliminando sala')
+			})
+		}
+
 		$scope.create = function(){
 			Admin.create.room({room: $scope.room}).then(function(response){
 				alertify.success('Exito creando la sala')

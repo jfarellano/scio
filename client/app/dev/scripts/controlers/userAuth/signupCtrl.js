@@ -38,6 +38,7 @@ angular.module('app')
         return $scope.signupForm.$valid && !angular.equals($scope.user, original);
     };
     Conciliacion.get.constant('gender').then(function(response){
+        //console.log(response.data)
         $scope.gender = response.data.constants
     })  
     $scope.submitForm = function() {

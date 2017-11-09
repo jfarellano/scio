@@ -77,6 +77,11 @@ angular.module('app')
         Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
             window.location = '#/app/dashboard'
         })
+        Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
+            console.log(response.data)
+        }, function(response){
+            console.log(response.data)
+        })
     }
 
     $scope.edit = false
@@ -84,7 +89,6 @@ angular.module('app')
     //results
     $scope.showResult = function(ev) {
         $mdDialog.show({
-            //change to results
             templateUrl: URL.dev.template + '/audiencia/result.html',
             scope: $scope,        
             preserveScope: true,
@@ -100,6 +104,11 @@ angular.module('app')
     $scope.save = function(answer) {
       $mdDialog.hide(answer);
     };
+
+    $scope.cancel = function() {
+        $scope.edit = false
+        $mdDialog.cancel()
+    }
 
     $scope.results = []
     $scope.add_result = function(){

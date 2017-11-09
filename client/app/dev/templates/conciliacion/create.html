@@ -36,7 +36,7 @@
                         <div>
                             <md-input-container class="md-block" flex-gt-sm ng-if="solicitude.conciliation.definable">
                                 <label>Área del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.area" required>
+                                <md-select ng-model="solicitude.conciliation.area" required ng-change="getArea()"> 
                                     <md-option ng-repeat="area in area" value="{{area.value}}">
                                         {{::area.value}}
                                     </md-option>
@@ -44,7 +44,7 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm ng-if="!solicitude.conciliation.definable">
                                 <label>Área del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.area" required>
+                                <md-select ng-model="solicitude.conciliation.area" required ng-change="getAreaNot()">
                                     <md-option ng-repeat="area in areanot" value="{{area.value}}">
                                         {{::area.value}}
                                     </md-option>
@@ -52,7 +52,7 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Tema del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" required>
+                                <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" ng-change="getArea()" required>
                                     <md-option ng-repeat="top in topic" value="{{top.value}}">
                                         {{::top.value}}
                                     </md-option>

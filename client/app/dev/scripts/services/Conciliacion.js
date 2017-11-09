@@ -76,6 +76,9 @@ angular.module('app')
                 solicitude:function(id, sol){
                     return $http.put(IP + '/solicitudes/' + id, sol, {headers: Session.getHeaders()})
                 },
+                conciliation: function(id, conciliation){
+                    return $http.put(IP + '/conciliations/' + id, conciliation, {headers: Session.getHeaders()})
+                },
                 natural:function(solID, invID, natID, nat){
                     return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID+ '/naturals/'+ natID , nat, {headers: Session.getHeaders()})
                 },
@@ -167,6 +170,15 @@ angular.module('app')
                 },
                 draft: function(data){
                     return $http.post(IP + '/conciliations/borradores', data, {headers: Session.getHeaders()})
+                },
+                active_all: function(data){
+                    return $http.post(IP + '/coordinator/solicitudes/activas', data, {headers: Session.getHeaders()})
+                },
+                archive_all: function(data){
+                    return $http.post(IP + '/coordinator/solicitudes/archivadas', data, {headers: Session.getHeaders()})
+                },
+                draft_all: function(data){
+                    return $http.post(IP + '/coordinator/solicitudes/borradores', data, {headers: Session.getHeaders()})
                 }
             },
             delete:{

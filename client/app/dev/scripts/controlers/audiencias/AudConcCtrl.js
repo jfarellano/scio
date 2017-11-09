@@ -34,7 +34,13 @@ angular.module('app')
         console.log(request.data)
     })
 
-
+    $scope.cuantia = function(value){
+        if(value == -1){
+            return 'Indeterminada'
+        }else{
+            return '$ ' + value
+        }
+    }
 
     $scope.saveComment = function(){
         Audiencias.update.audience($scope.audience.id, $scope.audience).then(function(response){
@@ -44,7 +50,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.saveAssist = function(){
         var ids = []
         $scope.conc.solicitude_participations.forEach(function(part){

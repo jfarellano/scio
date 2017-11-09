@@ -76,9 +76,11 @@ angular.module('app')
             var r2 = $scope.departments.filter(function(d){
                 return d.value == $scope.involucrado.department
             })
-            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-                $scope.cities = response.data.constants
-            })
+            if(r2.length > 0){
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
         })
         $scope.showConvocante(ev)
     }
@@ -294,6 +296,8 @@ angular.module('app')
 
     $scope.addProfession = function(id, type){
         if ($scope.edit) {
+            //console.log($scope.profession)
+            $scope.profession.name = $scope.profession.name.value
             Conciliacion.create.profession(id, type, $scope.profession).then(function(response){
                 alertify.success('Exito agregando profesión')
                 $scope.getProfession(id, type)
@@ -617,7 +621,9 @@ angular.module('app')
 
 //Validations
     $scope.convocantes_validation = function(){
-        return $scope.convocantes().length != 0;
+        try{
+            return $scope.convocantes().length != 0;
+        }catch(err){}
     }
     $scope.convocados_validation = function(){
         return $scope.convocados().length != 0;
@@ -688,7 +694,7 @@ angular.module('app')
     // $scope.study = {university: '', level: '', title: ''}
     // var original_study = angular.copy($scope.study)
     $scope.getARName = function(app){
-         return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
+        if(app != null) return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
     }
     // $scope.resetStudy = function(){
     //     $scope.study = angular.copy(original_study);
@@ -716,13 +722,20 @@ angular.module('app')
         return p.participation_type == 'convocante'
     }
     $scope.getConvocantes = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => $scope.esConvocante(i));
+        if ($scope.solicitude != null) {
+            return $scope.solicitude.solicitude_participations.filter(i => $scope.esConvocante(i));
+        }
     }
     $scope.getConvocados = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        if($scope.solicitude != null){
+            return $scope.solicitude.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        }
     }
     $scope.convocantes = function(){
-        return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocante');
+        //console.log($scope.solicitude)
+        if ($scope.solicitude != null) {
+            return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocante');
+        }
     }
     $scope.convocados = function(){
         return $scope.solicitude.solicitude_participations.filter(i => i.participation_type == 'convocado');
@@ -827,25 +840,41 @@ angular.module('app')
 
     Conciliacion.get.constant_child(2304, 'conciliation_area').then(function(response){
         $scope.areanot = response.data.constants
-        var r1 = $scope.area.filter(function(a) {
+        if($scope.area != null){
+            var r1 = $scope.area.filter(function(a) {
+                return a.value == $scope.solicitude.conciliation.area
+            })
+            Conciliacion.get.constant_child(r1[0].id, 'conciliation_topic').then(function(response){
+                $scope.topic = response.data.constants
+                var r2 = $scope.topic.filter(function(t){
+                    return t.value == $scope.solicitude.conciliation.topic
+                })
+            })
+        }
+    })
+
+    $scope.getArea = function(){
+        var r = $scope.area.filter(function(a) {
             return a.value == $scope.solicitude.conciliation.area
         })
-        Conciliacion.get.constant_child(r1[0].id, 'conciliation_topic').then(function(response){
+        console.log(r)
+        Conciliacion.get.constant_child(r[0].id, 'conciliation_topic').then(function(response){
             $scope.topic = response.data.constants
-            var r2 = $scope.topic.filter(function(t){
-                return t.value == $scope.solicitude.conciliation.topic
-            })
+        }, function(response){
+            console.log(response.data)
         })
-    })
-    
-    $scope.$watch('solicitude.conciliation.area', function(){
-        var r = $scope.area.filter(function(a) {
+    }
+
+    $scope.getAreaNot = function(){
+        var r = $scope.areanot.filter(function(a) {
             return a.value == $scope.solicitude.conciliation.area
         })
         Conciliacion.get.constant_child(r[0].id, 'conciliation_topic').then(function(response){
             $scope.topic = response.data.constants
+        }, function(response){
+            console.log(response.data)
         })
-    })
+    }
 
     $scope.getAssigneeCity = function(){
         var r = $scope.departments.filter(function(a) {
@@ -863,7 +892,6 @@ angular.module('app')
             return t.value == $scope.solicitude.conciliation.topic
         })
         Conciliacion.get.constant_child(r[0].id, 'conciliation_subtopic').then(function(response){
-            console.log(response.data)
             $scope.subtopicValid = true
             $scope.subtopic = response.data.constants
             if($scope.subtopic.length == 0){
@@ -892,9 +920,11 @@ angular.module('app')
         var r2 = $scope.departments.filter(function(d){
             return d.value == $scope.involucrado.department
         })
-        Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-            $scope.cities = response.data.constants
-        })
+        if(r2.length > 0){
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        }
     })
 
     $scope.getRepCities = function(){
@@ -924,12 +954,16 @@ angular.module('app')
     }
 
     $scope.$watch('involucrado.involved.department', function(){
-        var r = $scope.departments.filter(function(a) {
-            return a.value == $scope.involucrado.involved.department
-        })
-        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
-            $scope.cities = response.data.constants
-        })
+        if($scope.departments != null){
+            var r = $scope.departments.filter(function(a) {
+                return a.value == $scope.involucrado.involved.department
+            })
+            if (r.length > 0) {
+                Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
+        }
     })
 
     Conciliacion.get.constant('gender').then(function(response){
