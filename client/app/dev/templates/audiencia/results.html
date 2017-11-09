@@ -21,6 +21,41 @@
                 </md-input-container>
             </div>
 
+            <!-- <h3>Manejo del conflicto</h3>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Escala de conflicto</label>
+                    <md-select ng-model="mc.conflict_scale" required>
+                            <md-option ng-repeat="type in scale" value="{{type.value}}" requiered>
+                                {{::type.text}}
+                            </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <md-checkbox ng-model="mc.third_parties_direct_intervention" aria-label="Es abogado">Intervención directa de terceros</md-checkbox>
+            <div ng-if="mc.third_parties_direct_intervention">
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Tercero</label>
+                        <md-select ng-model="mc.third_party" required>
+                                <md-option ng-repeat="type in third" value="{{type.value}}" requiered>
+                                    {{::type.text}}
+                                </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Documento firmado</label>
+                        <md-select ng-model="mc.signed_document" required>
+                                <md-option ng-repeat="type in signed" value="{{type.value}}" requiered>
+                                    {{::type.text}}
+                                </md-option>
+                        </md-select>
+                    </md-input-container>
+                    <label>Fecha de intervención</label>
+                    <md-datepicker ng-model="mc.intervention_date" placeholder="Fecha de Intervención" required></md-datepicker>
+                </div>
+            </div> -->
+
             <div ng-if="resultType.result == 'acta'">
                 <h4>Listado Resultados</h4>
                 <div class="scrolleable-content-wizard">

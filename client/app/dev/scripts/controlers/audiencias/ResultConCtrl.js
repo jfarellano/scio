@@ -110,4 +110,14 @@ angular.module('app')
     $scope.deleteResult = function(id){
     	$scope.results.splice(id, 1)
     }
+
+    Conciliacion.get.constant('conflict_scale').then(function(response){
+        $scope.scale = response.data.constants
+    })
+    Conciliacion.get.constant('third_party').then(function(response){
+        $scope.third = response.data.constants
+    })
+    Conciliacion.get.constant('signed_document').then(function(response){
+        $scope.signed = response.data.constants
+    })
 }]);

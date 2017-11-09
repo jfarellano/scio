@@ -134,7 +134,7 @@ angular.module('app')
         $scope.involucrado = inv
         $scope.edit = edit
         if(edit){
-            // $scope.studies = inv.involved.assignee.studies
+            $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             var r2 = $scope.departments.filter(function(d){
                 return d.value == $scope.involucrado.involved.assignee.department
             })
@@ -144,7 +144,7 @@ angular.module('app')
                 console.log(response.data)
             })
         }else{
-            // $scope.studies = []
+            $scope.getProfession(null, 'assignee')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/apoderado.html',
@@ -168,6 +168,11 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = edit
+        if(edit){
+            $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
+        }else{
+            $scope.getProfession(null, 'representative')
+        }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/representante.html',
             scope: $scope,        
@@ -303,11 +308,11 @@ angular.module('app')
             $scope.profession = {}
         }
     }
-    $scope.deleteProfession = function(id, type){
+    $scope.deleteProfession = function(id, type, usrID){
         if ($scope.edit) {
             Conciliacion.delete.profession($scope.professions[id].id).then(function(response){
                 alertify.success('Exito eliminando profesión')
-                $scope.getProfession($scope.involucrado.involved.id, type)
+                $scope.getProfession(usrID, type)
             }, function(response){
                 console.log(response.data)
                 alertify.error('Error eliminando profesión')
@@ -335,6 +340,15 @@ angular.module('app')
     $scope.add_apoderado = function(){
         Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.assignee).then(function(response){
             alertify.success("Apoderado agregado con exito")
+            $scope.professions.forEach(function(proff){
+                Conciliacion.create.profession(response.data.assignee.id, 'assignee', proff).then(function(response){
+                    alertify.success('Exito agregando profesión')
+                }, function(response){
+                    $scope.profession = {}
+                    alertify.error('Error agregando profesión')
+                    console.log(response.data)
+                })
+            })
             $scope.resetInvolucrado()
             $scope.getSolicitude()
         },function(response){
@@ -357,6 +371,15 @@ angular.module('app')
     $scope.add_representante = function(){
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.id, $scope.involucrado.involved.representative).then(function(response){
             alertify.success("Representante agregado con exito")
+            $scope.professions.forEach(function(proff){
+                Conciliacion.create.profession(response.data.representative.id, 'representative', proff).then(function(response){
+                    alertify.success('Exito agregando profesión')
+                }, function(response){
+                    $scope.profession = {}
+                    alertify.error('Error agregando profesión')
+                    console.log(response.data)
+                })
+            })
             $scope.resetInvolucrado()
             $scope.getSolicitude()
         },function(response){
