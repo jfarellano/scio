@@ -117,6 +117,9 @@ angular.module('app')
                 },
                 fundamentals: function(fundamentalID, fund){
                     return $http.put(IP + '/fundamentals/'+ fundamentalID, fund, {headers: Session.getHeaders()})
+                },
+                associate_involved: function(solID, invID, type){
+                    return $http.get(IP + '/solicitudes/'+solID+'/relate_with/involveds/'+invID+ '/' + type, {headers: Session.getHeaders()})
                 }
             },
             get:{

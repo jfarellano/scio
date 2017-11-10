@@ -3,12 +3,11 @@ angular.module('app')
 	return{
 		get:{
 			juridical: function(id){
-				return $http.get(IP + '/solicitudes/20200202/involveds/928398283/juridicals/nit/'+id, {headers: Session.getHeaders()})
+				return $http.post(IP + '/solicitudes/1/involveds/1/juridicals/show_by_identifier',id, {headers: Session.getHeaders()})
 			},
-			natural: function(idType, id){
-				console.log(idType)
-				console.log(IP + '/solicitudes/1/involveds/1/naturals/'+idType+'/'+id)
-				return $http.get(IP + '/solicitudes/1/involveds/1/naturals/'+idType+'/'+id, {headers: Session.getHeaders()})
+			natural: function(id){
+				console.log(id)
+				return $http.post(IP + '/solicitudes/1/involveds/1/naturals/show_by_identifier', id,{headers: Session.getHeaders()})
 			}
 		}
 	}        

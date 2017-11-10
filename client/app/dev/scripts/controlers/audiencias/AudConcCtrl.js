@@ -54,7 +54,7 @@ angular.module('app')
         var ids = []
         $scope.conc.solicitude_participations.forEach(function(part){
             if(part.assist){
-                ids.push(part.id)
+                ids.push(part.involved.id)
             }
         })
         Audiencias.create.assistance($scope.audience.id, ids).then(function(response){

@@ -46,7 +46,7 @@
             <h2>Solicitud de conciliación No.1342</h2>
             <h3>{{getState()}}</h3>
 
-            <h4><b>Convocantes</b></h4>
+            <h4 class="show_title"><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </md-list-item>
-            <h4><b>Convocados</b></h4>
+            <h4 class="show_title"><b>Convocados</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -68,23 +68,23 @@
                     </div>
                 </div>
             </md-list-item>
-            <h4><b>Hechos</b></h4>
+            <h4 class="show_title"><b>Hechos</b></h4>
             <div class="infoContainer">
                 <div ng-repeat="hecho in conc.conciliation.facts">
                     <p><b>{{$index + 1}}.</b> {{hecho.description}}</p>
                 </div>
             </div>
-            <h4><b>Pretensiones</b></h4>
+            <h4 class="show_title"><b>Pretensiones</b></h4>
             <div ng-repeat="pret in conc.conciliation.pretensions">
                 <div class="infoContainer">
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
-            <h4><b>Anexos y pruebas</b></h4>
+            <h4 class="show_title"><b>Anexos y pruebas</b></h4>
             <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p)">
                 <p><b>{{$index + 1}}.</b> {{p.name}}</p>
             </md-list-item>
-            <h4><b>Documentos</b></h4>
+            <h4 class="show_title"><b>Documentos</b></h4>
             <md-list-item class="md-2-line" ng-repeat="d in documents" ng-click="showDocument(d)">
                 <p><b>{{$index + 1}}.</b> {{d.name}}</p>
             </md-list-item>

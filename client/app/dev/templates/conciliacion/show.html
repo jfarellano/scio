@@ -6,7 +6,14 @@
         <div class="show_content" data-slim-scroll data-scroll-height="auto">
             <h2>Solicitud de conciliación No.1342</h2>
             <h3>{{getState()}}</h3>
-
+            <h4 class="show_title">Resumen de fechas</h4>
+            <p>Fecha de creación: {{conc.creation_date}}</p>
+            <div ng-if="conc.conciliation.acceptance_date != null">
+                <p>Fecha de aceptación: {{conc.conciliation.acceptance_date}}</p>
+            </div>
+            <div ng-if="conc.conciliation.assignment_date != null">
+                <p>Fecha de asignación: {{conc.conciliation.assignment_date}}</p>
+            </div>
             <div ng-if="conc.state == 'enviada' && Session.getRole() == 'coordinator'">
                 <div class="box">
                     <div class="box-body bg-dark">
@@ -51,7 +58,7 @@
                     <div class="box-body bg-dark">
                         <h4>Programar audiencia</h4>
                         <p>Seleccione en el siguiente horario una hora disponible y en el cuadro nueva audiencia arrastrelo de la parte inferior para cambiar la longitud de la audiencia, cuando la quiera programar en la fecha y hora deseada oprima el boton programar.</p>
-                        <div class="bg-white">
+                        <div class="bg-white cal_color">
                             <div id="programCalendar" ng-model="events" calendar="programCalendar" config="uiConfig.programCalendar" ui-calendar="uiConfig.programCalendar"></div>
                         </div>
                         <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="programAudience()">Programar</button>
@@ -64,13 +71,13 @@
             </div>
 
             <div ng-if="conc.conciliator != null">
-                <h4><b>Conciliador</b></h4>
+                <h4 class="show_title"><b>Conciliador</b></h4>
                 <h5>{{conc.conciliator.name}} {{conc.conciliator.first_lastname}}</h5>
                 <p>Telefono: {{conc.conciliator.phone}}</p>
                 <p>E-Mail: {{conc.conciliator.email}}</p>
             </div>
 
-            <h4><b>Convocantes</b></h4>
+            <h4 class="show_title"><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -84,7 +91,7 @@
                     </div>
                 </div>
             </md-list-item>
-            <h4><b>Convocados</b></h4>
+            <h4 class="show_title"><b>Convocados</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -98,27 +105,27 @@
                     <md-icon ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'" class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="getNotification(conv)">assignment</md-icon>
                 </div>
             </md-list-item>
-            <h4><b>Hechos</b></h4>
+            <h4 class="show_title"><b>Hechos</b></h4>
             <div class="infoContainer">
                 <div ng-repeat="hecho in conc.conciliation.facts">
                     <p><b>{{$index + 1}}.</b> {{hecho.description}}</p>
                 </div>
             </div>
-            <h4><b>Pretensiones</b></h4>
+            <h4 class="show_title"><b>Pretensiones</b></h4>
             <div ng-repeat="pret in conc.conciliation.pretensions">
                 <div class="infoContainer">
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
-            <h4><b>Anexos y pruebas</b></h4>
+            <h4 class="show_title"><b>Anexos y pruebas</b></h4>
             <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p)">
                 <p><b>{{$index + 1}}.</b> {{p.name}}</p>
             </md-list-item>
-            <h4><b>Audiencias</b></h4>
+            <h4 class="show_title"><b>Audiencias</b></h4>
             <md-list-item class="md-2-line" ng-repeat="a in audiences" ng-click="showAudience(a, $event)">
                 <p><b>{{$index + 1}}.</b> Audiencia {{a.start}}</p>
             </md-list-item>
-            <h4><b>Documentos</b></h4>
+            <h4 class="show_title"><b>Documentos</b></h4>
             <md-list-item class="md-2-line" ng-repeat="d in documents" ng-click="showDocument(d)">
                 <p><b>{{$index + 1}}.</b> {{d.name}}</p>
             </md-list-item>

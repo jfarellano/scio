@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Session', '$compile', 'uiCalendarConfig', 'Audiencias', 'IP',function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Session, $compile, uiCalendarConfig, Audiencias, IP){
+.controller('ConcShowCtlr', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Session', '$compile', 'uiCalendarConfig', 'Audiencias', 'IP', '$document',function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Session, $compile, uiCalendarConfig, Audiencias, IP, $document){
     $scope.Session =  Session
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
@@ -261,21 +261,29 @@ angular.module('app')
     });
 
 //CALENDAR
-    
 
     Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
         audiencias.forEach(function(aud){
             var a = {
-                title: aud.title,
+                title: Session.getName(),
                 start: new Date(aud.start),
                 end: new Date(aud.end),
                 allDay: false, 
-                editable: false
+                editable: false,
+                stick: true
             }
             $scope.audiencias.push(a)
         })
     }, function(response){console.log(response.data)})
+
+    $scope.eventsF = function (start, end, timezone, callback) {
+      var s = new Date(start).getTime() / 1000;
+      var e = new Date(end).getTime() / 1000;
+      var m = new Date(start).getMonth();
+      var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
+      callback(events);
+    };
     $scope.program = true
     $scope.uiConfig = {
         programCalendar:{
@@ -303,17 +311,21 @@ angular.module('app')
                         allDay:false,
                         editable: true,
                         eventDurationEditable: true,
+                        stick: true,
                         _itsUTC: false
                     }
                     $scope.audiencias.push($scope.newEvent)
-                    console.log($scope.audiencias)
-                    console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
+                    //console.log($scope.audiencias)
+                    //console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
                     $scope.program = false
-                    //uiCalendarConfig.calendars.programCalendar.fullCalendar('refetchEvents')
                 }
             },
             eventDragStop: function(){
                 
+            },
+            eventRender: function( event, element, view ) { 
+                element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
+                $compile(element)($scope);
             },
             eventResizeStop: function(){
                 console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
@@ -321,7 +333,6 @@ angular.module('app')
         }
     }
 
-    
 
     Date.prototype.sendFormat = function() {
       var mm = this.getMonth() + 1; // getMonth() is zero-based
