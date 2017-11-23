@@ -108,46 +108,51 @@
 			</div>
 			<h4>Datos de profesión</h4>
             <div layout-gt-xs="row" class="layout-gt-xs-row">
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Nombre de la profesión: </label>
-                    <md-select ng-model="profession.name">
-                        <md-option ng-repeat="c in profession_name" value="{{c.value}}">
-                            {{::c.value}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Institución: </label>
-                    <md-select ng-model="profession.institution">
-                        <md-option ng-repeat="c in profession_institution" value="{{c.value}}" >
-                            {{::c.value}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-            <div layout-gt-xs="row" class="layout-gt-xs-row">
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Tarjeta profesional</label>
-                    <input input-num ng-model="profession.professional_card" type="number">
-                </md-input-container>
-                <label>Fecha de graduación</label>
-                <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
-            </div>
-            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.assignee.id, 'assignee')">Agregar profesión</md-button>
+                        <md-input-container class="flex-gt-xs col-sm-6" flex-gt-xs>
+                            <angucomplete-alt id="ex1"
+                              placeholder="Nombre de la profesión:"
+                              pause="100"
+                              selected-object="profession.name"
+                              local-data="profession_name"
+                              search-fields="value"
+                              title-field="value"
+                              minlength="4"
+                              input-class="form-control form-control-small flex-gt-xs "
+                              flex-gt-xs/>
+                        </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Institución: </label>
+                            <md-select ng-model="profession.institution">
+                                <md-option ng-repeat="c in profession_institution" value="{{::c.value}}" >
+                                    {{::c.value}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Tarjeta profesional</label>
+                            <input input-num ng-model="profession.professional_card" type="number">
+                        </md-input-container>
+                        <label>Fecha de graduación</label>
+                        <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
+                    </div>
+                    <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.id, 'involved')">Agregar profesión</md-button>
 
-            <div data-slim-scroll data-scroll-height="250px">
-                <md-subheader class="md-no-sticky">Profesiones</md-subheader>
-                <md-list-item class="md-3-line" ng-repeat="p in professions">
-                        <div class="md-list-item-text" layout="column">
-                            <h3>{{::p.name}}</h3>
-                            <p>Institución: {{::p.institution}}</p>
-                        </div>
-                        <div class="md-secondary">
-                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'assignee', involucrado.involved.assignee.id)">delete_forever</md-icon>
-                        </div>
-                </md-list-item>
-                <div style="height: 30px"></div>
-            </div>
+                    <div data-slim-scroll data-scroll-height="250px">
+                        <md-subheader class="md-no-sticky">Profesiones</md-subheader>
+                        <md-list-item class="md-3-line" ng-repeat="p in professions">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3 ng-if="edit">{{::p.name}}</h3>
+                                    <h3 ng-if="!edit">{{::p.name.title}}</h3>
+                                    <p>Institución: {{::p.institution}}</p>
+                                </div>
+                                <div class="md-secondary">
+                                    <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'involved', involucrado.involved.id)">delete_forever</md-icon>
+                                </div>
+                        </md-list-item>
+                        <div style="height: 30px"></div>
+                    </div>
 		    <!-- <h3>Estudios</h3>
 		    <div class="container-fluid">
 				<form name="oldStudies" layout-gt-xs="row" class="layout-gt-xs-row">

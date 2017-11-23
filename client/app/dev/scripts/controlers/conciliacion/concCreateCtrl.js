@@ -302,8 +302,7 @@ angular.module('app')
 
     $scope.addProfession = function(id, type){
         if ($scope.edit || $scope.verified ) {
-            //console.log($scope.profession)
-            //$scope.profession.name = $scope.profession.name.value
+            $scope.profession.name = $scope.profession.name.title
             Conciliacion.create.profession(id, type, $scope.profession).then(function(response){
                 alertify.success('Exito agregando profesión')
                 $scope.getProfession(id, type)
@@ -351,6 +350,7 @@ angular.module('app')
         Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee).then(function(response){
             alertify.success("Apoderado agregado con exito")
             $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
                 Conciliacion.create.profession(response.data.assignee.id, 'assignee', proff).then(function(response){
                     alertify.success('Exito agregando profesión')
                 }, function(response){
@@ -382,6 +382,7 @@ angular.module('app')
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.representative).then(function(response){
             alertify.success("Representante agregado con exito")
             $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
                 Conciliacion.create.profession(response.data.representative.id, 'representative', proff).then(function(response){
                     alertify.success('Exito agregando profesión')
                 }, function(response){
@@ -415,8 +416,11 @@ angular.module('app')
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
+                $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
+                $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.professions.forEach(function(proff){
+                        proff.name = proff.name.title
                         Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
                             alertify.success('Exito agregando profesión')
                         }, function(response){
@@ -518,8 +522,12 @@ angular.module('app')
         Conciliacion.create.involved($scope.solicitude.id, 'convocado', $scope.involucrado).then(function(response){
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
+                console.log($scope.involucrado)
+                $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
+                $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.professions.forEach(function(proff){
+                        proff.name = proff.name.title
                         Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
                             alertify.success('Exito agregando profesión')
                         }, function(response){
@@ -885,10 +893,8 @@ angular.module('app')
     }
     $scope.resetInvolucrado = function(){
         $scope.involucrado = {
-            participation_type: '',
             involved: {
                 country: 'COLOMBIA',
-                nature: ''
             }
         }
     }

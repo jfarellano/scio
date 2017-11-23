@@ -7,6 +7,7 @@
         ,'ngStorage'
         ,'validation.match'
         ,'ngFileUpload'
+        ,'angucomplete-alt'//Dropdown filtrado dinamico
         // Angular modules
         ,'ui.router'
         ,'ngAnimate'

@@ -36,7 +36,8 @@
     "angular-media-queries": "^0.6.1",
     "angular-wizard": "^1.1.1",
     "ngstorage": "^0.3.11",
-    "alertify.js": "^0.3.11"
+    "alertify.js": "^0.3.11",
+    "angucomplete-alt": "^3.0.0"
   },
   "devDependencies": {
     "bootstrap-sass-official": "~3.3.7",

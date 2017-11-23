@@ -1,12 +1,18 @@
 <div class="modal_form">
     <md-dialog-content>
-    	<h3>Fecha: {{audience.date}}</h3>
-        <h4>Inicio: {{audience.start}}</h4>
-        <h4>Fin: {{audience.end}}</h4>
-        <h3>Comentarios</h3>
-        <p>{{audience.comment}}</p>
+        <div class="col-md-12">
+            <div class="icon-box ibox-center ibox-lg">
+                <div class="ibox-icon">
+                    <a href="javascript:;"><i class="material-icons">alarm_on</i></a>
+                </div>
+                <h3>Fecha: {{audience.date}}</h3>
+		        <h4>Inicio: {{audience.start}}</h4>
+		        <h4>Fin: {{audience.end}}</h4>
+		        <h3>Comentarios</h3>
+		        <p>{{audience.comment}}</p>
+            </div>
+        </div>
     </md-dialog-content>
     <md-dialog-actions>
-
     </md-dialog-actions>
 </div>

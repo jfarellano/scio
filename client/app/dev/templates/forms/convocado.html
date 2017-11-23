@@ -46,21 +46,40 @@
                         </div>
                     </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <!-- <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Ciudad de expedición</label>
                             <md-select ng-model="involucrado.involved.natural.identifier_expedition_city" required>
                                 <md-option ng-repeat="c in all_cities" value="{{c.value}}" requiered>
                                     {{::c.value}}
                                 </md-option>
                             </md-select>
-                        </md-input-container>
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>País de origen</label>
-                            <md-select ng-model="involucrado.involved.natural.origin_country" required>
-                                <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
-                                    {{::g.value}}
-                                </md-option>
-                            </md-select>
+                        </md-input-container> -->
+                        <md-input-container class="flex-gt-xs" flex-gt-xs ng-if="!edit">
+                            <angucomplete-alt id="ex1"
+                              placeholder="Ciudad de expedición"
+                              pause="100"
+                              selected-object="involucrado.involved.natural.identifier_expedition_city"
+                              local-data="all_cities"
+                              search-fields="value"
+                              title-field="value"
+                              minlength="1"
+                              field-required="true"
+                              input-class="form-control form-control-small flex-gt-xs "
+                              flex-gt-xs/>
+                          </md-input-container>
+
+                        <md-input-container class="flex-gt-xs" flex-gt-xs ng-if="!edit">
+                            <angucomplete-alt id="ex1"
+                              placeholder="País de origen"
+                              pause="100"
+                              selected-object="involucrado.involved.natural.origin_country"
+                              local-data="countries"
+                              search-fields="value"
+                              title-field="value"
+                              minlength="1"
+                              field-required="true"
+                              input-class="form-control form-control-small flex-gt-xs "
+                              flex-gt-xs/>
                         </md-input-container>
                     </div>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -149,7 +168,7 @@
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Nivel escolar: </label>
                             <md-select ng-model="involucrado.involved.natural.scholarly_level" required>
-                                <md-option ng-repeat="c in level" value="{{c.value}}" requiered>
+                                <md-option ng-repeat="c in level" value="{{::c.value}}" requiered>
                                     {{::c.value}}
                                 </md-option>
                             </md-select>
@@ -157,13 +176,17 @@
                     </div>
                     <h4>Datos de profesión</h4>
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-input-container class="flex-gt-xs" flex-gt-xs>
-                            <label>Nombre de la profesión: </label>
-                            <md-select ng-model="profession.name">
-                                <md-option ng-repeat="c in profession_name" value="{{::c.value}}">
-                                    {{::c.value}}
-                                </md-option>
-                            </md-select>
+                        <md-input-container class="flex-gt-xs col-sm-6" flex-gt-xs>
+                            <angucomplete-alt id="ex1"
+                              placeholder="Nombre de la profesión:"
+                              pause="100"
+                              selected-object="profession.name"
+                              local-data="profession_name"
+                              search-fields="value"
+                              title-field="value"
+                              minlength="4"
+                              input-class="form-control form-control-small flex-gt-xs "
+                              flex-gt-xs/>
                         </md-input-container>
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Institución: </label>
@@ -188,8 +211,9 @@
                         <md-subheader class="md-no-sticky">Profesiones</md-subheader>
                         <md-list-item class="md-3-line" ng-repeat="p in professions">
                                 <div class="md-list-item-text" layout="column">
-                                    <h3>{{::p.name}}</h3>
-                                    <p>Institución: {{p.institution}}</p>
+                                    <h3 ng-if="edit">{{::p.name}}</h3>
+                                    <h3 ng-if="!edit">{{::p.name.title}}</h3>
+                                    <p>Institución: {{::p.institution}}</p>
                                 </div>
                                 <div class="md-secondary">
                                     <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'involved', involucrado.involved.id)">delete_forever</md-icon>
@@ -223,7 +247,7 @@
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Sector económico</label>
                             <md-select ng-model="involucrado.involved.juridical.economic_sector" required>
-                                <md-option ng-repeat="g in economic_sector" value="{{g.value}}" requiered>
+                                <md-option ng-repeat="g in economic_sector" value="{{::g.value}}" requiered>
                                     {{::g.value}}
                                 </md-option>
                             </md-select>
@@ -231,7 +255,7 @@
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Tipo de organización</label>
                             <md-select ng-model="involucrado.involved.juridical.organization_type" required>
-                                <md-option ng-repeat="g in org_type" value="{{g.value}}" requiered>
+                                <md-option ng-repeat="g in org_type" value="{{::g.value}}" requiered>
                                     {{::g.value}}
                                 </md-option>
                             </md-select>
@@ -241,7 +265,7 @@
                         <md-input-container class="flex-gt-xs" flex-gt-xs>
                             <label>Tipo de entidad publica</label>
                             <md-select ng-model="involucrado.involved.juridical.type_of_public_entity" required>
-                                <md-option ng-repeat="g in public_type" value="{{g.value}}" requiered>
+                                <md-option ng-repeat="g in public_type" value="{{::g.value}}" requiered>
                                     {{::g.value}}
                                 </md-option>
                             </md-select>
