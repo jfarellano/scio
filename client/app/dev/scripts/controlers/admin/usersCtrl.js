@@ -1,8 +1,9 @@
 angular.module('app')
-.controller('UsersCtlr', ['$scope', '$state', '$window','Admin', 'Session', '$mdDialog', 'URL', 'Conciliacion', function($scope, $state, $window, Admin, Session, $mdDialog, URL, Conciliacion){
+.controller('UsersCtlr', ['$scope', '$state', '$window','Admin', 'Session', '$mdDialog', 'URL', 'Conciliacion', 'COL', function($scope, $state, $window, Admin, Session, $mdDialog, URL, Conciliacion, COL){
 		$('#loader-container').fadeIn('fast');
 		Admin.index.users().then(function(response){
 			$scope.users = response.data.users
+			console.log($scope.users)
 			$('#loader-container').fadeOut('slow');
 		}, function(response){
 			console.log(response.data)
@@ -37,6 +38,7 @@ angular.module('app')
 		$scope.create = function(){
 			Admin.create.user($scope.user).then(function(response){
 				alertify.success('Exito creando el usuario')
+				console.log(response.data)
 				$scope.reFetch()
 				$scope.resetUser()
 			}, function(response){
@@ -77,6 +79,7 @@ angular.module('app')
 	    $scope.edit = false
 	    $scope.editUser = function(user, ev){
 	    	$scope.user = user
+	    	console.log(user)
 	    	$scope.edit = true;
 	    	$scope.showUser(ev)
 	    }
@@ -85,11 +88,36 @@ angular.module('app')
 	        $scope.gender = response.data.constants
 	    }) 
 
+	    Conciliacion.get.constant_child(COL ,'department').then(function(response){
+	        $scope.departments = response.data.constants
+	        var r2 = $scope.departments.filter(function(d){
+	            return d.value == $scope.user.department
+	        })
+	        if(r2.length > 0){
+	            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+	                $scope.cities = response.data.constants
+	            })
+	        }
+	    })
+
+	    Conciliacion.get.constant('strata').then(function(response){
+	        $scope.estratos = response.data.constants
+	    })
+
+	    $scope.getCities = function(){
+	        var r = $scope.departments.filter(function(a) {
+	            return a.value == $scope.user.department
+	        })
+	        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+	            $scope.cities = response.data.constants
+	        })
+	    }
 	    $scope.editU = function(){
 	    	$scope.edit = false
 	    	delete $scope.user.role
 	    	Admin.update.user($scope.user.id, $scope.user).then(function(response){
 	    		alertify.success('Exito editando usuario')
+	    		console.log(response.data)
 	    		$scope.edit = false
 	    		$scope.resetUser()
 	    		$scope.reFetch()

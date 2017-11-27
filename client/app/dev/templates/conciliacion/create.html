@@ -90,8 +90,13 @@
                                         <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                         <div class="md-list-item-text" layout="column">
                                             <h3>{{::getName(conv)}}</h3>
+                                            <p>Postulante: {{conv.postulant}}</p>
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
+                                        </div>
+                                        <div class="md-secondary">
+                                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showPostulant(conv, $event)">assignment_ind</md-icon>
+                                            Postulante
                                         </div>
                                         <div class="md-secondary">
                                             <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
@@ -124,19 +129,24 @@
                             <md-subheader class="md-no-sticky">Convocados</md-subheader>
                             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="editConvocado(conv, $event)">
                                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
-                                    <div class="md-list-item-text" layout="column">
-                                        <h3>{{::getName(conv)}}</h3>
-                                        <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
-                                        <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
-                                    </div>
-                                    <div class="md-secondary">
-                                        <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
-                                        Apoderado
-                                    </div>
-                                    <div class="md-secondary">
-                                        <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
-                                        Representante Legal
-                                    </div>
+                                        <div class="md-list-item-text" layout="column">
+                                            <h3>{{::getName(conv)}}</h3>
+                                            <p>Postulante: {{conv.postulant}}</p>
+                                            <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
+                                            <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
+                                        </div>
+                                        <div class="md-secondary">
+                                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showPostulant(conv, $event)">assignment_ind</md-icon>
+                                            Postulante
+                                        </div>
+                                        <div class="md-secondary">
+                                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
+                                            Apoderado
+                                        </div>
+                                        <div class="md-secondary">
+                                            <md-icon class="material-icons md-secondary" aria-label="Agregar representante" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">location_city</md-icon>
+                                            Representante Legal
+                                        </div>
                             </md-list-item>
                             <div style="height: 30px"></div>
                         </div>
@@ -230,7 +240,7 @@
                 <div class="scrolleable-content-wizard">
                     <div data-slim-scroll data-scroll-height="auto">
                         <md-subheader class="md-no-sticky">Pruebas</md-subheader>
-                        <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="showProof(p)">
+                        <md-list-item class="md-3-line" ng-repeat="p in proofs" ng-click="showProof(p, $event)">
                             <div class="md-list-item-text" layout="column">
                                 <p><b>{{::$index + 1}}. </b>{{::p.name}}</p>
                             </div>

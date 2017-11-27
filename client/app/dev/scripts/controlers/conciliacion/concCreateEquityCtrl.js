@@ -269,6 +269,29 @@ angular.module('app')
         $scope.edit = true
         $scope.showPretension(ev)
     }
+    //Postulante
+    $scope.postulant = {}
+    $scope.showPostulant = function(inv, ev) {
+        $scope.involucrado = inv
+        $scope.getPostulants()
+        //$('#loader-container').fadeIn('fast');
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/postulante.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            Conciliacion.update.set_postulant($scope.solicitude.id, $scope.involucrado.involved.id, $scope.postulant.type).then(function(response){
+                alertify.success('Exito agregando postulante')
+                $scope.getSolicitude()
+            }, function(response){
+                alertify.error('Error agregando postulante')
+                console.log(response.data)
+            })
+        }, function() {
+        });
+    };
     //proof
     $scope.proof = {}
     $scope.showProofCreate = function(ev) {
@@ -298,11 +321,11 @@ angular.module('app')
     };
 
     //profesion
-    //profesion
     $scope.profession = {}
 
     $scope.addProfession = function(id, type){
         if ($scope.edit || $scope.verified ) {
+            $scope.profession.name = $scope.profession.name.title
             Conciliacion.create.profession(id, type, $scope.profession).then(function(response){
                 alertify.success('Exito agregando profesión')
                 $scope.getProfession(id, type)
@@ -331,7 +354,7 @@ angular.module('app')
         }
     }
     $scope.getProfession = function(id, type){
-        if ($scope.edit || $scope.verified) {
+        if ($scope.edit || $scope.verified ) {
             Conciliacion.get.profession(id, type).then(function(response){
                 console.log(response.data)
                 $scope.professions = response.data.professions
@@ -349,6 +372,7 @@ angular.module('app')
         Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee).then(function(response){
             alertify.success("Apoderado agregado con exito")
             $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
                 Conciliacion.create.profession(response.data.assignee.id, 'assignee', proff).then(function(response){
                     alertify.success('Exito agregando profesión')
                 }, function(response){
@@ -380,6 +404,7 @@ angular.module('app')
         Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.representative).then(function(response){
             alertify.success("Representante agregado con exito")
             $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
                 Conciliacion.create.profession(response.data.representative.id, 'representative', proff).then(function(response){
                     alertify.success('Exito agregando profesión')
                 }, function(response){
@@ -407,14 +432,17 @@ angular.module('app')
             console.log(response.data)
         })
     }
-   //Convocante
+    //Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
+                $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
+                $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.professions.forEach(function(proff){
+                        proff.name = proff.name.title
                         Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
                             alertify.success('Exito agregando profesión')
                         }, function(response){
@@ -516,8 +544,12 @@ angular.module('app')
         Conciliacion.create.involved($scope.solicitude.id, 'convocado', $scope.involucrado).then(function(response){
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
+                console.log($scope.involucrado)
+                $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
+                $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                 Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.professions.forEach(function(proff){
+                        proff.name = proff.name.title
                         Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
                             alertify.success('Exito agregando profesión')
                         }, function(response){
@@ -913,7 +945,7 @@ angular.module('app')
     Conciliacion.get.constant('involved_nature').then(function(response){
         $scope.convtype = response.data.constants
     })
-    Conciliacion.get.constant_child(2304, 'conciliation_area').then(function(response){
+    Conciliacion.get.constant_child(2307, 'conciliation_area').then(function(response){
         $scope.area = response.data.constants
         var r1 = $scope.area.filter(function(a) {
             return a.value == $scope.solicitude.conciliation.area

@@ -57,7 +57,7 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study,{headers: Session.getHeaders()})
                 },
                 proof: function(solID, file){
-                    return Upload.upload({ url: IP + '/solicitudes/'+solID+'/proofs', data: {proof_data: file.file, name:file.name, description:file.description}, headers: Session.getHeaders()})
+                    return Upload.upload({ url: IP + '/solicitudes/'+solID+'/proofs', data: {proof_data: file.file, name:file.name, description:file.description, testimony:file.testimony}, headers: Session.getHeaders()})
                 },
                 comment: function(){
                     return null
@@ -120,6 +120,9 @@ angular.module('app')
                 },
                 associate_involved: function(solID, invID, type){
                     return $http.get(IP + '/solicitudes/'+solID+'/relate_with/involveds/'+invID+ '/' + type, {headers: Session.getHeaders()})
+                },
+                set_postulant: function(solID, invID, type){
+                    return $http.get(IP + '/solicitudes/'+solID+'/involved/'+invID+'/postulant/'+type)
                 }
             },
             get:{

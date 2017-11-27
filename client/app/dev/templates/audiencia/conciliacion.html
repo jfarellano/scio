@@ -24,6 +24,7 @@
                             <label>Comentarios</label>
                             <textarea ng-model="audience.comment" rows="5" md-select-on-focus></textarea>
                         </md-input-container>
+                        <md-checkbox ng-model="audience.show_comment_on_document" aria-label="Mostrar comentarios">¿Mostrar comentarios en el documento?</md-checkbox>
                         <md-button class="btn-w-md md-accent" ng-click="saveComment()">Guardar comentarios</md-button>
                     </div>
                 </div>
@@ -81,7 +82,7 @@
                 </div>
             </div>
             <h4 class="show_title"><b>Anexos y pruebas</b></h4>
-            <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p)">
+            <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p, $event)">
                 <p><b>{{$index + 1}}.</b> {{p.name}}</p>
             </md-list-item>
             <h4 class="show_title"><b>Documentos</b></h4>

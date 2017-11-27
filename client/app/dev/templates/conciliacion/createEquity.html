@@ -73,8 +73,13 @@
                                         <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                         <div class="md-list-item-text" layout="column">
                                             <h3>{{::getName(conv)}}</h3>
+                                            <p>Postulante: {{conv.postulant}}</p>
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
+                                        </div>
+                                        <div class="md-secondary">
+                                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showPostulant(conv, $event)">assignment_ind</md-icon>
+                                            Postulante
                                         </div>
                                         <div class="md-secondary">
                                             <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>
@@ -109,8 +114,13 @@
                                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                     <div class="md-list-item-text" layout="column">
                                         <h3>{{::getName(conv)}}</h3>
+                                        <p>Postulante: {{conv.postulant}}</p>
                                         <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                         <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
+                                    </div>
+                                    <div class="md-secondary">
+                                        <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showPostulant(conv, $event)">assignment_ind</md-icon>
+                                        Postulante
                                     </div>
                                     <div class="md-secondary">
                                         <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">business_center</md-icon>

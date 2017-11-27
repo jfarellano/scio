@@ -64,4 +64,7 @@ md-dialog{
 .scio-bar{
 	background-color: #485058;
 }
-
+input[type=text] {
+    border: none;
+    border-bottom: 1px solid #e0e0e0;
+}

@@ -10,17 +10,35 @@
 <md-dialog-content class="modal_form">
     <div class="ui-wizard-content">
         <form name="hechoForm">
-            <md-input-container class="flex-gt-xs" flex-gt-xs>
-                <label>Nombre</label>
-                <input data-ng-model="proof.name" type="text">
+            <md-input-container class="flex-gt-xs" ng-if="proof.select"  flex-gt-xs>
+                <label>Tipo de prueba: </label>
+                <md-select ng-model="proof.type" ng-change="selectProof()" flex-gt-xs>
+                    <md-option ng-repeat="c in proofTypes" value="{{::c.value}}" >
+                        {{::c.value}}
+                    </md-option>
+                </md-select>
             </md-input-container>
-            <md-input-container class="md-block">
-                    <label>Descripción</label>
-                    <textarea ng-model="proof.description" rows="10" md-select-on-focus required=""></textarea>
+            <div ng-if="!proof.select">
+                <md-input-container class="md-block" flex-gt-xs>
+                    <label>Nombre</label>
+                    <input data-ng-model="proof.name" type="text">
                 </md-input-container>
-            <md-input-container class="md-block">
-                <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="proof.file">Seleccionar archivos</md-button>
-            </md-input-container>
+                <md-input-container class="md-block">
+                        <label>Descripción</label>
+                        <textarea ng-model="proof.description" rows="10" md-select-on-focus required=""></textarea>
+                    </md-input-container>
+                <div ng-if="proof.type == 'Archivo'">
+                    <md-input-container class="md-block">
+                        <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="proof.file">Seleccionar archivos</md-button>
+                    </md-input-container>
+                </div>
+                <div ng-if="proof.type == 'Testimonio'">
+                    <md-input-container class="md-block" flex-gt-xs>
+                        <label>Testimonio</label>
+                        <textarea ng-model="proof.testimony" rows="10" md-select-on-focus required=""></textarea>
+                    </md-input-container>
+                </div>
+            </div>
         </form>
     </div>
 </md-dialog-content>

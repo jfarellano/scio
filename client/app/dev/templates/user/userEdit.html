@@ -28,6 +28,44 @@
             </div>
             <div layout-gt-xs="row" class="layout-gt-xs-row">
                 <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Dirección de residencia</label>
+                    <input ng-model="user.notification_address" type="text" >
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Estrato</label>
+                    <md-select ng-model="user.strata" >
+                        <md-option ng-repeat="c in estratos" value="{{c.value}}">
+                            {{::c.value}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Departamento</label>
+                    <md-select ng-model="user.department" ng-change="getCities()" >
+                        <md-option ng-repeat="g in departments" value="{{g.value}}">
+                            {{::g.value}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Ciudad</label>
+                    <md-select ng-model="user.city" >
+                        <md-option ng-repeat="g in cities" value="{{g.value}}">
+                            {{::g.value}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Celular de contacto</label>
+                    <input input-num ng-model="user.cell_phone" data-ng-minlength=7 type="number" >
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
                     <label>Telefono de contacto</label>
                     <input ng-model="user.phone" data-ng-minlength=7 type="number" required>
                 </md-input-container>

@@ -124,8 +124,24 @@ angular.module('app')
         alertify.error('funcion en construccion')
     }
 
-    $scope.showProof = function(proof){
-        window.open(IP + proof.url, '_blank');
+    $scope.showProof = function(proof, ev){
+        if (proof.testimony == null) {
+            window.open(IP + proof.url, '_blank');
+        }else{
+            $scope.part = proof
+            $mdDialog.show({
+                templateUrl: URL.dev.template + '/forms/showproof.html',
+                scope: $scope,        
+                preserveScope: true,
+                targetEvent: ev,
+                fullscreen: $scope.customFullscreen,
+                clickOutsideToClose:true
+            }).then(function(answer) {
+                console.log('Guardado con exito.')
+            }, function() {
+                console.log('Evento cancelado')
+            });
+        }
     }
 
     $scope.reprogram = function(){

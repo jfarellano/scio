@@ -26,16 +26,19 @@
                 </div>
             </div>
 
-            <div ng-if="conc.state == 'aceptada' && Session.getRole() == 'coordinator' || onc.state == 'denegada_por_conciliador' && Session.getRole() == 'coordinator'">
+            <div ng-if="conc.state == 'aceptada' && Session.getRole() == 'coordinator' || conc.state == 'denegada_por_conciliador' && Session.getRole() == 'coordinator'">
                 <div class="box">
                     <div class="box-body bg-dark">
                         <h4>Asignacion de conciliador</h4>
                         <p>Seleccione un conciliador de la lista para asignarlo a esta solicitud.</p>
-                        <md-list-item class="md-3-line" ng-repeat="con in conciliators" ng-click="setConciliator(con)">
-                            <div class="md-list-item-text" layout="column">
-                                <h3>{{getUserName(con)}}</h3>
-                            </div>
-                        </md-list-item>
+                        <div data-slim-scroll data-scroll-height="250px">
+                            <md-list-item class="md-3-line" ng-repeat="con in conciliators" ng-click="setConciliator(con)">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{getUserName(con)}}</h3>
+                                </div>
+                            </md-list-item>
+                            <div style="height: 30px"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,7 +121,7 @@
                 </div>
             </div>
             <h4 class="show_title"><b>Anexos y pruebas</b></h4>
-            <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p)">
+            <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p, $event)">
                 <p><b>{{$index + 1}}.</b> {{p.name}}</p>
             </md-list-item>
             <h4 class="show_title"><b>Audiencias</b></h4>

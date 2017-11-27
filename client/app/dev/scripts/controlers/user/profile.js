@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('profileCtrl', ['$scope', '$window', 'URL', 'Session', '$mdDialog', 'IP',function($scope, $window, URL, Session, $mdDialog, IP){
+.controller('profileCtrl', ['$scope', '$window', 'URL', 'Session', '$mdDialog', 'IP', 'Conciliacion', 'COL',function($scope, $window, URL, Session, $mdDialog, IP, Conciliacion, COL){
 
 
     Session.show().then(function(response){
@@ -53,6 +53,34 @@ angular.module('app')
             $scope.reFetch()
             alertify.error('Error editando foto de perfil')
             console.log(response.data)
+        })
+    }
+    Conciliacion.get.constant('gender').then(function(response){
+        $scope.gender = response.data.constants
+    }) 
+
+    Conciliacion.get.constant_child(COL ,'department').then(function(response){
+        $scope.departments = response.data.constants
+        var r2 = $scope.departments.filter(function(d){
+            return d.value == $scope.user.department
+        })
+        if(r2.length > 0){
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        }
+    })
+
+    Conciliacion.get.constant('strata').then(function(response){
+        $scope.estratos = response.data.constants
+    })
+
+    $scope.getCities = function(){
+        var r = $scope.departments.filter(function(a) {
+            return a.value == $scope.user.department
+        })
+        Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+            $scope.cities = response.data.constants
         })
     }
 

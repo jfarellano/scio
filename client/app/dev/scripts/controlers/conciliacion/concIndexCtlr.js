@@ -45,6 +45,8 @@ angular.module('app')
                         if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
                             $scope.moreAvailable = false
                         }
+                    }, function(response){
+                        console.log(response.data)
                     })
                 }else if($scope.estado == 'archivo'){
                     Conciliacion.get.archive(data).then(function(response){

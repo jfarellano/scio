@@ -1,0 +1,27 @@
+<md-toolbar>
+  <div class="md-toolbar-tools scio-bar">
+    <h4>Postulante</h4>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()">
+      <md-icon class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-dialog-content class="modal_form">
+	<form name="postForm">
+	    <div layout-gt-xs="row" class="layout-gt-xs-row">
+	        <md-input-container class="flex-gt-xs" flex-gt-xs>
+	            <label>Postulantes</label>
+	            <md-select ng-model="postulant.type" required>
+	                <md-option ng-repeat="g in postulants" value="{{g.value}}" requiered>
+	                    {{g.value}}
+	                </md-option>
+	            </md-select>
+	        </md-input-container>
+	    </div>
+	</form>
+</md-dialog-content>
+<md-dialog-actions>
+    <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!postForm.$valid">Guardar</md-button>  
+</md-dialog-actions>

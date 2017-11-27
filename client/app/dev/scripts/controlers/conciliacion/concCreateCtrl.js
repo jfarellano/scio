@@ -7,6 +7,7 @@ angular.module('app')
             window.location = '#/app/conciliacion'
         }
         $scope.solicitude = response.data.solicitude
+        console.log($scope.solicitude)
         if ($scope.solicitude.conciliation.payment_amount == -1) {
             $scope.cuantia.indeterminada = true
         }else{
@@ -248,8 +249,10 @@ angular.module('app')
     }
     //Pruebas
     $scope.proof = {}
+    $scope.proofTypes = [{value: 'Testimonio'}, {value: 'Archivo'}]
     $scope.showProofCreate = function(ev) {
         $('#loader-container').fadeIn('fast');
+        $scope.proof.select = true
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/proof.html',
             scope: $scope,        
@@ -273,6 +276,10 @@ angular.module('app')
         }, function() {
         });
     };
+    $scope.selectProof = function(){
+        console.log($scope.proof)
+        $scope.proof.select = false
+    }
     //Fundamentos
     $scope.showFundamental = function(ev) {
         $('#loader-container').fadeIn('fast');
@@ -288,6 +295,29 @@ angular.module('app')
             }else{
                 $scope.add_hp(3)
             }
+        }, function() {
+        });
+    };
+    //Postulante
+    $scope.postulant = {}
+    $scope.showPostulant = function(inv, ev) {
+        $scope.involucrado = inv
+        $scope.getPostulants()
+        //$('#loader-container').fadeIn('fast');
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/postulante.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            Conciliacion.update.set_postulant($scope.solicitude.id, $scope.involucrado.involved.id, $scope.postulant.type).then(function(response){
+                alertify.success('Exito agregando postulante')
+                $scope.getSolicitude()
+            }, function(response){
+                alertify.error('Error agregando postulante')
+                console.log(response.data)
+            })
         }, function() {
         });
     };
@@ -691,8 +721,24 @@ angular.module('app')
         })
     }
 
-    $scope.showProof = function(proof){
-        $window.open(IP + proof.url, '_blank');
+    $scope.showProof = function(proof, ev){
+        if (proof.testimony == null) {
+            $window.open(IP + proof.url, '_blank');
+        }else{
+            $scope.part = proof
+            $mdDialog.show({
+                templateUrl: URL.dev.template + '/forms/showproof.html',
+                scope: $scope,        
+                preserveScope: true,
+                targetEvent: ev,
+                fullscreen: $scope.customFullscreen,
+                clickOutsideToClose:true
+            }).then(function(answer) {
+                console.log('Guardado con exito.')
+            }, function() {
+                console.log('Evento cancelado')
+            });
+        }
     }
 //FinCRUDS
 
@@ -905,7 +951,7 @@ angular.module('app')
     Conciliacion.get.constant('involved_nature').then(function(response){
         $scope.convtype = response.data.constants
     })
-    Conciliacion.get.constant_child(1959, 'conciliation_area').then(function(response){
+    Conciliacion.get.constant_child(1962, 'conciliation_area').then(function(response){
         $scope.area = response.data.constants
         var r1 = $scope.area.filter(function(a) {
             return a.value == $scope.solicitude.conciliation.area
@@ -921,9 +967,11 @@ angular.module('app')
                 console.log(response.data)
             })
         })
+    }, function(response){
+        console.log(response.data)
     })
 
-    Conciliacion.get.constant_child(2304, 'conciliation_area').then(function(response){
+    Conciliacion.get.constant_child(2307, 'conciliation_area').then(function(response){
         $scope.areanot = response.data.constants
         if($scope.area != null){
             var r1 = $scope.area.filter(function(a) {
@@ -1119,6 +1167,17 @@ angular.module('app')
     $scope.showVerification = function(){
         return $scope.edit || $scope.verified
     }
+    $scope.getPostulants = function(){
+        var arr = [{value: 'involucrado'}]
+        if ($scope.involucrado.involved.assignee != null) {
+            arr.push({value: 'apoderado'})
+        }
+        if ($scope.involucrado.involved.representative !=null) {
+            arr.push({value: 'representante'})
+        }
+        $scope.postulants = arr
+    }
+    $scope.postulants = [{value: 'involucrado'}]
 //FinVARIABLES
 }]);
 angular.module('app').directive('input', [function(){
