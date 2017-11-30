@@ -4,6 +4,7 @@
 
 	<h3>Usuarios</h3>
     <md-list-item class="md-3-line" ng-repeat="u in users" ng-click="">
+        <img ng-src="{{image(u)}}" class="md-avatar" alt="Imagen de perfil">
         <div class="md-list-item-text" layout="column">
         	<h3>{{getName(u)}}</h3>
 		    <h4>{{u.role}}</h4>
@@ -16,4 +17,6 @@
             <md-icon class="material-icons md-secondary" aria-label="Eliminar usuario" ng-click="delete(u)">delete_forever</md-icon>
         </div>
     </md-list-item>
+    <md-button class="md-raised btn-w-md md-primary" ng-if="indice > 1" ng-click="indexChange(true)">Anterior</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-if="morePages" ng-click="indexChange(false)">Siguiente</md-button>
 </div>

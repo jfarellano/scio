@@ -10,12 +10,12 @@
     //DEV
         $scope.logout = function(){
             Session.logout()
-            $window.location = '#/iniciosecion'
+            $window.location = '#/iniciosesion'
         }
 
         if(!Session.isAuth()){
             console.log('Entro en no auth')
-            $window.location = '#/iniciosecion'
+            $window.location = '#/iniciosesion'
         }else{
             console.log('Entro en auth')
             $window.location = '#/app/dashboard'
@@ -32,9 +32,9 @@
         $scope.Session = Session
 
         $rootScope.$on('$stateChangeSuccess', function (event) {
-            if($window.location.hash != '#/iniciosecion' && $window.location.hash != '#/registro'){
+            if($window.location.hash != '#/iniciosesion' && $window.location.hash != '#/registro'){
                 if(!Session.isAuth()){
-                    $window.location = '#/iniciosecion'
+                    $window.location = '#/iniciosesion'
                 }
             }
         })

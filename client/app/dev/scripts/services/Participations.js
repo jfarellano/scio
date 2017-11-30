@@ -6,7 +6,6 @@ angular.module('app')
 				return $http.post(IP + '/solicitudes/1/involveds/1/juridicals/show_by_identifier',id, {headers: Session.getHeaders()})
 			},
 			natural: function(id){
-				console.log(id)
 				return $http.post(IP + '/solicitudes/1/involveds/1/naturals/show_by_identifier', id,{headers: Session.getHeaders()})
 			}
 		}

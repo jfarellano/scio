@@ -36,9 +36,7 @@ angular.module('app')
     $scope.cancel = function() {
         $scope.edit = false
         $scope.verified = false
-        $scope.hecho_pretension.description = ''
-        $scope.hecho_pretension.department = null
-        $scope.hecho_pretension.city = null
+        $scope.hecho_pretension = {}
         $mdDialog.cancel()
         $scope.resetInvolucrado()
     };
@@ -76,6 +74,7 @@ angular.module('app')
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
             $scope.getProfession(inv.involved.id, 'involved')
         }
+        $scope.showConvocante(ev)
         Conciliacion.get.constant_child(COL ,'department').then(function(response){
             $scope.departments = response.data.constants
             var r2 = $scope.departments.filter(function(d){
@@ -87,7 +86,6 @@ angular.module('app')
                 })
             }
         })
-        $scope.showConvocante(ev)
     }
     //Convocado
     $scope.showConvocado = function(ev) {
@@ -123,6 +121,8 @@ angular.module('app')
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
             $scope.getProfession(inv.involved.id, 'involved')
         }
+        $scope.edit = true
+        $scope.showConvocado(ev)
         Conciliacion.get.constant_child(COL ,'department').then(function(response){
             $scope.departments = response.data.constants
             var r2 = $scope.departments.filter(function(d){
@@ -132,8 +132,6 @@ angular.module('app')
                 $scope.cities = response.data.constants
             })
         })
-        $scope.edit = true
-        $scope.showConvocado(ev)
     }
     //Apoderado
     $scope.showApoderado = function(inv, ev, edit) {
@@ -220,6 +218,16 @@ angular.module('app')
     $scope.editHecho = function(hecho, ev){
         $('#loader-container').fadeIn('fast');
         $scope.hecho_pretension = hecho
+        if ($scope.hecho_pretension != null) {
+            var r = $scope.departments.filter(function(a) {
+                return a.value == $scope.hecho_pretension.department
+            })
+            if (r[0] != null) {
+                Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
+        }
         $scope.edit = true
         $scope.showHecho(ev)
     }
@@ -313,9 +321,11 @@ angular.module('app')
         }).then(function(answer) {
             Conciliacion.update.set_postulant($scope.solicitude.id, $scope.involucrado.involved.id, $scope.postulant.type).then(function(response){
                 alertify.success('Exito agregando postulante')
+                $scope.resetInvolucrado()
                 $scope.getSolicitude()
             }, function(response){
                 alertify.error('Error agregando postulante')
+                $scope.resetInvolucrado()
                 console.log(response.data)
             })
         }, function() {
@@ -325,7 +335,7 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.hecho_pretension = pret
         $scope.edit = true
-        $scope.showPretension(ev)
+        $scope.showFundamental(ev)
     }
     //profesion
     $scope.profession = {}
@@ -480,6 +490,7 @@ angular.module('app')
             }
         },function(response){
             console.log(response.data)
+            $scope.resetInvolucrado()
             alertify.error("Error agregando convocante")
         })
     }
@@ -654,27 +665,27 @@ angular.module('app')
 
         if(type == 1){
             Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.getSolicitude()
             },function(response){
-                $scope.hecho_pretension.description = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }
         else if (type == 2){
             Conciliacion.create.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.getSolicitude()
             },function(response){
-                $scope.hecho_pretension = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }else{
             Conciliacion.create.fundamentals($scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.getSolicitude()
             },function(response){
-                $scope.hecho_pretension = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }
@@ -682,32 +693,32 @@ angular.module('app')
     $scope.edit_hp = function(type){
         if(type == 1){
             Conciliacion.update.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id , $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.edit = false
                 $scope.getSolicitude()
             },function(response){
                 $scope.edit = false
-                $scope.hecho_pretension.description = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }else if(type == 2){
             Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.edit = false
                 $scope.getSolicitude()
             },function(response){
                 $scope.edit = false
-                $scope.hecho_pretension = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }else{
             Conciliacion.update.fundamentals($scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
-                $scope.hecho_pretension.description = '';
+                $scope.hecho_pretension = {}
                 $scope.edit = false
                 $scope.getSolicitude()
             },function(response){
                 $scope.edit = false
-                $scope.hecho_pretension = ''
+                $scope.hecho_pretension = {}
                 console.log(response.data)
             })
         }
@@ -768,20 +779,25 @@ angular.module('app')
     $scope.nextStep = function(state) {
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state
-
+            console.log($scope.solicitude)
+            if ($scope.solicitude.conciliation.definable == null) {
+                $scope.solicitude.conciliation.definable = false
+            }
+            console.log($scope.solicitude)
             if($scope.cuantia.indeterminada){
                 $scope.solicitude.conciliation.payment_amount = -1
             }
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+                console.log($scope.solicitude)
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     $scope.getSolicitude()
                 },function(response){
                     console.log(response.data)
                     $scope.solicitude.state = 'incompleta'
                     Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-                        WizardHandler.wizard.goTo(0)
+                        WizardHandler.wizard().goTo(0)
                     },function(response){
-                        WizardHandler.wizard.goTo(0)
+                        WizardHandler.wizard().goTo(0)
                     })
                 })
             },function(response){console.log(response.data)})
@@ -940,7 +956,7 @@ angular.module('app')
     $scope.resetInvolucrado = function(){
         $scope.involucrado = {
             involved: {
-                country: 'COLOMBIA',
+                country: 'COLOMBIA'
             }
         }
     }

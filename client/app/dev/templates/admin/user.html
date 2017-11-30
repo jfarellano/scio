@@ -40,6 +40,34 @@
             </div>
             <div layout-gt-xs="row" class="layout-gt-xs-row">
                 <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Numero de cedula</label>
+                    <input ng-model="user.identification_card" type="number">
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Ciudad de expedición</label>
+                    <md-select ng-model="user.identifier_expedition_city">
+                        <md-option ng-repeat="g in all_cities" value="{{g.value}}">
+                            {{::g.value}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>País de origen</label>
+                    <md-select ng-model="user.origin_country">
+                        <md-option ng-repeat="g in countries" value="{{g.value}}">
+                            {{::g.value}}
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Fecha de nacimiento</label>
+                    <md-datepicker ng-model="user.birthdate" placeholder="Fecha de nacimiento" required></md-datepicker>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
                     <label>Género</label>
                     <md-select ng-model="user.gender" required>
                         <md-option ng-repeat="g in gender" value="{{g.value}}" >
@@ -106,6 +134,11 @@
                     <input ng-model="user.password_c" data-match="userForm.pass" type="password" required>
                 </md-input-container>
             </div>
+            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                <md-input-container class="flex-gt-xs">
+                    <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="user.profile_picture">Seleccionar foto de perfil</md-button>
+                </md-input-container>
+            </div>
             <div ng-if="user.role == 'conciliator'">
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
@@ -117,8 +150,28 @@
             <div ng-if="user.role == 'conciliator_in_equity'">
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
-                        <label>Numero de cedula</label>
-                        <input ng-model="user.identification_card" type="number" required>
+                        <label>Resolución</label>
+                        <input ng-model="user.resolution" type="text">
+                    </md-input-container>
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Entidad formadora</label>
+                        <input ng-model="user.training_entity" type="text">
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Entidad nominadora</label>
+                        <input ng-model="user.nominating_entity" type="text">
+                    </md-input-container>
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Punto de atención de la conciliación en equidad (PACE)</label>
+                        <input ng-model="user.pace" type="text">
+                    </md-input-container>
+                </div>
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Dirección PACE</label>
+                        <input ng-model="user.pace_address" type="text">
                     </md-input-container>
                 </div>
             </div>

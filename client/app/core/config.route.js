@@ -92,8 +92,8 @@ angular.module('app')
                     templateUrl: "app/dev/templates/userAuth/signup.html",
                     controller: 'SignupCtrl'
                 })
-                .state('iniciosecion', {
-                    url: '/iniciosecion',
+                .state('iniciosesion', {
+                    url: '/iniciosesion',
                     templateUrl: "app/dev/templates/userAuth/login.html",
                     controller: 'loginCtrl'
                 })

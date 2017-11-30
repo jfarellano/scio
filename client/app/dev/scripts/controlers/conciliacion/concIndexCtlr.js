@@ -17,7 +17,6 @@ angular.module('app')
                 if($scope.estado == 'activo'){
                     Conciliacion.get.active_all(data).then(function(response){
                         $scope.data = response.data.solicitudes
-                        console.log(response.data)
                         if (response.data.solicitudes.length == 0 || response.data.solicitudes.length < 10) {
                             $scope.moreAvailable = false
                         }

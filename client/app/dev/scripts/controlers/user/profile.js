@@ -4,6 +4,7 @@ angular.module('app')
 
     Session.show().then(function(response){
         $scope.user = response.data.user
+        $scope.user.birthdate = new Date($scope.user.birthdate)
     },function(response){
         console.log(response.data)
     })
@@ -11,6 +12,7 @@ angular.module('app')
     $scope.reFetch = function(){
         Session.show().then(function(response){
             $scope.user = response.data.user
+            $scope.user.birthdate = new Date($scope.user.birthdate)
         },function(response){
             console.log(response.data)
         })
@@ -37,7 +39,7 @@ angular.module('app')
     $scope.abogado = false;
     $scope.logo = URL.image + '/logo.png';
     $scope.register = function(){
-        $window.location = '#/iniciosecion'
+        $window.location = '#/iniciosesion'
     }
 
     $scope.getPic = function(){
@@ -83,6 +85,34 @@ angular.module('app')
             $scope.cities = response.data.constants
         })
     }
+    Conciliacion.get.constant('city').then(function(response){
+            var all_cities = response.data.constants.sort(function (a, b) {
+                if(a.value < b.value){
+                    return -1
+                }else if(a.value > b.value){
+                    return 1
+                }
+                return 0
+            })
+            $scope.all_cities = []
+            $.each(all_cities, function(i, el){
+                if ($scope.uniqueCity(el)){
+                    $scope.all_cities.push(el);
+                }
+            })
+        }, function(response){
+            console.log(response.data)
+        })
+        $scope.uniqueCity = function(ele){
+        var a = $scope.all_cities.filter(function(elem){
+            return ele.value == elem.value
+        })
+        return a.length == 0
+    }
+
+    Conciliacion.get.constant('country').then(function(response){
+        $scope.countries = response.data.constants
+    }) 
 
     $scope.error = false
     //Validation

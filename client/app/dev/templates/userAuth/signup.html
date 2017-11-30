@@ -54,6 +54,11 @@
                                 <input ng-model="user.password_c" data-match="signupForm.pass" type="password" required>
                             </md-input-container>
                         </div>
+                        <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-input-container class="flex-gt-xs">
+                                <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="user.profile_picture">Seleccionar foto de perfil</md-button>
+                            </md-input-container>
+                        </div>
                         <md-checkbox ng-model="lawyer" aria-label="Es abogado">Abogado</md-checkbox>
                         <div ng-if="lawyer">
                             <div layout-gt-xs="row" class="layout-gt-xs-row">

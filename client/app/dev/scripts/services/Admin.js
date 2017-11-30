@@ -1,12 +1,12 @@
 angular.module('app')
-.factory('Admin', ['$http', 'IP', 'Session',function ConciliacionFactory($http, IP, Session) {
+.factory('Admin', ['$http', 'IP', 'Session', 'Upload',function ConciliacionFactory($http, IP, Session, Upload) {
 	return{
 		index:{
 			rooms: function(){
 				return $http.get(IP + '/rooms', {headers: Session.getHeaders()})
 			},
-			users: function(){
-				return $http.post(IP + '/admin/users/index', null,{headers: Session.getHeaders()})
+			users: function(index){
+				return $http.post(IP + '/admin/users/index', {page: index},{headers: Session.getHeaders()})
 			}
 		},
 		create:{
@@ -14,7 +14,8 @@ angular.module('app')
 				return $http.post(IP + '/rooms', room, {headers: Session.getHeaders()})
 			},
 			user: function(user){
-				return $http.post(IP + '/admin/users', user, {headers: Session.getHeaders()})
+				//return $http.post(IP + '/admin/users', user, {headers: Session.getHeaders()})
+				return  Upload.upload({method: 'POST', url: IP + '/admin/users',data: user , headers: Session.getHeaders()})
 			}
 		},
 		update:{

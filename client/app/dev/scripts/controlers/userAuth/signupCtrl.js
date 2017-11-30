@@ -28,7 +28,7 @@ angular.module('app')
     $scope.abogado = false;
     $scope.logo = URL.image + '/logo.png';
     $scope.register = function(){
-        $window.location = '#/iniciosecion'
+        $window.location = '#/iniciosesion'
     }
 
     $scope.error = false
@@ -50,7 +50,7 @@ angular.module('app')
                 .textContent('Su registro ha sido exitoso. Por favor incie sesión a continuación.')
                 .ariaLabel('Registro exitoso')
                 .ok('Continuar')
-            $window.location = '#/iniciosecion'
+            $window.location = '#/iniciosesion'
             alertify.log("Registro exitoso")
         },function(response){
             $scope.error = true

@@ -13,7 +13,6 @@ angular.module('app')
         })
         if($scope.conc.state == 'aceptada'){
             Session.getConciliators().then(function(response){
-                console.log(response.data)
                 $scope.conciliators = response.data.users
             },function(response){
                 console.log(response.data)
@@ -134,7 +133,6 @@ angular.module('app')
                     .ariaLabel('Programacion invalida')
                     .ok('Volver a programar')
                 );
-                console.log(response)
                 console.log(response.data)
             })
         }
@@ -195,7 +193,6 @@ angular.module('app')
 
     $scope.showParticipant = function(part, ev){
         $scope.part = part
-        console.log(part)
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/showParticipant.html',
             scope: $scope,        
@@ -319,7 +316,6 @@ angular.module('app')
                 var selectDate = new Date(date.format())
                 var endDate = new Date(selectDate.setHours(selectDate.getHours() + 1) + 60*60*1000)
                 if($scope.program){
-                    console.log('Entro')
                     $scope.newEvent = {
                         title: 'Nueva audiencia',
                         start: selectDate,
@@ -344,9 +340,14 @@ angular.module('app')
                 $compile(element)($scope);
             },
             eventResizeStop: function(){
-                console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
+                //console.log(uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents'))
             }
         }
+    }
+
+    $scope.resetEvent = function(){
+        $scope.audiencias.splice($scope.audiencias.length - 1, 1)
+        $scope.program = true;
     }
 
 

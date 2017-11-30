@@ -68,3 +68,13 @@ input[type=text] {
     border: none;
     border-bottom: 1px solid #e0e0e0;
 }
+.md-button.md-icon-button{
+	border-radius: 0%;
+	width:auto;
+	padding: 0px;
+	line-height: 1;
+}
+.md-button .icon-caption{
+	text-transform: none;
+	text-rendering: optimizeLegibility;
+}
