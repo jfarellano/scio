@@ -5,7 +5,6 @@ angular.module('app')
 		Admin.index.users(1).then(function(response){
 			$('#loader-container').fadeOut('slow');
 			$scope.users = response.data.users
-			console.log($scope.users)
 			$scope.users.forEach(function(user){
 				if(user.birthdate != null){
 					user.birthdate = new Date(user.birthdate)
