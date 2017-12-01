@@ -387,22 +387,30 @@ angular.module('app')
 //CRUDS
     //Apoderado
     $scope.add_apoderado = function(){
-        Conciliacion.create.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee).then(function(response){
-            alertify.success("Apoderado agregado con exito")
-            $scope.professions.forEach(function(proff){
-                proff.name = proff.name.title
-                Conciliacion.create.profession(response.data.assignee.id, 'assignee', proff).then(function(response){
-                    alertify.success('Exito agregando profesión')
-                }, function(response){
-                    $scope.profession = {}
-                    alertify.error('Error agregando profesión')
-                    console.log(response.data)
+        Conciliacion.create.assignee(null, null, $scope.involucrado.involved.assignee).then(function(response){
+            var assignee = response.data.assignee
+            console.log(assignee.id)
+            Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id}).then(function(response){
+                alertify.success("Apoderado creado con exito")
+                $scope.professions.forEach(function(proff){
+                    proff.name = proff.name.title
+                    Conciliacion.create.profession(assignee.id, 'assignee', proff).then(function(response){
+                        alertify.success('Exito agregando profesión')
+                    }, function(response){
+                        $scope.profession = {}
+                        alertify.error('Error agregando profesión')
+                        console.log(response.data)
+                    })
+                    $scope.resetInvolucrado()
+                    $scope.getSolicitude()
                 })
+            }, function(response){
+                $scope.resetInvolucrado()
+                console.log(response.data)
+                alertify.error("Error relacionando apoderado intente de nuevo")
             })
-            $scope.resetInvolucrado()
-            $scope.getSolicitude()
         },function(response){
-            alertify.error("Error agregando apoderado")
+            alertify.error("Error creando apoderado revise la informacion del apoderado")
             $scope.resetInvolucrado()
             console.log(response.data)
         })
@@ -419,22 +427,29 @@ angular.module('app')
     }
     //Rrepresentante
     $scope.add_representante = function(){
-        Conciliacion.create.representative($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.representative).then(function(response){
-            alertify.success("Representante agregado con exito")
-            $scope.professions.forEach(function(proff){
-                proff.name = proff.name.title
-                Conciliacion.create.profession(response.data.representative.id, 'representative', proff).then(function(response){
-                    alertify.success('Exito agregando profesión')
-                }, function(response){
-                    $scope.profession = {}
-                    alertify.error('Error agregando profesión')
-                    console.log(response.data)
+        Conciliacion.create.representative(null, null, $scope.involucrado.involved.representative).then(function(response){
+            var representative = response.data.representative
+            Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: representative.id}).then(function(response){
+                alertify.success("Representante creado con exito")
+                $scope.professions.forEach(function(proff){
+                    proff.name = proff.name.title
+                    Conciliacion.create.profession(representative.id, 'representative', proff).then(function(response){
+                        alertify.success('Exito agregando profesión')
+                    }, function(response){
+                        $scope.profession = {}
+                        alertify.error('Error agregando profesión')
+                        console.log(response.data)
+                    })
                 })
+                $scope.resetInvolucrado()
+                $scope.getSolicitude()
+            }, function(response){
+                console.log(response.data)
+                $scope.resetInvolucrado()
+                alertify.error("Error relacionando al representante intente de nuevo")
             })
-            $scope.resetInvolucrado()
-            $scope.getSolicitude()
         },function(response){
-            alertify.error("Error agregando al representante")
+            alertify.error("Error creando al representante, revise los datos")
             console.log(response.data)
         })
         $scope.getSolicitude()

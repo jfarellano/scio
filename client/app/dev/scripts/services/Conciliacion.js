@@ -36,10 +36,10 @@ angular.module('app')
                     return $http.post(IP + '/solicitudes/' + id + '/involveds/' + type, inv,{headers: Session.getHeaders()})
                 },
                 natural:function(solId, invId, nat){
-                    return $http.post(IP + '/solicitudes/' + solId + '/involveds/' + invId + '/naturals', nat, {headers: Session.getHeaders()})
+                    return $http.post(IP + '/involveds/' + invId + '/naturals', nat, {headers: Session.getHeaders()})
                 },
                 juridical:function(solID, invId,jur){
-                    return $http.post(IP + '/solicitudes/' + solID + '/involveds/' + invId + '/juridicals', jur,{headers: Session.getHeaders()})
+                    return $http.post(IP + '/involveds/' + invId + '/juridicals', jur,{headers: Session.getHeaders()})
                 },
                 fact:function(solID, concID, fact){
                     return $http.post(IP + '/conciliations/'+concID+'/facts', fact,{headers: Session.getHeaders()})
@@ -48,10 +48,10 @@ angular.module('app')
                     return $http.post(IP + '/conciliations/'+concID+'/pretensions', pret, {headers: Session.getHeaders()})
                 },
                 assignee:function(solID, invID, assignee){
-                    return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees', assignee,{headers: Session.getHeaders()})
+                    return $http.post(IP + '/assignees', assignee,{headers: Session.getHeaders()})
                 },
                 representative:function(solID, invID, rep){
-                    return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives', rep, {headers: Session.getHeaders()})
+                    return $http.post(IP + '/representatives', rep, {headers: Session.getHeaders()})
                 },
                 study:function(solID, invID, assigID, study){
                     return $http.post(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies', study,{headers: Session.getHeaders()})
@@ -70,6 +70,18 @@ angular.module('app')
                 },
                 fundamentals: function(concID, fund){
                     return $http.post(IP + '/conciliations/'+concID+'/fundamentals', fund, {headers: Session.getHeaders()})
+                },
+                assignee_relation: function(assignee){
+                    return $http.post(IP + '/solicitude_empowerments', assignee, {headers: Session.getHeaders()})
+                },
+                representative_relation: function(representative){
+                    return $http.post(IP + '/solicitude_representations', representative, {headers: Session.getHeaders()})
+                },
+                global_assignee: function(solID, assigID, type){
+                    return $http.get(IP + '/solicitudes/'+solID+'/assignees/'+assigID+'/'+type+'/set_global', {headers: Session.getHeaders()})
+                },
+                global_representative: function(){
+                    return $http.get(IP + '/solicitudes/'+solID+'/representatives/'+assigID+'/'+type+'/set_global', {headers: Session.getHeaders()})
                 }
             },
             update:{
@@ -80,10 +92,10 @@ angular.module('app')
                     return $http.put(IP + '/conciliations/' + id, conciliation, {headers: Session.getHeaders()})
                 },
                 natural:function(solID, invID, natID, nat){
-                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID+ '/naturals/'+ natID , nat, {headers: Session.getHeaders()})
+                    return $http.put(IP+ '/naturals/'+ natID , nat, {headers: Session.getHeaders()})
                 },
                 juridical:function(solID, invID, jurID, jur){
-                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID+ '/juridicals/'+jurID , jur,{headers: Session.getHeaders()})
+                    return $http.put(IP+ '/juridicals/'+jurID , jur,{headers: Session.getHeaders()})
                 },
                 involved:function(solID, invID, inv){
                     return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID, inv, {headers: Session.getHeaders()})
@@ -95,10 +107,10 @@ angular.module('app')
                     return $http.put(IP + '/pretensions/' +pretID, pret, {headers: Session.getHeaders()})
                 },
                 assignee:function(solID, invID, assigID,assignee){
-                    return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID, pret, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/assignees/' +assigID, pret, {headers: Session.getHeaders()})
                 },
                 representative:function(solID, invID, repID, rep){
-                    return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/representatives/' +repID, rep, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/representatives/' +repID, rep, {headers: Session.getHeaders()})
                 },
                 study:function(solID, invID, assigID, studyID,study){
                     return $http.put(IP + '/solicitudes/' +solID+ '/involveds/' +invID+ '/assignees/' +assigID+ '/studies/' +studyID, study,{headers: Session.getHeaders()})
@@ -193,6 +205,12 @@ angular.module('app')
                 },
                 profession: function(proffID){
                     return $http.delete(IP + '/professions/' + proffID, {headers: Session.getHeaders()})
+                },
+                assignee: function(){
+                    return $http.delete(IP + '/solicitude_empowerments', info, {headers: Session.getHeaders()})
+                },
+                representative: function(){
+                    return $http.delete(IP + '/solicitude_representations', info, {headers: Session.getHeaders()})
                 }
             },
 

@@ -3,10 +3,10 @@ angular.module('app')
 	return{
 		get:{
 			juridical: function(id){
-				return $http.post(IP + '/solicitudes/1/involveds/1/juridicals/show_by_identifier',id, {headers: Session.getHeaders()})
+				return $http.post(IP + '/involveds/1/juridicals/show_by_identifier',id, {headers: Session.getHeaders()})
 			},
 			natural: function(id){
-				return $http.post(IP + '/solicitudes/1/involveds/1/naturals/show_by_identifier', id,{headers: Session.getHeaders()})
+				return $http.post(IP + '/involveds/1/naturals/show_by_identifier', id,{headers: Session.getHeaders()})
 			}
 		}
 	}        
