@@ -98,7 +98,7 @@ angular.module('app')
                     return $http.put(IP+ '/juridicals/'+jurID , jur,{headers: Session.getHeaders()})
                 },
                 involved:function(solID, invID, inv){
-                    return $http.put(IP+ '/solicitudes/' +solID+ '/involveds/' +invID, inv, {headers: Session.getHeaders()})
+                    return $http.put(IP+ '/involveds/' +invID, inv, {headers: Session.getHeaders()})
                 },
                 fact:function(solID, concID, factID, fact){
                     return $http.put(IP + '/facts/' +factID, fact,{headers: Session.getHeaders()})
@@ -107,7 +107,7 @@ angular.module('app')
                     return $http.put(IP + '/pretensions/' +pretID, pret, {headers: Session.getHeaders()})
                 },
                 assignee:function(solID, invID, assigID,assignee){
-                    return $http.put(IP + '/assignees/' +assigID, pret, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/assignees/' +assigID, assignee, {headers: Session.getHeaders()})
                 },
                 representative:function(solID, invID, repID, rep){
                     return $http.put(IP + '/representatives/' +repID, rep, {headers: Session.getHeaders()})
@@ -206,14 +206,13 @@ angular.module('app')
                 profession: function(proffID){
                     return $http.delete(IP + '/professions/' + proffID, {headers: Session.getHeaders()})
                 },
-                assignee: function(){
-                    return $http.delete(IP + '/solicitude_empowerments', info, {headers: Session.getHeaders()})
+                assignee: function(info){
+                    return $http.post(IP + '/solicitude_empowerments/delete', info, {headers: Session.getHeaders()})
                 },
-                representative: function(){
-                    return $http.delete(IP + '/solicitude_representations', info, {headers: Session.getHeaders()})
+                representative: function(info){
+                    return $http.post(IP + '/solicitude_representations/delete', info, {headers: Session.getHeaders()})
                 }
             },
-
             //Logic helpers in conciliations
             create_success: function(){
                 return success;

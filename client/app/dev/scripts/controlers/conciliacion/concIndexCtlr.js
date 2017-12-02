@@ -6,7 +6,7 @@ angular.module('app')
         $scope.searchType = null
         $scope.moreAvailable = true
         $scope.types = [
-            {text:'', value: null},
+            {text:'', value: ''},
             {text:'Fecha', value: 'date'},
             {text:'Involucrado', value: 'involved'},
             {text:'Numero de Caso', value: 'case_number'}
