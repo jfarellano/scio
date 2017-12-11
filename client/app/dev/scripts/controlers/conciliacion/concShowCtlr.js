@@ -142,6 +142,8 @@ angular.module('app')
         $scope.conc.state = 'iniciar_audiencia'
         Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
             window.location = '#/app/audiencia/conciliacion/' + $scope.conc.id
+        }, function(response){
+            console.log(response.data)
         })
     }
 

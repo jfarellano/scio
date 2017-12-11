@@ -7,12 +7,12 @@
             <h2>Solicitud de conciliación No.1342</h2>
             <h3>{{getState()}}</h3>
             <h4 class="show_title">Resumen de fechas</h4>
-            <p>Fecha de creación: {{conc.creation_date}}</p>
+            <p>Fecha de creación de la solicitud: {{conc.creation_date}}</p>
             <div ng-if="conc.conciliation.acceptance_date != null">
-                <p>Fecha de aceptación: {{conc.conciliation.acceptance_date}}</p>
+                <p>Fecha de aceptación de la solicitud: {{conc.conciliation.acceptance_date}}</p>
             </div>
             <div ng-if="conc.conciliation.assignment_date != null">
-                <p>Fecha de asignación: {{conc.conciliation.assignment_date}}</p>
+                <p>Fecha de asignación del conciliador: {{conc.conciliation.assignment_date}}</p>
             </div>
             <div ng-if="conc.state == 'enviada' && Session.getRole() == 'coordinator'">
                 <div class="box">

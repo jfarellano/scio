@@ -60,6 +60,8 @@ angular.module('app')
                         if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
                             $scope.moreAvailable = false
                         }
+                    }, function(response){
+                        console.log(response.data)
                     })
                 }
             }
@@ -85,11 +87,15 @@ angular.module('app')
                     }
                 })
             }else if ($scope.estado == 'borrador') {
+                console.log('Entro')
                 Conciliacion.get.draft(data).then(function(response){
+                    console.log('Entro2')
                     $scope.data = $scope.data.concat(response.data.conciliations)
                     if (response.data.conciliations.length == 0 || response.data.conciliations.length < 10) {
                         $scope.moreAvailable = false
                     }
+                }, function(response){
+                    console.log(response.data)
                 })
             }
         }

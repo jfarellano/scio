@@ -80,8 +80,8 @@ angular.module('app')
                 global_assignee: function(solID, assigID, type){
                     return $http.get(IP + '/solicitudes/'+solID+'/assignees/'+assigID+'/'+type+'/set_global', {headers: Session.getHeaders()})
                 },
-                global_representative: function(){
-                    return $http.get(IP + '/solicitudes/'+solID+'/representatives/'+assigID+'/'+type+'/set_global', {headers: Session.getHeaders()})
+                global_representative: function(solID, repID, type){
+                    return $http.get(IP + '/solicitudes/'+solID+'/representatives/'+repID+'/'+type+'/set_global', {headers: Session.getHeaders()})
                 }
             },
             update:{
