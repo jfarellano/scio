@@ -13,8 +13,8 @@ angular.module('app')
 			audience: function(solID, audience){
 				return $http.post(IP + '/conciliator/solicitudes/'+solID+'/audiences', audience, {headers: Session.getHeaders()})
 			},
-			assistance: function(audienceID, ids){
-				return $http.post(IP + '/conciliator/audiences/'+audienceID+'/set_assistance', {involveds: ids}, {headers: Session.getHeaders()} )
+			assistance: function(audienceID, info){
+				return $http.put(IP + '/audiences/'+audienceID+'/attendances', info, {headers: Session.getHeaders()} )
 			},
 			assistance_document: function(concID, audID){
 				return $http.get(IP + '/conciliation/'+concID+'/documents/audience/'+audID+'/assistance_constancy_new_date', {headers: Session.getHeaders()})

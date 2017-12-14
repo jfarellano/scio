@@ -1173,6 +1173,32 @@ angular.module('app')
             console.log(response.data)
         })
     }
+
+    $scope.getParticipantNameById = function(type, id){
+        if (type == 'involved') {
+            $scope.solicitude.solicitude_participations.forEach(function(inv){
+                if (inv.id = id) {
+                    return $scope.getName(inv)
+                }
+            })
+        }else if (type == 'assignee') {
+            $scope.solicitude.solicitude_participations.forEach(function(inv){
+                if (inv.assignee != null) {
+                    if(inv.assignee.id == id){
+                        return $scope.getARName(inv.assignee)
+                    }
+                }
+            })
+        }else if (type == 'representative') {
+            $scope.solicitude.solicitude_participations.forEach(function(inv){
+                if (inv.representative != null) {
+                    if(inv.representative.id == id){
+                        return $scope.getARName(inv.representative)
+                    }
+                }
+            })
+        }
+    }
     // $scope.study = {university: '', level: '', title: ''}
     // var original_study = angular.copy($scope.study)
     $scope.getARName = function(app){

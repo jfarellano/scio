@@ -15,14 +15,6 @@
 	    			<md-checkbox ng-model="globalAsociation.value" ng-change="test()" aria-label="Apoderado global">Usar apoderado global? </md-checkbox>
 	    		</md-input-container>
 	    	</div>
-    		<!-- <md-input-container class="flex-gt-xs" flex-gt-xs>
-                <label>Que tipo de apoderado va a usar:</label>
-                <md-select ng-model="globalAsociation.value" ng-change="test()" required>
-                    <md-option ng-repeat="g in globalSelectAssignee" value="{{g.response}}" requiered>
-                        {{::g.value}}
-                    </md-option>
-                </md-select>
-            </md-input-container> -->
     	</div>
     	<div ng-if="true">
 	    	<div ng-if="showForm('assignee')">
@@ -160,7 +152,7 @@
 	                <label>Fecha de graduación</label>
 	                <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
 	            </div>
-	            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.id, 'involved')">Agregar profesión</md-button>
+	            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.assignee.id, 'assignee')">Agregar profesión</md-button>
 
 	            <div data-slim-scroll data-scroll-height="250px">
 	                <md-subheader class="md-no-sticky">Profesiones</md-subheader>

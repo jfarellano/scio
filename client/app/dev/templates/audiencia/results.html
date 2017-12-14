@@ -1,63 +1,43 @@
 <div class="col-md-12">
     <div class="box box-default">
         <div class="index_area" style="padding: 10px;">
-            <h3>Fin de solicitud</h3>
-            <div layout-gt-xs="row" class="layout-gt-xs-row">
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Tipo de resultado</label>
-                    <md-select ng-model="resultType.result" required>
-                            <md-option ng-repeat="type in resultTypes" value="{{type.value}}" requiered>
-                                {{::type.text}}
-                            </md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Conclusión de conciliación</label>
-                    <md-select ng-model="acuerdo.ac" required>
-                            <md-option ng-repeat="type in conclution()" value="{{type.value}}" requiered>
-                                {{::type.text}}
-                            </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-
-            <h3>Manejo del conflicto</h3>
-            <div layout-gt-xs="row" class="layout-gt-xs-row">
-                <md-input-container class="flex-gt-xs" flex-gt-xs>
-                    <label>Escala de conflicto</label>
-                    <md-select ng-model="mc.conflict_scale" required>
-                            <md-option ng-repeat="type in scale" value="{{type.value}}" requiered>
-                                {{::type.value}}
-                            </md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-            <md-checkbox ng-model="mc.third_parties_direct_intervention" aria-label="Es abogado">Intervención directa de terceros</md-checkbox>
-            <div ng-if="mc.third_parties_direct_intervention">
+            <div ng-if="conc.state != 'audiencia_suspendida'">
+                <h3>Resultados de audiencia</h3>
                 <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
-                        <label>Tercero</label>
-                        <md-select ng-model="mc.third_party" required>
-                                <md-option ng-repeat="type in third" value="{{type.value}}" requiered>
-                                    {{::type.value}}
+                        <label>Tipo de resultado</label>
+                        <md-select ng-model="resultOption.result" required>
+                                <md-option ng-repeat="type in resutOptions" value="{{type.value}}" requiered>
+                                    {{::type.text}}
                                 </md-option>
                         </md-select>
                     </md-input-container>
+                </div>
+            </div>
+            <div ng-if="conc.state == 'audiencia_suspendida'">
+                <h3>Resultados de suspención</h3>
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
                     <md-input-container class="flex-gt-xs" flex-gt-xs>
-                        <label>Documento firmado</label>
-                        <md-select ng-model="mc.signed_document" required>
-                                <md-option ng-repeat="type in signed" value="{{type.value}}" requiered>
-                                    {{::type.value}}
+                        <label>Tipo de resultado</label>
+                        <md-select ng-model="resultOption.suspention" required>
+                                <md-option ng-repeat="type in suspendResult" value="{{type.value}}" requiered>
+                                    {{::type.text}}
                                 </md-option>
                         </md-select>
                     </md-input-container>
-                    <label>Fecha de intervención</label>
-                    <md-datepicker ng-model="mc.intervention_date" placeholder="Fecha de Intervención" required></md-datepicker>
                 </div>
             </div>
 
-            <div ng-if="resultType.result == 'acta'">
-                <h4>Listado Resultados</h4>
+            <div ng-if="resultOption.result == 1">
+                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                    <label>Tipo de acuerdo</label>
+                    <md-select ng-model="acuerdo.ac" required>
+                            <md-option ng-repeat="type in actas" value="{{type.value}}" requiered>
+                                {{::type.text}}
+                            </md-option>
+                    </md-select>
+                </md-input-container>
+                <h4>Redacción de acuerdo conciliatorio</h4>
                 <div class="scrolleable-content-wizard">
                     <div data-slim-scroll data-scroll-height="400px">
                         <md-subheader class="md-no-sticky">Resultados</md-subheader>
@@ -76,8 +56,73 @@
                 </div>
                 <md-button class="md-raised btn-w-md md-primary" ng-click="showResult($event)">Agregar nuevo resultado</md-button>
             </div>
-
-            <md-button class="md-raised btn-w-md md-primary" ng-click="endSolicitude()">Finalizar solicitud</md-button>
+            <div ng-if="resultOption.result == 4 || (conc.state == 'audiencia_suspendida' && resultOption.suspention == 1)" >
+                <div class="box">
+                    <div class="box-body bg-dark">
+                        <h4>Reprogramar audiencia</h4>
+                        <p>Seleccione en el siguiente horario una hora disponible y en el cuadro nueva audiencia arrastrelo de la parte inferior para cambiar la longitud de la audiencia, cuando la quiera programar en la fecha y hora deseada oprima el boton programar.</p>
+                        <div class="bg-white cal_color">
+                            <div id="programCalendarAudience" ng-model="events" calendar="programCalendarAudience" config="uiConfig.programCalendarAudience" ui-calendar="uiConfig.programCalendarAudience"></div>
+                        </div>
+                        <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="resetEvent()">Reprogramar</button>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="resultOption.result == 5">
+                <h3>Razón de finalizacion de la conciliación</h3>
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Razones</label>
+                        <md-select ng-model="resultOption.others" required>
+                                <md-option ng-repeat="type in others" value="{{type.value}}" requiered>
+                                    {{::type.value}}
+                                </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+            <div ng-if="resultOption.result == 1 || resultOption.result == 2 || resultOption.result == 5 || (conc.state == 'audiencia_suspendida' && resultOption.suspention == 0)">
+                <h3>Manejo del conflicto</h3>
+                <div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <md-input-container class="flex-gt-xs" flex-gt-xs>
+                        <label>Escala de conflicto</label>
+                        <md-select ng-model="mc.conflict_scale" required>
+                                <md-option ng-repeat="type in scale" value="{{type.value}}" requiered>
+                                    {{::type.value}}
+                                </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+                <md-checkbox ng-model="mc.third_parties_direct_intervention" aria-label="Es abogado">Intervención directa de terceros</md-checkbox>
+                <div ng-if="mc.third_parties_direct_intervention">
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Tercero</label>
+                            <md-select ng-model="mc.third_party" required>
+                                    <md-option ng-repeat="type in third" value="{{type.value}}" requiered>
+                                        {{::type.value}}
+                                    </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <label>Documento firmado</label>
+                            <md-select ng-model="mc.signed_document" required>
+                                    <md-option ng-repeat="type in signed" value="{{type.value}}" requiered>
+                                        {{::type.value}}
+                                    </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <label>Fecha de intervención</label>
+                        <md-datepicker ng-model="mc.intervention_date" placeholder="Fecha de Intervención" required></md-datepicker>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!(conc.state == 'audiencia_suspendida')">
+                <md-button class="md-raised btn-w-md md-primary" ng-click="endSolicitude()">Finalizar audiencia</md-button>
+            </div>
+            <div ng-if="(conc.state == 'audiencia_suspendida')">
+                <md-button class="md-raised btn-w-md md-primary" ng-click="endSuspention()">Finalizar audiencia</md-button>
+            </div>
         </div>
     </div>
 </div>

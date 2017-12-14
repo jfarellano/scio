@@ -7,18 +7,17 @@
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-if="asistencia">
                         <h4><b>Llamado a lista</b></h4>
-                        <md-list-item class="md-3-line" ng-repeat="conv in conc.solicitude_participations" ng-click="showParticipant(conv, $event)">
-                                <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
-                                <div class="md-list-item-text" layout="column">
-                                    <h3>{{getName(conv)}}</h3>
-                                    <h4>{{getID(conv)}}</h4>
-                                    <p>Teléfono: {{conv.involved.phone}}</p>
-                                    <md-checkbox class="md-secondary" ng-model="conv.assist" ng-if="asistencia"></md-checkbox>
-                                </div>
+                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances" ng-click="showParticipant(conv, $event)">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{conv.entity_name}}</h3>
+                                <!-- <h4>{{getID(conv)}}</h4>
+                                <p>Teléfono: {{conv.involved.phone}}</p> -->
+                                <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance" ng-if="asistencia"></md-checkbox>
+                            </div>
                         </md-list-item>
                         <md-button class="btn-w-md md-accent" ng-click="saveAssist()" ng-if="asistencia">Guardar listado de asistencia</md-button>
                     </div>
-                    <div ng-if="!asistencia">
+                    <div>
                     <h4><b>Comentarios</b></h4>
                         <md-input-container class="md-block">
                             <label>Comentarios</label>
@@ -32,11 +31,8 @@
         </div>
         <div class="divider divider-lg divider-dashed"></div>
         <div class="row" style="padding-left:10%;">
-            <div class="col-md-6 col-sm-6 col-xs-6">
-                <md-button class="btn-w-md md-warn" data-ng-click="showResults()" ng-disabled="asistencia">Finalizar proceso</md-button><div class="divider divider-xs"></div>
-            </div>
-            <div class="col-md-6 col-sm-6 col-xs-6" ng-if="Session.getRole() != 'conciliator_in_equity'">
-                <md-button class="btn-w-md md-primary" data-ng-click="reprogram()" ng-disabled="asistencia">Reprogramar</md-button><div class="divider divider-xs"></div>
+            <div >
+                <md-button class="btn-w-md md-warn" data-ng-click="showResults()" >Finalizar audiencia</md-button><div class="divider divider-xs"></div>
             </div>
         </div>
     </div>
@@ -49,25 +45,47 @@
 
             <h4 class="show_title"><b>Convocantes</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
-                <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{getName(conv)}}</h3>
-                        <h4>{{getID(conv)}}</h4>
-                        <p>Teléfono: {{conv.involved.phone}}</p>
+                        <h3>{{::getName(conv)}}</h3>
+                        <p>Postulante: {{conv.postulant}}</p>
+                        <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
+                        <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                     </div>
-                </div>
+                    <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                        <md-icon >assignment_ind</md-icon>
+                        <div class="icon-caption">Postulante</div>
+                    </md-button>
+                    <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                        <md-icon >business_center</md-icon>
+                        <div class="icon-caption">Apoderado</div>
+                    </md-button>
+                    <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                        <md-icon >location_city</md-icon>
+                        <div class="icon-caption">Representante Legal</div>
+                    </md-button>
             </md-list-item>
             <h4 class="show_title"><b>Convocados</b></h4>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
-                <div>
-                    <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
-                    <div class="md-list-item-text" layout="column">
-                        <h3>{{getName(conv)}}</h3>
-                        <h4>{{getID(conv)}}</h4>
-                        <p>Teléfono: {{conv.involved.phone}}</p>
-                    </div>
+                <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{::getName(conv)}}</h3>
+                    <p>Postulante: {{conv.postulant}}</p>
+                    <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
+                    <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                 </div>
+                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                    <md-icon >assignment_ind</md-icon>
+                    <div class="icon-caption">Postulante</div>
+                </md-button>
+                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                    <md-icon >business_center</md-icon>
+                    <div class="icon-caption">Apoderado</div>
+                </md-button>
+                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                    <md-icon >location_city</md-icon>
+                    <div class="icon-caption">Representante Legal</div>
+                </md-button>
             </md-list-item>
             <h4 class="show_title"><b>Hechos</b></h4>
             <div class="infoContainer">

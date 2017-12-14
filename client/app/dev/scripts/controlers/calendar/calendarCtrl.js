@@ -11,6 +11,7 @@ angular.module('app')
     Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
         audiencias.forEach(function(aud){
+            console.log(aud)
             var a = {
                 title: aud.title,
                 start: new Date(aud.start),
@@ -20,6 +21,7 @@ angular.module('app')
             }
             $scope.Audiencias.push(a)
         })
+        console.log($scope.Audiencias)
     }, function(response){console.log(response.data)})
 
     $scope.uiConfig = {

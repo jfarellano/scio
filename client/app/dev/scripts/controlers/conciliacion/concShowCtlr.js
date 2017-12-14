@@ -21,6 +21,9 @@ angular.module('app')
         if ($scope.conc.state == 'iniciar_audiencia' && (Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity')) {
             window.location = '#/app/audiencia/conciliacion/' + $scope.conc.id
         }
+        if ($scope.conc.state == 'audiencia_suspendida' && (Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity')) {
+            window.location = '#/app/audiencia/result/' + $scope.conc.id
+        }
         Conciliacion.get.proof($scope.conc.id).then(function(response){
             $scope.proofs = response.data.proofs
         })
