@@ -32,24 +32,27 @@ angular.module('app')
         console.log(request.data)
     })
 
+    $scope.showArchive = function(url){
+        window.open(IP + url, '_blank');
+    }
+
     $scope.showProof = function(proof, ev){
-        if (proof.testimony == null) {
-            window.open(IP + proof.url, '_blank');
-        }else{
-            $scope.part = proof
-            $mdDialog.show({
-                templateUrl: URL.dev.template + '/forms/showproof.html',
-                scope: $scope,        
-                preserveScope: true,
-                targetEvent: ev,
-                fullscreen: $scope.customFullscreen,
-                clickOutsideToClose:true
-            }).then(function(answer) {
-                console.log('Guardado con exito.')
-            }, function() {
-                console.log('Evento cancelado')
-            });
-        }
+        $scope.part = proof
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/showproof.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            fullscreen: $scope.customFullscreen,
+            clickOutsideToClose:true
+        }).then(function(answer) {
+            console.log('Guardado con exito.')
+        }, function() {
+            console.log('Evento cancelado')
+        });
+    }
+    $scope.cancel = function(){
+        $mdDialog.hide()
     }
 
     $scope.showDocument = function(doc){

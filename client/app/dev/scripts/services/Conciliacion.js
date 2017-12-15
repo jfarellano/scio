@@ -89,7 +89,7 @@ angular.module('app')
                     return $http.put(IP + '/solicitudes/' + id, sol, {headers: Session.getHeaders()})
                 },
                 conciliation: function(id, conciliation){
-                    return $http.put(IP + '/conciliations/' + id, {conciliation:conciliation}, {headers: Session.getHeaders()})
+                    return $http.put(IP + '/conciliations/' + id, {conciliation: conciliation}, {headers: Session.getHeaders()})
                 },
                 natural:function(solID, invID, natID, nat){
                     return $http.put(IP+ '/naturals/'+ natID , nat, {headers: Session.getHeaders()})

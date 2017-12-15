@@ -1,14 +1,23 @@
-<div class="modal_form">
+<div>
+    <md-toolbar>
+      <div class="md-toolbar-tools scio-bar">
+        <h4>Prueba</h4>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
     <md-dialog-content>
         <div class="col-md-12">
             <div class="icon-box ibox-center ibox-lg">
                 <h3>{{part.name}}</h3>
                 <p>Descripción: {{part.description}}</p>
-                <p>Testimonio:{{part.testimony}}</p>
+                <p ng-if="part.testimony != null">Testimonio:{{part.testimony}}</p>
             </div>
         </div>
     </md-dialog-content>
     <md-dialog-actions>
-
+        <md-button ng-if="part.testimony == null" class="md-raised btn-w-md md-primary" ng-click="showArchive(part.url)">Descargar archivo</md-button>  
     </md-dialog-actions>
 </div>

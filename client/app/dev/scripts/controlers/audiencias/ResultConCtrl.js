@@ -221,7 +221,8 @@ angular.module('app')
                 end: new Date(aud.end),
                 allDay: false, 
                 editable: false,
-                stick: true
+                stick: true,
+                _itsUTC: true
             }
             $scope.audiencias.push(a)
         })
@@ -294,7 +295,6 @@ angular.module('app')
     $scope.events = [$scope.audiencias]
 
     $scope.programAudience = function(){
-        console.log('wertyui')
         if(!$scope.program){
             var eve = uiCalendarConfig.calendars.programCalendarAudience.fullCalendar('clientEvents')
             var prog = eve[eve.length - 1]
@@ -310,7 +310,7 @@ angular.module('app')
                 ending_hour: (eHH>9 ? '' : '0') + eHH + ':' + (eMM>9 ? '' : '0') + eMM
             }
             Audiencias.create.audience($scope.conc.id, {audience: aud}).then(function(response){
-                //console.log(response.data)
+                console.log(response.data)
                 $mdDialog.show(
                   $mdDialog.alert()
                     .parent(angular.element(document.querySelector('#popupContainer')))
