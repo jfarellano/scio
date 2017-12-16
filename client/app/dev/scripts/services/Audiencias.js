@@ -7,6 +7,9 @@ angular.module('app')
 			},
 			solicitude: function(solID){
 				return $http.get(IP + '/solicitudes/'+solID+'/audiences', {headers: Session.getHeaders()})
+			},
+			guests: function(audID){
+				return $http.get(IP + '/conciliator/audiences/'+audID+'/guests', {headers: Session.getHeaders()})
 			}
 		},
 		create:{
@@ -18,11 +21,19 @@ angular.module('app')
 			},
 			assistance_document: function(concID, audID){
 				return $http.get(IP + '/conciliation/'+concID+'/documents/audience/'+audID+'/assistance_constancy_new_date', {headers: Session.getHeaders()})
+			},
+			guest: function(audID, guest){
+				return $http.post(IP + '/conciliator/audiences/'+audID+'/guests', guest, {headers: Session.getHeaders()})
 			}
 		},
 		update:{
 			audience: function(audienceID, audience){
 				return $http.put(IP + '/conciliator/audiences/'+audienceID, audience, {headers: Session.getHeaders()})
+			}
+		},
+		delete:{
+			guest: function(gusetID){
+				return $http.delete(IP + '/conciliator/guests/'+gusetID, {headers: Session.getHeaders()})
 			}
 		}
 	}        

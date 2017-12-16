@@ -1,0 +1,67 @@
+<md-toolbar>
+  <div class="md-toolbar-tools scio-bar">
+    <h4>Invitado</h4>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()">
+      <md-icon class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-dialog-content class="modal_form">
+    <form name="appForm">
+    	<div ng-if="true">
+    		<div layout-gt-xs="row" class="layout-gt-xs-row">
+	    		<md-input-container class="flex-gt-xs" flex-gt-xs>
+			        <label>Tipo de documento</label>
+			        <md-select ng-model="invitado.identifier_type" required>
+			            <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
+			                {{::type.value}}
+			            </md-option>
+			        </md-select>
+			    </md-input-container>
+	    		<md-input-container class="flex-gt-xs" flex-gt-xs>
+			        <label>Número de identificación</label>
+			        <input input-num ng-model="invitado.identifier" type="number" data-ng-minlength=3 ng-disabled="!invitado.identifier_type" required>
+			    </md-input-container>
+			</div>
+	    	<div layout-gt-xs="row" class="layout-gt-xs-row">
+			    <md-input-container class="flex-gt-xs" flex-gt-xs>
+			        <label>Nombre</label>
+			        <input data-ng-model="invitado.name" type="text" required>
+			    </md-input-container>
+			</div>
+			<div layout-gt-xs="row" class="layout-gt-xs-row">
+			    <md-input-container class="flex-gt-xs" flex-gt-xs>
+			        <label>Primer apellido</label>
+			        <input data-ng-model="invitado.first_lastname" type="text" required>
+			    </md-input-container>
+			    <md-input-container class="flex-gt-xs" flex-gt-xs>
+			        <label>Segundo apellido</label>
+			        <input data-ng-model="invitado.second_lastname" type="text" required>
+			    </md-input-container>
+			</div>
+			<div layout-gt-xs="row" class="layout-gt-xs-row">
+				<md-input-container class="flex-gt-xs" flex-gt-xs>
+	                <label>Género</label>
+	                <md-select ng-model="invitado.gender" required>
+	                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+	                        {{::g.value}}
+	                    </md-option>
+	                </md-select>
+	            </md-input-container>
+	            <md-input-container class="flex-gt-xs" flex-gt-xs>
+	                <label>Parte</label>
+	                <md-select ng-model="invitado.participation" required>
+	                    <md-option ng-repeat="g in parte" value="{{g.value}}" requiered>
+	                        {{::g.value}}
+	                    </md-option>
+	                </md-select>
+	            </md-input-container>
+	        </div>
+
+	</form>
+</md-dialog-content>
+<md-dialog-actions>
+    <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
+    <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">Guardar</md-button>  
+</md-dialog-actions>

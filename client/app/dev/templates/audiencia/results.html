@@ -117,6 +117,25 @@
                     </div>
                 </div>
             </div>
+             <div class="scrolleable-content-wizard">
+                <div data-slim-scroll data-scroll-height="auto">
+                    <md-list>
+                        <md-subheader class="md-no-sticky">Invitados</md-subheader>
+                         <md-list-item class="md-3-line" ng-repeat="conv in invitados">
+                                <div class="md-list-item-text" layout="column">
+                                    <h3>{{getName(conv)}}</h3>
+                                    <h4>{{getID(conv)}}</h4>
+                                </div>
+                                <div class="md-secondary">
+                                    <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="delete_invitado(conv)">delete_forever</md-icon>
+                                </div>
+                        </md-list-item>
+                        <div style="height: 30px"></div>
+                    </md-list>
+                </div>
+            </div>
+            <md-button class="md-raised btn-w-md md-primary" ng-click="showInvitado($event)">Agregar invitado</md-button>
+                    
             <div ng-if="!(conc.state == 'audiencia_suspendida')">
                 <md-button class="md-raised btn-w-md md-primary" ng-click="endSolicitude()">Finalizar audiencia</md-button>
             </div>

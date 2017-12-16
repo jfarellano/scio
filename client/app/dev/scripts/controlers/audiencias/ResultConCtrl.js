@@ -6,20 +6,35 @@ angular.module('app')
         if(!($scope.conc.state == 'iniciar_audiencia' || $scope.conc.state == 'audiencia_suspendida')){
             window.location = '#/app/conciliacion/' + $scope.conc.id
         }
+        Audiencias.get.solicitude($scope.conc.id).then(function(response){
+            var auds = response.data.audiences
+            $scope.audience = auds[auds.length - 1]
+            console.log($scope.audience)
+        })
     },function (request) {
         $scope.conc = {}
         console.log(request.data)
     })
     $scope.reFetch = function(){
         Conciliacion.show($state.params.id).then(function (request) {
-        $scope.conc = request.data.solicitude;
-        if(!($scope.conc.state == 'iniciar_audiencia' || $scope.conc.state == 'audiencia_suspendida')){
-            window.location = '#/app/conciliacion/' + $scope.conc.id
-        }
+            $scope.conc = request.data.solicitude;
+            if(!($scope.conc.state == 'iniciar_audiencia' || $scope.conc.state == 'audiencia_suspendida')){
+                window.location = '#/app/conciliacion/' + $scope.conc.id
+            }
+            Audiencias.get.solicitude($scope.conc.id).then(function(response){
+                var auds = response.data.audiences
+                $scope.audience = auds[auds.length - 1]
+                console.log($scope.audience)
+                Audiencias.get.guests($scope.audience.id).then(function(response){
+                    console.log(response.data)
+                    $scope.invitados = response.data.guests
+                })
+            })
         },function (request) {
             $scope.conc = {}
             console.log(request.data)
         })
+        Audiencias.get.guest($scope.audience)
     }
     Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
@@ -341,4 +356,63 @@ angular.module('app')
             })
         }
     }
+//Invitados
+    $scope.invitado = {}
+    $scope.parte = [
+        {value: 'convocante'},
+        {value: 'convocado'}
+    ]
+    $scope.save = function(answer) {
+      $mdDialog.hide(answer);
+    };
+    $scope.cancel = function() {
+        $mdDialog.cancel()
+    };
+    $scope.showInvitado = function(ev) {
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/invitado.html',
+            scope: $scope,        
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            $scope.add_invitado()
+        }, function() {
+            $scope.reFetch()
+        });
+    };
+    $scope.add_invitado = function(){
+        Audiencias.create.guest($scope.audience.id, $scope.invitado).then(function(response){
+            alertify.success('Exito agregando invitado')
+            $scope.invitado = {}
+            $scope.reFetch()
+        }, function(response){
+            alertify.error('Error agregando invitado')
+            console.log(response.data)
+            $scope.invitado = {}
+        })
+    }
+    $scope.delete_invitado = function(inv){
+        Audiencias.delete.guest(inv.id).then(function(response){
+            alertify.success('Exito eliminando invitado')
+            $scope.invitado = {}
+            $scope.reFetch()
+        }, function(response){
+            alertify.error('Error eliminando invitado')
+            console.log(response.data)
+            $scope.invitado = {}
+        })
+    }
+    $scope.getName = function(inv){
+        return inv.name + ' ' + inv.first_lastname + ' ' + inv.second_lastname
+    }
+    $scope.getID = function(ele){
+        return ele.identifier_type + ': ' + ele.identifier
+    }
+    Conciliacion.get.constant('identifier_type').then(function(response){
+        $scope.idType = response.data.constants
+    }) 
+    Conciliacion.get.constant('gender').then(function(response){
+        $scope.gender = response.data.constants
+    }) 
 }]);

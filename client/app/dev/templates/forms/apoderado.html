@@ -33,7 +33,7 @@
 					        <input input-num ng-model="involucrado.involved.assignee.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.assignee.identifier_type" required>
 					    </md-input-container>
 					</div>
-					<div layout-gt-xs="row" class="layout-gt-xs-row">
+					<div layout-gt-xs="row" ng-if="!global" class="layout-gt-xs-row">
 		                <md-input-container class="flex-gt-xs" flex-gt-xs>
 		                    <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="findAssignee()">Verificar</button>
 		                </md-input-container>
@@ -227,7 +227,7 @@
 	</form>
 </md-dialog-content>
 <md-dialog-actions>
-	<md-button class="md-raised col-sm-12 btn-w-md md-warn" ng-if="edit && !verified" ng-click="replace_apoderado()">Restaurar</md-button>
+	<md-button class="md-raised col-sm-12 btn-w-md md-warn" ng-if="edit && !verified && !global" ng-click="replace_apoderado()">Restaurar</md-button>
     <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
     <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">{{getButtonLable()}}</md-button>  
 </md-dialog-actions>
