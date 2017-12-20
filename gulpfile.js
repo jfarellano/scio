@@ -193,7 +193,8 @@ function startBrowserSync(opt) {
         logPrefix: 'gulp-patterns',
         notify: true,
         reloadDelay: 0, //1000,
-        online: false
+        online: false,
+        open: false
     };
 
     switch(opt) {
