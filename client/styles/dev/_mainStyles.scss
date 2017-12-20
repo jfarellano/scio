@@ -1,10 +1,9 @@
-*{
-	font-family: 'flm_font', 'Helvetica', 'Roboto';
-}
-
 @font-face {
 	font-family: "flm_font";
 	src: url('/styles/dev/font-Medium.otf');
+}
+*{
+	font-family: 'flm_font', 'Helvetica', 'Roboto';
 }
 
 progress {

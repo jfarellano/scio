@@ -1,23 +1,25 @@
+<md-toolbar>
     <div class="md-toolbar-tools scio-bar">
         <h4>Audiencia</h4>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon class="material-icons">close</md-icon>
         </md-button>
-      </div>
-    <md-dialog-content>
-        <div class="col-md-12">
-            <div class="icon-box ibox-center ibox-lg">
-                <div class="ibox-icon">
-                    <a href="javascript:;"><i class="material-icons">alarm_on</i></a>
-                </div>
-                <h3>Fecha: {{audience.date}}</h3>
-		        <h3>Inicio: {{audience.start}}</h4>
-		        <h3>Fin: {{audience.end}}</h4>
-		        <h3>Comentarios</h3>
-		        <p>{{audience.comment}}</p>
+    </div>
+</md-toolbar>
+<md-dialog-content>
+    <div class="col-md-12">
+        <div class="icon-box ibox-center ibox-lg">
+            <div class="ibox-icon">
+                <a href="javascript:;"><i class="material-icons">alarm_on</i></a>
             </div>
+            <h3>Fecha: {{audience.date}}</h3>
+	        <h3>Inicio: {{audience.start}}</h4>
+	        <h3>Fin: {{audience.end}}</h4>
+	        <h3>Comentarios</h3>
+	        <p>{{audience.comment}}</p>
         </div>
-    </md-dialog-content>
-    <md-dialog-actions>
-    </md-dialog-actions>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
+</md-dialog-actions>

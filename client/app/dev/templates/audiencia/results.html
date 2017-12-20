@@ -40,7 +40,7 @@
                 <h4>Redacción de acuerdo conciliatorio</h4>
                 <div class="scrolleable-content-wizard">
                     <div data-slim-scroll data-scroll-height="400px">
-                        <md-subheader class="md-no-sticky">Resultados</md-subheader>
+                        <md-subheader class="md-no-sticky">Items de acuerdo conciliatorio</md-subheader>
                         <md-list-item class="md-3-line" ng-repeat="r in results" ng-click="editPretension(p, $event)">
                             <div>
                                 <div class="md-list-item-text" layout="column">
@@ -54,7 +54,7 @@
                         <div style="height: 100px"></div>
                     </div>
                 </div>
-                <md-button class="md-raised btn-w-md md-primary" ng-click="showResult($event)">Agregar nuevo resultado</md-button>
+                <md-button class="md-raised btn-w-md md-primary" ng-click="showResult($event)">Redactar item de acuerdo</md-button>
             </div>
             <div ng-if="resultOption.result == 4 || (conc.state == 'audiencia_suspendida' && resultOption.suspention == 1)" >
                 <div class="box">

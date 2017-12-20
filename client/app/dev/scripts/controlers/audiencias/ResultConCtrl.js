@@ -26,32 +26,29 @@ angular.module('app')
                 $scope.audience = auds[auds.length - 1]
                 console.log($scope.audience)
                 Audiencias.get.guests($scope.audience.id).then(function(response){
-                    console.log(response.data)
                     $scope.invitados = response.data.guests
                 })
             })
+            Audiencias.get.user_audiences().then(function(response){
+            var audiencias = response.data.audiences
+            audiencias.forEach(function(aud){
+                var a = {
+                    title: Session.getName(),
+                    start: new Date(aud.start),
+                    end: new Date(aud.end),
+                    allDay: false, 
+                    editable: false,
+                    stick: true,
+                    _itsUTC: true
+                }
+                $scope.audiencias.push(a)
+            })
+    }, function(response){console.log(response.data)})
         },function (request) {
             $scope.conc = {}
             console.log(request.data)
         })
-        Audiencias.get.guest($scope.audience)
     }
-    Audiencias.get.user_audiences().then(function(response){
-        var audiencias = response.data.audiences
-        audiencias.forEach(function(aud){
-            console.log(aud)
-            var a = {
-                title: Session.getName(),
-                start: new Date(aud.start),
-                end: new Date(aud.end),
-                allDay: false, 
-                editable: false,
-                stick: true
-            }
-            $scope.audiencias.push(a)
-        })
-        console.log($scope.audiencias)
-    }, function(response){console.log(response.data)})
 
     $scope.addResult = function(description){
         Conciliacion.create.results($scope.conc.conciliation.id, description).then(function(response){
@@ -229,6 +226,7 @@ angular.module('app')
     //CALENDAR
     Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
+        //console.log(audiencias)
         audiencias.forEach(function(aud){
             var a = {
                 title: Session.getName(),
@@ -236,11 +234,11 @@ angular.module('app')
                 end: new Date(aud.end),
                 allDay: false, 
                 editable: false,
-                stick: true,
-                _itsUTC: true
+                stick: true
             }
             $scope.audiencias.push(a)
         })
+        //console.log($scope.audiencias)
     }, function(response){console.log(response.data)})
 
     $scope.eventsF = function (start, end, timezone, callback) {

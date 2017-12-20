@@ -14,10 +14,8 @@
         }
 
         if(!Session.isAuth()){
-            console.log('Entro en no auth')
             $window.location = '#/iniciosesion'
         }else{
-            console.log('Entro en auth')
             $window.location = '#/app/dashboard'
         }
 

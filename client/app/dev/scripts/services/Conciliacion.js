@@ -211,6 +211,9 @@ angular.module('app')
                 },
                 representative: function(info){
                     return $http.post(IP + '/solicitude_representations/delete', info, {headers: Session.getHeaders()})
+                },
+                global_relation: function(solID, type, con){
+                    return $http.delete(IP + '/solicitudes/'+solID+'/'+type+'/'+con+'/destroy_global_relationship')
                 }
             },
             //Logic helpers in conciliations

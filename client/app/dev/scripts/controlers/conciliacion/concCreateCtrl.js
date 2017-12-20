@@ -487,13 +487,26 @@ angular.module('app')
     }
     $scope.replace_apoderado = function(){
         if($scope.global){
-            console.log($scope.solicitude, $scope.involucrado.involved.assignee)
+            var ind = WizardHandler.wizard().currentStepNumber()
+            var con = ''
+            if (ind == 2) {
+                //Convocantes
+                con = 'convocante'
+            }else{
+                //Convocados
+                con = 'convocado'
+            }
             //function(solID, assigID, type)
-            Conciliacion.delete.global_assignee_representative($scope.solicitude.id, $scope.involucrado.involved.assignee.id, 'assignee').then(function(response){
+            Conciliacion.delete.global_relation($scope.solicitude.id, 'assignee', con).then(function(response){
                 alertify.success("Exito restaurando apoderado global")
+                $scope.getSolicitude()
+                $scope.resetInvolucrado()
+                $scope.cancel()
             }, function(response){
                 alertify.error("Error restaurando apoderado global")
                 console.log(response.data)
+                $scope.resetInvolucrado()
+                console.log(response)
             })
         }else{
             Conciliacion.delete.assignee({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
@@ -612,7 +625,6 @@ angular.module('app')
                 var ind = WizardHandler.wizard().currentStepNumber()
                 if (ind == 2) {
                     //Convocantes
-                    
                     $scope.setGlobal('convocante', 'representative', $scope.involucrado.involved.representative.id)
                 }else{
                     //Convocados
@@ -631,11 +643,25 @@ angular.module('app')
     $scope.replace_representante = function(){
         if($scope.global){
             //function(solID, assigID, type)
-            Conciliacion.delete.global_assignee_representative($scope.solicitude.id, $scope.involucrado.involved.representative.id, 'representative').then(function(response){
+           var ind = WizardHandler.wizard().currentStepNumber()
+            var con = ''
+            if (ind == 2) {
+                //Convocantes
+                con = 'convocante'
+            }else{
+                //Convocados
+                con = 'convocado'
+            }
+            //function(solID, assigID, type)
+            Conciliacion.delete.global_relation($scope.solicitude.id, 'representative', con).then(function(response){
                 alertify.success("Exito restaurando representante global")
+                $scope.getSolicitude()
+                $scope.resetInvolucrado()
+                $scope.cancel()
             }, function(response){
                 alertify.error("Error restaurando representante global")
-                console.log(response.data)
+                $scope.resetInvolucrado()
+                console.log(response)
             })
         }else{
             Conciliacion.delete.representative({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
@@ -976,7 +1002,6 @@ angular.module('app')
     $scope.finished = function() {
         $scope.solicitude.state = 'enviada'
         Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-            $scope.getSolicitude()
             window.location = '#/app/conciliacion'
         },function(response){console.log(response.data)})
     };
@@ -1054,9 +1079,6 @@ angular.module('app')
     $scope.globalSelectAssignee = [{value: 'Usar apoderado independiente', response: false}, {value: 'Usar apoderado global', response: true}]
     $scope.globalSelectRepresentative = [{value: 'Usar representante legal independiente', response: false}, {value: 'Usar representante legal global', response: true}]
     $scope.globalAsociation = {value: false}
-    $scope.test = function(){
-        console.log('global globalAsociation' + $scope.globalAsociation.value)
-    }
     $scope.showForm = function(type){
         var isGlobal = false
         var ind = WizardHandler.wizard().currentStepNumber()

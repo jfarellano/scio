@@ -1,41 +1,43 @@
+<md-toolbar>
     <div class="md-toolbar-tools scio-bar">
         <h4>Involucrado</h4>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon class="material-icons">close</md-icon>
         </md-button>
-      </div>
-    <md-dialog-content>
-        <div class="col-md-12">
-            <div class="icon-box ibox-center ibox-lg">
-                <div class="ibox-icon">
-                    <a href="javascript:;"><i class="material-icons">{{getIcon(part)}}</i></a>
-                </div>
-                <h3>{{getName(part)}}</h3>
-                <h4>{{part.participation_type}}</h4>
-                <p>{{getID(part)}}</p>
-                <p>Teléfono: {{part.involved.phone}}</p>
-                <p>E-mail: {{part.involved.email}}</p>
-                <p>Dirección: {{part.involved.address}}</p>
-                <p>{{part.involved.nature}}</p>
-                <div ng-if="apoderado(part)">
-                    <h4>Apoderado</h5>
-                    <p>{{part.involved.assignee.first_name}} {{part.involved.assignee.first_lastname}}</p>
-                    <p>Celular: {{part.involved.assignee.cellphone}}</p>
-                    <p>Teléfono: {{part.involved.assignee.telephone}}</p>
-                    <p>E-mail: {{part.involved.assignee.email}}</p>
-                    <p>{{part.involved.assignee.identifier_type}}: {{part.involved.assignee.identifier}}</p>
-                </div>
-                <div ng-if="representante(part)">
-                    <h4>Representante</p>
-                    <p>{{part.involved.representative.first_name}} {{part.involved.representative.first_lastname}}</p>
-                    <p>Celular: {{part.involved.representative.cellphone}}</p>
-                    <p>Teléfono: {{part.involved.representative.telephone}}</p>
-                    <p>E-mail: {{part.involved.representative.email}}</p>
-                    <p>{{part.involved.representative.identifier_type}}: {{part.involved.representative.identifier}}</p>
-                </div>
+    </div>
+</md-toolbar>
+<md-dialog-content>
+    <div class="col-md-12">
+        <div class="icon-box ibox-center ibox-lg">
+            <div class="ibox-icon">
+                <a href="javascript:;"><i class="material-icons">{{getIcon(part)}}</i></a>
+            </div>
+            <h3>{{getName(part)}}</h3>
+            <h4>{{part.participation_type}}</h4>
+            <p>{{getID(part)}}</p>
+            <p>Teléfono: {{part.involved.phone}}</p>
+            <p>E-mail: {{part.involved.email}}</p>
+            <p>Dirección: {{part.involved.address}}</p>
+            <p>{{part.involved.nature}}</p>
+            <div ng-if="apoderado(part)">
+                <h4>Apoderado</h5>
+                <p>{{part.involved.assignee.first_name}} {{part.involved.assignee.first_lastname}}</p>
+                <p>Celular: {{part.involved.assignee.cellphone}}</p>
+                <p>Teléfono: {{part.involved.assignee.telephone}}</p>
+                <p>E-mail: {{part.involved.assignee.email}}</p>
+                <p>{{part.involved.assignee.identifier_type}}: {{part.involved.assignee.identifier}}</p>
+            </div>
+            <div ng-if="representante(part)">
+                <h4>Representante</p>
+                <p>{{part.involved.representative.first_name}} {{part.involved.representative.first_lastname}}</p>
+                <p>Celular: {{part.involved.representative.cellphone}}</p>
+                <p>Teléfono: {{part.involved.representative.telephone}}</p>
+                <p>E-mail: {{part.involved.representative.email}}</p>
+                <p>{{part.involved.representative.identifier_type}}: {{part.involved.representative.identifier}}</p>
             </div>
         </div>
-    </md-dialog-content>
-    <md-dialog-actions>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
 
