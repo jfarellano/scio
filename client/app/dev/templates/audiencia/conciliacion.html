@@ -7,11 +7,9 @@
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-if="asistencia">
                         <h4><b>Llamado a lista</b></h4>
-                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances" ng-click="showParticipant(conv, $event)">
+                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances">
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{conv.entity_name}}</h3>
-                                <!-- <h4>{{getID(conv)}}</h4>
-                                <p>Teléfono: {{conv.involved.phone}}</p> -->
                                 <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance" ng-if="asistencia"></md-checkbox>
                             </div>
                         </md-list-item>
