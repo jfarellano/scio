@@ -5,7 +5,7 @@
         </md-button>
         <div class="show_content" data-slim-scroll data-scroll-height="auto">
             <h2>Solicitud de conciliación No.1342</h2>
-            <h3>{{getState()}}</h3>
+            <h4>{{getState()}}</h4>
             <h4 class="show_title">Resumen de fechas</h4>
             <p>Fecha de creación de la solicitud: {{conc.creation_date}}</p>
             <div ng-if="conc.conciliation.acceptance_date != null">
@@ -27,14 +27,14 @@
             </div>
 
             <div ng-if="conc.state == 'aceptada' && Session.getRole() == 'coordinator' || conc.state == 'denegada_por_conciliador' && Session.getRole() == 'coordinator'">
-                <div class="box">
+                <div class="box conciliator_list">
                     <div class="box-body bg-dark">
                         <h4>Asignacion de conciliador</h4>
                         <p>Seleccione un conciliador de la lista para asignarlo a esta solicitud.</p>
                         <div data-slim-scroll data-scroll-height="250px">
                             <md-list-item class="md-3-line" ng-repeat="con in conciliators" ng-click="setConciliator(con)">
                                 <div class="md-list-item-text" layout="column">
-                                    <h3>{{getUserName(con)}}</h3>
+                                    <h3 class="cap">{{getUserName(con)}}</h3>
                                 </div>
                             </md-list-item>
                             <div style="height: 30px"></div>
@@ -69,14 +69,16 @@
                     </div>
                 </div>
             </div>
-
+            <div ng-if="conc.state == 'programada'">
+                    <p>Audiencia programada para el {{courrentAudience.start}} en la sala {{courrentAudience.room_name}}</p>
+            </div>
             <div ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'">
                 <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="toAudience()">Ir a Audiencia</button>
             </div>
 
             <div ng-if="conc.conciliator != null">
                 <h4 class="show_title"><b>Conciliador</b></h4>
-                <h5>{{conc.conciliator.name}} {{conc.conciliator.first_lastname}}</h5>
+                <h5 class="cap">{{conc.conciliator.name}} {{conc.conciliator.first_lastname}}</h5>
                 <p>Telefono: {{conc.conciliator.phone}}</p>
                 <p>E-Mail: {{conc.conciliator.email}}</p>
             </div>
@@ -86,7 +88,7 @@
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{getName(conv)}}</h3>
+                        <h3 class="cap">{{getName(conv)}}</h3>
                         <h4>{{getID(conv)}}</h4>
                         <p>Teléfono: {{conv.involved.phone}}</p>
                     </div>
@@ -100,7 +102,7 @@
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                     <div class="md-list-item-text" layout="column">
-                        <h3>{{getName(conv)}}</h3>
+                        <h3 class="cap">{{getName(conv)}}</h3>
                         <h4>{{getID(conv)}}</h4>
                         <p>Teléfono: {{conv.involved.phone}}</p>
                     </div>

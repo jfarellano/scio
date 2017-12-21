@@ -149,6 +149,13 @@
     padding: 10px;
 }
 
+.conciliator_list{
+    md-list-item.md-3-line, md-list-item.md-3-line > .md-no-style{
+        height: 30px;
+        min-height: 30px;
+    }
+}
+
 //Fix select on md-dialog
 .md-select-menu-container {
     z-index: 99999 !important;

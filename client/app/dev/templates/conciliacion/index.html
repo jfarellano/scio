@@ -34,9 +34,9 @@
                         <div ng-click="toShow(conc)">
                             <div class="box ">
                                 <div class="box-body">
-                                    <div class=" box_name"><b>{{getConvNames($index)}}</b></div>
+                                    <div class=" box_name cap"><b>{{getConvNames($index)}}</b></div>
                                     <div class="box_content">
-                                        <h6>{{getConvoNames($index)}}</h6>
+                                        <h6 class="cap">{{getConvoNames($index)}}</h6>
                                         <p>Estado: {{getState(conc)}}</p>
                                         <div class="col-sm-12 barra-prog"><md-progress-linear md-mode="determinate" value="{{progress(conc)}}" aria-valuemin="0" aria-valuemax="100"></md-progress-linear></div>
                                     </div>

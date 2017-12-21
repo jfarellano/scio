@@ -32,7 +32,7 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <md-checkbox ng-model="solicitude.conciliation.definable" aria-label="Es abogado">Asunto jurídico definible</md-checkbox>
+                        <md-checkbox ng-model="solicitude.conciliation.definable" aria-label="¿Esta solicitud cuenta con un asunto juridico definible?">Asunto jurídico definible</md-checkbox>
                         <div>
                             <md-input-container class="md-block" flex-gt-sm ng-if="solicitude.conciliation.definable">
                                 <label>Área del derecho:</label>
@@ -67,7 +67,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <md-checkbox ng-model="cuantia.indeterminada" aria-label="Cuantia indeterminada">Cuantia indeterminada?</md-checkbox>
+                        <md-checkbox ng-model="cuantia.indeterminada" aria-label="La cuantia de esta solicitud de indeterminada">Cuantia indeterminada?</md-checkbox>
                         <md-input-container class="md-block" ng-if="!cuantia.indeterminada" flex-gt-sm>
                             <label>Cuantía</label>
                             <input data-ng-model="solicitude.conciliation.payment_amount" type="number" required>
@@ -80,8 +80,28 @@
             </wz-step>
             <wz-step wz-title="Convocantes">
                 <h4>Listado de Convocantes</h4>
-                <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary flex-gt-xs" flex-gt-xs>Apoderado Global</md-button>
-                <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary flex-gt-xs" flex-gt-xs>Representante Global</md-button>
+                <div ng-if="getGlobalAR('convocante', 'assignee') != null">
+                    <md-list-item class="md-3-line">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Apoderado global</h3>
+                                <h3 class="cap">{{::getARName(getGlobalAR('convocante', 'assignee'))}}</h3>
+                                <p>E-mail: {{::getGlobalAR('convocante', 'assignee').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocante', 'assignee').email}}</p>
+                            </div>
+                    </md-list-item> 
+                </div>
+                <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary">Apoderado Global</md-button>
+                <div ng-if="getGlobalAR('convocante', 'representative') != null">
+                    <md-list-item class="md-3-line">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Representante legal global</h3>
+                                <h3 class="cap">{{::getARName(getGlobalAR('convocante', 'representative'))}}</h3>
+                                <p>E-mail: {{::getGlobalAR('convocante', 'representative').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocante', 'representative').email}}</p>
+                            </div>
+                    </md-list-item> 
+                </div>
+                <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary">Representante Global</md-button>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -95,15 +115,15 @@
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                         </div>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                                        <md-button title="Postulante" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
                                             <md-icon >assignment_ind</md-icon>
                                             <div class="icon-caption">Postulante</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                                        <md-button title="Postulante" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                                             <md-icon >business_center</md-icon>
                                             <div class="icon-caption">Apoderado</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                                        <md-button title="Postulante" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
                                             <md-icon >location_city</md-icon>
                                             <div class="icon-caption">Representante Legal</div>
                                         </md-button>
@@ -123,8 +143,28 @@
             </wz-step>
             <wz-step wz-title="convocados">
                 <h4>Listado de Convocados</h4>
-                <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary flex-gt-xs" flex-gt-xs>Apoderado Global</md-button>
-                <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary flex-gt-xs" flex-gt-xs>Representante Global</md-button>
+                <div ng-if="getGlobalAR('convocado', 'assignee') != null">
+                    <md-list-item class="md-3-line">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Apoderado global</h3>
+                                <h3 class="cap">{{::getARName(getGlobalAR('convocado', 'assignee'))}}</h3>
+                                <p>E-mail: {{::getGlobalAR('convocado', 'assignee').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocado', 'assignee').email}}</p>
+                            </div>
+                    </md-list-item> 
+                </div>
+                <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary">Apoderado Global</md-button>
+                <div ng-if="getGlobalAR('convocado', 'representative') != null">
+                    <md-list-item class="md-3-line">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>Representante legal global</h3>
+                                <h3 class="cap">{{::getARName(getGlobalAR('convocado', 'representative'))}}</h3>
+                                <p>E-mail: {{::getGlobalAR('convocado', 'representative').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocado', 'representative').email}}</p>
+                            </div>
+                    </md-list-item> 
+                </div>
+                <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary">Representante Global</md-button>
                 <div class="ui-wizard-content">
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
@@ -137,15 +177,15 @@
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                         </div>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                                        <md-button title="Postulante" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
                                             <md-icon >assignment_ind</md-icon>
                                             <div class="icon-caption">Postulante</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                                        <md-button title="Postulante" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                                             <md-icon >business_center</md-icon>
                                             <div class="icon-caption">Apoderado</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                                        <md-button title="Postulante" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
                                             <md-icon >location_city</md-icon>
                                             <div class="icon-caption">Representante Legal</div>
                                         </md-button>
