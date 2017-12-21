@@ -340,14 +340,7 @@ angular.module('app')
             console.log(response)
             if (response.status != 204) {
                 $scope.involucrado.involved.assignee = response.data.assignee
-                var r = $scope.departments.filter(function(a) {
-                    return a.value == $scope.involucrado.involved.assignee.department
-                })
-                if (r.length > 0) {
-                    Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
-                        $scope.cities = response.data.constants
-                    })
-                }
+                $scope.getAssigneeCity()
                 $scope.verified = true
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
@@ -360,14 +353,7 @@ angular.module('app')
         Participations.get.representative({identifier_type: $scope.involucrado.involved.representative.identifier_type, identifier: $scope.involucrado.involved.representative.identifier}).then(function(response){
             if (response.status != 204) {
                 $scope.involucrado.involved.representative = response.data.representative
-                var r = $scope.departments.filter(function(a) {
-                    return a.value == $scope.involucrado.involved.representative.department
-                })
-                if (r.length > 0) {
-                    Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
-                        $scope.cities = response.data.constants
-                    })
-                }
+                $scope.getRepCities()
                 $scope.verified = true
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
