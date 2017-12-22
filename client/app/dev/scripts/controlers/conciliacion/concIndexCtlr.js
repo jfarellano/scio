@@ -2,7 +2,7 @@ angular.module('app')
     .controller('ConcIndexCtlr', ['$scope', '$state', '$window','Conciliacion', 'screenSize', 'Session', '$mdDialog',function($scope, $state, $window, Conciliacion, screenSize, Session, $mdDialog){
         $scope.estado = 'activo'
         $scope.page = 1
-        $scope.searchContent = {}   
+        $scope.searchContent = {}
         $scope.searchType = null
         $scope.moreAvailable = true
         $scope.types = [
@@ -127,7 +127,7 @@ angular.module('app')
             $scope.fetchData()
         }
 
-        
+
 
         $scope.Session =  Session
 
@@ -151,7 +151,7 @@ angular.module('app')
             }else{
                 info = c[0].involved.juridical.name
             }
-            
+
             if (c.length > 1) {
                 info = info + ' y otros.'
             }
@@ -172,7 +172,7 @@ angular.module('app')
             }else{
                 info = c[0].involved.juridical.name
             }
-            
+
             if (c.length > 1) {
                 info = info + ' y otros.'
             }
@@ -184,13 +184,13 @@ angular.module('app')
                 var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
                 Conciliacion.create.solicitude(solicitude).then(function(response){
                     console.log(response.data)
-                    window.location = '#/app/create/conciliacion/' + response.data.solicitude.id    
+                    window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
                 },function(response){
                     console.log(response.data)
                 })
             }else{
                 $scope.showConfirm(ev)
-            }              
+            }
         }
 
         $scope.showConfirm = function(ev) {
@@ -233,7 +233,7 @@ angular.module('app')
         }
 
         $scope.progress = function(conc){
-            switch(conc.state){ 
+            switch(conc.state){
                 case 'incompleta':
                     return 0
                     break
@@ -268,5 +268,9 @@ angular.module('app')
 
         $scope.mobile = screenSize.on('xs, sm', function(isMatch){
             $scope.mobile = isMatch;
-        });    
+        });
+
+        $scope.getIndex = function(){
+            return Conciliacion.getIndex()
+        }
     }]);
