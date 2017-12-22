@@ -412,7 +412,7 @@ angular.module('app')
     
 //FinModal
 //CRUDS
-    //Apoderado
+//Apoderado
     $scope.add_apoderado = function(){
         Conciliacion.create.assignee(null, null, $scope.involucrado.involved.assignee).then(function(response){
             var assignee = response.data.assignee
@@ -568,7 +568,7 @@ angular.module('app')
         })
     }
 
-    //Rrepresentante
+//Rrepresentante
     $scope.add_representante = function(){
         Conciliacion.create.representative(null, null, $scope.involucrado.involved.representative).then(function(response){
             var representative = response.data.representative
@@ -676,7 +676,7 @@ angular.module('app')
             })
         }
     }
-    //Convocante
+//Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
         Conciliacion.create.involved($scope.solicitude.id, 'convocante', $scope.involucrado).then(function(response){
@@ -818,23 +818,17 @@ angular.module('app')
             }else{
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
-                    if($scope.involucrado.apoderado){
-                        Conciliacion.create.assignee($scope.solicitude.id, response.data.involved.id, $scope.involucrado).then(function(response){
-                            console.log(response.data)
-                            $scope.resetInvolucrado()
-                        },function(response){
-                            alertify.error('Error creando convocado, no puede tener las credenciales de algun participante de la solicitud')
-                            console.log(response.data)
-                        })
-                    }else{
-                        $scope.resetInvolucrado()
-                    }
+                    alertify.success("Exito agregando convocado")
+                    $scope.resetInvolucrado()
                 },function(response){
                     alertify.error('Error creando convocado')
                     console.log(response.data)
                     $scope.resetInvolucrado()
                 })
             }
+        }, function(response){
+            console.log(response.data)
+            alertify.error("Error creando involucrado")
         })
     }
     $scope.edit_convocado = function(){

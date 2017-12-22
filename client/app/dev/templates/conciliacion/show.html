@@ -1,4 +1,4 @@
-<div ng-controller="ConcShowCtlr">  
+<div ng-controller="ConcShowCtlr">
     <div class="box box-default show-scroll">
         <md-button class="md-icon-button md-primary" aria-label="Back" ng-if="mobile" ng-click="switchIndex()">
             <md-icon class="material-icons">arrow_back</md-icon>
@@ -84,6 +84,7 @@
             </div>
 
             <h4 class="show_title"><b>Convocantes</b></h4>
+            <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -140,7 +141,7 @@
 
             <button ng-if="Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity'" class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="getDocument()">Generar solicitud de conciliacion</button>
             <!-- <section class="box box-default">
-                <div class="box-body no-padding">                
+                <div class="box-body no-padding">
                     <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
                         <md-tab ng-repeat="tab in tabs"
                                 ng-disabled="tab.disabled"
@@ -154,7 +155,7 @@
                                 <br/>
                             </div>
                         </md-tab>
-                    </md-tabs> 
+                    </md-tabs>
                 </div>
             </section> -->
         </div>
