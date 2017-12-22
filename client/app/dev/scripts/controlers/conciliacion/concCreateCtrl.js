@@ -811,6 +811,7 @@ angular.module('app')
                     $scope.resetInvolucrado()
                     $scope.getSolicitude()
                 }, function(response){
+                    alertify.error('Error creando convocado, no puede tener las credenciales de algun participante de la solicitud')
                     console.log(response.data)
                     $scope.resetInvolucrado()
                 })
@@ -822,12 +823,14 @@ angular.module('app')
                             console.log(response.data)
                             $scope.resetInvolucrado()
                         },function(response){
+                            alertify.error('Error creando convocado, no puede tener las credenciales de algun participante de la solicitud')
                             console.log(response.data)
                         })
                     }else{
                         $scope.resetInvolucrado()
                     }
                 },function(response){
+                    alertify.error('Error creando convocado')
                     console.log(response.data)
                     $scope.resetInvolucrado()
                 })
