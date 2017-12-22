@@ -30,7 +30,6 @@ angular.module('app')
         "/" +  this.getFullYear();
     }
 //LOGIC
-
 //Modals
     $scope.edit = false
     $scope.cancel = function() {
