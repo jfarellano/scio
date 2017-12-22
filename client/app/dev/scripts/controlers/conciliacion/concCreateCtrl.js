@@ -25,11 +25,12 @@ angular.module('app')
         console.log(response)
     })
     Date.prototype.formatDate = function(){
-        return ("0" + this.getDate()).slice(-2) + 
+        return ("0" + this.getDate()).slice(-2) +
         "/" +  ("0" + (this.getMonth() + 1)).slice(-2) +
         "/" +  this.getFullYear();
     }
 //LOGIC
+
 //Modals
     $scope.edit = false
     $scope.cancel = function() {
@@ -53,7 +54,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/convocante.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -97,7 +98,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/convocado.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -161,7 +162,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/apoderado.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -207,7 +208,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/representante.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -232,7 +233,7 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/hecho.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -266,7 +267,7 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/pretension.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -293,7 +294,7 @@ angular.module('app')
         $scope.proof.select = true
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/proof.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -321,7 +322,7 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/fundamental.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -342,7 +343,7 @@ angular.module('app')
         //$('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/postulante.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -409,7 +410,7 @@ angular.module('app')
             $scope.professions = []
         }
     }
-    
+
 //FinModal
 //CRUDS
 //Apoderado
@@ -756,7 +757,7 @@ angular.module('app')
                     $scope.edit = false
                 })
             }else{
-                Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){  
+                Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
                     alertify.success("Edicion exitosa de convocante")
                     if ($scope.verified) {
                         Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
@@ -966,7 +967,7 @@ angular.module('app')
             $scope.part = proof
             $mdDialog.show({
                 templateUrl: URL.dev.template + '/forms/showproof.html',
-                scope: $scope,        
+                scope: $scope,
                 preserveScope: true,
                 targetEvent: ev,
                 fullscreen: $scope.customFullscreen,
@@ -1106,7 +1107,7 @@ angular.module('app')
                 }
             }
         }
-        
+
         return $scope.global || (!isGlobal && !$scope.globalAsociation.value)
     }
 
@@ -1309,7 +1310,7 @@ angular.module('app')
         Conciliacion.get.constant(name).then(function(response){
             return response.data.constants
         })
-    }  
+    }
     Conciliacion.get.constant('conciliation_applicant').then(function(response){
         $scope.applicant = response.data.constants
     })
@@ -1418,7 +1419,7 @@ angular.module('app')
             }
         },function(response){
             console.log(response.data)
-        })      
+        })
     }
 
     Conciliacion.get.constant('organization_type').then(function(response){
@@ -1429,10 +1430,10 @@ angular.module('app')
     })
     Conciliacion.get.constant('identifier_type').then(function(response){
         $scope.idType = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant('country').then(function(response){
         $scope.countries = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant_child(COL ,'department').then(function(response){
         $scope.departments = response.data.constants
         var r2 = $scope.departments.filter(function(d){
@@ -1486,7 +1487,7 @@ angular.module('app')
 
     Conciliacion.get.constant('gender').then(function(response){
         $scope.gender = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant('scholarly_level').then(function(response){
         $scope.level = response.data.constants
     })
