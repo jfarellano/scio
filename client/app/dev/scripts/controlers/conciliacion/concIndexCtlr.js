@@ -11,6 +11,7 @@ angular.module('app')
             {text:'Involucrado', value: 'involved'},
             {text:'Numero de Caso', value: 'case_number'}
         ]
+        Conciliacion.setIndex(true);
         $scope.fetchData = function(){
             if(Session.getRole() == 'coordinator' || Session.getRole() == 'admin'){
                 var data = {page: $scope.page, filter_type: $scope.searchType, filter_content: $scope.searchContent}

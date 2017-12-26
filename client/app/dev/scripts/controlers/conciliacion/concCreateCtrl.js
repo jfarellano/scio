@@ -1546,7 +1546,8 @@ angular.module('app')
     }
 
     $scope.toIndex = function(){
-        window.location = '#/app/conciliacion'
+        Conciliacion.setIndex(true);
+        window.location = '#/app/conciliacion';
     }
 
     $scope.showVerification = function(){
