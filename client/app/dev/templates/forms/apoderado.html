@@ -39,176 +39,138 @@
 		                </md-input-container>
 		            </div>
 		        </div>
-		    	<div layout-gt-xs="row" class="layout-gt-xs-row">
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Primer nombre</label>
-				        <input data-ng-model="involucrado.involved.assignee.first_name" type="text" required>
-				    </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Segundo nombre</label>
-				        <input data-ng-model="involucrado.involved.assignee.second_name" type="text">
-				    </md-input-container>
-				</div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Primer apellido</label>
-				        <input data-ng-model="involucrado.involved.assignee.first_lastname" type="text" required>
-				    </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Segundo apellido</label>
-				        <input data-ng-model="involucrado.involved.assignee.second_lastname" type="text" required>
-				    </md-input-container>
-				</div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-					<md-input-container class="flex-gt-xs" flex-gt-xs>
-		                <label>Género</label>
-		                <md-select ng-model="involucrado.involved.assignee.gender" required>
-		                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
-		                        {{::g.value}}
-		                    </md-option>
-		                </md-select>
-		            </md-input-container>
-		        </div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-					<md-input-container class="flex-gt-xs" flex-gt-xs>
-		                <label>E-mail</label>
-		                <input data-ng-model="involucrado.involved.assignee.email" type="email" required>
-		            </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Teléfono de contacto</label>
-				        <input ng-model="involucrado.involved.assignee.telephone" data-ng-minlength=7 type="number" required>
-				    </md-input-container>
-				</div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Celular de contacto</label>
-				        <input ng-model="involucrado.involved.assignee.cellphone" data-ng-minlength=7 type="number" required>
-				    </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>País</label>
-				        <md-select ng-model="involucrado.involved.assignee.country" required>
-				            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
-				                {{::c.value}}
-				            </md-option>
-				        </md-select>
-				    </md-input-container>
-				</div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Departamento</label>
-				        <md-select ng-model="involucrado.involved.assignee.department" ng-change="getAssigneeCity()" required>
-				            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
-				                {{::c.value}}
-				            </md-option>
-				        </md-select>
-				    </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Ciudad</label>
-				        <md-select ng-model="involucrado.involved.assignee.city" required>
-				            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
-				                {{::c.value}}
-				            </md-option>
-				        </md-select>
-				    </md-input-container>
-				</div>
-				<div layout-gt-xs="row" class="layout-gt-xs-row">
-				    <md-input-container class="flex-gt-xs" flex-gt-xs>
-				        <label>Dirección de residencia</label>
-				        <input ng-model="involucrado.involved.assignee.address" type="text" required>
-				    </md-input-container>
-				    <md-input-container class="flex-gt-xs" flex-gt-sm>
-		                <label>Numero de tarjeta profesional</label>
-		                <input ng-model="involucrado.involved.assignee.professional_card" type="number">
-		            </md-input-container>
-				</div>
-				<h4>Datos de profesión</h4>
-		        <div layout-gt-xs="row" class="layout-gt-xs-row">
-	                <md-input-container class="flex-gt-xs col-sm-6" flex-gt-xs>
-	                    <angucomplete-alt id="ex1"
-	                      placeholder="Nombre de la profesión:"
-	                      pause="100"
-	                      selected-object="profession.name"
-	                      local-data="profession_name"
-	                      search-fields="value"
-	                      title-field="value"
-	                      minlength="4"
-	                      input-class="form-control form-control-small flex-gt-xs "
-	                      flex-gt-xs/>
-	                </md-input-container>
-	                <md-input-container class="flex-gt-xs" flex-gt-xs>
-	                    <label>Institución: </label>
-	                    <md-select ng-model="profession.institution">
-	                        <md-option ng-repeat="c in profession_institution" value="{{::c.value}}" >
-	                            {{::c.value}}
-	                        </md-option>
-	                    </md-select>
-	                </md-input-container>
-	    		</div>
-	            <div layout-gt-xs="row" class="layout-gt-xs-row">
-	                <md-input-container class="flex-gt-xs" flex-gt-xs>
-	                    <label>Tarjeta profesional</label>
-	                    <input input-num ng-model="profession.professional_card" type="number">
-	                </md-input-container>
-	                <label>Fecha de graduación</label>
-	                <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
-	            </div>
-	            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.assignee.id, 'assignee')">Agregar profesión</md-button>
+                <div ng-if="verify_click">
+    		    	<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Primer nombre</label>
+    				        <input data-ng-model="involucrado.involved.assignee.first_name" type="text" required>
+    				    </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Segundo nombre</label>
+    				        <input data-ng-model="involucrado.involved.assignee.second_name" type="text">
+    				    </md-input-container>
+    				</div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Primer apellido</label>
+    				        <input data-ng-model="involucrado.involved.assignee.first_lastname" type="text" required>
+    				    </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Segundo apellido</label>
+    				        <input data-ng-model="involucrado.involved.assignee.second_lastname" type="text" required>
+    				    </md-input-container>
+    				</div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    					<md-input-container class="flex-gt-xs" flex-gt-xs>
+    		                <label>Género</label>
+    		                <md-select ng-model="involucrado.involved.assignee.gender" required>
+    		                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+    		                        {{::g.value}}
+    		                    </md-option>
+    		                </md-select>
+    		            </md-input-container>
+    		        </div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    					<md-input-container class="flex-gt-xs" flex-gt-xs>
+    		                <label>E-mail</label>
+    		                <input data-ng-model="involucrado.involved.assignee.email" type="email" required>
+    		            </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Teléfono de contacto</label>
+    				        <input ng-model="involucrado.involved.assignee.telephone" data-ng-minlength=7 type="number" required>
+    				    </md-input-container>
+    				</div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Celular de contacto</label>
+    				        <input ng-model="involucrado.involved.assignee.cellphone" data-ng-minlength=7 type="number" required>
+    				    </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>País</label>
+    				        <md-select ng-model="involucrado.involved.assignee.country" required>
+    				            <md-option ng-repeat="c in countries" value="{{c.value}}" requiered>
+    				                {{::c.value}}
+    				            </md-option>
+    				        </md-select>
+    				    </md-input-container>
+    				</div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Departamento</label>
+    				        <md-select ng-model="involucrado.involved.assignee.department" ng-change="getAssigneeCity()" required>
+    				            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
+    				                {{::c.value}}
+    				            </md-option>
+    				        </md-select>
+    				    </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Ciudad</label>
+    				        <md-select ng-model="involucrado.involved.assignee.city" required>
+    				            <md-option ng-repeat="c in city" value="{{c.value}}" requiered>
+    				                {{::c.value}}
+    				            </md-option>
+    				        </md-select>
+    				    </md-input-container>
+    				</div>
+    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    				        <label>Dirección de residencia</label>
+    				        <input ng-model="involucrado.involved.assignee.address" type="text" required>
+    				    </md-input-container>
+    				    <md-input-container class="flex-gt-xs" flex-gt-sm>
+    		                <label>Numero de tarjeta profesional</label>
+    		                <input ng-model="involucrado.involved.assignee.professional_card" type="number">
+    		            </md-input-container>
+    				</div>
+    				<h4>Datos de profesión</h4>
+    		        <div layout-gt-xs="row" class="layout-gt-xs-row">
+    	                <md-input-container class="flex-gt-xs col-sm-6" flex-gt-xs>
+    	                    <angucomplete-alt id="ex1"
+    	                      placeholder="Nombre de la profesión:"
+    	                      pause="100"
+    	                      selected-object="profession.name"
+    	                      local-data="profession_name"
+    	                      search-fields="value"
+    	                      title-field="value"
+    	                      minlength="4"
+    	                      input-class="form-control form-control-small flex-gt-xs "
+    	                      flex-gt-xs/>
+    	                </md-input-container>
+    	                <md-input-container class="flex-gt-xs" flex-gt-xs>
+    	                    <label>Institución: </label>
+    	                    <md-select ng-model="profession.institution">
+    	                        <md-option ng-repeat="c in profession_institution" value="{{::c.value}}" >
+    	                            {{::c.value}}
+    	                        </md-option>
+    	                    </md-select>
+    	                </md-input-container>
+    	    		</div>
+    	            <div layout-gt-xs="row" class="layout-gt-xs-row">
+    	                <md-input-container class="flex-gt-xs" flex-gt-xs>
+    	                    <label>Tarjeta profesional</label>
+    	                    <input input-num ng-model="profession.professional_card" type="number">
+    	                </md-input-container>
+    	                <label>Fecha de graduación</label>
+    	                <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
+    	            </div>
+    	            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.assignee.id, 'assignee')">Agregar profesión</md-button>
 
-	            <div data-slim-scroll data-scroll-height="250px">
-	                <md-subheader class="md-no-sticky">Profesiones</md-subheader>
-	                <md-list-item class="md-3-line" ng-repeat="p in professions">
-	                        <div class="md-list-item-text" layout="column">
-	                            <h3 ng-if="edit">{{::p.name}}</h3>
-	                            <h3 ng-if="!edit">{{::p.name.title}}</h3>
-	                            <p>Institución: {{::p.institution}}</p>
-	                        </div>
-	                        <div class="md-secondary">
-	                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'involved', involucrado.involved.id)">delete_forever</md-icon>
-	                        </div>
-	                </md-list-item>
-	                <div style="height: 30px"></div>
-	            </div>     	
-			    <!-- <h3>Estudios</h3>
-			    <div class="container-fluid">
-					<form name="oldStudies" layout-gt-xs="row" class="layout-gt-xs-row">
-					    <div ng-repeat="st in studies">
-					    	<md-input-container class="flex-gt-xs" flex-gt-xs>
-						        <label>Universidad</label>
-						        <input ng-model="st.university" type="text" required>
-						    </md-input-container>
-						    <md-input-container class="flex-gt-xs" flex-gt-xs>
-						        <label>Nivel de estudio</label>
-						        <input ng-model="st.level" type="text" required>
-						    </md-input-container>
-						    <md-input-container class="flex-gt-xs" flex-gt-xs>
-						        <label>Título</label>
-						        <input ng-model="st.title" type="text" required>
-						    </md-input-container>
-						    <md-button class="flex-gt-xs" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="showStudy(st, true)" ng-if="edit">Guardar</md-button>
-						    <md-button class="flex-gt-xs md-warn md-button" flex-gt-xs ng-disabled="oldStudies.$valid" ng-click="delete_estudio($index)">Eliminar</md-button>
-						    <br>
-					    </div>
-					</form>
-				</div>
-
-				<div class="container-fluid">
-					<form name="newStudies" layout-gt-xs="row" class="layout-gt-xs-row">
-					    <md-input-container class="flex-gt-xs" flex-gt-xs>
-					        <label>Universidad</label>
-					        <input ng-model="study.university" type="text" required>
-					    </md-input-container>
-					    <md-input-container class="flex-gt-xs" flex-gt-xs>
-					        <label>Nivel de estudio</label>
-					        <input ng-model="study.level" type="text" required>
-					    </md-input-container>
-					    <md-input-container class="flex-gt-xs" flex-gt-xs>
-					        <label>Titulo</label>
-					        <input ng-model="study.title" type="text" required>
-					    </md-input-container>
-					    <md-button class="flex-gt-xs md-raised btn-w-md md-accent" flex-gt-xs ng-disabled="!newStudies.$valid" ng-click="showStudy(study, false)">Agregar</md-button>
-					</form>
-				</div> -->
-			    <br>
+    	            <div data-slim-scroll data-scroll-height="250px">
+    	                <md-subheader class="md-no-sticky">Profesiones</md-subheader>
+    	                <md-list-item class="md-3-line" ng-repeat="p in professions">
+    	                        <div class="md-list-item-text" layout="column">
+    	                            <h3 ng-if="edit">{{::p.name}}</h3>
+    	                            <h3 ng-if="!edit">{{::p.name.title}}</h3>
+    	                            <p>Institución: {{::p.institution}}</p>
+    	                        </div>
+    	                        <div class="md-secondary">
+    	                            <md-icon class="material-icons md-secondary" aria-label="Agregar apoderado" ng-click="deleteProfession($index, 'involved', involucrado.involved.id)">delete_forever</md-icon>
+    	                        </div>
+    	                </md-list-item>
+    	                <div style="height: 30px"></div>
+    	            </div>
+    			    <br>
+                </div>
 			</div>
 			<div ng-if="!showForm('assignee') && !globalAvailable('assignee')">
 	        	<div class="icon-box ibox-center ibox-lg">
@@ -222,12 +184,12 @@
 	                <p>E-mail: {{involucrado.involved.assignee.email}}</p>
 	                <p>{{involucrado.involved.assignee.identifier_type}}: {{involucrado.involved.assignee.identifier}}</p>
 	            </div>
-	        </div> 
+	        </div>
 	    </div>
 	</form>
 </md-dialog-content>
 <md-dialog-actions>
 	<md-button class="md-raised col-sm-12 btn-w-md md-warn" ng-if="edit && !verified" ng-click="replace_apoderado()">Restaurar</md-button>
     <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
-    <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">{{getButtonLable()}}</md-button>  
+    <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid">{{getButtonLable()}}</md-button>
 </md-dialog-actions>

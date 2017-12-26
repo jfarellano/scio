@@ -172,7 +172,6 @@ angular.module('app')
                     return $http.get(IP + '/conciliation/'+concID+'/documents/conciliation_no_agreement_by_unattendance_constance', {headers: Session.getHeaders()})
                 },
                 constancia_insasitencia: function(concID){
-                    console.log('Entro aca');
                     return $http.get(IP + '/conciliation/'+concID+'/documents/conciliation_unattendance_constance', {headers: Session.getHeaders()})
                 },
                 constancia_nueva_fecha: function (concID) {

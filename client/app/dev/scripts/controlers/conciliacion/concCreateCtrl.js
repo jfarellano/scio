@@ -29,12 +29,14 @@ angular.module('app')
         "/" +  ("0" + (this.getMonth() + 1)).slice(-2) +
         "/" +  this.getFullYear();
     }
+    $scope.verify_click = false
 //LOGIC
 //Modals
     $scope.edit = false
     $scope.cancel = function() {
         $scope.edit = false
         $scope.verified = false
+        $scope.verify_click = false
         $scope.global = false
         $scope.hecho_pretension = {}
         $scope.global_assignees = {}
@@ -66,6 +68,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
         });
     };
     $scope.editConvocante = function(inv, ev){
@@ -178,6 +181,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
             $scope.getSolicitude()
         });
     };
@@ -224,6 +228,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
             $scope.getSolicitude()
         });
     };
@@ -721,25 +726,23 @@ angular.module('app')
         })
     }
     $scope.edit_convocante = function(){
-        console.log("Se ejecuto")
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado).then(function(response){
-            console.log("Entro")
             if($scope.involucrado.involved.nature == 'natural'){
                 $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
-                    console.log("Entro2")
                     alertify.success("Edicion exitosa de convocante")
                     if ($scope.verified) {
                         Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
-                            console.log("Entro3")
                             alertify.success("Exito agregando involucrado")
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
                         }, function(response){
                             console.log(response.data)
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
@@ -762,12 +765,14 @@ angular.module('app')
                         Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
                             alertify.success("Exito agregando involucrado")
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
                         }, function(response){
                             console.log(response.data)
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
@@ -840,12 +845,14 @@ angular.module('app')
                         Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocado').then(function(response){
                             alertify.success("Exito agregando involucrado")
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
                         }, function(response){
                             console.log(response.data)
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
@@ -866,12 +873,14 @@ angular.module('app')
                         Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocado').then(function(response){
                             alertify.success("Exito agregando involucrado")
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
                         }, function(response){
                             console.log(response.data)
                             $scope.verified = false
+                            $scope.verify_click = false
                             $scope.getSolicitude()
                             $scope.resetInvolucrado()
                             $scope.edit = false
@@ -1146,9 +1155,11 @@ angular.module('app')
         }
         $scope.edit = false
         $scope.verified = false
+        $scope.verify_click = false
     }
     $scope.verified = false
     $scope.findInvolved = function(){
+        $scope.verify_click = true
         if($scope.involucrado.involved.nature == 'natural'){
             Participations.get.natural({identifier_type: $scope.involucrado.involved.natural.identifier_type, identifier: $scope.involucrado.involved.natural.identifier}).then(function(response){
                 if (response.status != 204) {
@@ -1174,6 +1185,7 @@ angular.module('app')
         }
     }
     $scope.findAssignee = function(){
+        $scope.verify_click = true
         Participations.get.assignee({identifier_type: $scope.involucrado.involved.assignee.identifier_type, identifier: $scope.involucrado.involved.assignee.identifier}).then(function(response){
             if (response.status != 204) {
                 $scope.involucrado.involved.assignee = response.data.assignee
@@ -1187,6 +1199,7 @@ angular.module('app')
         })
     }
     $scope.findRepresentative = function(){
+        $scope.verify_click = true
         Participations.get.representative({identifier_type: $scope.involucrado.involved.representative.identifier_type, identifier: $scope.involucrado.involved.representative.identifier}).then(function(response){
             if (response.status != 204) {
                 $scope.involucrado.involved.representative = response.data.representative
