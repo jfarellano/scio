@@ -36,7 +36,7 @@ angular.module('app')
                     title: Session.getName(),
                     start: new Date(aud.start),
                     end: new Date(aud.end),
-                    allDay: false, 
+                    allDay: false,
                     editable: false,
                     stick: true,
                     _itsUTC: true
@@ -68,8 +68,8 @@ angular.module('app')
     ]
 
     $scope.actas = [
-    		{text: 'Acta de acuerdo', value: 'completo'},
-    		{text: 'Acta de acuerdo parcial', value: 'parcial'}
+		{text: 'Acta de acuerdo', value: 'total'},
+		{text: 'Acta de acuerdo parcial', value: 'partial'}
     ]
     $scope.constancias = [
 		{text: 'Constancia de no acuerdo', value: 'no_acuerdo'},
@@ -103,8 +103,8 @@ angular.module('app')
         {text:'No aceptación de excusa', value: 0}
     ]
     $scope.mc = {}
+    $scope.acuerdo = {}
     $scope.endSolicitude = function(){
-        console.log($scope.mc)
         if($scope.resultOption.result == 1){
             $scope.conc.state = 'cerrada'
             Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
@@ -113,10 +113,18 @@ angular.module('app')
                 console.log(response.data)
             })
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                window.location = '#/app/dashboard'
+                Conciliacion.get.acta($scope.conc.conciliation.id, $scope.acuerdo.ac).then(function(response){
+                    window.location = '#/app/dashboard'
+                    alertify.success("Se cerro correctamente la solicitud")
+                },function(response){
+                    console.log(response.data);
+                    alertify.error("Error cerrando la solicitud")
+                })
+
             })
         }
         if($scope.resultOption.result == 2){
+            //constancia
             $scope.conc.state = 'cerrada'
             Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
                 console.log(response.data)
@@ -124,21 +132,36 @@ angular.module('app')
                 console.log(response.data)
             })
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                window.location = '#/app/dashboard'
+                Conciliacion.get.constancia($scope.conc.conciliation.id).then(function(response){
+                    window.location = '#/app/dashboard'
+                    alertify.success("Se cerro correctamente la solicitud")
+                },function(response){
+                    console.log(response.data);
+                    alertify.error("Error cerrando la solicitud")
+                })
             })
         }
         if($scope.resultOption.result == 3){
             $scope.conc.state = 'audiencia_suspendida'
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
+                Conciliacion.get.constancia_insasitencia($scope.conc.conciliation.id).then(function(response){
+                    window.location = '#/app/dashboard'
+                    alertify.success("Se reprogramo correctamente la solicitud")
+                },function(response){
+                    console.log(response.data);
+                    alertify.error("Error reprogramando la solicitud, porfavor contacte soporte")
+                })
                 $scope.reFetch()
             },function(response){
                 console.log(response.data)
             })
         }
         if($scope.resultOption.result == 4){
+            //new Date
             $scope.programAudience()
         }
         if($scope.resultOption.result == 5){
+            //otros
             $scope.conc.state = 'cerrada'
             Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
                 console.log(response.data)
@@ -146,19 +169,48 @@ angular.module('app')
                 console.log(response.data)
             })
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                window.location = '#/app/dashboard'
+                console.log(document_others[$scope.resultOption.others]);
+                Conciliacion.get.constancia_otro($scope.conc.conciliation.id, document_others[$scope.resultOption.others]).then(function(response){
+                    window.location = '#/app/dashboard'
+                    alertify.success("Se cerro correctamente la solicitud")
+                },function(response){
+                    console.log(response.data);
+                    alertify.error("Error cerrando la solicitud")
+                })
             })
         }
-        if($scope.resultOption.result == 6){
+    }
+
+    var document_others = {
+        'FALTA DE COMPETENCIA': 'lack_of_competition',
+        'RETIRO DE LA SOLICITUD': 'withdrawal_of_request' ,
+        'ACUERDO DE EXTRACONCILIACION': 'extraconciliation_agreement',
+        'OTROS': 'others',
+        'FALTA DE PAGO DEL SERVICIO': 'lack_of_payment_for_the_service',
+        'DESISTIMIENTO DE UNA O AMBAS PARTES': 'withdrawal_of_the_parties',
+        'ASUNTO NO CONCILIABLE': 'unreconcilable_matter'
+    }
+
+    $scope.endSuspention = function(){
+        if($scope.resultOption.suspention == 1){
+            //new Date
+            $scope.resultOption.result = 4
+            $scope.endSolicitude()
+        }else{
             $scope.conc.state = 'cerrada'
-            console.log($scope.mc)
             Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
                 console.log(response.data)
             }, function(response){
                 console.log(response.data)
             })
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                window.location = '#/app/dashboard'
+                Conciliacion.get.constancia_inasistencia_no_acuerdo($scope.conc.conciliation.id).then(function(response){
+                    window.location = '#/app/dashboard'
+                    alertify.success("Se cerro correctamente la solicitud")
+                },function(response){
+                    console.log(response.data);
+                    alertify.error("Error cerrando la solicitud")
+                })
             })
         }
     }
@@ -169,7 +221,7 @@ angular.module('app')
     $scope.showResult = function(ev) {
         $mdDialog.show({
             templateUrl: URL.dev.template + '/audiencia/result.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -209,19 +261,11 @@ angular.module('app')
         $scope.signed = response.data.constants
     })
     Conciliacion.get.constant('other_conciliation_constancy').then(function(response){
-        console.log(response)
+        console.log(response.data)
         $scope.others = response.data.constants
     }, function(response){
         console.log(response.data)
     })
-    $scope.endSuspention = function(){
-        if($scope.resultOption.suspention == 1){
-            $scope.resultOption.result = 4
-        }else{
-            $scope.resultOption.result = 6
-        }
-        $scope.endSolicitude()
-    }
 
     //CALENDAR
     Audiencias.get.user_audiences().then(function(response){
@@ -232,7 +276,7 @@ angular.module('app')
                 title: Session.getName(),
                 start: new Date(aud.start),
                 end: new Date(aud.end),
-                allDay: false, 
+                allDay: false,
                 editable: false,
                 stick: true
             }
@@ -284,9 +328,9 @@ angular.module('app')
                 }
             },
             eventDragStop: function(){
-                
+
             },
-            eventRender: function( event, element, view ) { 
+            eventRender: function( event, element, view ) {
                 element.attr({'tooltip': event.title, 'tooltip-append-to-body': true});
                 $compile(element)($scope);
             },
@@ -335,10 +379,15 @@ angular.module('app')
                 );
                 $scope.conc.state = 'programada'
                 Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                    window.location = '#/app/dashboard'
-                    console.log('Edit exitosa')
+                    Conciliacion.get.constancia_nueva_fecha($scope.conc.conciliation.id).then(function(response){
+                        window.location = '#/app/dashboard'
+                        alertify.success("Se reprogramo correctamente la solicitud")
+                    },function(response){
+                        console.log(response.data);
+                        alertify.error("Error reprogramando la solicitud porfavor contacte soporte")
+                    })
                 }, function(response){
-                    console.log('Edit fallo')
+                    console.log('Error en la edicion de solicitud')
                 })
             }, function(response){
                 $mdDialog.show(
@@ -369,7 +418,7 @@ angular.module('app')
     $scope.showInvitado = function(ev) {
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/invitado.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -409,8 +458,8 @@ angular.module('app')
     }
     Conciliacion.get.constant('identifier_type').then(function(response){
         $scope.idType = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant('gender').then(function(response){
         $scope.gender = response.data.constants
-    }) 
+    })
 }]);

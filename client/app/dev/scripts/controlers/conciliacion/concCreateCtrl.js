@@ -998,9 +998,15 @@ angular.module('app')
 //Wizard
     $scope.finished = function() {
         $scope.solicitude.state = 'enviada'
+        $('#loader-container').fadeIn('fast');
         Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+            $('#loader-container').fadeOut('slow');
             window.location = '#/app/conciliacion'
-        },function(response){console.log(response.data)})
+        },function(response){
+            console.log(response.data)
+            alertify.error("Hubo un error finalizando la solicitud recargue la pagina por favor");
+            $('#loader-container').fadeOut('slow');
+        })
     };
     $scope.nextStep = function(state) {
         if($scope.solicitude.state == 'incompleta'){

@@ -195,7 +195,6 @@ angular.module('app')
         }
 
         $scope.showConfirm = function(ev) {
-            // Appending dialog to document.body to cover sidenav in docs app
             var confirm = $mdDialog.confirm()
                 .title('¿Que tipo de conciliación quiere iniciar?')
                 .textContent('Escoja el tipo de coniliación que desea iniciar')

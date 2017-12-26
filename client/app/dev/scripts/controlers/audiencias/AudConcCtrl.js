@@ -5,7 +5,7 @@ angular.module('app')
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
         if($scope.conc.state != 'iniciar_audiencia'){
-        
+
         //if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator' || Session.getRole() != 'conciliator_in_equity'){
             //console.log('cambio aca')
             window.location = '#/app/conciliacion/' + $scope.conc.id
@@ -59,7 +59,16 @@ angular.module('app')
     }
 
     $scope.showResults = function(ev){
+        console.log('Entro');
         window.location = '#/app/audiencia/result/' + $scope.conc.id
+        // Audiencias.get.valid($scope.audience.id).then(function(response){
+        //     console.log('Entro2');
+        //     console.log(response.data);
+        //     window.location = '#/app/audiencia/result/' + $scope.conc.id
+        // }, function(response){
+        //     console.log('Entro 3');
+        //     console.log(response.data);
+        // })
     }
 
     $scope.showDocument = function(doc){
@@ -112,7 +121,7 @@ angular.module('app')
         $scope.part = proof
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/showproof.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             fullscreen: $scope.customFullscreen,
@@ -127,7 +136,7 @@ angular.module('app')
     $scope.reFetchConc = function(){
         Conciliacion.show($state.params.id).then(function (request) {
             $scope.conc = request.data.solicitude;
-            
+
             if($scope.conc.state != 'iniciar_audiencia'){
 
             //if($scope.conc.state != 'iniciar_audiencia' || Session.getRole() != 'conciliator' || Session.getRole() != 'conciliator_in_equity'){
@@ -167,13 +176,13 @@ angular.module('app')
     }
     String.prototype.replaceAll = function(str1, str2, ignore){
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
-    } 
+    }
 
     $scope.showParticipant = function(part, ev){
         $scope.part = part
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/showParticipant.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             fullscreen: $scope.customFullscreen,
@@ -245,7 +254,7 @@ angular.module('app')
         $mdDialog.show({
             //change to results
             templateUrl: URL.dev.template + '/forms/pretension.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -391,10 +400,10 @@ angular.module('app')
     }
     Conciliacion.get.constant('identifier_type').then(function(response){
         $scope.idType = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant('country').then(function(response){
         $scope.countries = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant_child(COL ,'department').then(function(response){
         $scope.departments = response.data.constants
         var r2 = $scope.departments.filter(function(d){
@@ -425,7 +434,7 @@ angular.module('app')
     }
     Conciliacion.get.constant('gender').then(function(response){
         $scope.gender = response.data.constants
-    }) 
+    })
     Conciliacion.get.constant('scholarly_level').then(function(response){
         $scope.level = response.data.constants
     })
@@ -530,7 +539,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/apoderado.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -637,7 +646,7 @@ angular.module('app')
         }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/representante.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
@@ -732,7 +741,7 @@ angular.module('app')
         //$('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/postulante.html',
-            scope: $scope,        
+            scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false

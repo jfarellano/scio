@@ -160,18 +160,6 @@ angular.module('app')
         })
     }
 
-    $scope.getNotification = function(conv){
-        Audiencias.get.solicitude($scope.conc.id).then(function(response){
-            var auds = response.data.audiences
-            Conciliacion.get.user_notification($scope.conc.conciliation.id, conv.id, auds[auds.length - 1].id).then(function(response){
-                window.open(IP +'/'+ response.data.document.url, '_blank')
-            }, function(response){
-                console.log(response.data)
-                alertify.error('Hubo un error generando el documento vuelve a intentarlo o refresca la pagina')
-            })
-        })
-    }
-
     $scope.coordAccept = function(response){
         $scope.conc.state = response
         Conciliacion.update.coordinator_solicitude($scope.conc.id, $scope.conc).then(function(response){

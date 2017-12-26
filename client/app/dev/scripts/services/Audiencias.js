@@ -10,6 +10,10 @@ angular.module('app')
 			},
 			guests: function(audID){
 				return $http.get(IP + '/conciliator/audiences/'+audID+'/guests', {headers: Session.getHeaders()})
+			},
+			valid: function(audID){
+				console.log('Entrooo');
+				return $http.get(IP + '/audiences/'+audID+'/validate', {headers: Session.getHeaders()})
 			}
 		},
 		create:{
@@ -36,5 +40,5 @@ angular.module('app')
 				return $http.delete(IP + '/conciliator/guests/'+gusetID, {headers: Session.getHeaders()})
 			}
 		}
-	}        
+	}
 }]);
