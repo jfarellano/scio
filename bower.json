@@ -36,7 +36,8 @@
     "angular-wizard": "^1.1.1",
     "ngstorage": "^0.3.11",
     "alertify.js": "^0.3.11",
-    "angucomplete-alt": "^3.0.0"
+    "angucomplete-alt": "^3.0.0",
+    "moment": "^2.20.1"
   },
   "devDependencies": {
     "bootstrap-sass-official": "~3.3.7",
