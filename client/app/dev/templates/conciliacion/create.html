@@ -36,7 +36,7 @@
                         <div>
                             <md-input-container class="md-block" flex-gt-sm ng-if="solicitude.conciliation.definable">
                                 <label>Área del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.area" required ng-change="getArea()"> 
+                                <md-select ng-model="solicitude.conciliation.area" required ng-change="getArea()">
                                     <md-option ng-repeat="area in area" value="{{area.value}}">
                                         {{::area.value}}
                                     </md-option>
@@ -86,9 +86,9 @@
                                 <h3>Apoderado global</h3>
                                 <h3 class="cap">{{::getARName(getGlobalAR('convocante', 'assignee'))}}</h3>
                                 <p>E-mail: {{::getGlobalAR('convocante', 'assignee').email}}</p>
-                                <p>Teléfono: {{::getGlobalAR('convocante', 'assignee').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocante', 'assignee').telephone}}</p>
                             </div>
-                    </md-list-item> 
+                    </md-list-item>
                 </div>
                 <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary">Apoderado Global</md-button>
                 <div ng-if="getGlobalAR('convocante', 'representative') != null">
@@ -97,9 +97,9 @@
                                 <h3>Representante legal global</h3>
                                 <h3 class="cap">{{::getARName(getGlobalAR('convocante', 'representative'))}}</h3>
                                 <p>E-mail: {{::getGlobalAR('convocante', 'representative').email}}</p>
-                                <p>Teléfono: {{::getGlobalAR('convocante', 'representative').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocante', 'representative').telephone}}</p>
                             </div>
-                    </md-list-item> 
+                    </md-list-item>
                 </div>
                 <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary">Representante Global</md-button>
                 <div class="ui-wizard-content">
@@ -115,15 +115,15 @@
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                         </div>
-                                        <md-button title="Postulante" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                                        <md-button title="Modificar el postulante a este involucardo" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
                                             <md-icon >assignment_ind</md-icon>
                                             <div class="icon-caption">Postulante</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                                        <md-button title="Agregar o editar apoderado a este involucardo" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                                             <md-icon >business_center</md-icon>
                                             <div class="icon-caption">Apoderado</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                                        <md-button title="Agregar o editar representante legal a este involucardo" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
                                             <md-icon >location_city</md-icon>
                                             <div class="icon-caption">Representante Legal</div>
                                         </md-button>
@@ -149,9 +149,9 @@
                                 <h3>Apoderado global</h3>
                                 <h3 class="cap">{{::getARName(getGlobalAR('convocado', 'assignee'))}}</h3>
                                 <p>E-mail: {{::getGlobalAR('convocado', 'assignee').email}}</p>
-                                <p>Teléfono: {{::getGlobalAR('convocado', 'assignee').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocado', 'assignee').telephone}}</p>
                             </div>
-                    </md-list-item> 
+                    </md-list-item>
                 </div>
                 <md-button ng-click="showGlobalAssignee($event)" class="md-raised btn-w-md md-primary">Apoderado Global</md-button>
                 <div ng-if="getGlobalAR('convocado', 'representative') != null">
@@ -160,9 +160,9 @@
                                 <h3>Representante legal global</h3>
                                 <h3 class="cap">{{::getARName(getGlobalAR('convocado', 'representative'))}}</h3>
                                 <p>E-mail: {{::getGlobalAR('convocado', 'representative').email}}</p>
-                                <p>Teléfono: {{::getGlobalAR('convocado', 'representative').email}}</p>
+                                <p>Teléfono: {{::getGlobalAR('convocado', 'representative').telephone}}</p>
                             </div>
-                    </md-list-item> 
+                    </md-list-item>
                 </div>
                 <md-button ng-click="showGlobalRepresentative($event)" class="md-raised btn-w-md md-primary">Representante Global</md-button>
                 <div class="ui-wizard-content">
@@ -177,15 +177,15 @@
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                         </div>
-                                        <md-button title="Postulante" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                                        <md-button title="Modificar el postulante a este involucardo" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
                                             <md-icon >assignment_ind</md-icon>
                                             <div class="icon-caption">Postulante</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                                        <md-button title="Agregar o editar apoderado a este involucardo" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                                             <md-icon >business_center</md-icon>
                                             <div class="icon-caption">Apoderado</div>
                                         </md-button>
-                                        <md-button title="Postulante" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                                        <md-button title="Agregar o editar representante legal a este involucardo" aria-label="Modificar el postulante a este involucardo" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
                                             <md-icon >location_city</md-icon>
                                             <div class="icon-caption">Representante Legal</div>
                                         </md-button>
@@ -198,7 +198,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -223,7 +223,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('hechos')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -248,7 +248,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -269,11 +269,11 @@
                         </div>
                     </div>
                     <md-button class="md-raised btn-w-md md-primary" ng-click="showFundamental($event)">Agregar nuevo fundamento</md-button>
-                </div> 
+                </div>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -295,7 +295,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocantes')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -312,5 +312,5 @@
                 </div>
             </wz-step>
         </wizard>
-    </div>    
+    </div>
 </div>

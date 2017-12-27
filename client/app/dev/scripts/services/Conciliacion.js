@@ -220,6 +220,8 @@ angular.module('app')
                 },
                 global_relation: function(solID, type, con){
                     return $http.delete(IP + '/solicitudes/'+solID+'/'+type+'/'+con+'/destroy_global_relationship')
+                }, involved: function(invID){
+                    return $http.delete(IP + '/involveds/'+ invID, {headers: Session.getHeaders()})
                 }
             },
             //Logic helpers in conciliations

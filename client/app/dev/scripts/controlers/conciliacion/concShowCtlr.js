@@ -57,6 +57,7 @@ angular.module('app')
         $mdDialog.cancel()
         $scope.edit = false
         $scope.verified = false
+        $scope.verify_click = false
         $scope.resetInvolucrado()
     }
 
@@ -366,7 +367,9 @@ angular.module('app')
     }
     $scope.edit = false
     $scope.verified = false
+    $scope.verify_click = false
     $scope.findInvolved = function(){
+        $scope.verify_click = true
         if($scope.involucrado.involved.nature == 'natural'){
             Participations.get.natural({identifier_type: $scope.involucrado.involved.natural.identifier_type, identifier: $scope.involucrado.involved.natural.identifier}).then(function(response){
                 if (response.status != 204) {
@@ -489,6 +492,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
         });
     };
     $scope.add_convocante = function(){
@@ -542,6 +546,7 @@ angular.module('app')
                 $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
                 Conciliacion.update.natural($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
                     alertify.success("Edicion exitosa de convocante")
+                    $scope.verify_click = false
                     if ($scope.verified) {
                         Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
                             alertify.success("Exito agregando involucrado")
@@ -570,6 +575,7 @@ angular.module('app')
             }else{
                 Conciliacion.update.juridical($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
                   alertify.success("Edicion exitosa de convocante")
+                  $scope.verify_click = true
                     if ($scope.verified) {
                         Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
                             alertify.success("Exito agregando involucrado")
@@ -622,6 +628,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
         });
     };
     $scope.add_convocado = function(){
@@ -670,6 +677,7 @@ angular.module('app')
     }
 
     $scope.edit_convocado = function(){
+        $scope.verify_click = false
         Conciliacion.update.involved($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()

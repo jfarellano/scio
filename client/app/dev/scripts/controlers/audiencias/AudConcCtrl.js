@@ -59,16 +59,19 @@ angular.module('app')
     }
 
     $scope.showResults = function(ev){
-        console.log('Entro');
-        window.location = '#/app/audiencia/result/' + $scope.conc.id
-        // Audiencias.get.valid($scope.audience.id).then(function(response){
-        //     console.log('Entro2');
-        //     console.log(response.data);
-        //     window.location = '#/app/audiencia/result/' + $scope.conc.id
-        // }, function(response){
-        //     console.log('Entro 3');
-        //     console.log(response.data);
-        // })
+        Audiencias.get.valid($scope.audience.id).then(function(response){
+            var a = response.data
+            console.log(a);
+            if(a.valid){
+                window.location = '#/app/audiencia/result/' + $scope.conc.id
+            }else{
+                a.errors.forEach(function(elem){
+                    alertify.error(elem)
+                })
+            }
+        }, function(response){
+            console.log(response.data);
+        })
     }
 
     $scope.showDocument = function(doc){
@@ -163,6 +166,7 @@ angular.module('app')
     $scope.cancel = function(){
         $scope.edit = false
         $scope.verified = false
+        $scope.verify_click =false
         $scope.global = false
         $mdDialog.cancel()
         $scope.resetInvolucrado()
@@ -351,6 +355,7 @@ angular.module('app')
                 $scope.involucrado.involved.assignee = response.data.assignee
                 $scope.getAssigneeCity()
                 $scope.verified = true
+                $scope.verify_click = true
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             }
@@ -364,6 +369,7 @@ angular.module('app')
                 $scope.involucrado.involved.representative = response.data.representative
                 $scope.getRepCities()
                 $scope.verified = true
+                $scope.verify_click = true
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
             }
@@ -552,6 +558,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
             $scope.reFetchConc()
         });
     };
@@ -604,6 +611,7 @@ angular.module('app')
                     $scope.resetInvolucrado()
                     $scope.reFetchConc()
                     $scope.verified = false
+                    $scope.verify_click = false
                 }, function(response){
                     console.log(response.data)
                     alertify.error("Error agregando al apoderado")
@@ -659,6 +667,7 @@ angular.module('app')
         }, function() {
             $scope.edit = false
             $scope.verified = false
+            $scope.verify_click = false
             $scope.reFetchConc()
         });
     };
@@ -700,6 +709,7 @@ angular.module('app')
                     $scope.resetInvolucrado()
                     $scope.reFetchConc()
                     $scope.verified = false
+                    $scope.verify_click = false
                 }, function(response){
                     console.log(response.data)
                     alertify.error("Error agregando al representante")
