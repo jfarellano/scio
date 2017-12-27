@@ -349,13 +349,14 @@ angular.module('app')
         }
     }
     $scope.findAssignee = function(){
+        $scope.verify_click = true
         Participations.get.assignee({identifier_type: $scope.involucrado.involved.assignee.identifier_type, identifier: $scope.involucrado.involved.assignee.identifier}).then(function(response){
             console.log(response)
             if (response.status != 204) {
                 $scope.involucrado.involved.assignee = response.data.assignee
                 $scope.getAssigneeCity()
                 $scope.verified = true
-                $scope.verify_click = true
+
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             }
@@ -364,6 +365,7 @@ angular.module('app')
         })
     }
     $scope.findRepresentative = function(){
+        $scope.verify_click = true
         Participations.get.representative({identifier_type: $scope.involucrado.involved.representative.identifier_type, identifier: $scope.involucrado.involved.representative.identifier}).then(function(response){
             if (response.status != 204) {
                 $scope.involucrado.involved.representative = response.data.representative
