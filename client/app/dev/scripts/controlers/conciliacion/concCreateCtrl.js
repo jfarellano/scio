@@ -2,9 +2,6 @@ angular.module('app')
 .controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations){
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     $scope.cuantia = {indeterminada: false}
-    $scope.test = function(){
-        console.log("BUENAS");
-    }
     Conciliacion.get.solicitude($state.params.id).then(function(response){
         if(!response.data.solicitude.state.includes('incompleta')){
             window.location = '#/app/conciliacion'
