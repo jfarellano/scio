@@ -72,15 +72,15 @@
                     <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                     <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                 </div>
-                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
+                <md-button title="Postulante, esta será la persona que firme los documentos por parte de este involucrado" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
                     <md-icon >assignment_ind</md-icon>
                     <div class="icon-caption">Postulante</div>
                 </md-button>
-                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
+                <md-button title="Agregar o editar el apoderado de este involucrado" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                     <md-icon >business_center</md-icon>
                     <div class="icon-caption">Apoderado</div>
                 </md-button>
-                <md-button title="Postulante" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
+                <md-button title="Agregar o editar el representante legal de este involucrado" aria-label="Postulante" class="md-icon-button md-secondary" ng-click="showRepresentante(conv, $event, representanteEdition(conv))">
                     <md-icon >location_city</md-icon>
                     <div class="icon-caption">Representante Legal</div>
                 </md-button>
