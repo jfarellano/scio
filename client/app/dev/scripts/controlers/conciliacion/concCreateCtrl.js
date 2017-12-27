@@ -157,7 +157,6 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = edit
-        $scope.verify_click = edit
         if(edit){
             $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             var r2 = $scope.departments.filter(function(d){
@@ -213,10 +212,8 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = edit
-        $scope.verify_click = edit
         if(edit){
             $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
-            $scope.verify_click = true
         }else{
             $scope.getProfession(null, 'representative')
         }
@@ -474,12 +471,13 @@ angular.module('app')
         Conciliacion.update.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee.id, $scope.involucrado.involved.assignee).then(function(response){
             if ($scope.verified && !$scope.global) {
                 Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: $scope.involucrado.involved.assignee.id }).then(function(response){
-                    alertify.success("Apoderado editado con exito")
+                    alertify.success("Apoderado agregado con exito")
                     $scope.resetInvolucrado()
                     $scope.getSolicitude()
+                    $scope.edit = false
                 }, function(response){
                     console.log(response.data)
-                    alertify.error("Error agregando al apoderado")
+                    $scope.edit == false
                     $scope.resetInvolucrado()
                     $scope.getSolicitude()
                 })
@@ -493,13 +491,15 @@ angular.module('app')
                     $scope.setGlobal('convocado', 'assignee', $scope.involucrado.involved.assignee.id)
                 }
             }else{
-                alertify.success("apoderado editado con exito")
+                alertify.success("Apoderado editado con exito")
                 $scope.resetInvolucrado()
                 $scope.getSolicitude()
                 $scope.global = false
+                $scope.edit = false
             }
         },function(response){
             $scope.global = false
+            $scope.edit = false
             alertify.error("Error en la edición del apoderado")
             $scope.resetInvolucrado()
             console.log(response.data)
@@ -637,9 +637,10 @@ angular.module('app')
                     alertify.success("Representante editado con exito")
                     $scope.resetInvolucrado()
                     $scope.getSolicitude()
+                    $scope.edit = false
                 }, function(response){
                     console.log(response.data)
-                    alertify.error("Error agregando al representante")
+                    $scope.edit = false
                     $scope.resetInvolucrado()
                     $scope.getSolicitude()
                 })
@@ -655,6 +656,7 @@ angular.module('app')
             }else{
                 alertify.success("Representante editado con exito")
                 $scope.global = false
+                $scope.edit = false
                 $scope.resetInvolucrado()
                 $scope.getSolicitude()
             }
@@ -685,6 +687,7 @@ angular.module('app')
             }, function(response){
                 alertify.error("Error restaurando representante global")
                 $scope.resetInvolucrado()
+                $scope.cancel()
                 console.log(response)
             })
         }else{
@@ -696,6 +699,7 @@ angular.module('app')
             }, function(response){
                 alertify.error("Error restaurando del apoderado")
                 $scope.resetInvolucrado()
+                $scope.cancel()
                 console.log(response)
             })
         }
@@ -727,8 +731,10 @@ angular.module('app')
                         console.log(response.data);
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     }, function(response){
                         console.log(response.data);
+                        $scope.cancel()
                         alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
                         $scope.resetInvolucrado()
                     })
@@ -736,6 +742,7 @@ angular.module('app')
             }else{
                 Conciliacion.create.juridical($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.getSolicitude()
+                    $scope.cancel()
                     alertify.success("Exito agregando convocante")
                     $scope.resetInvolucrado()
                 },function(response){
@@ -743,16 +750,19 @@ angular.module('app')
                         console.log(response.data);
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     }, function(response){
                         console.log(response.data);
                         alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     })
                 })
             }
         },function(response){
             console.log(response.data)
             $scope.resetInvolucrado()
+            $scope.cancel()
             alertify.error("Error agregando convocante")
         })
     }
@@ -854,16 +864,19 @@ angular.module('app')
                     })
                     alertify.success("Exito agregando convocante")
                     $scope.resetInvolucrado()
+                    $scope.cancel()
                     $scope.getSolicitude()
                 }, function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         console.log(response.data);
                         alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     }, function(response){
                         console.log(response.data);
                         alertify.error("Error agregando convocado, CONTACTE EL EQUIPO DE SOPORTE")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     })
                 })
             }else{
@@ -871,15 +884,18 @@ angular.module('app')
                     $scope.getSolicitude()
                     alertify.success("Exito agregando convocado")
                     $scope.resetInvolucrado()
+                    $scope.cancel()
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         console.log(response.data);
                         alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     }, function(response){
                         console.log(response.data);
                         alertify.error("Error agregando convocado, CONTACTE EL EQUIPO DE SOPORTE")
                         $scope.resetInvolucrado()
+                        $scope.cancel()
                     })
                 })
             }

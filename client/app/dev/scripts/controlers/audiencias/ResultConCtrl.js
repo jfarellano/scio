@@ -30,8 +30,9 @@ angular.module('app')
                 })
             })
             Audiencias.get.user_audiences().then(function(response){
-            var audiencias = response.data.audiences
-            audiencias.forEach(function(aud){
+                $scope.audiencias = []
+                var audiencias = response.data.audiences
+                audiencias.forEach(function(aud){
                 var a = {
                     title: Session.getName(),
                     start: new Date(aud.start),
