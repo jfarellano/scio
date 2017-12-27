@@ -5,8 +5,12 @@ angular.module('app')
         $scope.conc = request.data.solicitude;
         Audiencias.get.solicitude($scope.conc.id).then(function(response){
             $scope.audiences = response.data.audiences
-            if($scope.audiences.length > 0) $scope.courrentAudience = $scope.audiences[$scope.audiences.length - 1];
-            console.log($scope.courrentAudience)
+            if($scope.audiences.length > 0) {
+                $scope.courrentAudience = $scope.audiences[$scope.audiences.length - 1];
+                var start = new Date($scope.courrentAudience.start)
+                var end = new Date($scope.courrentAudience.end)
+                $scope.audience_date = dateToEs(start) + " hasta el " + dateToEs(end)
+            }
         })
         Conciliacion.get.documents($scope.conc.conciliation.id).then(function(response){
             $scope.documents = response.data.documents
@@ -36,6 +40,15 @@ angular.module('app')
 
     $scope.showArchive = function(url){
         window.open(IP + url, '_blank');
+    }
+
+    var dateToEs = function(fecha){
+        var months = { "0": "Enero", "1": "Febrero", "2": "Marzo", "3": "Abril", "4": "Mayo", "5": "Junio", "6": "Juilo", "7": "Agosto", "8": "Septiembre", "9": "Octubre", "10": "Noviembre", "11": "Diciembre"}
+        return fecha.getDate() + " de " + months[fecha.getMonth()] + ", " + fecha.getFullYear() + ". A las " + fecha.getHours() + ":" + getMins(fecha) + " horas"
+    }
+
+    var getMins = function (date){
+        return (date.getMinutes()<10?'0':'') + date.getMinutes()
     }
 
     $scope.showProof = function(proof, ev){

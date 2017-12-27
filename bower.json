@@ -32,7 +32,6 @@
     "ng-file-upload": "^12.2.13",
     "ng-device-detector": "^3.0.1",
     "re-tree": "^0.0.2",
-    "moment": "^2.16.0",
     "angular-media-queries": "^0.6.1",
     "angular-wizard": "^1.1.1",
     "ngstorage": "^0.3.11",

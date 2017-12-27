@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div ng-if="conc.state == 'programada'">
-                    <p>Audiencia programada para el {{courrentAudience.start}} en la sala {{courrentAudience.room_name}}</p>
+                    <p>Audiencia programada para el {{audience_date}} en la sala {{courrentAudience.room_name}}</p>
             </div>
             <div ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'">
                 <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="toAudience()">Ir a Audiencia</button>
