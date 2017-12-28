@@ -180,6 +180,9 @@ angular.module('app')
                 constancia_otro: function(concID, type){
                     return $http.get(IP + '/conciliation/'+concID+'/documents/conciliation_other_constance/'+ type, {headers: Session.getHeaders()})
                 },
+                notification: function(concID, invID){
+                    return $http.get(IP + '/conciliation/'+concID+'/involved/'+invID+'/documents/conciliation_notification')
+                },
                 profession: function(ID, type){
                     return $http.get(IP + '/'+type+'/'+ID+'/professions')
                 },

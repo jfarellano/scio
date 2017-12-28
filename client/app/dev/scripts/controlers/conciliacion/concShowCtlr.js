@@ -42,6 +42,15 @@ angular.module('app')
         window.open(IP + url, '_blank');
     }
 
+    $scope.getNotification = function(conv){
+        Conciliacion.get.notification($scope.conc.conciliation.id, conv.involved.id).then(function(response){
+            $scope.showDocument(response.data.document)
+        }, function(response){
+            alertify.error('Hubo un error generando este documento')
+            console.log(response.data);
+        })
+    }
+
     var dateToEs = function(fecha){
         var months = { "0": "Enero", "1": "Febrero", "2": "Marzo", "3": "Abril", "4": "Mayo", "5": "Junio", "6": "Juilo", "7": "Agosto", "8": "Septiembre", "9": "Octubre", "10": "Noviembre", "11": "Diciembre"}
         return fecha.getDate() + " de " + months[fecha.getMonth()] + ", " + fecha.getFullYear() + ". A las " + fecha.getHours() + ":" + getMins(fecha) + " horas"
