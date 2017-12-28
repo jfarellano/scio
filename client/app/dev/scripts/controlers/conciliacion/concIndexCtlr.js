@@ -142,42 +142,50 @@ angular.module('app')
         $scope.state = Conciliacion.state();
 
         $scope.getConvNames = function(id) {
-            if ($scope.data[id].solicitude_participations.length == 0) {
-                return 'Conciliacion'
-            }
-            var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocante');
-            var info = ''
-            if(c[0].involved.nature == 'natural'){
-                info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
-            }else{
-                info = c[0].involved.juridical.name
-            }
+            try {
+                if ($scope.data[id].solicitude_participations.length == 0) {
+                    return 'Conciliacion'
+                }
+                var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocante');
+                var info = ''
+                if(c[0].involved.nature == 'natural'){
+                    info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
+                }else{
+                    info = c[0].involved.juridical.name
+                }
 
-            if (c.length > 1) {
-                info = info + ' y otros.'
+                if (c.length > 1) {
+                    info = info + ' y otros.'
+                }
+                return info + ' Convocante';
+            } catch (e) {
+                return "Conciliacion"
             }
-            return info + ' Convocante';
         }
 
         $scope.getConvoNames = function(id) {
-            if ($scope.data[id].solicitude_participations.length == 0) {
-                return ''
-            }
-            var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocado');
-            var info = ''
-            if(c.length == 0){
-                return ''
-            }
-            if(c[0].involved.nature == 'natural'){
-                info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
-            }else{
-                info = c[0].involved.juridical.name
-            }
+            try {
+                if ($scope.data[id].solicitude_participations.length == 0) {
+                    return ''
+                }
+                var c = $scope.data[id].solicitude_participations.filter(i => i.participation_type == 'convocado');
+                var info = ''
+                if(c.length == 0){
+                    return ''
+                }
+                if(c[0].involved.nature == 'natural'){
+                    info = c[0].involved.natural.first_name + ' ' + c[0].involved.natural.first_lastname
+                }else{
+                    info = c[0].involved.juridical.name
+                }
 
-            if (c.length > 1) {
-                info = info + ' y otros.'
+                if (c.length > 1) {
+                    info = info + ' y otros.'
+                }
+                return info + ' Convocado';
+            } catch (e) {
+                return ''
             }
-            return info + ' Convocado';
         }
 
         $scope.openCreate = function(ev){
