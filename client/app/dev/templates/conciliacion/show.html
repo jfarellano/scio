@@ -93,6 +93,9 @@
                         <h4>{{getID(conv)}}</h4>
                         <p>Teléfono: {{conv.involved.phone}}</p>
                     </div>
+                    <div class="md-secondary">
+                        <md-icon ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'" class="material-icons md-secondary" aria-label="Generar notificación" ng-click="getNotification(conv)">assignment</md-icon>
+                    </div>
                 </div>
             </md-list-item>
             <h4 class="show_title"><b>Convocados</b></h4>
@@ -104,6 +107,9 @@
                         <h3 class="cap">{{getName(conv)}}</h3>
                         <h4>{{getID(conv)}}</h4>
                         <p>Teléfono: {{conv.involved.phone}}</p>
+                    </div>
+                    <div class="md-secondary">
+                        <md-icon ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'" class="material-icons md-secondary" aria-label="Generar notificación" ng-click="getNotification(conv)">assignment</md-icon>
                     </div>
                 </div>
             </md-list-item>
