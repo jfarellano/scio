@@ -45,6 +45,7 @@ angular.module('app')
     $scope.getNotification = function(conv){
         Conciliacion.get.notification($scope.conc.conciliation.id, conv.involved.id).then(function(response){
             $scope.showDocument(response.data.document)
+            $scope.reFetchConc()
         }, function(response){
             alertify.error('Hubo un error generando este documento')
             console.log(response.data);
@@ -103,6 +104,11 @@ angular.module('app')
                     console.log(response.data)
                 })
             }
+            Conciliacion.get.documents($scope.conc.conciliation.id).then(function(response){
+                $scope.documents = response.data.documents
+            }, function(response){
+                console.log(response.data)
+            })
         },function (request) {
             $scope.conc = {}
         })
@@ -111,6 +117,7 @@ angular.module('app')
     $scope.getDocument = function(){
         Conciliacion.get.solicitude_document($scope.conc.conciliation.id).then(function(response){
             var data = response.data.document
+            $scope.reFetchConc()
             alertify.success('Exito generando documento')
             window.open(IP +'/'+ data.url, '_blank')
         }, function(response){
@@ -143,7 +150,6 @@ angular.module('app')
                 ending_hour: (eHH>9 ? '' : '0') + eHH + ':' + (eMM>9 ? '' : '0') + eMM
             }
             Audiencias.create.audience($scope.conc.id, {audience: aud}).then(function(response){
-                //console.log(response.data)
                 $mdDialog.show(
                   $mdDialog.alert()
                     .parent(angular.element(document.querySelector('#popupContainer')))
@@ -211,7 +217,11 @@ angular.module('app')
     }
 
     $scope.getState = function(){
-        return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
+        try {
+            return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
+        } catch (e) {
+            return ""
+        }
     }
     String.prototype.replaceAll = function(str1, str2, ignore){
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
@@ -254,11 +264,19 @@ angular.module('app')
     }
 
     $scope.getConvocantes = function(){
-        return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
+        try {
+            return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
+        } catch (e) {
+            return []
+        }
     }
 
     $scope.getConvocados = function(){
-        return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        try {
+            return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        } catch (e) {
+            return []
+        }
     }
     $scope.apoderado = function(inv){
         return inv.involved.assignee != null
