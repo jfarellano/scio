@@ -190,34 +190,34 @@ angular.module('app')
                     console.log(response.data)
                 })
             }else{
-                $scope.showConfirm(ev)
-            }
-        }
-
-        $scope.showConfirm = function(ev) {
-            var confirm = $mdDialog.confirm()
-                .title('¿Que tipo de conciliación quiere iniciar?')
-                .textContent('Escoja el tipo de coniliación que desea iniciar')
-                .ariaLabel('Tipo de conciliacion')
-                .targetEvent(ev)
-                .ok('Conciliación en equidad')
-                .cancel('Conciliación en derecho');
-            $mdDialog.show(confirm).then(function() {
                 var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion_en_equidad", "payment_amount": 0}
-                Conciliacion.create.solicitude(solicitude).then(function(response){
-                    window.location = '#/app/create/conciliacion_equidad/' + response.data.solicitude.id
-                },function(response){
-                    console.log(response.data)
-                })
-            }, function() {
-                var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
                 Conciliacion.create.solicitude(solicitude).then(function(response){
                     window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
                 },function(response){
                     console.log(response.data)
                 })
-            });
-        };
+            }
+        }
+
+        // $scope.showConfirm = function(ev) {
+        //     var confirm = $mdDialog.confirm()
+        //         .title('¿Que tipo de conciliación quiere iniciar?')
+        //         .textContent('Escoja el tipo de coniliación que desea iniciar')
+        //         .ariaLabel('Tipo de conciliacion')
+        //         .targetEvent(ev)
+        //         .ok('Conciliación en equidad')
+        //         .cancel('Conciliación en derecho');
+        //     $mdDialog.show(confirm).then(function() {
+        //
+        //     }, function() {
+        //         var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
+        //         Conciliacion.create.solicitude(solicitude).then(function(response){
+        //             window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
+        //         },function(response){
+        //             console.log(response.data)
+        //         })
+        //     });
+        // };
 
         $scope.toShow = function(conc){
             Conciliacion.setIndex(false)
@@ -225,7 +225,7 @@ angular.module('app')
                 if (conc.solicitude_type != 'conciliacion_en_equidad') {
                     window.location = '#/app/create/conciliacion/' + conc.id
                 }else{
-                    window.location = '#/app/create/conciliacion_equidad/' + conc.id
+                    window.location = '#/app/create/conciliacion/' + conc.id
                 }
             }else{
                 window.location = '#/app/conciliacion/' + conc.id

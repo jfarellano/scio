@@ -1,13 +1,16 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations){
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations', 'Audiencias',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations, Audiencias){
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     $scope.cuantia = {indeterminada: false}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
+        $scope.solicitude = response.data.solicitude
         if(!response.data.solicitude.state.includes('incompleta')){
             window.location = '#/app/conciliacion'
         }
-        $scope.solicitude = response.data.solicitude
-        console.log($scope.solicitude)
+        if ($scope.solicitude.solicitude_type == 'conciliacion_en_equidad') {
+            $scope.solicitude.conciliation.definable = false
+        }
+        console.log($scope.solicitude, response.data)
         if ($scope.solicitude.conciliation.payment_amount == -1) {
             $scope.cuantia.indeterminada = true
         }else{
@@ -1079,17 +1082,35 @@ angular.module('app')
     }
 //Wizard
     $scope.finished = function() {
-        $scope.solicitude.state = 'enviada'
-        $('#loader-container').fadeIn('fast');
-        Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-            $('#loader-container').fadeOut('slow');
-            window.location = '#/app/conciliacion'
-        },function(response){
-            console.log(response.data)
-            alertify.error("Hubo un error finalizando la solicitud recargue la pagina por favor");
-            $('#loader-container').fadeOut('slow');
-        })
+        if($scope.solicitude.solicitude_type == 'conciliacion'){
+            $scope.solicitude.state = 'enviada'
+            $('#loader-container').fadeIn('fast');
+            Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+                $('#loader-container').fadeOut('slow');
+                window.location = '#/app/conciliacion'
+            },function(response){
+                console.log(response.data)
+                alertify.error("Hubo un error finalizando la solicitud recargue la pagina por favor");
+                $('#loader-container').fadeOut('slow');
+            })
+        }else{
+            $scope.solicitude.state = 'iniciar_audiencia'
+            $('#loader-container').fadeIn('fast');
+            Conciliacion.update.conciliator_solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
+                Audiencias.create.audience($scope.solicitude.id, {audience:{}}).then(function(response){
+                    $('#loader-container').fadeOut('slow');
+                    alertify.success('A la audiencia')
+                    $scope.getSolicitude()
+                window.location = '#/app/audiencia/conciliacion/' + $scope.solicitude.id
+                }, function(response){
+                    console.log(response.data)
+                })
+            },function(response){
+                console.log(response.data)
+            })
+        }
     };
+
     $scope.nextStep = function(state) {
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state

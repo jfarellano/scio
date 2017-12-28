@@ -32,7 +32,9 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        <md-checkbox ng-model="solicitude.conciliation.definable" aria-label="¿Esta solicitud cuenta con un asunto juridico definible?">Asunto jurídico definible</md-checkbox>
+                        <div ng-if="solicitude.solicitude_type == 'conciliacion'">
+                            <md-checkbox ng-model="solicitude.conciliation.definable" aria-label="¿Esta solicitud cuenta con un asunto juridico definible?">Asunto jurídico definible</md-checkbox>
+                        </div>
                         <div>
                             <md-input-container class="md-block" flex-gt-sm ng-if="solicitude.conciliation.definable">
                                 <label>Área del derecho:</label>
@@ -52,20 +54,22 @@
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>Tema del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" ng-change="getArea()" required>
+                                <md-select ng-model="solicitude.conciliation.topic" ng-change="getSubTopic()" required>
                                     <md-option ng-repeat="top in topic" value="{{top.value}}">
                                         {{::top.value}}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label>Subtema del derecho:</label>
-                                <md-select ng-model="solicitude.conciliation.subtopic" ng-disabled="!subtopicValid">
-                                    <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
-                                        {{::sub.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                            <div ng-if="solicitude.solicitude_type == 'conciliacion'">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Subtema del derecho:</label>
+                                    <md-select ng-model="solicitude.conciliation.subtopic" ng-disabled="!subtopicValid">
+                                        <md-option ng-repeat="sub in subtopic" value="{{sub.value}}">
+                                            {{::sub.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
                         </div>
                         <md-checkbox ng-model="cuantia.indeterminada" aria-label="La cuantia de esta solicitud de indeterminada">Cuantia indeterminada?</md-checkbox>
                         <md-input-container class="md-block" ng-if="!cuantia.indeterminada" flex-gt-sm>
@@ -198,7 +202,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('convocados')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocados_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -223,7 +227,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('hechos')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('hechos')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!hechos_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -248,7 +252,7 @@
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
                         <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Siguiente</md-button>
+                        <md-button wz-next="nextStep('pretensiones')" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!pretensiones_validation()" flex-gt-xs>Siguiente</md-button>
                     </div>
                 </div>
             </wz-step>
@@ -300,14 +304,28 @@
                 </div>
             </wz-step>
             <wz-step wz-title="Final">
-                <h4>Fin de Solicitud</h4>
-                <div class="ui-wizard-content">
-                    <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de pago del servicio de conciliación. Por favor realice el pago para hacer efectiva la solicitud</p>
+                <div ng-if="solicitude.solicitude_type == 'conciliacion'">
+                    <h4>Fin de Solicitud</h4>
+                    <div class="ui-wizard-content">
+                        <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de pago del servicio de conciliación. Por favor realice el pago para hacer efectiva la solicitud</p>
+                    </div>
+                    <div class="ui-wizard-actions">
+                        <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
+                            <md-button wz-next="finished()" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Pagar</md-button>
+                        </div>
+                    </div>
                 </div>
-                <div class="ui-wizard-actions">
-                    <div layout-gt-xs="row" class="layout-gt-xs-row">
-                        <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
-                        <md-button wz-next="finished()" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>Pagar</md-button>
+                <div ng-if="solicitude.solicitude_type == 'conciliacion_en_equidad'">
+                    <h4>Fin de Solicitud</h4>
+                    <div class="ui-wizard-content">
+                        <p>Por favor rectifique toda la solicutud. A continuación, se le llevará a la plataforma de audiencia.</p>
+                    </div>
+                    <div class="ui-wizard-actions">
+                        <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-button wz-previous=""  class="md-raised btn-w-md flex-gt-xs" flex-gt-xs>Atrás</md-button>
+                            <md-button wz-next="finished()" class="md-raised btn-w-md md-primary flex-gt-xs" ng-disabled="!convocantes_validation()" flex-gt-xs>A la audiencia</md-button>
+                        </div>
                     </div>
                 </div>
             </wz-step>
