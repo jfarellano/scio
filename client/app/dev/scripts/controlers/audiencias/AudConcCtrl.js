@@ -176,7 +176,11 @@ angular.module('app')
     };
 
     $scope.getState = function(){
-        return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
+        try {
+            return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
+        } catch (e) {
+            return 'Estado'
+        }
     }
     String.prototype.replaceAll = function(str1, str2, ignore){
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
@@ -207,11 +211,19 @@ angular.module('app')
     }
 
     $scope.getConvocantes = function(){
-        return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
+        try {
+            return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
+        } catch (e) {
+            return []
+        }
     }
 
     $scope.getConvocados = function(){
-        return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        try {
+            return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
+        } catch (e) {
+            return []
+        }
     }
     $scope.apoderado = function(inv){
         return inv.involved.assignee != null
@@ -413,15 +425,17 @@ angular.module('app')
         $scope.countries = response.data.constants
     })
     Conciliacion.get.constant_child(COL ,'department').then(function(response){
-        $scope.departments = response.data.constants
-        var r2 = $scope.departments.filter(function(d){
-            return d.value == $scope.involucrado.department
-        })
-        if(r2.length > 0){
-            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-                $scope.cities = response.data.constants
+        try {
+            $scope.departments = response.data.constants
+            var r2 = $scope.departments.filter(function(d){
+                return d.value == $scope.involucrado.department
             })
-        }
+            if(r2.length > 0){
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
+        } catch (e) {}
     })
     $scope.getAssigneeCity = function(){
         var r = $scope.departments.filter(function(a) {
