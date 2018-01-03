@@ -4,7 +4,11 @@ angular.module('app')
     $scope.cuantia = {indeterminada: false}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
         $scope.solicitude = response.data.solicitude
-        //onsole.log($scope.solicitude);
+        console.log($scope.solicitude);
+        if ($scope.solicitude.state == 'incompleta' && $scope.solicitude.solicitude_type != 'conciliacion_en_equidad') {
+            $scope.solicitude.conciliation = {}
+            $scope.solicitude.conciliation.definable = true
+        }
         if(!response.data.solicitude.state.includes('incompleta')){
             window.location = '#/app/conciliacion'
         }
@@ -990,12 +994,10 @@ angular.module('app')
             if ($scope.solicitude.conciliation.definable == null) {
                 $scope.solicitude.conciliation.definable = false
             }
-            console.log($scope.solicitude)
             if($scope.cuantia.indeterminada){
                 $scope.solicitude.conciliation.payment_amount = -1
             }
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
-                console.log($scope.solicitude)
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     $scope.getSolicitude()
                 },function(response){
