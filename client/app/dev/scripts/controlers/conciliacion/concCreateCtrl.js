@@ -1247,19 +1247,9 @@ angular.module('app')
     Conciliacion.get.constant('conciliation_goal').then(function(response){
         $scope.service_goal = response.data.constants
     })
-    $scope.involucrado = {
-        participation_type: '',
-        involved: {
-            country: 'COLOMBIA',
-            nature: ''
-        }
-    }
+    $scope.involucrado = {}
     $scope.resetInvolucrado = function(){
-        $scope.involucrado = {
-            involved: {
-                country: 'COLOMBIA'
-            }
-        }
+        $scope.involucrado = {}
     }
     $scope.assignee = {}
     Conciliacion.get.constant('conciliation_period').then(function(response){
