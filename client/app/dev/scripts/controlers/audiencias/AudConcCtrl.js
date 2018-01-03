@@ -13,6 +13,9 @@ angular.module('app')
         Conciliacion.get.proof($scope.conc.id).then(function(response){
             $scope.proofs = response.data.proofs
         })
+        Conciliacion.get.fundamentals($scope.conc.conciliation.id).then(function(response){
+            $scope.fundamentals = response.data.fundamentals
+        })
         Audiencias.get.solicitude($scope.conc.id).then(function(response){
             var auds = response.data.audiences
             $scope.audience = auds[auds.length - 1]
