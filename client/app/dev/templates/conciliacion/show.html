@@ -145,26 +145,6 @@
             </md-list-item>
 
             <h3><b>Cuantía</b> {{cuantia(conc.conciliation.payment_amount)}}</h3>
-
-            <button ng-if="Session.getRole() == 'conciliator' || Session.getRole() == 'conciliator_in_equity'" class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="getDocument()">Generar solicitud de conciliacion</button>
-            <!-- <section class="box box-default">
-                <div class="box-body no-padding">
-                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
-                        <md-tab ng-repeat="tab in tabs"
-                                ng-disabled="tab.disabled"
-                                label="{{tab.title}}">
-                            <div class="tab{{$index}}" style="padding: 25px; text-align: center;">
-                                <div ng-repeat="item in tab.info">
-                                    <ul>
-                                        <div ng-bind="item.nombre" ng-click="click()"></div>
-                                    </ul>
-                                </div>
-                                <br/>
-                            </div>
-                        </md-tab>
-                    </md-tabs>
-                </div>
-            </section> -->
         </div>
     </div>
 </div>
