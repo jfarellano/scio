@@ -23,7 +23,7 @@
                             <div layout-gt-xs="row" class="layout-gt-xs-row">
         		    			<md-input-container class="flex-gt-xs" flex-gt-xs>
         					        <label>Tipo de documento</label>
-        					        <md-select ng-model="involucrado.involved.representative.identifier_type" required>
+        					        <md-select ng-model="involucrado.involved.representative.identifier_type" ng-disabled="verify_click" required>
         					            <md-option ng-repeat="type in idType" value="{{type.value}}" requiered>
         					                {{::type.value}}
         					            </md-option>
@@ -31,7 +31,7 @@
         					    </md-input-container>
         			    		<md-input-container class="flex-gt-xs" flex-gt-xs>
         					        <label>Número de identificación</label>
-        					        <input input-num ng-model="involucrado.involved.representative.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.representative.identifier_type" required>
+        					        <input input-num ng-model="involucrado.involved.representative.identifier" type="number" data-ng-minlength=3 ng-disabled="!involucrado.involved.representative.identifier_type || verify_click" required>
         					    </md-input-container>
         					</div>
         					<div layout-gt-xs="row" class="layout-gt-xs-row">
