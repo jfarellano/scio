@@ -1,4 +1,4 @@
-<div class="col-md-4" ng-if="getIndex() || !mobile">
+<div class="col-md-5" ng-if="getIndex() || !mobile">
     <div ng-if="Session.getRole() != 'coordinator' && Session.getRole() != 'admin' && Session.getRole() != 'conciliator'" >
         <md-button class="md-fab add_button" aria-label="Iniciar nueva conciliación" style="background-color: #8DCEE0;" ng-click="openCreate($event)">+</md-button>
     </div>
@@ -59,20 +59,20 @@
             </div>
         </div>
         <div class="divider divider-lg divider-dashed"></div>
-        <div class="row">
-            <div class="col-md-3 col-sm-3 col-xs-3">
+        <div layout-gt-xs="row" class="layout-gt-xs-row centered">
+            <div class="flex-gt-xs" flex-gt-xs>
                 <md-button class="btn-w-md md-accent" data-ng-click="indexType('activo')">Activas</md-button><div class="divider divider-xs"></div>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3">
+            <div class="flex-gt-xs" flex-gt-xs>
                 <md-button class="btn-w-md md-primary" data-ng-click="indexType('archivo')">Archivo</md-button><div class="divider divider-xs"></div>
             </div>
-            <div class="col-md-3 col-sm-3 col-xs-3">
+            <div class="flex-gt-xs" flex-gt-xs ng-if="Session.getRole() != 'conciliator' && Session.getRole() != 'coordinator'">
                 <md-button class="btn-w-md md-primary" data-ng-click="indexType('borrador')">Borrador</md-button><div class="divider divider-xs"></div>
             </div>
         </div>
     </div>
 </div>
-<div class="col-md-8" ng-if="(!getIndex() && mobile) || !mobile">
+<div class="col-md-7" ng-if="(!getIndex() && mobile) || !mobile">
     <ui-view name="show">
     </ui-view>
 </div>
