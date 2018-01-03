@@ -634,7 +634,6 @@ angular.module('app')
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
                 try{
-                    $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
                     $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                     Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                         $scope.professions.forEach(function(proff){
@@ -752,7 +751,6 @@ angular.module('app')
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
                 try{
-                    $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
                     $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
                     Conciliacion.create.natural($scope.solicitude.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                         $scope.professions.forEach(function(proff){

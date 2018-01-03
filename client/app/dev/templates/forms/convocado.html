@@ -47,20 +47,10 @@
                     </div>
                     <div ng-if="verify_click">
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
-                            <md-input-container class="flex-gt-xs" flex-gt-xs ng-if="!edit">
-                                <angucomplete-alt id="ex1"
-                                  placeholder="Ciudad de expedición"
-                                  pause="100"
-                                  selected-object="involucrado.involved.natural.identifier_expedition_city"
-                                  local-data="all_cities"
-                                  search-fields="value"
-                                  title-field="value"
-                                  minlength="1"
-                                  field-required="true"
-                                  input-class="form-control form-control-small flex-gt-xs "
-                                  flex-gt-xs/>
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>Ciudad de expedición</label>
+                                <input data-ng-model="involucrado.involved.natural.identifier_expedition_city"required type="text">
                             </md-input-container>
-
                             <md-input-container class="flex-gt-xs" flex-gt-xs ng-if="!edit">
                                 <angucomplete-alt id="ex1"
                                   placeholder="País de origen"
