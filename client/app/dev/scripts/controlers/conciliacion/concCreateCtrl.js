@@ -1266,21 +1266,26 @@ angular.module('app')
     })
     Conciliacion.get.constant_child(1962, 'conciliation_area').then(function(response){
         $scope.area = response.data.constants
-        var r1 = $scope.area.filter(function(a) {
-            return a.value == $scope.solicitude.conciliation.area
-        })
-        if ($scope.solicitude.conciliation.definable) {
-            Conciliacion.get.constant_child(r1[0].id, 'conciliation_topic').then(function(response){
-                $scope.topic = response.data.constants
-                var r2 = $scope.topic.filter(function(t){
-                    return t.value == $scope.solicitude.conciliation.topic
-                })
-                Conciliacion.get.constant_child(r2[0].id, 'conciliation_subtopic').then(function(response){
-                    $scope.subtopic = response.data.constants
-                }, function(response){
-                    console.log(response.data)
-                })
+        try {
+            var r1 = $scope.area.filter(function(a) {
+                return a.value == $scope.solicitude.conciliation.area
             })
+            if ($scope.solicitude.conciliation.definable) {
+                Conciliacion.get.constant_child(r1[0].id, 'conciliation_topic').then(function(response){
+                    $scope.topic = response.data.constants
+                    var r2 = $scope.topic.filter(function(t){
+                        return t.value == $scope.solicitude.conciliation.topic
+                    })
+                    Conciliacion.get.constant_child(r2[0].id, 'conciliation_subtopic').then(function(response){
+                        $scope.subtopic = response.data.constants
+                    }, function(response){
+                        console.log(response.data)
+                    })
+                })
+            }
+        } catch (e) {
+            $scope.topic = []
+            $scope.subtopic = []
         }
     }, function(response){
         console.log(response.data)
