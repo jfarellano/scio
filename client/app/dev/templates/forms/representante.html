@@ -151,6 +151,12 @@
     			                <label>Fecha de graduación</label>
     			                <md-datepicker ng-model="profession.graduation_date" placeholder="Fecha de graduación"></md-datepicker>
     			            </div>
+                            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                                <md-input-container class="flex-gt-xs" flex-gt-xs>
+    						        <label>Entidad emisora del titulo</label>
+    						        <input ng-model="profession.issuing_entity" type="text">
+    						    </md-input-container>
+                            </div>
     			            <md-button class="md-raised btn-w-md md-primary" ng-click="addProfession(involucrado.involved.id, 'involved')">Agregar profesión</md-button>
     			            <div data-slim-scroll data-scroll-height="250px">
     			                <md-subheader class="md-no-sticky">Profesiones</md-subheader>

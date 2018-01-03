@@ -4,6 +4,7 @@ angular.module('app')
     $scope.cuantia = {indeterminada: false}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
         $scope.solicitude = response.data.solicitude
+        //onsole.log($scope.solicitude);
         if(!response.data.solicitude.state.includes('incompleta')){
             window.location = '#/app/conciliacion'
         }
@@ -331,7 +332,6 @@ angular.module('app')
     $scope.showPostulant = function(inv, ev) {
         $scope.involucrado = inv
         $scope.getPostulants()
-        //$('#loader-container').fadeIn('fast');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/postulante.html',
             scope: $scope,

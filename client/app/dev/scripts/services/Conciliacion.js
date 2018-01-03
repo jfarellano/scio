@@ -184,7 +184,7 @@ angular.module('app')
                     return $http.get(IP + '/conciliation/'+concID+'/involved/'+invID+'/documents/conciliation_notification', {headers: Session.getHeaders()})
                 },
                 profession: function(ID, type){
-                    return $http.get(IP + '/'+type+'/'+ID+'/professions')
+                    return $http.get(IP + '/'+type+'/'+ID+'/professions', {headers: Session.getHeaders()})
                 },
                 fundamentals: function(concID){
                     return $http.get(IP + '/conciliations/'+concID+'/fundamentals', {headers: Session.getHeaders()})
