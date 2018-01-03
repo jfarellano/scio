@@ -33,7 +33,7 @@
             navCollapsed: true,                            // true, false
             navBehind: true,                               // true, false
             fixedHeader: true,                              // true, false
-            sidebarWidth: 'middle',                         // small, middle, large      
+            sidebarWidth: 'middle',                         // small, middle, large
             theme: 'light',                                 // light, gray, dark
             colorOption: '24',                               // 11,12,13,14,15,16; 21,22,23,24,25,26; 31,32,33,34,35,36
             link: 'https://themeforest.net/item/material-design-angular-admin-app/17067522'
@@ -64,14 +64,19 @@
             'contrastLightColors': '400 500 600 700 800 900',
             'contrastStrongLightColors': '400 500 600 700 800 900'
         })
-        
+
         $mdDateLocaleProvider.formatDate = function (date) {
             return date ? moment(date).format('DD/MM/YYYY') : '';
         }
         $mdDateLocaleProvider.parseDate = function (dateString) {
             var m = moment(dateString, 'DD/MM/YYYY', true);
             return m.isValid() ? m.toDate() : new Date(NaN);
-        } 
+        }
+
+        $mdDateLocaleProvider.months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Juilo", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        $mdDateLocaleProvider.shortMonths = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+        $mdDateLocaleProvider.days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+        $mdDateLocaleProvider.shortDays = ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'];
 
         $mdThemingProvider
             .definePalette('cyanAlt', cyanAlt)

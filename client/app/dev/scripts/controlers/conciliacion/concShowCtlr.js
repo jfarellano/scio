@@ -354,6 +354,11 @@ angular.module('app')
             defaultView: 'agendaWeek',
             timezone: 'local',
             allDaySlot: false,
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'],
+            buttonText:{
+                today: 'Hoy'
+            },
             header: {
                 left: 'Calendario de audiencias',
                 center: '',

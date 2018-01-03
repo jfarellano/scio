@@ -16,7 +16,7 @@ angular.module('app')
                 title: aud.title,
                 start: new Date(aud.start),
                 end: new Date(aud.end),
-                allDay: false, 
+                allDay: false,
                 editable: false,
                 stick: true
             }
@@ -33,13 +33,19 @@ angular.module('app')
             defaultView: 'agendaWeek',
             timezone: 'local',
             allDaySlot: false,
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab'],
+            buttonText:{
+                today: 'Hoy'
+            },
             header: {
                 left: 'Calendario de audiencias',
                 center: '',
-                right: 'today prev,next'
+                right: 'today prev,next',
+                today: 'Hoy'
             }
         }
-    }    
+    }
 
     $scope.events = [$scope.Audiencias]
 }])
