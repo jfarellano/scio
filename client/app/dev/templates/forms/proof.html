@@ -28,8 +28,9 @@
                         <textarea ng-model="proof.description" rows="10" md-select-on-focus required=""></textarea>
                     </md-input-container>
                 <div ng-if="proof.type == 'Archivo'">
+                    <p>Nombre del archivo: {{proof.file.name}}</p>
                     <md-input-container class="md-block">
-                        <md-button class="md-raised btn-w-md md-primary" ngf-select ng-model="proof.file">Seleccionar archivos</md-button>
+                        <md-button class="md-raised btn-w-md md-primary" ngf-select required ng-model="proof.file">Seleccionar archivos</md-button>
                     </md-input-container>
                 </div>
                 <div ng-if="proof.type == 'Testimonio'">
@@ -44,5 +45,5 @@
 </md-dialog-content>
 <md-dialog-actions>
     <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">{{getButtonLable()}}</md-button>  
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">{{getButtonLable()}}</md-button>
 </md-dialog-actions>
