@@ -3,6 +3,7 @@ angular.module('app')
     $scope.Session =  Session
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
+        //console.log($scope.conc);
         Audiencias.get.solicitude($scope.conc.id).then(function(response){
             $scope.audiences = response.data.audiences
             if($scope.audiences.length > 0) {
@@ -11,6 +12,9 @@ angular.module('app')
                 var end = new Date($scope.courrentAudience.end)
                 $scope.audience_date = dateToEs(start) + " hasta el " + dateToEs(end)
             }
+        })
+        Conciliacion.get.fundamentals($scope.conc.conciliation.id).then(function(response){
+            $scope.fundamentals = response.data.fundamentals
         })
         Conciliacion.get.documents($scope.conc.conciliation.id).then(function(response){
             $scope.documents = response.data.documents

@@ -125,6 +125,12 @@
                     <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
                 </div>
             </div>
+            <h4 class="show_title"><b>Fundamentos del derecho</b></h4>
+            <div ng-repeat="pret in fundamentals">
+                <div class="infoContainer">
+                    <p><b>{{$index + 1}}.</b> {{pret.description}}</p>
+                </div>
+            </div>
             <h4 class="show_title"><b>Anexos y pruebas</b></h4>
             <md-list-item class="md-2-line" ng-repeat="p in proofs" ng-click="showProof(p, $event)">
                 <p><b>{{$index + 1}}.</b> {{p.name}}</p>
