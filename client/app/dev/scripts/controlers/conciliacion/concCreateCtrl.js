@@ -1247,9 +1247,13 @@ angular.module('app')
     Conciliacion.get.constant('conciliation_goal').then(function(response){
         $scope.service_goal = response.data.constants
     })
-    $scope.involucrado = {}
+    $scope.involucrado = {
+        involved: {}
+    }
     $scope.resetInvolucrado = function(){
-        $scope.involucrado = {}
+        $scope.involucrado = {
+            involved: {}
+        }
     }
     $scope.assignee = {}
     Conciliacion.get.constant('conciliation_period').then(function(response){

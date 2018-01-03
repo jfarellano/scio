@@ -41,7 +41,8 @@
         	                </div>
         	            </div>
                         <div ng-if="verify_click || edit">
-    				    	<div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <h4>Datos de identificación</h4>
+                            <div layout-gt-xs="row" class="layout-gt-xs-row">
     						    <md-input-container class="flex-gt-xs" flex-gt-xs>
     						        <label>Primer nombre</label>
     						        <input data-ng-model="involucrado.involved.representative.first_name" type="text" required>
@@ -61,27 +62,27 @@
     						        <input data-ng-model="involucrado.involved.representative.second_lastname" type="text" required="">
     						    </md-input-container>
     						</div>
+                            <div layout-gt-xs="row" class="layout-gt-xs-row">
+                                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                    <label>Género</label>
+                                    <md-select ng-model="involucrado.involved.representative.gender" required>
+                                        <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+                                            {{::g.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <h4>Datos de contacto</h4>
     						<div layout-gt-xs="row" class="layout-gt-xs-row">
     						    <md-input-container class="flex-gt-xs" flex-gt-xs>
     				                <label>E-mail</label>
     				                <input data-ng-model="involucrado.involved.representative.email" type="email" required>
     				            </md-input-container>
-
+                                <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                   <label>Teléfono de contacto</label>
+                                   <input ng-model="involucrado.involved.representative.telephone" data-ng-minlength=7 type="number" required>
+                               </md-input-container>
     						</div>
-    						<div layout-gt-xs="row" class="layout-gt-xs-row">
-    							<md-input-container class="flex-gt-xs" flex-gt-xs>
-    				                <label>Género</label>
-    				                <md-select ng-model="involucrado.involved.representative.gender" required>
-    				                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
-    				                        {{::g.value}}
-    				                    </md-option>
-    				                </md-select>
-    				            </md-input-container>
-    				             <md-input-container class="flex-gt-xs" flex-gt-xs>
-    						        <label>Teléfono de contacto</label>
-    						        <input ng-model="involucrado.involved.representative.telephone" data-ng-minlength=7 type="number" required>
-    						    </md-input-container>
-    				        </div>
     						<div layout-gt-xs="row" class="layout-gt-xs-row">
     						    <md-input-container class="flex-gt-xs" flex-gt-xs>
     						        <label>Celular de contacto</label>
@@ -101,7 +102,9 @@
     						            </md-option>
     						        </md-select>
     						    </md-input-container>
-    						    <md-input-container class="flex-gt-xs" flex-gt-xs>
+    						</div>
+    						<div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="involucrado.involved.representative.country == 'COLOMBIA'">
+                                <md-input-container class="flex-gt-xs" flex-gt-xs>
     						        <label>Departamento</label>
     						        <md-select ng-model="involucrado.involved.representative.department" ng-change="getRepCities()" required>
     						            <md-option ng-repeat="c in departments" value="{{c.value}}" requiered>
@@ -109,8 +112,6 @@
     						            </md-option>
     						        </md-select>
     						    </md-input-container>
-    						</div>
-    						<div layout-gt-xs="row" class="layout-gt-xs-row">
     						    <md-input-container class="flex-gt-xs" flex-gt-xs>
     						        <label>Ciudad</label>
     						        <md-select ng-model="involucrado.involved.representative.city" required>

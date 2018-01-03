@@ -40,7 +40,8 @@
 		            </div>
 		        </div>
                 <div ng-if="verify_click || edit">
-    		    	<div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <h4>Información de identificación</h4>
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
     				    <md-input-container class="flex-gt-xs" flex-gt-xs>
     				        <label>Primer nombre</label>
     				        <input data-ng-model="involucrado.involved.assignee.first_name" type="text" required>
@@ -60,7 +61,7 @@
     				        <input data-ng-model="involucrado.involved.assignee.second_lastname" type="text" required>
     				    </md-input-container>
     				</div>
-    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+                    <div layout-gt-xs="row" class="layout-gt-xs-row">
     					<md-input-container class="flex-gt-xs" flex-gt-xs>
     		                <label>Género</label>
     		                <md-select ng-model="involucrado.involved.assignee.gender" required>
@@ -70,6 +71,7 @@
     		                </md-select>
     		            </md-input-container>
     		        </div>
+                    <h4>Información de contacto</h4>
     				<div layout-gt-xs="row" class="layout-gt-xs-row">
     					<md-input-container class="flex-gt-xs" flex-gt-xs>
     		                <label>E-mail</label>
@@ -94,7 +96,7 @@
     				        </md-select>
     				    </md-input-container>
     				</div>
-    				<div layout-gt-xs="row" class="layout-gt-xs-row">
+    				<div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="involucrado.involved.assignee.country == 'COLOMBIA'">
     				    <md-input-container class="flex-gt-xs" flex-gt-xs>
     				        <label>Departamento</label>
     				        <md-select ng-model="involucrado.involved.assignee.department" ng-change="getAssigneeCity()" required>
