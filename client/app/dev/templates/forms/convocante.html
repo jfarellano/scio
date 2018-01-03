@@ -317,5 +317,5 @@
 </md-dialog-content>
 <md-dialog-actions>
     <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!convocanteForm.$valid">{{getButtonLable()}}</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!verify_click || !convocanteForm.$valid">{{getButtonLable()}}</md-button>
 </md-dialog-actions>
