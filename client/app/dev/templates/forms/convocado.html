@@ -156,11 +156,15 @@
                                 <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
-                                <label>E-mail</label>
-                                <input data-ng-model="involucrado.involved.email" type="email" required>
+                                <label>Celular de contacto</label>
+                                <input input-num ng-model="involucrado.involved.cellphone" data-ng-minlength=7 type="number" required>
                             </md-input-container>
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>E-mail</label>
+                                <input data-ng-model="involucrado.involved.email" type="email" required>
+                            </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Página web</label>
                                 <input data-ng-model="involucrado.involved.web_site" type="text">
