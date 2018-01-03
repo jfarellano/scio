@@ -299,6 +299,16 @@
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>País de residencia</label>
+                                <md-select ng-model="involucrado.involved.country" required>
+                                    <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                        {{::g.value}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="involucrado.involved.country == 'COLOMBIA'">
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Departamento</label>
                                 <md-select ng-model="involucrado.involved.department" required>
                                     <md-option ng-repeat="g in departments" value="{{g.value}}" requiered>
@@ -314,6 +324,7 @@
                                     </md-option>
                                 </md-select>
                             </md-input-container>
+                        </div>
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
