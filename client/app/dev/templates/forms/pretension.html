@@ -1,25 +1,24 @@
-<div>
-    <md-toolbar>
-      <div class="md-toolbar-tools scio-bar">
-        <h4>Pretensión</h4>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon class="material-icons">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-    <md-dialog-content class="modal_form">
-        <div class="ui-wizard-content">
-            <form name="hechoForm">
-                <md-input-container class="md-block modal_form">
-                    <label>Desriba la pretensión</label>
-                    <textarea ng-model="hecho_pretension.description" rows="10" md-select-on-focus required=""></textarea>
-                </md-input-container>
-            </form>
-        </div>
-    </md-dialog-content>
-    <md-dialog-actions>
-        <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-        <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">{{getButtonLable()}}</md-button>  
-    </md-dialog-actions>
- </div>
+
+<md-toolbar>
+  <div class="md-toolbar-tools scio-bar">
+    <h4>Pretensión</h4>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="cancel()">
+      <md-icon class="material-icons">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-dialog-content class="modal_form">
+    <div class="ui-wizard-content">
+        <form name="hechoForm">
+            <md-input-container class="md-block modal_form">
+                <label>Desriba la pretensión</label>
+                <textarea ng-model="hecho_pretension.description" rows="10" md-select-on-focus required=""></textarea>
+            </md-input-container>
+        </form>
+    </div>
+</md-dialog-content>
+<md-dialog-actions>
+    <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!hechoForm.$valid">{{getButtonLable()}}</md-button>
+</md-dialog-actions>
