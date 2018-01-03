@@ -40,6 +40,11 @@
                                         <p>Estado: {{getState(conc)}}</p>
                                         <div class="col-sm-12 barra-prog"><md-progress-linear md-mode="determinate" value="{{progress(conc)}}" aria-valuemin="0" aria-valuemax="100"></md-progress-linear></div>
                                     </div>
+                                    <div ng-if="estado == 'borrador'">
+                                        <md-button class="md-icon-button md-warn position_top_left" ng-click="deleteSolicitude(conc)" aria-label="Eliminar solicitud">
+                                            <md-icon class="material-icons">delete_forever</md-icon>
+                                        </md-button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

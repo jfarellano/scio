@@ -127,8 +127,17 @@ angular.module('app')
             }
             $scope.fetchData()
         }
-
-
+        $scope.deletion = false
+        $scope.deleteSolicitude = function(sol){
+            $scope.deletion = true
+            Conciliacion.delete.solicitude(sol.id).then(function(response){
+                alertify.success('Se elimino correctamente la solicitud')
+                $scope.fetchData()
+            }, function(response){
+                alertify.error('Error eliminando la solicitud')
+                $scope.fetchData()
+            })
+        }
 
         $scope.Session =  Session
 
@@ -189,21 +198,25 @@ angular.module('app')
         }
 
         $scope.openCreate = function(ev){
-            if (Session.getRole() != 'conciliator_in_equity') {
-                var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
-                Conciliacion.create.solicitude(solicitude).then(function(response){
-                    console.log(response.data)
-                    window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
-                },function(response){
-                    console.log(response.data)
-                })
+            if($scope.deletion){
+                $scope.deletion = false
             }else{
-                var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion_en_equidad", "payment_amount": 0}
-                Conciliacion.create.solicitude(solicitude).then(function(response){
-                    window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
-                },function(response){
-                    console.log(response.data)
-                })
+                if (Session.getRole() != 'conciliator_in_equity') {
+                    var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion", "payment_amount": 0}
+                    Conciliacion.create.solicitude(solicitude).then(function(response){
+                        console.log(response.data)
+                        window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
+                    },function(response){
+                        console.log(response.data)
+                    })
+                }else{
+                    var solicitude = { "user_id":Session.getUserID(),"solicitude_type":"conciliacion_en_equidad", "payment_amount": 0}
+                    Conciliacion.create.solicitude(solicitude).then(function(response){
+                        window.location = '#/app/create/conciliacion/' + response.data.solicitude.id
+                    },function(response){
+                        console.log(response.data)
+                    })
+                }
             }
         }
 

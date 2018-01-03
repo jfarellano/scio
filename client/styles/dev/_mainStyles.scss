@@ -14,6 +14,12 @@ progress {
   border-radius: 9px;
 }
 
+.position_top_left{
+	position: absolute;
+    top: 4px;
+    right: 4px;
+}
+
 .user-auth-body{
 	background-image: url('/assets/images/BG.png');
 	background-size: auto;
@@ -31,7 +37,7 @@ progress {
 }
 
 .horizontal_align{
-	
+
 	ul {
 	    text-align: justify;
 	}
