@@ -84,18 +84,20 @@ angular.module('app')
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
             $scope.getProfession(inv.involved.id, 'involved')
         }
-        $scope.showConvocante(ev)
-        Conciliacion.get.constant_child(COL ,'department').then(function(response){
-            $scope.departments = response.data.constants
-            var r2 = $scope.departments.filter(function(d){
-                return d.value == $scope.involucrado.department
-            })
-            if(r2.length > 0){
-                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-                    $scope.cities = response.data.constants
+        try {
+            Conciliacion.get.constant_child(COL ,'department').then(function(response){
+                $scope.departments = response.data.constants
+                var r2 = $scope.departments.filter(function(d){
+                    return d.value == $scope.involucrado.department
                 })
-            }
-        })
+                if(r2.length > 0){
+                    Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                        $scope.cities = response.data.constants
+                    })
+                }
+            })
+        } catch (e) {}
+        $scope.showConvocante(ev)
     }
     //Convocado
     $scope.showConvocado = function(ev) {
@@ -120,22 +122,24 @@ angular.module('app')
     $scope.editConvocado = function(inv, ev){
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
+        $scope.edit = true
+        $scope.verify_click = true
         if($scope.involucrado.involved.natural != null){
             $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
             $scope.getProfession(inv.involved.id, 'involved')
         }
-        $scope.edit = true
-        $scope.verify_click = true
+        try {
+            Conciliacion.get.constant_child(COL ,'department').then(function(response){
+                $scope.departments = response.data.constants
+                var r2 = $scope.departments.filter(function(d){
+                    return d.value == $scope.involucrado.department
+                })
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            })
+        } catch (e) {}
         $scope.showConvocado(ev)
-        Conciliacion.get.constant_child(COL ,'department').then(function(response){
-            $scope.departments = response.data.constants
-            var r2 = $scope.departments.filter(function(d){
-                return d.value == $scope.involucrado.department
-            })
-            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-                $scope.cities = response.data.constants
-            })
-        })
     }
     //Apoderado
     $scope.showGlobalAssignee = function(ev){
@@ -400,6 +404,7 @@ angular.module('app')
         if ($scope.edit || $scope.verified ) {
             Conciliacion.get.profession(id, type).then(function(response){
                 $scope.professions = response.data.professions
+                console.log(response.data);
             }, function(response){ console.log(response.data) })
         }else{ $scope.professions = [] }
     }

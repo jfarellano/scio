@@ -21,7 +21,6 @@ angular.module('app')
     },
     signUp: function(info){
       return  Upload.upload({method: 'POST', url: IP + '/user',data: info , headers: this.getHeaders()})
-      //return $http.post(IP + '/user', info)
     },
     setToken: function(token, role, user_id, name, email){
       $localStorage.auth = {
