@@ -44,6 +44,7 @@ angular.module('app')
 //Modals
     $scope.edit = false
     $scope.cancel = function() {
+        $scope.postulant = {}
         $scope.edit = false
         $scope.verified = false
         $scope.verify_click = false
@@ -347,11 +348,11 @@ angular.module('app')
         }).then(function(answer) {
             Conciliacion.update.set_postulant($scope.solicitude.id, $scope.involucrado.involved.id, $scope.postulant.type).then(function(response){
                 alertify.success('Exito agregando postulante')
-                $scope.resetInvolucrado()
+                $scope.cancel()
                 $scope.getSolicitude()
             }, function(response){
                 alertify.error('Error agregando postulante')
-                $scope.resetInvolucrado()
+                $scope.cancel()
                 console.log(response.data)
             })
         }, function() { $scope.cancel() });
