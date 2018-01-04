@@ -157,14 +157,16 @@ angular.module('app')
         $scope.verify_click = edit
         if(edit){
             $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
-            var r2 = $scope.departments.filter(function(d){
-                return d.value == $scope.involucrado.involved.assignee.department
-            })
-            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-                $scope.city = response.data.constants
-            }, function(response){
-                console.log(response.data)
-            })
+            try {
+                var r2 = $scope.departments.filter(function(d){
+                    return d.value == $scope.involucrado.involved.assignee.department
+                })
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.city = response.data.constants
+                }, function(response){
+                    console.log(response.data)
+                })
+            } catch (e) {}
         }else{
             $scope.getProfession(null, 'assignee')
         }

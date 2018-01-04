@@ -205,5 +205,5 @@
 <md-dialog-actions>
 	<md-button class="md-raised col-sm-12 btn-w-md md-warn" ng-if="edit && !verified" ng-click="replace_apoderado()">Restaurar</md-button>
     <md-button class="md-raised col-sm-12 btn-w-md" ng-click="cancel()">Cancelar</md-button>
-    <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!appForm.$valid || !verify_click">{{getButtonLable()}}</md-button>
+    <md-button class="md-raised col-sm-12 btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="(!appForm.$valid || !verify_click) && !globalAsociation.value">{{getButtonLable()}}</md-button>
 </md-dialog-actions>
