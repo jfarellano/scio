@@ -134,7 +134,7 @@ angular.module('app')
                     return $http.get(IP + '/solicitudes/'+solID+'/relate_with/involveds/'+invID+ '/' + type, {headers: Session.getHeaders()})
                 },
                 set_postulant: function(solID, invID, type){
-                    return $http.get(IP + '/solicitudes/'+solID+'/involved/'+invID+'/postulant/'+type)
+                    return $http.get(IP + '/solicitudes/'+solID+'/involved/'+invID+'/postulant/'+type, {headers: Session.getHeaders()})
                 }
             },
             get:{
