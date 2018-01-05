@@ -449,7 +449,6 @@ angular.module('app')
         }
     }
     $scope.involucrado = {
-        participation_type: '',
         involved: {}
     }
     $scope.resetInvolucrado = function(){

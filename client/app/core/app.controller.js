@@ -4,7 +4,7 @@
     angular.module('app')
         .controller('AppCtrl', [ '$scope', '$rootScope', '$document', 'appConfig', '$state', '$mdSidenav', '$mdComponentRegistry', 'Session', '$window', '$location', AppCtrl]) // overall control
         .controller('SidenavRightCtrl', ['$scope', '$mdSidenav', SidenavRightCtrl])
-    
+
     function AppCtrl($scope, $rootScope, $document, appConfig, $state, $mdSidenav, $mdComponentRegistry, Session, $window, $location) {
 
     //DEV
@@ -54,7 +54,7 @@
         }
 
 
-        // 
+        //
         $rootScope.$on("$stateChangeSuccess", function (event, currentRoute, previousRoute) {
             $document.duScrollTo(0, 0);
         });
@@ -86,4 +86,4 @@
         $scope.Session = Session
     }
 
-})(); 
+})();

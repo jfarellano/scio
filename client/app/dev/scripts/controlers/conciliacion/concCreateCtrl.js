@@ -1,5 +1,5 @@
 angular.module('app')
-.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations', 'Audiencias',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations, Audiencias){
+.controller('ConcCreateCtlr', ['$scope', '$q','$timeout', 'WizardHandler','Conciliacion', '$http', '$mdDialog', 'URL', '$state', 'Upload', '$window', 'IP', 'COL', 'Participations', 'Audiencias', 'ErrorHandler',function($scope, $q, $timeout, WizardHandler, Conciliacion, $http, $mdDialog, URL, $state, Upload, $window, IP, COL, Participations, Audiencias, ErrorHandler){
     var step = {'info': 0, 'convocantes': 1, 'convocados': 2, 'hechos': 3, 'pretensiones': 4, 'por_pagar': 5}
     $scope.cuantia = {indeterminada: false}
     Conciliacion.get.solicitude($state.params.id).then(function(response){
@@ -310,10 +310,9 @@ angular.module('app')
                 $scope.getProof()
                 $scope.getSolicitude()
             }, function(response){
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.proof = {}
                 $('#loader-container').fadeOut('slow');
-                alertify.error('Error subiendo la prueba')
             })
         }, function() {
             $scope.cancel()
@@ -355,9 +354,8 @@ angular.module('app')
                 $scope.cancel()
                 $scope.getSolicitude()
             }, function(response){
-                alertify.error('Error agregando postulante')
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
-                console.log(response.data)
             })
         }, function() { $scope.cancel() });
     };
@@ -379,8 +377,7 @@ angular.module('app')
                 $scope.profession = {}
             }, function(response){
                 $scope.profession = {}
-                alertify.error('Error agregando profesión')
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else{
             $scope.professions.push($scope.profession)
@@ -393,8 +390,7 @@ angular.module('app')
                 alertify.success('Exito eliminando profesión')
                 $scope.getProfession(usrID, type)
             }, function(response){
-                console.log(response.data)
-                alertify.error('Error eliminando profesión')
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else{
             $scope.professions.splice(id, 1)
@@ -422,8 +418,7 @@ angular.module('app')
                     alertify.success('Exito agregando profesión')
                 }, function(response){
                     $scope.profession = {}
-                    alertify.error('Error agregando profesión')
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             })
             if (!$scope.global) {
@@ -433,8 +428,7 @@ angular.module('app')
                     $scope.cancel()
                 }, function(response){
                     $scope.cancel()
-                    console.log(response.data)
-                    alertify.error("Error relacionando apoderado intente de nuevo")
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
                 if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'assignee', assignee.id);
@@ -442,8 +436,7 @@ angular.module('app')
             }
         },function(response){
             $scope.cancel()
-            alertify.error("Error creando apoderado revise la informacion del apoderado")
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.edit_apoderado = function(){
@@ -454,7 +447,7 @@ angular.module('app')
                     $scope.cancel()
                     $scope.getSolicitude()
                 }, function(response){
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                     $scope.getSolicitude()
                 })
@@ -468,8 +461,7 @@ angular.module('app')
             }
         },function(response){
             $scope.cancel()
-            alertify.error("Error en la edición del apoderado")
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.replace_apoderado = function(){
@@ -488,8 +480,7 @@ angular.module('app')
                 $scope.getSolicitude()
                 $scope.cancel()
             }, function(response){
-                alertify.error("Error restaurando apoderado global")
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
             })
         }else{
@@ -498,9 +489,8 @@ angular.module('app')
                 $scope.getSolicitude()
                 $scope.cancel()
             }, function(response){
-                alertify.error("Error restaurando del apoderado")
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
-                console.log(response)
             })
         }
     }
@@ -520,8 +510,7 @@ angular.module('app')
             $scope.getSolicitude()
             $scope.globalAsociation.value = false
         }, function(response){
-            console.log(response.data)
-            alertify.error("Error agregando al apoderado")
+            ErrorHandler.errorDisplay(response.data.errors)
             $scope.cancel()
             $scope.getSolicitude()
             $scope.globalAsociation.value = false
@@ -538,8 +527,7 @@ angular.module('app')
             $scope.getSolicitude()
             $scope.globalAsociation.value = false
         }, function(response){
-            console.log(response.data)
-            alertify.error("Error agregando al representante")
+            ErrorHandler.errorDisplay(response.data.errors)
             $scope.cancel()
             $scope.getSolicitude()
             $scope.globalAsociation.value = false
@@ -557,8 +545,7 @@ angular.module('app')
                     alertify.success('Exito agregando profesión')
                 }, function(response){
                     $scope.profession = {}
-                    alertify.error('Error agregando profesión')
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             })
             if (!$scope.global) {
@@ -567,18 +554,16 @@ angular.module('app')
                     $scope.cancel()
                     $scope.getSolicitude()
                 }, function(response){
-                    console.log(response.data)
                     $scope.cancel()
-                    alertify.error("Error relacionando al representante intente de nuevo")
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
                 if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', representative.id);
                 else $scope.setGlobal('convocado', 'representative', representative.id);
             }
         },function(response){
-            alertify.error("Error creando al representante, revise los datos")
+            ErrorHandler.errorDisplay(response.data.errors)
             $scope.cancel()
-            console.log(response.data)
         })
         $scope.getSolicitude()
     }
@@ -590,7 +575,7 @@ angular.module('app')
                     $scope.cancel()
                     $scope.getSolicitude()
                 }, function(response){
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                     $scope.getSolicitude()
                 })
@@ -604,8 +589,7 @@ angular.module('app')
             }
         },function(response){
             $scope.cancel()
-            alertify.error("Error editado al representante")
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.replace_representante = function(){
@@ -619,9 +603,8 @@ angular.module('app')
                 $scope.getSolicitude()
                 $scope.cancel()
             }, function(response){
-                alertify.error("Error restaurando representante global")
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
-                console.log(response)
             })
         }else{
             Conciliacion.delete.representative({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
@@ -629,9 +612,8 @@ angular.module('app')
                 $scope.getSolicitude()
                 $scope.cancel()
             }, function(response){
-                alertify.error("Error restaurando del apoderado")
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
-                console.log(response)
             })
         }
     }
@@ -650,8 +632,7 @@ angular.module('app')
                                 alertify.success('Exito agregando profesión')
                             }, function(response){
                                 $scope.profession = {}
-                                alertify.error('Error agregando profesión')
-                                console.log(response.data)
+                                ErrorHandler.errorDisplay(response.data.errors)
                             })
                         })
                         $scope.getSolicitude()
@@ -663,7 +644,7 @@ angular.module('app')
                             $scope.cancel()
                         }, function(response){
                             $scope.cancel()
-                            alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
@@ -672,7 +653,7 @@ angular.module('app')
                         $scope.cancel()
                     }, function(response){
                         $scope.cancel()
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                        ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
             }else{
@@ -682,20 +663,17 @@ angular.module('app')
                     alertify.success("Exito agregando convocante")
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
-                        console.log(response.data);
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.cancel()
                     }, function(response){
-                        console.log(response.data);
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                        ErrorHandler.errorDisplay(response.data.errors)
                         $scope.cancel()
                     })
                 })
             }
         },function(response){
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
             $scope.cancel()
-            alertify.error("Error agregando convocante")
         })
     }
     $scope.edit_convocante = function(){
@@ -710,17 +688,15 @@ angular.module('app')
                             $scope.getSolicitude()
                             $scope.cancel()
                         }, function(response){
-                            console.log(response.data)
+                            ErrorHandler.errorDisplay(response.data.errors)
                             $scope.cancel()
                             $scope.getSolicitude()
-                            alertify.error("Error agregando involucrado")
                         })
                     }
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
-                    alertify.error("Error en la edicion de convocante")
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                 })
             }else{
@@ -732,24 +708,21 @@ angular.module('app')
                             $scope.cancel()
                             $scope.getSolicitude()
                         }, function(response){
-                            console.log(response.data)
                             $scope.getSolicitude()
                             $scope.cancel()
-                            alertify.error("Error agregando involucrado")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
-                    alertify.error("Error en la edicion de convocante")
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                 })
             }
         }, function(response){
             $scope.cancel()
-            alertify.error("Error editando los datos de este involucrado porfavor revise la validez de los datos")
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     //Convocado
@@ -767,8 +740,7 @@ angular.module('app')
                                 alertify.success('Exito agregando profesión')
                             }, function(response){
                                 $scope.profession = {}
-                                alertify.error('Error agregando profesión')
-                                console.log(response.data)
+                                ErrorHandler.errorDisplay(response.data.errors)
                             })
                         })
                         $scope.getSolicitude()
@@ -780,7 +752,7 @@ angular.module('app')
                             $scope.cancel()
                         }, function(response){
                             $scope.cancel()
-                            alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
@@ -789,7 +761,7 @@ angular.module('app')
                         $scope.cancel()
                     }, function(response){
                         $scope.cancel()
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                        ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
             }else{
@@ -802,16 +774,14 @@ angular.module('app')
                         alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         $scope.cancel()
                     }, function(response){
-                        console.log(response.data);
-                        alertify.error("Error agregando convocado, CONTACTE EL EQUIPO DE SOPORTE")
+                        ErrorHandler.errorDisplay(response.data.errors)
                         $scope.cancel()
                     })
                 })
             }
         }, function(response){
             $scope.cancel()
-            console.log(response.data)
-            alertify.error("Error creando involucrado")
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.edit_convocado = function(){
@@ -825,16 +795,15 @@ angular.module('app')
                             $scope.cancel()
                             $scope.getSolicitude()
                         }, function(response){
-                            console.log(response.data)
                             $scope.cancel()
                             $scope.getSolicitude()
-                            alertify.error("Error agregando involucrado")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                 })
             }else{
@@ -845,16 +814,14 @@ angular.module('app')
                             $scope.cancel()
                             $scope.getSolicitude()
                         }, function(response){
-                            console.log(response.data)
                             $scope.getSolicitude()
                             $scope.cancel()
-                            alertify.error("Error agregando involucrado")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
                     $scope.cancel()
                 }, function(response){
-                    alertify.error("Hubo un error editando la información verifique los datos")
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.cancel()
                 })
             }
@@ -868,7 +835,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }
         else if (type == 2){
@@ -877,7 +844,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else{
             Conciliacion.create.fundamentals($scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
@@ -885,7 +852,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }
     }
@@ -896,7 +863,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else if(type == 2){
             Conciliacion.update.pret($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
@@ -904,7 +871,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else{
             Conciliacion.update.fundamentals($scope.hecho_pretension.id, $scope.hecho_pretension).then(function(response){
@@ -912,7 +879,7 @@ angular.module('app')
                 $scope.getSolicitude()
             },function(response){
                 $scope.cancel()
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }
     }
@@ -972,8 +939,7 @@ angular.module('app')
                 $('#loader-container').fadeOut('slow');
                 window.location = '#/app/conciliacion'
             },function(response){
-                console.log(response.data)
-                alertify.error("Hubo un error finalizando la solicitud recargue la pagina por favor");
+                ErrorHandler.errorDisplay(response.data.errors)
                 $('#loader-container').fadeOut('slow');
             })
         }else{
@@ -984,12 +950,12 @@ angular.module('app')
                     $('#loader-container').fadeOut('slow');
                     alertify.success('A la audiencia')
                     $scope.getSolicitude()
-                window.location = '#/app/audiencia/conciliacion/' + $scope.solicitude.id
+                    window.location = '#/app/audiencia/conciliacion/' + $scope.solicitude.id
                 }, function(response){
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             },function(response){
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }
     };
@@ -1007,7 +973,7 @@ angular.module('app')
                 Conciliacion.create.conciliation($scope.solicitude.id, $scope.solicitude).then(function(response){
                     $scope.getSolicitude()
                 },function(response){
-                    console.log(response.data)
+                    ErrorHandler.errorDisplay(response.data.errors)
                     $scope.solicitude.state = 'incompleta'
                     Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                         WizardHandler.wizard().goTo(0)
@@ -1092,10 +1058,9 @@ angular.module('app')
                 $scope.cancel()
                 alertify.success("Exito asociando apoderado global")
             }, function(response){
-                console.log(response.data)
                 $scope.cancel()
                 $scope.getSolicitude()
-                alertify.error("Error asociando apoderado global")
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else if (type == 'representative') {
             Conciliacion.create.global_representative($scope.solicitude.id, id, con).then(function(response){
@@ -1103,8 +1068,7 @@ angular.module('app')
                 $scope.getSolicitude()
                 alertify.success("Exito asociando representante global")
             }, function(response){
-                alertify.error("Error asociando representante global")
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
                 $scope.cancel()
                 $scope.getSolicitude()
             })
@@ -1127,7 +1091,7 @@ angular.module('app')
                 }
             }, function(response){
                 $('#loader-container').fadeOut('slow');
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }else{
             Participations.get.juridical({nit:$scope.involucrado.involved.juridical.nit}).then(function(response){
@@ -1139,7 +1103,7 @@ angular.module('app')
                 }
             }, function(response){
                 $('#loader-container').fadeOut('slow');
-                console.log(response.data)
+                ErrorHandler.errorDisplay(response.data.errors)
             })
         }
     }
@@ -1157,7 +1121,7 @@ angular.module('app')
             }
         }, function(response){
             $('#loader-container').fadeOut('slow');
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.findRepresentative = function(){
@@ -1174,7 +1138,7 @@ angular.module('app')
             }
         }, function(response){
             $('#loader-container').fadeOut('slow');
-            console.log(response.data)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.getARName = function(app){
@@ -1193,7 +1157,7 @@ angular.module('app')
             })
         },function(response){
             window.location = '#/app/conciliacion'
-            console.log(response)
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
     $scope.esConvocante = function(p){
@@ -1296,7 +1260,7 @@ angular.module('app')
                     Conciliacion.get.constant_child(r2[0].id, 'conciliation_subtopic').then(function(response){
                         $scope.subtopic = response.data.constants
                     }, function(response){
-                        console.log(response.data)
+                        //ErrorHandler.errorDisplay(response.data.errors)
                     })
                 })
             }
@@ -1305,7 +1269,7 @@ angular.module('app')
             $scope.subtopic = []
         }
     }, function(response){
-        console.log(response.data)
+        ErrorHandler.errorDisplay(response.data.errors)
     })
 
     Conciliacion.get.constant_child(2307, 'conciliation_area').then(function(response){
