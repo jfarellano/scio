@@ -159,8 +159,8 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = edit
-        $scope.verify_click = edit
         if(edit){
+            $scope.verify_click = edit
             $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             try {
                 var r2 = $scope.departments.filter(function(d){
@@ -212,9 +212,10 @@ angular.module('app')
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = edit
-        $scope.verify_click = edit
-        if(edit) $scope.getProfession($scope.involucrado.involved.representative.id, 'representative');
-        else $scope.getProfession(null, 'representative');
+        if(edit) {
+            $scope.verify_click = edit
+            $scope.getProfession($scope.involucrado.involved.representative.id, 'representative');
+        }else $scope.getProfession(null, 'representative');
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/representante.html',
             scope: $scope,
@@ -367,7 +368,6 @@ angular.module('app')
     }
     //profesion
     $scope.profession = {}
-
     $scope.addProfession = function(id, type){
         if ($scope.edit || $scope.verified ) {
             $scope.profession.name = $scope.profession.name.title
@@ -407,197 +407,6 @@ angular.module('app')
 
 //FinModal
 //CRUDS
-//Apoderado
-    $scope.add_apoderado = function(){
-        Conciliacion.create.assignee(null, null, $scope.involucrado.involved.assignee).then(function(response){
-            var assignee = response.data.assignee
-            $scope.verify_click = false
-            $scope.professions.forEach(function(proff){
-                proff.name = proff.name.title
-                Conciliacion.create.profession(assignee.id, 'assignee', proff).then(function(response){
-                    alertify.success('Exito agregando profesión')
-                }, function(response){
-                    $scope.profession = {}
-                    ErrorHandler.errorDisplay(response.data.errors)
-                })
-            })
-            if (!$scope.global) {
-                Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id}).then(function(response){
-                    alertify.success("Apoderado creado con exito")
-                    $scope.getSolicitude()
-                    $scope.cancel()
-                }, function(response){
-                    ErrorHandler.errorDisplay(response.data.errors)
-                })
-            }else{
-                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'assignee', assignee.id);
-                else $scope.setGlobal('convocado', 'assignee', assignee.id);
-            }
-        },function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-    }
-    $scope.edit_apoderado = function(){
-        Conciliacion.update.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee.id, $scope.involucrado.involved.assignee).then(function(response){
-            if ($scope.verified && !$scope.global) {
-                Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: $scope.involucrado.involved.assignee.id }).then(function(response){
-                    alertify.success("Apoderado agregado con exito")
-                    $scope.cancel()
-                    $scope.getSolicitude()
-                }, function(response){
-                    ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.getSolicitude()
-                })
-            }else if ($scope.verified && $scope.global) {
-                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'assignee', $scope.involucrado.involved.assignee.id);
-                else $scope.setGlobal('convocado', 'assignee', $scope.involucrado.involved.assignee.id);
-            }else{
-                alertify.success("Apoderado editado con exito")
-                $scope.getSolicitude()
-                $scope.cancel()
-            }
-        },function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-    }
-    $scope.replace_apoderado = function(){
-        if($scope.global){
-            var con = ''
-            if (WizardHandler.wizard().currentStepNumber() == 2) {
-                //Convocantes
-                con = 'convocante'
-            }else{
-                //Convocados
-                con = 'convocado'
-            }
-            //function(solID, assigID, type)
-            Conciliacion.delete.global_relation($scope.solicitude.id, 'assignee', con).then(function(response){
-                alertify.success("Exito restaurando apoderado global")
-                $scope.getSolicitude()
-                $scope.cancel()
-            }, function(response){
-                ErrorHandler.errorDisplay(response.data.errors)
-            })
-        }else{
-            Conciliacion.delete.assignee({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
-                alertify.success("Restauración de apoderado exitosa")
-                $scope.getSolicitude()
-                $scope.cancel()
-            }, function(response){
-                ErrorHandler.errorDisplay(response.data.errors)
-            })
-        }
-    }
-    $scope.relateGlobalAssignee = function(){
-        var assignee = {}
-        var ind = WizardHandler.wizard().currentStepNumber()
-        if(ind == 2 ){
-            //Convocante
-            assignee = $scope.getGlobalAR('convocante', 'assignee')
-        }else{
-            //Convocado
-            assignee = $scope.getGlobalAR('convocado', 'assignee')
-        }
-        Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id }).then(function(response){
-            alertify.success("Apoderado asociado con exito")
-            $scope.cancel()
-            $scope.getSolicitude()
-            $scope.globalAsociation.value = false
-        }, function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-    }
-    $scope.relateGlobalRepresentative = function(){
-        var representative = {}
-        var ind = WizardHandler.wizard().currentStepNumber()
-        if(ind == 2 ) representative = $scope.getGlobalAR('convocante', 'representative');
-        else representative = $scope.getGlobalAR('convocado', 'representative');
-        Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: representative.id }).then(function(response){
-            alertify.success("Representante asociado con exito")
-            $scope.cancel()
-            $scope.getSolicitude()
-            $scope.globalAsociation.value = false
-        }, function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-    }
-
-//Rrepresentante
-    $scope.add_representante = function(){
-        Conciliacion.create.representative(null, null, $scope.involucrado.involved.representative).then(function(response){
-            var representative = response.data.representative
-            $scope.verify_click = false
-            $scope.professions.forEach(function(proff){
-                proff.name = proff.name.title
-                Conciliacion.create.profession(representative.id, 'representative', proff).then(function(response){
-                    alertify.success('Exito agregando profesión')
-                }, function(response){
-                    $scope.profession = {}
-                    ErrorHandler.errorDisplay(response.data.errors)
-                })
-            })
-            if (!$scope.global) {
-                Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: representative.id}).then(function(response){
-                    alertify.success("Representante creado con exito")
-                    $scope.cancel()
-                    $scope.getSolicitude()
-                }, function(response){
-                    ErrorHandler.errorDisplay(response.data.errors)
-                })
-            }else{
-                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', representative.id);
-                else $scope.setGlobal('convocado', 'representative', representative.id);
-            }
-        },function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-        $scope.getSolicitude()
-    }
-    $scope.edit_representante = function(){
-        Conciliacion.update.representative($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.representative.id, $scope.involucrado.involved.representative).then(function(response){
-            if ($scope.verified && !$scope.global) {
-                Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: $scope.involucrado.involved.representative.id }).then(function(response){
-                    alertify.success("Representante editado con exito")
-                    $scope.cancel()
-                    $scope.getSolicitude()
-                }, function(response){
-                    ErrorHandler.errorDisplay(response.data.errors)
-                })
-            }else if ($scope.verified && $scope.global) {
-                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', $scope.involucrado.involved.representative.id);
-                else $scope.setGlobal('convocado', 'representative', $scope.involucrado.involved.representative.id);
-            }else{
-                alertify.success("Representante editado con exito")
-                $scope.cancel()
-                $scope.getSolicitude()
-            }
-        },function(response){
-            ErrorHandler.errorDisplay(response.data.errors)
-        })
-    }
-    $scope.replace_representante = function(){
-        if($scope.global){
-            var con = ''
-            if (WizardHandler.wizard().currentStepNumber() == 2) con = 'convocante';
-            else con = 'convocado';
-            //function(solID, assigID, type)
-            Conciliacion.delete.global_relation($scope.solicitude.id, 'representative', con).then(function(response){
-                alertify.success("Exito restaurando representante global")
-                $scope.getSolicitude()
-                $scope.cancel()
-            }, function(response){
-                ErrorHandler.errorDisplay(response.data.errors)
-            })
-        }else{
-            Conciliacion.delete.representative({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
-                alertify.success("Restauración de apoderado exitosa")
-                $scope.getSolicitude()
-                $scope.cancel()
-            }, function(response){
-                ErrorHandler.errorDisplay(response.data.errors)
-            })
-        }
-    }
 //Convocante
     $scope.add_convocante = function(){
         $scope.involucrado.participation_type = 'convocante';
@@ -621,15 +430,19 @@ angular.module('app')
                         $scope.cancel()
                     }, function(response){
                         Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
+                            $scope.showConvocante()
                             alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         }, function(response){
+                            $scope.showConvocante()
                             ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showConvocante()
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
+                        $scope.showConvocante()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
@@ -640,13 +453,16 @@ angular.module('app')
                     alertify.success("Exito agregando convocante")
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showConvocante()
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
+                        $scope.showConvocante()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 })
             }
         },function(response){
+            $scope.showConvocante()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -668,6 +484,7 @@ angular.module('app')
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
+                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
@@ -685,14 +502,16 @@ angular.module('app')
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
+                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }
         }, function(response){
+            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
-    //Convocado
+//Convocado
     $scope.add_convocado = function(){
         $scope.involucrado.participation_type = 'convocado';
         Conciliacion.create.involved($scope.solicitude.id, 'convocado', $scope.involucrado).then(function(response){
@@ -722,8 +541,10 @@ angular.module('app')
                     })
                 }catch(err){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showConvocado()
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
+                        $scope.showConvocado()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
@@ -734,13 +555,16 @@ angular.module('app')
                     $scope.cancel()
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showConvocado()
                         alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
+                        $scope.showConvocado()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 })
             }
         }, function(response){
+            $scope.showConvocado()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -763,6 +587,7 @@ angular.module('app')
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
+                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
@@ -780,12 +605,214 @@ angular.module('app')
                     }
                     $scope.cancel()
                 }, function(response){
+                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }
         })
     }
-    //Hechos_pretensiones
+//Apoderado
+    $scope.add_apoderado = function(){
+        Conciliacion.create.assignee(null, null, $scope.involucrado.involved.assignee).then(function(response){
+            var assignee = response.data.assignee
+            $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
+                Conciliacion.create.profession(assignee.id, 'assignee', proff).then(function(response){
+                    alertify.success('Exito agregando profesión')
+                }, function(response){
+                    $scope.profession = {}
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            })
+            if (!$scope.global) {
+                Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id}).then(function(response){
+                    alertify.success("Apoderado creado con exito")
+                    $scope.getSolicitude()
+                    $scope.cancel()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            }else{
+                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'assignee', assignee.id);
+                else $scope.setGlobal('convocado', 'assignee', assignee.id);
+            }
+        },function(response){
+            $scope.showApoderado($scope.involucrado, null, $scope.edit)
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+    $scope.edit_apoderado = function(){
+        Conciliacion.update.assignee($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.assignee.id, $scope.involucrado.involved.assignee).then(function(response){
+            if ($scope.verified && !$scope.global) {
+                Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: $scope.involucrado.involved.assignee.id }).then(function(response){
+                    alertify.success("Apoderado agregado con exito")
+                    $scope.cancel()
+                    $scope.getSolicitude()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                    $scope.getSolicitude()
+                })
+            }else if ($scope.verified && $scope.global) {
+                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'assignee', $scope.involucrado.involved.assignee.id);
+                else $scope.setGlobal('convocado', 'assignee', $scope.involucrado.involved.assignee.id);
+            }else{
+                alertify.success("Apoderado editado con exito")
+                $scope.getSolicitude()
+                $scope.cancel()
+            }
+        },function(response){
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+    $scope.replace_apoderado = function(){
+        if($scope.global){
+            var con = ''
+            if (WizardHandler.wizard().currentStepNumber() == 2) {
+                //Convocantes
+                con = 'convocante'
+            }else{
+                //Convocados
+                con = 'convocado'
+            }
+            //function(solID, assigID, type)
+            Conciliacion.delete.global_relation($scope.solicitude.id, 'assignee', con).then(function(response){
+                alertify.success("Exito restaurando apoderado global")
+                $scope.getSolicitude()
+                $scope.cancel()
+            }, function(response){
+                $scope.cancel()
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
+        }else{
+            Conciliacion.delete.assignee({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
+                alertify.success("Restauración de apoderado exitosa")
+                $scope.getSolicitude()
+                $scope.cancel()
+            }, function(response){
+                $scope.cancel()
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
+        }
+    }
+    $scope.relateGlobalAssignee = function(){
+        var assignee = {}
+        var ind = WizardHandler.wizard().currentStepNumber()
+        if(ind == 2 ){
+            //Convocante
+            assignee = $scope.getGlobalAR('convocante', 'assignee')
+        }else{
+            //Convocado
+            assignee = $scope.getGlobalAR('convocado', 'assignee')
+        }
+        Conciliacion.create.assignee_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id }).then(function(response){
+            alertify.success("Apoderado asociado con exito")
+            $scope.cancel()
+            $scope.getSolicitude()
+            $scope.globalAsociation.value = false
+        }, function(response){
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+//Rrepresentante
+    $scope.add_representante = function(){
+        Conciliacion.create.representative(null, null, $scope.involucrado.involved.representative).then(function(response){
+            var representative = response.data.representative
+            $scope.professions.forEach(function(proff){
+                proff.name = proff.name.title
+                Conciliacion.create.profession(representative.id, 'representative', proff).then(function(response){
+                    alertify.success('Exito agregando profesión')
+                }, function(response){
+                    $scope.profession = {}
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            })
+            if (!$scope.global) {
+                Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: representative.id}).then(function(response){
+                    alertify.success("Representante creado con exito")
+                    $scope.cancel()
+                    $scope.getSolicitude()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            }else{
+                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', representative.id);
+                else $scope.setGlobal('convocado', 'representative', representative.id);
+            }
+        },function(response){
+            $scope.showRepresentante($scope.involucrado, null, $scope.edit)
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+        $scope.getSolicitude()
+    }
+    $scope.edit_representante = function(){
+        Conciliacion.update.representative($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.representative.id, $scope.involucrado.involved.representative).then(function(response){
+            if ($scope.verified && !$scope.global) {
+                Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: $scope.involucrado.involved.representative.id }).then(function(response){
+                    alertify.success("Representante editado con exito")
+                    $scope.cancel()
+                    $scope.getSolicitude()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            }else if ($scope.verified && $scope.global) {
+                if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', $scope.involucrado.involved.representative.id);
+                else $scope.setGlobal('convocado', 'representative', $scope.involucrado.involved.representative.id);
+            }else{
+                alertify.success("Representante editado con exito")
+                $scope.cancel()
+                $scope.getSolicitude()
+            }
+        },function(response){
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+    $scope.replace_representante = function(){
+        if($scope.global){
+            var con = ''
+            if (WizardHandler.wizard().currentStepNumber() == 2) con = 'convocante';
+            else con = 'convocado';
+            Conciliacion.delete.global_relation($scope.solicitude.id, 'representative', con).then(function(response){
+                alertify.success("Exito restaurando representante global")
+                $scope.getSolicitude()
+                $scope.cancel()
+            }, function(response){
+                $scope.cancel()
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
+        }else{
+            Conciliacion.delete.representative({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
+                alertify.success("Restauración de apoderado exitosa")
+                $scope.getSolicitude()
+                $scope.cancel()
+            }, function(response){
+                $scope.cancel()
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
+        }
+    }
+    $scope.relateGlobalRepresentative = function(){
+        var representative = {}
+        var ind = WizardHandler.wizard().currentStepNumber()
+        if(ind == 2 ) representative = $scope.getGlobalAR('convocante', 'representative');
+        else representative = $scope.getGlobalAR('convocado', 'representative');
+        Conciliacion.create.representative_relation({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id, representative_id: representative.id }).then(function(response){
+            alertify.success("Representante asociado con exito")
+            $scope.cancel()
+            $scope.getSolicitude()
+            $scope.globalAsociation.value = false
+        }, function(response){
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+//Hechos_pretensiones
     $scope.add_hp = function(type){
         if(type == 1){
             Conciliacion.create.fact($scope.solicitude.id, $scope.solicitude.conciliation.id, $scope.hecho_pretension).then(function(response){
@@ -841,15 +868,12 @@ angular.module('app')
             })
         }
     }
-
     //Pruebas
-
     $scope.getProof = function(){
         Conciliacion.get.proof($scope.solicitude.id).then(function(response){
             $scope.proofs = response.data.proofs
         })
     }
-
     $scope.showProof = function(proof, ev){
         if (proof.testimony == null) {
             $window.open(IP + proof.url, '_blank');
@@ -866,7 +890,6 @@ angular.module('app')
         }
     }
 //FinCRUDS
-
 //Validations
     $scope.convocantes_validation = function(){
         try{
@@ -917,7 +940,6 @@ angular.module('app')
             })
         }
     };
-
     $scope.nextStep = function(state) {
         if($scope.solicitude.state == 'incompleta'){
             $scope.solicitude.state = 'incompleta/' + state
