@@ -418,9 +418,11 @@ angular.module('app')
     $scope.verified = false
     $scope.verify_click = false
     $scope.findInvolved = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         if($scope.involucrado.involved.nature == 'natural'){
             Participations.get.natural({identifier_type: $scope.involucrado.involved.natural.identifier_type, identifier: $scope.involucrado.involved.natural.identifier}).then(function(response){
+                $('#loader-container').fadeOut('slow');
                 if (response.status != 204) {
                     $scope.involucrado.involved = response.data.involved
                     $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
@@ -429,16 +431,19 @@ angular.module('app')
                     $scope.getProfession($scope.involucrado.involved.id, 'involved')
                 }
             }, function(response){
+                $('#loader-container').fadeOut('slow');
                 console.log(response.data)
             })
         }else{
             Participations.get.juridical({nit:$scope.involucrado.involved.juridical.nit}).then(function(response){
+                $('#loader-container').fadeOut('slow');
                 if (response.status != 204) {
                     $scope.involucrado.involved = response.data.involved
                     $scope.verified = true
                     $scope.edit = true
                 }
             }, function(response){
+                $('#loader-container').fadeOut('slow');
                 console.log(response.data)
             })
         }

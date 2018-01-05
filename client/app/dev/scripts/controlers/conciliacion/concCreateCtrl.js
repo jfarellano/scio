@@ -1111,8 +1111,6 @@ angular.module('app')
         }
         $scope.cancel()
     }
-
-
     $scope.verified = false
     $scope.findInvolved = function(){
         $('#loader-container').fadeIn('fast');
