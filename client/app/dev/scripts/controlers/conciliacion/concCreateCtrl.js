@@ -427,7 +427,6 @@ angular.module('app')
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
-                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
@@ -435,7 +434,6 @@ angular.module('app')
                 else $scope.setGlobal('convocado', 'assignee', assignee.id);
             }
         },function(response){
-            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -448,7 +446,6 @@ angular.module('app')
                     $scope.getSolicitude()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
                     $scope.getSolicitude()
                 })
             }else if ($scope.verified && $scope.global) {
@@ -460,7 +457,6 @@ angular.module('app')
                 $scope.cancel()
             }
         },function(response){
-            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -481,7 +477,6 @@ angular.module('app')
                 $scope.cancel()
             }, function(response){
                 ErrorHandler.errorDisplay(response.data.errors)
-                $scope.cancel()
             })
         }else{
             Conciliacion.delete.assignee({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
@@ -490,7 +485,6 @@ angular.module('app')
                 $scope.cancel()
             }, function(response){
                 ErrorHandler.errorDisplay(response.data.errors)
-                $scope.cancel()
             })
         }
     }
@@ -511,9 +505,6 @@ angular.module('app')
             $scope.globalAsociation.value = false
         }, function(response){
             ErrorHandler.errorDisplay(response.data.errors)
-            $scope.cancel()
-            $scope.getSolicitude()
-            $scope.globalAsociation.value = false
         })
     }
     $scope.relateGlobalRepresentative = function(){
@@ -528,9 +519,6 @@ angular.module('app')
             $scope.globalAsociation.value = false
         }, function(response){
             ErrorHandler.errorDisplay(response.data.errors)
-            $scope.cancel()
-            $scope.getSolicitude()
-            $scope.globalAsociation.value = false
         })
     }
 
@@ -554,7 +542,6 @@ angular.module('app')
                     $scope.cancel()
                     $scope.getSolicitude()
                 }, function(response){
-                    $scope.cancel()
                     ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
@@ -563,7 +550,6 @@ angular.module('app')
             }
         },function(response){
             ErrorHandler.errorDisplay(response.data.errors)
-            $scope.cancel()
         })
         $scope.getSolicitude()
     }
@@ -576,8 +562,6 @@ angular.module('app')
                     $scope.getSolicitude()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
-                    $scope.getSolicitude()
                 })
             }else if ($scope.verified && $scope.global) {
                 if (WizardHandler.wizard().currentStepNumber() == 2) $scope.setGlobal('convocante', 'representative', $scope.involucrado.involved.representative.id);
@@ -588,7 +572,6 @@ angular.module('app')
                 $scope.getSolicitude()
             }
         },function(response){
-            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -604,7 +587,6 @@ angular.module('app')
                 $scope.cancel()
             }, function(response){
                 ErrorHandler.errorDisplay(response.data.errors)
-                $scope.cancel()
             })
         }else{
             Conciliacion.delete.representative({solicitude_id: $scope.solicitude.id, involved_id: $scope.involucrado.involved.id}).then(function(response){
@@ -613,7 +595,6 @@ angular.module('app')
                 $scope.cancel()
             }, function(response){
                 ErrorHandler.errorDisplay(response.data.errors)
-                $scope.cancel()
             })
         }
     }
@@ -641,18 +622,14 @@ angular.module('app')
                     }, function(response){
                         Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
                             alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                            $scope.cancel()
                         }, function(response){
-                            $scope.cancel()
                             ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
                     }, function(response){
-                        $scope.cancel()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
@@ -664,16 +641,13 @@ angular.module('app')
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
                     }, function(response){
                         ErrorHandler.errorDisplay(response.data.errors)
-                        $scope.cancel()
                     })
                 })
             }
         },function(response){
             ErrorHandler.errorDisplay(response.data.errors)
-            $scope.cancel()
         })
     }
     $scope.edit_convocante = function(){
@@ -689,15 +663,12 @@ angular.module('app')
                             $scope.cancel()
                         }, function(response){
                             ErrorHandler.errorDisplay(response.data.errors)
-                            $scope.cancel()
-                            $scope.getSolicitude()
                         })
                     }
                     $scope.getSolicitude()
                     $scope.cancel()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
                 })
             }else{
                 Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
@@ -708,8 +679,6 @@ angular.module('app')
                             $scope.cancel()
                             $scope.getSolicitude()
                         }, function(response){
-                            $scope.getSolicitude()
-                            $scope.cancel()
                             ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
@@ -717,11 +686,9 @@ angular.module('app')
                     $scope.cancel()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
                 })
             }
         }, function(response){
-            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -749,18 +716,14 @@ angular.module('app')
                     }, function(response){
                         Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
                             alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                            $scope.cancel()
                         }, function(response){
-                            $scope.cancel()
                             ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
                     }, function(response){
-                        $scope.cancel()
                         ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
@@ -772,15 +735,12 @@ angular.module('app')
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
                         alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
                     }, function(response){
                         ErrorHandler.errorDisplay(response.data.errors)
-                        $scope.cancel()
                     })
                 })
             }
         }, function(response){
-            $scope.cancel()
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
@@ -804,7 +764,6 @@ angular.module('app')
                     $scope.cancel()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
                 })
             }else{
                 Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
@@ -822,7 +781,6 @@ angular.module('app')
                     $scope.cancel()
                 }, function(response){
                     ErrorHandler.errorDisplay(response.data.errors)
-                    $scope.cancel()
                 })
             }
         })
@@ -986,6 +944,7 @@ angular.module('app')
             $scope.solicitude.state = 'incompleta/' + state
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                 $scope.getSolicitude()
+                $scope.cancel()
             },function(response){console.log(response.data)})
         }
     };
