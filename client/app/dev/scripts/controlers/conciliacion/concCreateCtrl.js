@@ -1111,11 +1111,15 @@ angular.module('app')
         }
         $scope.cancel()
     }
+
+
     $scope.verified = false
     $scope.findInvolved = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         if($scope.involucrado.involved.nature == 'natural'){
             Participations.get.natural({identifier_type: $scope.involucrado.involved.natural.identifier_type, identifier: $scope.involucrado.involved.natural.identifier}).then(function(response){
+                $('#loader-container').fadeOut('slow');
                 if (response.status != 204) {
                     $scope.involucrado.involved = response.data.involved
                     $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
@@ -1124,23 +1128,28 @@ angular.module('app')
                     $scope.getProfession($scope.involucrado.involved.id, 'involved')
                 }
             }, function(response){
+                $('#loader-container').fadeOut('slow');
                 console.log(response.data)
             })
         }else{
             Participations.get.juridical({nit:$scope.involucrado.involved.juridical.nit}).then(function(response){
+                $('#loader-container').fadeOut('slow');
                 if (response.status != 204) {
                     $scope.involucrado.involved = response.data.involved
                     $scope.verified = true
                     $scope.edit = true
                 }
             }, function(response){
+                $('#loader-container').fadeOut('slow');
                 console.log(response.data)
             })
         }
     }
     $scope.findAssignee = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         Participations.get.assignee({identifier_type: $scope.involucrado.involved.assignee.identifier_type, identifier: $scope.involucrado.involved.assignee.identifier}).then(function(response){
+            $('#loader-container').fadeOut('slow');
             if (response.status != 204) {
                 $scope.involucrado.involved.assignee = response.data.assignee
                 $scope.getAssigneeCity()
@@ -1149,12 +1158,15 @@ angular.module('app')
                 $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             }
         }, function(response){
+            $('#loader-container').fadeOut('slow');
             console.log(response.data)
         })
     }
     $scope.findRepresentative = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         Participations.get.representative({identifier_type: $scope.involucrado.involved.representative.identifier_type, identifier: $scope.involucrado.involved.representative.identifier}).then(function(response){
+            $('#loader-container').fadeOut('slow');
             if (response.status != 204) {
                 $scope.involucrado.involved.representative = response.data.representative
                 $scope.getRepCities()
@@ -1163,6 +1175,7 @@ angular.module('app')
                 $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
             }
         }, function(response){
+            $('#loader-container').fadeOut('slow');
             console.log(response.data)
         })
     }
