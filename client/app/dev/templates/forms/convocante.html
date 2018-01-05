@@ -276,12 +276,7 @@
                                 </md-select>
                             </md-input-container>
                         </div>
-                        <h4>Información de contacto</h4>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
-                            <md-input-container class="flex-gt-xs" flex-gt-xs>
-                                <label>Dirección judicial</label>
-                                <input ng-model="involucrado.involved.address" type="text" required>
-                            </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>País de origen</label>
                                 <md-select ng-model="involucrado.involved.juridical.origin_country" required>
@@ -291,7 +286,12 @@
                                 </md-select>
                             </md-input-container>
                         </div>
+                        <h4>Información de contacto</h4>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>Dirección judicial</label>
+                                <input ng-model="involucrado.involved.address" type="text" required>
+                            </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>País de residencia</label>
                                 <md-select ng-model="involucrado.involved.country" required>
@@ -327,6 +327,12 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Teléfono de contacto</label>
                                 <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row" class="layout-gt-xs-row">
+                            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                                <label>Página web</label>
+                                <input data-ng-model="involucrado.involved.web_site" type="text">
                             </md-input-container>
                         </div>
                     </div>
