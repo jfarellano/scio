@@ -84,7 +84,9 @@
             </div>
 
             <h4 class="show_title"><b>Convocantes</b></h4>
-            <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
+            <div ng-if="Session.getRole = 'admin'">
+                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
+            </div>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
@@ -99,7 +101,9 @@
                 </div>
             </md-list-item>
             <h4 class="show_title"><b>Convocados</b></h4>
-            <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
+            <div ng-if="Session.getRole = 'admin'">
+                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
+            </div>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
                 <div>
                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
