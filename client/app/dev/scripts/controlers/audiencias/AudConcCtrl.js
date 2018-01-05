@@ -358,39 +358,40 @@ angular.module('app')
 
     $scope.resetInvolucrado = function(){
         $scope.involucrado = {
-            involved: {
-                country: 'COLOMBIA'
-            }
+            involved: {}
         }
     }
     $scope.findAssignee = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         Participations.get.assignee({identifier_type: $scope.involucrado.involved.assignee.identifier_type, identifier: $scope.involucrado.involved.assignee.identifier}).then(function(response){
-            console.log(response)
+            $('#loader-container').fadeOut('slow');
             if (response.status != 204) {
                 $scope.involucrado.involved.assignee = response.data.assignee
                 $scope.getAssigneeCity()
                 $scope.verified = true
-
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.assignee.id, 'assignee')
             }
         }, function(response){
+            $('#loader-container').fadeOut('slow');
             console.log(response.data)
         })
     }
     $scope.findRepresentative = function(){
+        $('#loader-container').fadeIn('fast');
         $scope.verify_click = true
         Participations.get.representative({identifier_type: $scope.involucrado.involved.representative.identifier_type, identifier: $scope.involucrado.involved.representative.identifier}).then(function(response){
+            $('#loader-container').fadeOut('slow');
             if (response.status != 204) {
                 $scope.involucrado.involved.representative = response.data.representative
                 $scope.getRepCities()
                 $scope.verified = true
-                $scope.verify_click = true
                 $scope.edit = true
                 $scope.getProfession($scope.involucrado.involved.representative.id, 'representative')
             }
         }, function(response){
+            $('#loader-container').fadeOut('slow');
             console.log(response.data)
         })
     }
