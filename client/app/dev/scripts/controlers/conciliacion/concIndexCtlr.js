@@ -21,6 +21,8 @@ angular.module('app')
                         if (response.data.solicitudes.length == 0 || response.data.solicitudes.length < 10) {
                             $scope.moreAvailable = false
                         }
+                    }, function(response){
+                        console.log(response.data);
                     })
                 }else if($scope.estado == 'archivo'){
                     Conciliacion.get.archive_all(data).then(function(response){
