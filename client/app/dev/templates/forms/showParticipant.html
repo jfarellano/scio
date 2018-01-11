@@ -40,4 +40,7 @@
     </div>
 </md-dialog-content>
 <md-dialog-actions>
-
+    <div ng-if="Session.getRole() != 'default'">
+        <md-button class="md-raised btn-w-md md-primary" ng-click="editInvolved(part, $event, part.participation_type)">Editar involucrado</md-button>
+    </div>
+</md-dialog-actions>

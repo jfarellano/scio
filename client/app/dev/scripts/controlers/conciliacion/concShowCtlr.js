@@ -503,6 +503,7 @@ angular.module('app')
         });
     }
     $scope.editInvolved = function(inv, ev, type){
+        $scope.cancel()
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
         $scope.edit = true
