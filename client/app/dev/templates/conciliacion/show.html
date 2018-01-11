@@ -25,7 +25,6 @@
                     </div>
                 </div>
             </div>
-
             <div ng-if="conc.state == 'aceptada' && Session.getRole() == 'coordinator' || conc.state == 'denegada_por_conciliador' && Session.getRole() == 'coordinator'">
                 <div class="box conciliator_list">
                     <div class="box-body bg-dark">
@@ -42,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
             <div ng-if="conc.state == 'pendiente_por_aceptacion_de_conciliador' && Session.getRole() == 'conciliator'">
                 <div class="box">
                     <div class="box-body bg-dark">
@@ -54,8 +52,6 @@
                     </div>
                 </div>
             </div>
-
-
             <div ng-if="(conc.state == 'aceptada_por_conciliador' || conc.state == 'programar_audiencia') && Session.getRole() == 'conciliator'">
                 <div class="box">
                     <div class="box-body bg-dark">
@@ -75,17 +71,15 @@
             <div ng-if="conc.state == 'programada' && Session.getRole() == 'conciliator'">
                 <button class="md-raised btn-w-md md-primary md-button md-ink-ripple" ng-click="toAudience()">Ir a Audiencia</button>
             </div>
-
             <div ng-if="conc.conciliator != null">
                 <h4 class="show_title"><b>Conciliador</b></h4>
                 <h5 class="cap">{{conc.conciliator.name}} {{conc.conciliator.first_lastname}}</h5>
                 <p>Telefono: {{conc.conciliator.phone}}</p>
                 <p>E-Mail: {{conc.conciliator.email}}</p>
             </div>
-
             <h4 class="show_title"><b>Convocantes</b></h4>
-            <div ng-if="Session.getRole() == 'admin' && conc.state != 'cerrada'">
-                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
+            <div ng-if="Session.getRole() != 'default' && conc.state != 'cerrada'">
+                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showInvolved($event, 'convocante')">Agregar nuevo convocante</md-button>
             </div>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="showParticipant(conv, $event)">
                 <div>
@@ -101,8 +95,8 @@
                 </div>
             </md-list-item>
             <h4 class="show_title"><b>Convocados</b></h4>
-            <div ng-if="Session.getRole() == 'admin' && conc.state != 'cerrada'">
-                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
+            <div ng-if="Session.getRole() != 'default' && conc.state != 'cerrada'">
+                <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showInvolved($event, 'convocado')">Agregar nuevo convocado</md-button>
             </div>
             <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="showParticipant(conv, $event)">
                 <div>

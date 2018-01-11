@@ -41,11 +41,9 @@ angular.module('app')
         $scope.conc = {}
         console.log(request.data)
     })
-
     $scope.showArchive = function(url){
         window.open(IP + url, '_blank');
     }
-
     $scope.getNotification = function(conv){
         Conciliacion.get.notification($scope.conc.conciliation.id, conv.involved.id).then(function(response){
             $scope.showDocument(response.data.document)
@@ -55,16 +53,13 @@ angular.module('app')
             console.log(response.data);
         })
     }
-
     var dateToEs = function(fecha){
         var months = { "0": "Enero", "1": "Febrero", "2": "Marzo", "3": "Abril", "4": "Mayo", "5": "Junio", "6": "Juilo", "7": "Agosto", "8": "Septiembre", "9": "Octubre", "10": "Noviembre", "11": "Diciembre"}
         return fecha.getDate() + " de " + months[fecha.getMonth()] + ", " + fecha.getFullYear() + ". A las " + fecha.getHours() + ":" + getMins(fecha) + " horas"
     }
-
     var getMins = function (date){
         return (date.getMinutes()<10?'0':'') + date.getMinutes()
     }
-
     $scope.showProof = function(proof, ev){
         $scope.part = proof
         $mdDialog.show({
@@ -87,15 +82,12 @@ angular.module('app')
         $scope.verify_click = false
         $scope.resetInvolucrado()
     }
-
     $scope.showDocument = function(doc){
         window.open(IP +'/'+ doc.url, '_blank');
     }
-
     $scope.getUserName = function(user){
         return user.name + ' ' + user.first_lastname + ' ' + user.second_lastname
     }
-
     $scope.reFetchConc = function(){
         $('#loader-container').fadeIn('fast');
         Conciliacion.show($state.params.id).then(function (request) {
@@ -117,7 +109,6 @@ angular.module('app')
             $scope.conc = {}
         })
     }
-
     $scope.getDocument = function(){
         Conciliacion.get.solicitude_document($scope.conc.conciliation.id).then(function(response){
             var data = response.data.document
@@ -129,7 +120,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.cuantia = function(value){
         if(value == -1){
             return 'Indeterminada'
@@ -137,7 +127,6 @@ angular.module('app')
             return '$ ' + value
         }
     }
-
     $scope.programAudience = function(){
         if(!$scope.program){
             var eve = uiCalendarConfig.calendars.programCalendar.fullCalendar('clientEvents')
@@ -183,7 +172,6 @@ angular.module('app')
             })
         }
     }
-
     $scope.toAudience = function(){
         $scope.conc.state = 'iniciar_audiencia'
         Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
@@ -192,7 +180,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.coordAccept = function(response){
         $scope.conc.state = response
         Conciliacion.update.coordinator_solicitude($scope.conc.id, $scope.conc).then(function(response){
@@ -201,7 +188,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.conAccept = function(response){
         $scope.conc.state = response
         Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
@@ -210,7 +196,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.setConciliator = function(conciliator){
         //console.log('Entro en asigancion')
         Conciliacion.update.set_conciliator($scope.conc.id, conciliator.id).then(function(response){
@@ -219,7 +204,6 @@ angular.module('app')
             console.log(response.data)
         })
     }
-
     $scope.getState = function(){
         try {
             return $scope.conc.state.toUpperCase().replaceAll('_', ' ')
@@ -230,7 +214,6 @@ angular.module('app')
     String.prototype.replaceAll = function(str1, str2, ignore){
         return this.replace(new RegExp(str1.replace(/([\/\,\!\\\^\$\{\}\[\]\(\)\.\*\+\?\|\<\>\-\&])/g,"\\$&"),(ignore?"gi":"g")),(typeof(str2)=="string")?str2.replace(/\$/g,"$$$$"):str2);
     }
-
     $scope.showParticipant = function(part, ev){
         $scope.part = part
         $mdDialog.show({
@@ -246,7 +229,6 @@ angular.module('app')
             console.log('Evento cancelado')
         });
     }
-
     $scope.showAudience = function(audience, ev){
         $scope.audience = audience
         $mdDialog.show({
@@ -258,15 +240,12 @@ angular.module('app')
             clickOutsideToClose:true
         });
     }
-
     $scope.esConvocante = function(p){
         return p.participation_type == 'convocante'
     }
-
     $scope.esNatural = function(p){
         return p.involved.nature == 'natural'
     }
-
     $scope.getConvocantes = function(){
         try {
             return $scope.conc.solicitude_participations.filter(i => $scope.esConvocante(i));
@@ -274,7 +253,6 @@ angular.module('app')
             return []
         }
     }
-
     $scope.getConvocados = function(){
         try {
             return $scope.conc.solicitude_participations.filter(i => !$scope.esConvocante(i));
@@ -288,7 +266,6 @@ angular.module('app')
     $scope.representante = function(inv){
         return inv.involved.representative != null
     }
-
     $scope.getName = function(ele) {
         if($scope.esNatural(ele)){
             return ele.involved.natural.first_name + ' ' + ele.involved.natural.first_lastname
@@ -296,7 +273,6 @@ angular.module('app')
             return ele.involved.juridical.name
         }
     }
-
     $scope.getID = function(ele){
         if($scope.esNatural(ele)){
             return ele.involved.natural.identifier_type + ': ' + ele.involved.natural.identifier
@@ -304,7 +280,6 @@ angular.module('app')
             return 'Nit: ' + ele.involved.juridical.nit
         }
     }
-
     $scope.getIcon = function(ele){
         if($scope.esNatural(ele)){
             return 'perm_identity'
@@ -312,7 +287,6 @@ angular.module('app')
             return 'account_balance'
         }
     }
-
     $scope.switchIndex = function(){
         Conciliacion.setIndex(true);
         window.location = '#/app/conciliacion';
@@ -320,9 +294,7 @@ angular.module('app')
     $scope.mobile = screenSize.on('xs, sm', function(isMatch){
         $scope.mobile = isMatch;
     });
-
 //CALENDAR
-
     Audiencias.get.user_audiences().then(function(response){
         var audiencias = response.data.audiences
         audiencias.forEach(function(aud){
@@ -337,7 +309,6 @@ angular.module('app')
             $scope.audiencias.push(a)
         })
     }, function(response){console.log(response.data)})
-
     $scope.eventsF = function (start, end, timezone, callback) {
       var s = new Date(start).getTime() / 1000;
       var e = new Date(end).getTime() / 1000;
@@ -397,12 +368,10 @@ angular.module('app')
             }
         }
     }
-
     $scope.resetEvent = function(){
         $scope.audiencias.splice($scope.audiencias.length - 1, 1)
         $scope.program = true;
     }
-
     $scope.getProfession = function(id, type){
         if ($scope.edit || $scope.verified ) {
             Conciliacion.get.profession(id, type).then(function(response){
@@ -452,9 +421,7 @@ angular.module('app')
         involved: {}
     }
     $scope.resetInvolucrado = function(){
-        $scope.involucrado = {
-            involved: {}
-        }
+        $scope.involucrado = {involved: {}}
     }
     $scope.getButtonLable = function(){
         $('#loader-container').fadeOut('slow');
@@ -518,34 +485,48 @@ angular.module('app')
             $scope.professions = []
         }
     }
-
-//CONVOCANTE
-    $scope.showConvocante = function(ev) {
+//Involved
+    $scope.showInvolved = function(ev, type){
         $('#loader-container').fadeIn('fast');
-        if(!$scope.edit){
-            $scope.getProfession(null, 'involved')
-        }
+        if(!$scope.edit) $scope.getProfession(null, 'involved');
         $mdDialog.show({
-            templateUrl: URL.dev.template + '/forms/convocante.html',
+            templateUrl: URL.dev.template + '/forms/involucrado.html',
             scope: $scope,
             preserveScope: true,
             targetEvent: ev,
             escapeToClose: false
         }).then(function(answer) {
-            if($scope.edit){
-                $scope.edit_convocante()
-            }else{
-                $scope.add_convocante()
-            }
+            if($scope.edit) $scope.edit_involved(type);
+            else $scope.add_involved(type);
         }, function() {
-            $scope.edit = false
-            $scope.verified = false
-            $scope.verify_click = false
+            $scope.cancel()
         });
-    };
-    $scope.add_convocante = function(){
-        $scope.involucrado.participation_type = 'convocante';
-        Conciliacion.create.involved($scope.conc.id, 'convocante', $scope.involucrado).then(function(response){
+    }
+    $scope.editInvolved = function(inv, ev, type){
+        $('#loader-container').fadeIn('fast');
+        $scope.involucrado = inv
+        $scope.edit = true
+        $scope.verify_click = true
+        if($scope.involucrado.involved.natural != null){
+            $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
+            $scope.getProfession(inv.involved.id, 'involved')
+        }
+        try {
+            Conciliacion.get.constant_child(COL ,'department').then(function(response){
+                $scope.departments = response.data.constants
+                var r2 = $scope.departments.filter(function(d){
+                    return d.value == $scope.involucrado.department
+                })
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            })
+        } catch (e) {}
+        $scope.showInvolved(ev, type)
+    }
+    $scope.add_involved = function(type){
+        $scope.involucrado.participation_type = type;
+        Conciliacion.create.involved($scope.conc.id, type, $scope.involucrado).then(function(response){
             var involucrado = response.data.involved
             if($scope.involucrado.involved.nature == 'natural'){
                 try{
@@ -557,254 +538,95 @@ angular.module('app')
                                 alertify.success('Exito agregando profesión')
                             }, function(response){
                                 $scope.profession = {}
-                                alertify.error('Error agregando profesión')
-                                console.log(response.data)
+                                ErrorHandler.errorDisplay(response.data.errors)
                             })
                         })
                         $scope.reFetchConc()
-                        alertify.success("Exito agregando convocante")
+                        alertify.success("Exito agregando involucrado")
                         $scope.cancel()
                     }, function(response){
                         Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
-                            alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                            $scope.cancel()
+                            $scope.showConvocante()
+                            alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                         }, function(response){
-                            $scope.cancel()
-                            alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                            $scope.showConvocante()
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     })
                 }catch(err){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
-                        alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
+                        $scope.showConvocante()
+                        alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
-                        $scope.cancel()
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
+                        $scope.showConvocante()
+                        ErrorHandler.errorDisplay(response.data.errors)
                     })
                 }
             }else{
                 Conciliacion.create.juridical($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
                     $scope.reFetchConc()
                     $scope.cancel()
-                    alertify.success("Exito agregando convocante")
+                    alertify.success("Exito agregando involucrado")
                 },function(response){
                     Conciliacion.delete.involved(involucrado.id).then(function(response){
-                        console.log(response.data);
-                        alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
+                        $scope.showConvocante()
+                        alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
                     }, function(response){
-                        console.log(response.data);
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
-                        $scope.cancel()
+                        $scope.showConvocante()
+                        ErrorHandler.errorDisplay(response.data.errors)
                     })
                 })
             }
         },function(response){
-            console.log(response.data)
-            $scope.cancel()
-            alertify.error("Error agregando convocante")
+            $scope.showConvocante()
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
-
-    $scope.edit_convocante = function(){
-        $scope.involucrado.participation_type = 'convocado';
-        Conciliacion.create.involved($scope.conc.id, 'convocado', $scope.involucrado).then(function(response){
-            var involucrado = response.data.involved
-            if($scope.involucrado.involved.nature == 'natural'){
-                try{
-                    $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
-                    Conciliacion.create.natural($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                        $scope.professions.forEach(function(proff){
-                            proff.name = proff.name.title
-                            Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
-                                alertify.success('Exito agregando profesión')
-                            }, function(response){
-                                $scope.profession = {}
-                                alertify.error('Error agregando profesión')
-                                console.log(response.data)
-                            })
-                        })
-                        $scope.reFetchConc()
-                        alertify.success("Exito agregando convocante")
-                        $scope.cancel()
-                    }, function(response){
-                        Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
-                            alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                            $scope.cancel()
-                        }, function(response){
-                            $scope.cancel()
-                            alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
-                        })
-                    })
-                }catch(err){
-                    Conciliacion.delete.involved(involucrado.id).then(function(response){
-                        alertify.error("Error agregando convocante, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
-                    }, function(response){
-                        $scope.cancel()
-                        alertify.error("Error agregando convocante, CONTACTE EL EQUIPO DE SOPORTE")
-                    })
-                }
-            }else{
-                Conciliacion.create.juridical($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                    $scope.reFetchConc()
-                    alertify.success("Exito agregando convocado")
-                    $scope.cancel()
-                },function(response){
-                    Conciliacion.delete.involved(involucrado.id).then(function(response){
-                        alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                        $scope.cancel()
-                    }, function(response){
-                        console.log(response.data);
-                        alertify.error("Error agregando convocado, CONTACTE EL EQUIPO DE SOPORTE")
-                        $scope.cancel()
-                    })
-                })
-            }
-        }, function(response){
-            $scope.cancel()
-            console.log(response.data)
-            alertify.error("Error creando involucrado")
-        })
-    }
-
-//CONVOCADO
-    $scope.showConvocado = function(ev) {
-        $('#loader-container').fadeIn('fast');
-        if(!$scope.edit){
-            $scope.getProfession(null, 'involved')
-        }
-        $mdDialog.show({
-            templateUrl: URL.dev.template + '/forms/convocado.html',
-            scope: $scope,
-            preserveScope: true,
-            targetEvent: ev,
-            escapeToClose: false
-        }).then(function(answer) {
-            if($scope.edit){
-                $scope.edit_convocado()
-            }else{
-                $scope.add_convocado()
-            }
-        }, function() {
-            $scope.edit = false
-            $scope.verified = false
-            $scope.verify_click = false
-        });
-    };
-    $scope.add_convocado = function(){
-        $scope.involucrado.participation_type = 'convocado';
-        console.log($scope.involucrado);
-        Conciliacion.create.involved($scope.conc.id, 'convocado', $scope.involucrado).then(function(response){
-            var involucrado = response.data.involved
-            if($scope.involucrado.involved.nature == 'natural'){
-                $scope.involucrado.involved.natural.identifier_expedition_city = $scope.involucrado.involved.natural.identifier_expedition_city.title
-                $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
-                Conciliacion.create.natural($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                    $scope.professions.forEach(function(proff){
-                        proff.name = proff.name.title
-                        Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
-                            alertify.success('Exito agregando profesión')
-                        }, function(response){
-                            $scope.profession = {}
-                            alertify.error('Error agregando profesión')
-                            console.log(response.data)
-                        })
-                    })
-                    $scope.reFetchConc()
-                    alertify.success("Exito agregando convocado")
-                    $scope.resetInvolucrado()
-                }, function(response){
-                    alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                    console.log(response.data)
-                    $scope.resetInvolucrado()
-                })
-            }else{
-                Conciliacion.create.juridical($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
-                    $scope.reFetchConc()
-                    alertify.success("Exito agregando convocado")
-                    $scope.resetInvolucrado()
-                },function(response){
-                    alertify.error("Error agregando convocado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
-                    console.log(response.data)
-                    $scope.resetInvolucrado()
-                })
-            }
-        },function(response){
-            console.log(response.data)
-            $scope.resetInvolucrado()
-            alertify.error("Error agregando convocado")
-        })
-    }
-
-    $scope.edit_convocado = function(){
-        $scope.verify_click = false
+    $scope.edit_involved = function(type){
         Conciliacion.update.involved($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
                 Conciliacion.update.natural($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
-                    alertify.success("Edicion exitosa de convocado")
+                    alertify.success("Edicion exitosa de involucrado")
                     if ($scope.verified) {
-                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, 'convocado').then(function(response){
+                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, type).then(function(response){
                             alertify.success("Exito agregando involucrado")
-                            $scope.verified = false
                             $scope.reFetchConc()
-                            $scope.resetInvolucrado()
-                            $scope.edit = false
+                            $scope.cancel()
                         }, function(response){
-                            console.log(response.data)
-                            $scope.verified = false
-                            $scope.reFetchConc()
-                            $scope.resetInvolucrado()
-                            $scope.edit = false
-                            alertify.error("Error agregando involucrado")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
                     $scope.reFetchConc()
-                    $scope.resetInvolucrado()
-                    $scope.edit = false
+                    $scope.cancel()
                 }, function(response){
-                    alertify.error("Error en la edicion de convocado")
-                    console.log(response.data)
-                    $scope.resetInvolucrado()
-                    $scope.edit = false
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
                 })
             }else{
                 Conciliacion.update.juridical($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
-                  alertify.success("Edicion exitosa de convocado")
+                    alertify.success("Edicion exitosa de convocante")
                     if ($scope.verified) {
-                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, 'convocado').then(function(response){
+                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, type).then(function(response){
                             alertify.success("Exito agregando involucrado")
-                            $scope.verified = false
+                            $scope.cancel()
                             $scope.reFetchConc()
-                            $scope.resetInvolucrado()
-                            $scope.edit = false
                         }, function(response){
-                            console.log(response.data)
-                            $scope.verified = false
-                            $scope.reFetchConc()//reFetch
-                            $scope.resetInvolucrado()
-                            $scope.edit = false
-                            alertify.error("Error agregando involucrado")
+                            ErrorHandler.errorDisplay(response.data.errors)
                         })
                     }
                     $scope.reFetchConc()
-                    $scope.resetInvolucrado()
-                    $scope.edit = false
-                    }, function(response){
-                        alertify.error("Error en la edicion de convocado")
-                        console.log(response.data)
-                        $scope.resetInvolucrado()
-                        $scope.edit = false
-                    })
+                    $scope.cancel()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
             }
         }, function(response){
-            console.log(response.data)
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
         })
     }
-
-
-
     Date.prototype.sendFormat = function() {
       var mm = this.getMonth() + 1; // getMonth() is zero-based
       var dd = this.getDate();
@@ -814,7 +636,7 @@ angular.module('app')
     $scope.audiencias = []
     $scope.events = [$scope.audiencias]
 //CONSTANTS
-$scope.$watch('involucrado.involved.department', function(){
+    $scope.$watch('involucrado.involved.department', function(){
     if($scope.departments != null){
         var r = $scope.departments.filter(function(a) {
             return a.value == $scope.involucrado.involved.department
@@ -826,90 +648,77 @@ $scope.$watch('involucrado.involved.department', function(){
         }
     }
 })
-
-
-Conciliacion.get.constant('gender').then(function(response){
+    Conciliacion.get.constant('gender').then(function(response){
     $scope.gender = response.data.constants
 })
-Conciliacion.get.constant('scholarly_level').then(function(response){
-    $scope.level = response.data.constants
-})
-Conciliacion.get.constant('strata').then(function(response){
-    $scope.estratos = response.data.constants
-})
-Conciliacion.get.constant('profession_name').then(function(response){
-    $scope.profession_name = response.data.constants
-})
-Conciliacion.get.constant('profession_institution').then(function(response){
-    $scope.profession_institution = response.data.constants
-})
-Conciliacion.get.constant('type_of_public_entity').then(function(response){
-    $scope.public_type = response.data.constants
-})
-Conciliacion.get.constant('city').then(function(response){
-    var all_cities = response.data.constants.sort(function (a, b) {
-        if(a.value < b.value){
-            return -1
-        }else if(a.value > b.value){
-            return 1
-        }
-        return 0
+    Conciliacion.get.constant('scholarly_level').then(function(response){
+        $scope.level = response.data.constants
     })
-    $scope.all_cities = []
-    $.each(all_cities, function(i, el){
-        if ($scope.uniqueCity(el)){
-            $scope.all_cities.push(el);
-        }
+    Conciliacion.get.constant('strata').then(function(response){
+        $scope.estratos = response.data.constants
     })
-})
-
-$scope.uniqueCity = function(ele){
-    var a = $scope.all_cities.filter(function(elem){
-        return ele.value == elem.value
+    Conciliacion.get.constant('profession_name').then(function(response){
+        $scope.profession_name = response.data.constants
     })
-    return a.length == 0
-}
-$scope.involvedType = function(type){
-    if(type == 'natural'){
-        return 'Persona'
-    }else{
-        return 'Organización'
-    }
-}
-Conciliacion.get.constant('organization_type').then(function(response){
-    $scope.org_type = response.data.constants
-})
-Conciliacion.get.constant('economic_sector').then(function(response){
-    $scope.economic_sector = response.data.constants
-})
-Conciliacion.get.constant('identifier_type').then(function(response){
-    $scope.idType = response.data.constants
-})
-Conciliacion.get.constant('country').then(function(response){
-    $scope.countries = response.data.constants
-})
-Conciliacion.get.constant_child(COL ,'department').then(function(response){
-    $scope.departments = response.data.constants
-    var r2 = $scope.departments.filter(function(d){
-        return d.value == $scope.involucrado.department
+    Conciliacion.get.constant('profession_institution').then(function(response){
+        $scope.profession_institution = response.data.constants
     })
-    if(r2.length > 0){
-        Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
-            $scope.cities = response.data.constants
+    Conciliacion.get.constant('type_of_public_entity').then(function(response){
+        $scope.public_type = response.data.constants
+    })
+    Conciliacion.get.constant('city').then(function(response){
+        var all_cities = response.data.constants.sort(function (a, b) {
+            if(a.value < b.value){
+                return -1
+            }else if(a.value > b.value){
+                return 1
+            }
+            return 0
         })
+        $scope.all_cities = []
+        $.each(all_cities, function(i, el){
+            if ($scope.uniqueCity(el)){
+                $scope.all_cities.push(el);
+            }
+        })
+    })
+    $scope.uniqueCity = function(ele){
+        var a = $scope.all_cities.filter(function(elem){
+            return ele.value == elem.value
+        })
+        return a.length == 0
     }
-})
-Conciliacion.get.constant('involved_nature').then(function(response){
-    $scope.convtype = response.data.constants
-})
-
-
-    // selected = null,
-    // previous = null;
-    // $scope.tabs = $scope.conc.documentos;
-    // $scope.selectedIndex = 0;
-    // $scope.$watch('selectedIndex', function(current, old){
-    //     previous = selected;
-    //     selected = $scope.tabs[current];
-    // });
+    $scope.involvedType = function(type){
+        if(type == 'natural'){
+            return 'Persona'
+        }else{
+            return 'Organización'
+        }
+    }
+    Conciliacion.get.constant('organization_type').then(function(response){
+        $scope.org_type = response.data.constants
+    })
+    Conciliacion.get.constant('economic_sector').then(function(response){
+        $scope.economic_sector = response.data.constants
+    })
+    Conciliacion.get.constant('identifier_type').then(function(response){
+        $scope.idType = response.data.constants
+    })
+    Conciliacion.get.constant('country').then(function(response){
+        $scope.countries = response.data.constants
+    })
+    Conciliacion.get.constant_child(COL ,'department').then(function(response){
+        $scope.departments = response.data.constants
+        var r2 = $scope.departments.filter(function(d){
+            return d.value == $scope.involucrado.department
+        })
+        if(r2.length > 0){
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        }
+    })
+    Conciliacion.get.constant('involved_nature').then(function(response){
+        $scope.convtype = response.data.constants
+    })
 }]);

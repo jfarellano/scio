@@ -69,7 +69,7 @@ angular.module('app')
             targetEvent: ev,
             escapeToClose: false
         }).then(function(answer) {
-            if($scope.edit) $scope.edit_involved();
+            if($scope.edit) $scope.edit_involved(type);
             else $scope.add_involved(type);
         }, function() {
             $scope.cancel()
@@ -422,14 +422,14 @@ angular.module('app')
             ErrorHandler.errorDisplay(response.data.errors)
         })
     }
-    $scope.edit_involved = function(){
+    $scope.edit_involved = function(type){
         Conciliacion.update.involved($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado).then(function(response){
             if($scope.involucrado.involved.nature == 'natural'){
                 $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
                 Conciliacion.update.natural($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
                     alertify.success("Edicion exitosa de convocante")
                     if ($scope.verified) {
-                        Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
+                        Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, type).then(function(response){
                             alertify.success("Exito agregando involucrado")
                             $scope.getSolicitude()
                             $scope.cancel()
@@ -447,7 +447,7 @@ angular.module('app')
                 Conciliacion.update.juridical($scope.solicitude.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
                     alertify.success("Edicion exitosa de convocante")
                     if ($scope.verified) {
-                        Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, 'convocante').then(function(response){
+                        Conciliacion.update.associate_involved($scope.solicitude.id, $scope.involucrado.involved.id, type).then(function(response){
                             alertify.success("Exito agregando involucrado")
                             $scope.cancel()
                             $scope.getSolicitude()
