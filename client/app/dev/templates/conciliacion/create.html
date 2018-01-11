@@ -111,7 +111,7 @@
                         <div data-slim-scroll data-scroll-height="auto">
                             <md-list>
                                 <md-subheader class="md-no-sticky">Convocantes</md-subheader>
-                                <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="editConvocante(conv, $event)">
+                                <md-list-item class="md-3-line" ng-repeat="conv in getConvocantes()" ng-click="editInvolved(conv, $event, 'convocado')">
                                         <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                         <div class="md-list-item-text" layout="column">
                                             <h3>{{::getName(conv)}}</h3>
@@ -136,7 +136,7 @@
                             </md-list>
                         </div>
                     </div>
-                    <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocante($event)">Agregar nuevo convocante</md-button>
+                    <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showInvolved($event, 'convocante')">Agregar nuevo convocante</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -173,7 +173,7 @@
                     <div class="scrolleable-content-wizard">
                         <div data-slim-scroll data-scroll-height="auto">
                             <md-subheader class="md-no-sticky">Convocados</md-subheader>
-                            <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="editConvocado(conv, $event)">
+                            <md-list-item class="md-3-line" ng-repeat="conv in getConvocados()" ng-click="editInvolved(conv, $event, 'convocado')">
                                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                         <div class="md-list-item-text" layout="column">
                                             <h3>{{::getName(conv)}}</h3>
@@ -192,7 +192,7 @@
                             <div style="height: 30px"></div>
                         </div>
                     </div>
-                    <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showConvocado($event)">Agregar nuevo convocado</md-button>
+                    <md-button class="md-raised btn-w-md md-primary" flex-gt-xs ng-click="showInvolved($event, 'convocado')">Agregar nuevo convocado</md-button>
                 </div>
                 <div class="ui-wizard-actions">
                     <div layout-gt-xs="row" class="layout-gt-xs-row">
