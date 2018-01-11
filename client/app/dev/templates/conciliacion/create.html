@@ -177,14 +177,9 @@
                                     <md-icon class="material-icons">{{getIcon(conv)}}</md-icon>
                                         <div class="md-list-item-text" layout="column">
                                             <h3>{{::getName(conv)}}</h3>
-                                            <p>Postulante: {{conv.postulant}}</p>
                                             <p ng-if="conv.involved.assignee != null">Apoderado: {{::getARName(conv.involved.assignee)}}</p>
                                             <p ng-if="conv.involved.representative != null">Representante: {{::getARName(conv.involved.representative)}}</p>
                                         </div>
-                                        <md-button title="Modificar el postulante a este involucardo" aria-label="Agregar o editar apoderado a este involucardo" class="md-icon-button md-secondary" ng-click="showPostulant(conv, $event)">
-                                            <md-icon >assignment_ind</md-icon>
-                                            <div class="icon-caption">Postulante</div>
-                                        </md-button>
                                         <md-button title="Agregar o editar apoderado a este involucardo" aria-label="Agregar o editar representante legal a este involucardo" class="md-icon-button md-secondary" ng-click="showApoderado(conv, $event, apoderadoEdition(conv))">
                                             <md-icon >business_center</md-icon>
                                             <div class="icon-caption">Apoderado</div>
