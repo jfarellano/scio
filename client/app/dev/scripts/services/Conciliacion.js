@@ -206,6 +206,9 @@ angular.module('app')
                 },
                 draft_all: function(data){
                     return $http.post(IP + '/coordinator/solicitudes/borradores', data, {headers: Session.getHeaders()})
+                },
+                results: function(concID){
+                    return $http.get(IP + '/conciliator/conciliations/'+concID+'/results', {headers: Session.getHeaders()})
                 }
             },
             delete:{
@@ -229,6 +232,9 @@ angular.module('app')
                 },
                 solicitude: function(solID){
                     return $http.delete(IP + '/solicitudes/' + solID, {headers: Session.getHeaders()})
+                },
+                results: function(resID){
+                    return $http.delete(IP + '/conciliator/results/'+resID, {headers: Session.getHeaders()})
                 }
             },
             //Logic helpers in conciliations

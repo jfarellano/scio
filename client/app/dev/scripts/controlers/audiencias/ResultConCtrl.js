@@ -11,6 +11,12 @@ angular.module('app')
             $scope.audience = auds[auds.length - 1]
             console.log($scope.audience)
         })
+        Conciliacion.get.results($scope.conc.conciliation.id).then(function(response){
+            console.log(response.data);
+            $scope.results = response.data.results
+        }, function(response){
+            console.log(response.data);
+        })
     },function (request) {
         $scope.conc = {}
         console.log(request.data)
@@ -21,6 +27,12 @@ angular.module('app')
             if(!($scope.conc.state == 'iniciar_audiencia' || $scope.conc.state == 'audiencia_suspendida')){
                 window.location = '#/app/conciliacion/' + $scope.conc.id
             }
+            Conciliacion.get.results($scope.conc.conciliation.id).then(function(response){
+                console.log(response.data);
+                $scope.results = response.data.results
+            }, function(response){
+                console.log(response.data);
+            })
             Audiencias.get.solicitude($scope.conc.id).then(function(response){
                 var auds = response.data.audiences
                 $scope.audience = auds[auds.length - 1]
@@ -48,16 +60,6 @@ angular.module('app')
         },function (request) {
             $scope.conc = {}
             console.log(request.data)
-        })
-    }
-
-    $scope.addResult = function(description){
-        Conciliacion.create.results($scope.conc.conciliation.id, description).then(function(response){
-            alertify.success('Resultados guardados con exito')
-            $scope.endSolicitude(acuerdo)
-        }, function(response){
-            console.log(response.data)
-            alertify.error('Error guardando los resultados')
         })
     }
 
@@ -127,11 +129,6 @@ angular.module('app')
         if($scope.resultOption.result == 2){
             //constancia
             $scope.conc.state = 'cerrada'
-            Conciliacion.update.conciliation($scope.conc.conciliation.id, $scope.mc).then(function(response){
-                console.log(response.data)
-            }, function(response){
-                console.log(response.data)
-            })
             Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
                 Conciliacion.get.constancia($scope.conc.conciliation.id).then(function(response){
                     window.location = '#/app/dashboard'
@@ -227,7 +224,7 @@ angular.module('app')
             targetEvent: ev,
             escapeToClose: false
         }).then(function(answer) {
-            $scope.add_result()
+            $scope.addResult()
         }, function(answer) {
         	$scope.description = ''
         });
@@ -242,14 +239,28 @@ angular.module('app')
         $mdDialog.cancel()
     }
 
-    $scope.results = []
-    $scope.add_result = function(){
-    	$scope.results.push({description: $scope.description})
-        $scope.description = ''
+    //Result
+    $scope.result = {}
+    $scope.addResult = function(){
+        Conciliacion.create.results($scope.conc.conciliation.id, $scope.result.description).then(function(response){
+            alertify.success('Resultados guardados con exito')
+            $scope.result = {}
+            $scope.reFetch()
+        }, function(response){
+            $scope.result = {}
+            console.log(response.data)
+            alertify.error('Error guardando los resultados')
+        })
     }
 
+
     $scope.deleteResult = function(id){
-    	$scope.results.splice(id, 1)
+    	Conciliacion.delete.results(id).then(function(response){
+            alertify.success('Se elimino correctamente el resultado')
+            $scope.reFetch()
+        },function(response){
+            alertify.error('Hubo un error eliminando su resultado')
+        })
     }
 
     Conciliacion.get.constant('conflict_scale').then(function(response){
