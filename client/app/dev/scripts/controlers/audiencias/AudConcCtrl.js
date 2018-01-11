@@ -64,6 +64,7 @@ angular.module('app')
             var a = response.data
             console.log(a);
             if(a.valid){
+                $scope.saveAssist()
                 window.location = '#/app/audiencia/result/' + $scope.conc.id
             }else{
                 a.errors.forEach(function(elem){
