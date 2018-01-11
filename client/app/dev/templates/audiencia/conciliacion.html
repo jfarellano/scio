@@ -7,14 +7,14 @@
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-if="asistencia">
                         <h4><b>Llamado a lista</b></h4>
-                        <h5>Convocantes</h5>
+                        <h4 class="show_title"><b>Convocantes</b></h4>
                         <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances.convocante">
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{conv.entity_name}}</h3>
                                 <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance"></md-checkbox>
                             </div>
                         </md-list-item>
-                        <h5>Convocantes</h5>
+                        <h4 class="show_title"><b>Convocados</b></h4>
                         <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances.convocado">
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{conv.entity_name}}</h3>
