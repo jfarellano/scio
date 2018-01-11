@@ -1,7 +1,7 @@
 angular.module('app')
 .controller('AudConcCtrl', ['$scope', '$state', 'Conciliacion', '$window', 'screenSize', '$mdDialog', 'URL', 'Session', '$compile', 'Audiencias', 'IP', 'COL', 'Participations',function($scope, $state,Conciliacion, window, screenSize, $mdDialog, URL, Session, $compile, Audiencias, IP, COL, Participations){
     $scope.Session =  Session
-    $scope.asistencia = true
+    $scope.asistencia = false
     Conciliacion.show($state.params.id).then(function (request) {
         $scope.conc = request.data.solicitude;
         if($scope.conc.state != 'iniciar_audiencia'){
@@ -40,9 +40,11 @@ angular.module('app')
     $scope.getARName = function(app){
         if(app != null) return app.first_name + ' ' + app.first_lastname + ' ' + app.second_lastname
     }
+    $scope.toComment = function(){$scope.asistencia = false}
     $scope.saveComment = function(){
         Audiencias.update.audience($scope.audience.id, $scope.audience).then(function(response){
             alertify.success('Exito guardando comentarios')
+            $scope.asistencia = true
         }, function(response){
             alertify.error('Error guardando comentarios')
             console.log(response.data)
