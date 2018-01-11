@@ -7,13 +7,21 @@
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-if="asistencia">
                         <h4><b>Llamado a lista</b></h4>
-                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances">
+                        <h5>Convocantes</h5>
+                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances.convocante">
                             <div class="md-list-item-text" layout="column">
                                 <h3>{{conv.entity_name}}</h3>
-                                <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance" ng-if="asistencia"></md-checkbox>
+                                <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance"></md-checkbox>
                             </div>
                         </md-list-item>
-                        <md-button class="btn-w-md md-accent" ng-click="saveAssist()" ng-if="asistencia">Guardar listado de asistencia</md-button>
+                        <h5>Convocantes</h5>
+                        <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances.convocado">
+                            <div class="md-list-item-text" layout="column">
+                                <h3>{{conv.entity_name}}</h3>
+                                <md-checkbox class="md-secondary" aria-label="assist" ng-model="conv.attendance"></md-checkbox>
+                            </div>
+                        </md-list-item>
+                        <md-button class="btn-w-md md-accent" ng-click="saveAssist()">Guardar listado de asistencia</md-button>
                     </div>
                     <div>
                     <h4><b>Comentarios</b></h4>

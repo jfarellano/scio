@@ -52,8 +52,8 @@ angular.module('app')
         })
     }
     $scope.saveAssist = function(){
-        console.log($scope.audience.attendances)
-        Audiencias.create.assistance($scope.audience.id, $scope.audience).then(function(response){
+        var att = $scope.audience.attendances.convocante.concat($scope.audience.attendances.convocado)
+        Audiencias.create.assistance($scope.audience.id, {attendances: att}).then(function(response){
             alertify.success('Se guardo exitosamente la lista de asistencia')
         }, function(response){
             alertify.error('Hubo un error guardando la lista de asistencia')
