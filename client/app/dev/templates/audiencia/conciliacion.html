@@ -6,7 +6,6 @@
             <div class="scrolleable-content-aud">
                 <div data-slim-scroll data-scroll-height="auto">
                     <div ng-if="asistencia">
-                        <md-button class="btn-w-md" ng-click="toComment()">A comentarios</md-button>
                         <h4><b>Llamado a lista</b></h4>
                         <h4 class="show_title"><b>Convocantes</b></h4>
                         <md-list-item class="md-3-line" ng-repeat="conv in audience.attendances.convocante">
@@ -28,7 +27,7 @@
                         <h4><b>Comentarios</b></h4>
                         <md-input-container class="md-block">
                             <label>Comentarios</label>
-                            <textarea ng-model="audience.comment" rows="5" md-select-on-focus></textarea>
+                            <textarea ng-model="audience.comment" rows="7" md-select-on-focus></textarea>
                         </md-input-container>
                         <md-checkbox ng-model="audience.show_comment_on_document" aria-label="Mostrar comentarios">¿Mostrar comentarios en el documento?</md-checkbox>
                         <md-button class="btn-w-md md-accent" ng-click="saveComment()">Guardar comentarios</md-button>
@@ -38,8 +37,9 @@
         </div>
         <div class="divider divider-lg divider-dashed"></div>
         <div class="row" style="padding-left:10%;">
-            <div >
-                <md-button class="btn-w-md md-warn" ng-if="asistencia" data-ng-click="showResults()" >Finalizar audiencia</md-button><div class="divider divider-xs"></div>
+            <div ng-if="asistencia">
+                <md-button class="btn-w-md md-primary" ng-click="toComment()">A comentarios</md-button>
+                <md-button class="btn-w-md md-warn" data-ng-click="showResults()" >Finalizar audiencia</md-button><div class="divider divider-xs"></div>
             </div>
         </div>
     </div>

@@ -638,20 +638,20 @@ angular.module('app')
     $scope.events = [$scope.audiencias]
 //CONSTANTS
     $scope.$watch('involucrado.involved.department', function(){
-    if($scope.departments != null){
-        var r = $scope.departments.filter(function(a) {
-            return a.value == $scope.involucrado.involved.department
-        })
-        if (r.length > 0) {
-            Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
-                $scope.cities = response.data.constants
+        if($scope.departments != null){
+            var r = $scope.departments.filter(function(a) {
+                return a.value == $scope.involucrado.involved.department
             })
+            if (r.length > 0) {
+                Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
         }
-    }
-})
+    })
     Conciliacion.get.constant('gender').then(function(response){
-    $scope.gender = response.data.constants
-})
+        $scope.gender = response.data.constants
+    })
     Conciliacion.get.constant('scholarly_level').then(function(response){
         $scope.level = response.data.constants
     })
