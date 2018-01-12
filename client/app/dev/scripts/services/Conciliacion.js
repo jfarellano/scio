@@ -209,6 +209,9 @@ angular.module('app')
                 },
                 results: function(concID){
                     return $http.get(IP + '/conciliator/conciliations/'+concID+'/results', {headers: Session.getHeaders()})
+                },
+                valid: function(solID, data){
+                    return $http.post(IP + '/solicitudes/'+solID+'/occasional_validations', data, {headers: Session.getHeaders()})
                 }
             },
             delete:{

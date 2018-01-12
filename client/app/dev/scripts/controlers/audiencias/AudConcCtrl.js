@@ -432,7 +432,7 @@ angular.module('app')
 //Methods
     $scope.toComment = function(){$scope.asistencia = false}
     $scope.showResults = function(ev){
-        Audiencias.get.valid($scope.audience.id).then(function(response){
+        Conciliacion.get.valid($scope.conc.id, {party: 'all', validations: ['validate_juridicals_have_assignee_or_representative']}).then(function(response){
             var a = response.data
             console.log(a);
             if(a.valid){
