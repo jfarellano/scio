@@ -177,8 +177,8 @@ angular.module('app')
             })
             Conciliacion.create.assignee_relation({solicitude_id: $scope.conc.id, involved_id: $scope.involucrado.involved.id, assignee_id: assignee.id }).then(function(response){
                 alertify.success("Apoderado agregado con exito")
-                $scope.resetInvolucrado()
                 $scope.reFreshAssistance($scope.involucrado.involved.id, 'assignee', assignee.id)
+                $scope.resetInvolucrado()
                 $scope.reFetchConc()
             }, function(response){
                 console.log(response.data)
@@ -649,21 +649,5 @@ angular.module('app')
     })
     Conciliacion.get.constant('type_of_public_entity').then(function(response){
         $scope.public_type = response.data.constants
-    })
-    Conciliacion.get.constant('city').then(function(response){
-        var all_cities = response.data.constants.sort(function (a, b) {
-            if(a.value < b.value){
-                return -1
-            }else if(a.value > b.value){
-                return 1
-            }
-            return 0
-        })
-        $scope.all_cities = []
-        $.each(all_cities, function(i, el){
-            if ($scope.uniqueCity(el)){
-                $scope.all_cities.push(el);
-            }
-        })
     })
 }]);
