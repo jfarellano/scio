@@ -13,7 +13,7 @@ angular.module('app')
         audiencias.forEach(function(aud){
             //console.log(aud)
             var a = {
-                title: aud.title,
+                title: Session.getName(),
                 start: new Date(aud.start),
                 end: new Date(aud.end),
                 allDay: false,
