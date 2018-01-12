@@ -752,6 +752,21 @@ angular.module('app')
             return $scope.convocantes().length != 0;
         }catch(err){return false}
     }
+    $scope.convocantes_juridical_valid = function(){
+        Conciliacion.get.valid($scope.solicitude.id, {party: 'conveners', validations: ['validate_juridicals_have_assignee_or_representative', 'validate_juridicals_are_not_postulants']}).then(function(response){
+            var a = response.data
+            console.log(a);
+            if(a.valid){
+                WizardHandler.wizard().next()
+            }else{
+                a.errors.forEach(function(elem){
+                    alertify.error(elem)
+                })
+            }
+        }, function(response){
+            console.log(response.data);
+        })
+    }
     $scope.convocados_validation = function(){
         try {
             return $scope.convocados().length != 0;
