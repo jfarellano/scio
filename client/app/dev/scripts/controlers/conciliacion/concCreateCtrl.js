@@ -789,10 +789,10 @@ angular.module('app')
             $('#loader-container').fadeIn('fast');
             Conciliacion.update.solicitude($scope.solicitude.id, $scope.solicitude).then(function(response){
                 $('#loader-container').fadeOut('slow');
+                console.log('Entro en pago');
                 window.location = '#/app/conciliacion'
             },function(response){
                 ErrorHandler.errorDisplay(response.data.errors)
-                $('#loader-container').fadeOut('slow');
             })
         }else{
             $scope.solicitude.state = 'iniciar_audiencia'
