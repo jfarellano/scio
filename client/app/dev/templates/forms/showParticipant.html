@@ -27,6 +27,13 @@
                 <p>Teléfono: {{part.involved.assignee.telephone}}</p>
                 <p>E-mail: {{part.involved.assignee.email}}</p>
                 <p>{{part.involved.assignee.identifier_type}}: {{part.involved.assignee.identifier}}</p>
+                <p>Dirección: {{part.involved.assignee.address}}</p>
+                <p>País: {{part.involved.assignee.country}}</p>
+                <div ng-if="part.involved.assignee.country == 'COLOMBIA'">
+                    <p>Departamento: {{part.involved.assignee.department}}</p>
+                    <p>Ciudad: {{part.involved.assignee.city}}</p>
+                </div>
+                <p ng-if="part.involved.assignee.professional_card != null">Tarjeta profesional: {{part.involved.assignee.professional_card}}</p>
             </div>
             <div ng-if="representante(part)">
                 <h4>Representante</p>
@@ -35,6 +42,13 @@
                 <p>Teléfono: {{part.involved.representative.telephone}}</p>
                 <p>E-mail: {{part.involved.representative.email}}</p>
                 <p>{{part.involved.representative.identifier_type}}: {{part.involved.representative.identifier}}</p>
+                <p>Dirección: {{part.involved.representative.address}}</p>
+                <p>País: {{part.involved.representative.country}}</p>
+                <div ng-if="part.involved.representative.country == 'COLOMBIA'">
+                    <p>Departamento: {{part.involved.representative.department}}</p>
+                    <p>Ciudad: {{part.involved.representative.city}}</p>
+                </div>
+                <p ng-if="part.involved.representative.professional_card != null">Tarjeta profesional: {{part.involved.representative.professional_card}}</p>
             </div>
         </div>
     </div>

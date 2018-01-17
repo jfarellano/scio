@@ -133,6 +133,9 @@ angular.module('app')
     $scope.apoderadoEdition = function(inv){
         return inv.involved.assignee != null
     }
+    $scope.apoderado = function(inv){
+        return inv.involved.assignee != null
+    }
     $scope.showApoderado = function(inv, ev, edit) {
         $('#loader-container').fadeIn('fast');
         $scope.involucrado = inv
@@ -251,6 +254,9 @@ angular.module('app')
         })
     }
     $scope.representanteEdition = function(inv){
+        return inv.involved.representative != null
+    }
+    $scope.representante = function(inv){
         return inv.involved.representative != null
     }
     $scope.showRepresentante = function(inv, ev, edit) {
