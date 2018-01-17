@@ -62,7 +62,7 @@ angular.module('app')
         if(value == -1){
             return 'Indeterminada'
         }else{
-            return '$ ' + value
+            return '$ ' + $scope.decimal(value)
         }
     }
     $scope.Session =  Session
@@ -502,6 +502,9 @@ angular.module('app')
     }
     $scope.showVerification = function(){
         return $scope.edit || $scope.verified
+    }
+    $scope.decimal = function(num){
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
 //VariableGetters
     $scope.getARName = function(app){
