@@ -100,6 +100,15 @@ angular.module('app')
                     console.log(response.data)
                 })
             }
+            Audiencias.get.solicitude($scope.conc.id).then(function(response){
+                $scope.audiences = response.data.audiences
+                if($scope.audiences.length > 0) {
+                    $scope.courrentAudience = $scope.audiences[$scope.audiences.length - 1];
+                    var start = new Date($scope.courrentAudience.start)
+                    var end = new Date($scope.courrentAudience.end)
+                    $scope.audience_date = dateToEs(start) + " hasta el " + dateToEs(end)
+                }
+            })
             Conciliacion.get.documents($scope.conc.conciliation.id).then(function(response){
                 $scope.documents = response.data.documents
             }, function(response){
@@ -154,7 +163,7 @@ angular.module('app')
                 );
                 $scope.conc.state = 'programada'
                 Conciliacion.update.conciliator_solicitude($scope.conc.id, $scope.conc).then(function(response){
-                    console.log('Edit exitosa')
+                    $scope.reFetchConc()
                 }, function(response){
                     console.log('Edit fallo')
                 })
