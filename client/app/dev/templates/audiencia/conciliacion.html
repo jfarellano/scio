@@ -115,7 +115,8 @@
             <md-list-item class="md-2-line" ng-repeat="d in documents" ng-click="showDocument(d)">
                 <p><b>{{$index + 1}}.</b> {{d.name}}</p>
             </md-list-item>
-            <h3><b>Cuantía</b> {{cuantia(conc.conciliation.payment_amount)}}</h3>
+            <h4 class="show_title"><b>Cuantía</b></h4>
+            <h5>    {{cuantia(conc.conciliation.payment_amount)}}</h5>
             <div style="height: 30px"></div>
         </div>
     </div>
