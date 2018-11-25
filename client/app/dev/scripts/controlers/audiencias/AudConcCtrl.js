@@ -107,9 +107,198 @@ angular.module('app')
         })
     }
 //Involved
+    $scope.showInvolved = function(ev, type){
+        $('#loader-container').fadeIn('fast');
+        $scope.involucrado.participation_type = type;
+        if(!$scope.edit) $scope.getProfession(null, 'involved');
+        $mdDialog.show({
+            templateUrl: URL.dev.template + '/forms/involucrado.html',
+            scope: $scope,
+            preserveScope: true,
+            targetEvent: ev,
+            escapeToClose: false
+        }).then(function(answer) {
+            if($scope.edit) $scope.edit_involved(type);
+            else $scope.add_involved(type);
+        }, function() {
+            $scope.cancel()
+        });
+    }
+    $scope.editInvolved = function(inv, ev, type){
+        $('#loader-container').fadeIn('fast');
+        $scope.involucrado = inv
+        $scope.edit = true
+        $scope.verify_click = true
+        if($scope.involucrado.involved.natural != null){
+            $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
+            $scope.getProfession(inv.involved.id, 'involved')
+        }
+        try {
+            Conciliacion.get.constant_child(COL ,'department').then(function(response){
+                $scope.departments = response.data.constants
+                var r2 = $scope.departments.filter(function(d){
+                    return d.value == $scope.involucrado.department
+                })
+                Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            })
+        } catch (e) {}
+        $scope.showInvolved(ev, type)
+    }
+    $scope.completeInvolved = function(ev, inv){
+        $scope.tempInv = inv
+        $scope.showInvolved(ev, 'convocado')
+    }
+    $scope.add_involved = function(type){
+        Conciliacion.create.involved($scope.conc.id, $scope.involucrado.participation_type, $scope.involucrado).then(function(response){
+            var involucrado = response.data.involved
+            if($scope.involucrado.involved.nature == 'natural'){
+                try{
+                    try {
+                        $scope.involucrado.involved.natural.origin_country = $scope.involucrado.involved.natural.origin_country.title
+                    } catch (e) {
+                        $scope.involucrado.involved.natural.origin_country = null
+                    }
+                    Conciliacion.create.natural($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
+                        $scope.professions.forEach(function(proff){
+                            proff.name = proff.name.title
+                            Conciliacion.create.profession(involucrado.id, 'involved', proff).then(function(response){
+                                alertify.success('Exito agregando profesión')
+                            }, function(response){
+                                $scope.profession = {}
+                                ErrorHandler.errorDisplay(response.data.errors)
+                            })
+                        })
+                        $scope.getSolicitude()
+                        alertify.success("Exito agregando involucrado")
+                        $scope.cancel()
+                    }, function(response){
+                        Conciliacion.delete.involved(involucrado.involved.id).then(function(response){
+                            $scope.showInvolved(null , type)
+                            console.log('wqeweqeewqq');
+                            alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
+                        }, function(response){
+                            $scope.showInvolved(null , type)
+                            ErrorHandler.errorDisplay(response.data.errors)
+                        })
+                    })
+                }catch(err){
+                    Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showInvolved(null , type)
+                        console.log('zazazazazaz');
+                        alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
+                    }, function(response){
+                        $scope.showInvolved(null , type)
+                        ErrorHandler.errorDisplay(response.data.errors)
+                    })
+                }
+            }else{
+                Conciliacion.create.juridical($scope.conc.id, response.data.involved.id, $scope.involucrado.involved).then(function(response){
+                    $scope.getSolicitude()
+                    $scope.cancel()
+                    alertify.success("Exito agregando involucrado")
+                },function(response){
+                    Conciliacion.delete.involved(involucrado.id).then(function(response){
+                        $scope.showInvolved(null , type)
+                        alertify.error("Error agregando involucrado, recuerde que no puede tener las credenciales de algun participante de la solicitud")
+                    }, function(response){
+                        $scope.showInvolved(null , type)
+                        ErrorHandler.errorDisplay(response.data.errors)
+                    })
+                })
+            }
+        },function(response){
+            console.log(response.data);
+            $scope.showInvolved(null , type)
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
+    $scope.edit_involved = function(type){
+        Conciliacion.update.involved($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado).then(function(response){
+            if($scope.involucrado.involved.nature == 'natural'){
+                $scope.involucrado.involved.natural.birthdate = $scope.involucrado.involved.natural.birthdate.formatDate()
+                Conciliacion.update.natural($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.natural.id , $scope.involucrado.involved).then(function(response){
+                    alertify.success("Edicion exitosa de convocante")
+                    if ($scope.verified) {
+                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, type).then(function(response){
+                            alertify.success("Exito agregando involucrado")
+                            $scope.getSolicitude()
+                            $scope.cancel()
+                        }, function(response){
+                            ErrorHandler.errorDisplay(response.data.errors)
+                        })
+                    }
+                    $scope.getSolicitude()
+                    $scope.cancel()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            }else{
+                Conciliacion.update.juridical($scope.conc.id, $scope.involucrado.involved.id, $scope.involucrado.involved.juridical.id ,$scope.involucrado.involved).then(function(response){
+                    alertify.success("Edicion exitosa de convocante")
+                    if ($scope.verified) {
+                        Conciliacion.update.associate_involved($scope.conc.id, $scope.involucrado.involved.id, type).then(function(response){
+                            alertify.success("Exito agregando involucrado")
+                            $scope.cancel()
+                            $scope.getSolicitude()
+                        }, function(response){
+                            ErrorHandler.errorDisplay(response.data.errors)
+                        })
+                    }
+                    $scope.getSolicitude()
+                    $scope.cancel()
+                }, function(response){
+                    $scope.cancel()
+                    ErrorHandler.errorDisplay(response.data.errors)
+                })
+            }
+        }, function(response){
+            $scope.cancel()
+            ErrorHandler.errorDisplay(response.data.errors)
+        })
+    }
     $scope.resetInvolucrado = function(){
         $scope.involucrado = {
             involved: {}
+        }
+    }
+    $scope.findInvolved = function(){
+        $('#loader-container').fadeIn('fast');
+        $scope.verify_click = true
+        if($scope.involucrado.involved.nature == 'natural'){
+            Participations.get.natural({identifier_type: $scope.involucrado.involved.natural.identifier_type, identifier: $scope.involucrado.involved.natural.identifier}).then(function(response){
+                $('#loader-container').fadeOut('slow');
+                if (response.status != 204) {
+                    $scope.involucrado.involved = response.data.involved
+                    $scope.involucrado.involved.natural.birthdate = new Date($scope.involucrado.involved.natural.birthdate)
+                    $scope.verified = true
+                    $scope.edit = true
+                    $scope.getProfession($scope.involucrado.involved.id, 'involved')
+                }else{
+                    $scope.edit = true
+                    $scope.involucrado = $scope.tempInv
+                }
+            }, function(response){
+                $('#loader-container').fadeOut('slow');
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
+        }else{
+            Participations.get.juridical({nit:$scope.involucrado.involved.juridical.nit}).then(function(response){
+                $('#loader-container').fadeOut('slow');
+                if (response.status != 204) {
+                    $scope.involucrado.involved = response.data.involved
+                    $scope.verified = true
+                    $scope.edit = true
+                }else{
+                    $scope.involucrado = $scope.tempInv
+                    $scope.edit = true
+                }
+            }, function(response){
+                $('#loader-container').fadeOut('slow');
+                ErrorHandler.errorDisplay(response.data.errors)
+            })
         }
     }
 //APODERADOS
@@ -443,7 +632,16 @@ angular.module('app')
             console.log(a);
             if(a.valid){
                 $scope.saveAssist()
-                window.location = '#/app/audiencia/result/' + $scope.conc.id
+                Conciliacion.get.valid_audience($scope.audience.id).then(function(response){
+                    var b = response.draft_all
+                    if(a.valid){
+                        window.location = '#/app/audiencia/result/' + $scope.conc.id
+                    }else{
+                        a.errors.forEach(function(elem){
+                            alertify.error(elem)
+                        })
+                    }
+                })
             }else{
                 a.errors.forEach(function(elem){
                     alertify.error(elem)
@@ -476,6 +674,17 @@ angular.module('app')
     }
     $scope.showParticipant = function(part, ev){
         $scope.part = part
+        if(!$scope.esConvocante(part)){
+            Participations.get.valid(part.involved.id).then(function(response){
+                if(response.data){
+                    $scope.update = true
+                }else{
+                    $scope.update = false
+                }
+            }, function(response){
+                console.log(response.data);
+            })
+        }
         $mdDialog.show({
             templateUrl: URL.dev.template + '/forms/showParticipant.html',
             scope: $scope,
@@ -488,6 +697,9 @@ angular.module('app')
         }, function() {
             console.log('Evento cancelado')
         });
+    }
+    $scope.showContent = function(){
+        return true
     }
     $scope.cancel = function(){
         $scope.edit = false
@@ -510,7 +722,11 @@ angular.module('app')
         return $scope.edit || $scope.verified
     }
     $scope.decimal = function(num){
-        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        try {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        } catch (e) {
+            return null
+        }
     }
 //VariableGetters
     $scope.getARName = function(app){
@@ -601,6 +817,8 @@ angular.module('app')
             return 'Agregar'
         }
     }
+    $scope.create = false
+    $scope.dont_know = {value: false}
 //VariableFetchers
     $scope.getAssigneeCity = function(){
         try {
@@ -640,6 +858,66 @@ angular.module('app')
                 })
             }
         } catch (e) {}
+    })
+    Conciliacion.get.constant('gender').then(function(response){
+        $scope.gender = response.data.constants
+    })
+    Conciliacion.get.constant('scholarly_level').then(function(response){
+        $scope.level = response.data.constants
+    })
+    Conciliacion.get.constant('strata').then(function(response){
+        $scope.estratos = response.data.constants
+    })
+    Conciliacion.get.constant('profession_name').then(function(response){
+        $scope.profession_name = response.data.constants
+    })
+    Conciliacion.get.constant('profession_institution').then(function(response){
+        $scope.profession_institution = response.data.constants
+    })
+    Conciliacion.get.constant('type_of_public_entity').then(function(response){
+        $scope.public_type = response.data.constants
+    })
+    Conciliacion.get.constant('involved_nature').then(function(response){
+        $scope.convtype = response.data.constants
+    })
+    Conciliacion.get.constant('organization_type').then(function(response){
+        $scope.org_type = response.data.constants
+    })
+    Conciliacion.get.constant('economic_sector').then(function(response){
+        $scope.economic_sector = response.data.constants
+    })
+    Conciliacion.get.constant('identifier_type').then(function(response){
+        $scope.idType = response.data.constants
+    })
+    Conciliacion.get.constant('country').then(function(response){
+        $scope.countries = response.data.constants
+    })
+    Conciliacion.get.constant_child(COL ,'department').then(function(response){
+        $scope.departments = response.data.constants
+        var r2 = $scope.departments.filter(function(d){
+            return d.value == $scope.involucrado.department
+        })
+        if(r2.length > 0){
+            Conciliacion.get.constant_child(r2[0].id, 'city').then(function(response){
+                $scope.cities = response.data.constants
+            })
+        }
+    })
+    $scope.involvedType = function(type){
+        if(type == 'natural') return 'Persona';
+        else return 'Organización';
+    }
+    $scope.$watch('involucrado.involved.department', function(){
+        if($scope.departments != null){
+            var r = $scope.departments.filter(function(a) {
+                return a.value == $scope.involucrado.involved.department
+            })
+            if (r.length > 0) {
+                Conciliacion.get.constant_child(r[0].id, 'city').then(function(response){
+                    $scope.cities = response.data.constants
+                })
+            }
+        }
     })
     Conciliacion.get.constant('gender').then(function(response){
         $scope.gender = response.data.constants

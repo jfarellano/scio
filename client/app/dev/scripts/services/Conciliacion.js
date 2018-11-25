@@ -212,6 +212,9 @@ angular.module('app')
                 },
                 valid: function(solID, data){
                     return $http.post(IP + '/solicitudes/'+solID+'/occasional_validations', data, {headers: Session.getHeaders()})
+                },
+                valid_audience: function(audID){
+                    return $http.post(IP + '/audiences/'+audID+'/occasional_validations', {validations: ["validate_involveds_attributes"]},{headers: Session.getHeaders()})
                 }
             },
             delete:{

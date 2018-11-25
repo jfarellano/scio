@@ -13,7 +13,10 @@ angular.module('app')
 			},
 			representative: function(id){
 				return $http.post(IP + '/representatives/show_by_identifier', id,{headers: Session.getHeaders()})
+			},
+			valid: function(invID){
+				return $http.get(IP + '/involveds/'+invID+'/mandatory_attributes/completeness', {headers: Session.getHeaders()})
 			}
 		}
-	}        
+	}
 }]);

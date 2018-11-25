@@ -23,6 +23,7 @@
             </div>
             <div ng-if="involucrado.involved.nature == 'natural'">
                 <fieldset>
+                    <md-checkbox ng-if="!esConvocante(involucrado) && !edit" ng-model="dont_know.value" aria-label="No sabe la cedula">No tengo los datos completos</md-checkbox>
                     <h4>Datos de identificación</h4>
                     <div ng-if="!showVerification()">
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -45,11 +46,11 @@
                             </md-input-container>
                         </div>
                     </div>
-                    <div ng-if="verify_click">
+                    <div ng-if="showContent()">
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
-                            <md-input-container class="flex-gt-xs" flex-gt-xs>
+                            <md-input-container class="flex-gt-xs" ng-if="!showContent()" flex-gt-xs>
                                 <label>Ciudad de expedición</label>
-                                <input data-ng-model="involucrado.involved.natural.identifier_expedition_city"required type="text">
+                                <input data-ng-model="involucrado.involved.natural.identifier_expedition_city" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}" type="text">
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs ng-if="!edit">
                                 <angucomplete-alt id="ex1"
@@ -88,14 +89,14 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Género</label>
-                                <md-select ng-model="involucrado.involved.natural.gender" required>
-                                    <md-option ng-repeat="g in gender" value="{{g.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.natural.gender" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="g in gender" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
                             <label>Fecha de nacimiento</label>
-                            <md-datepicker ng-model="involucrado.involved.natural.birthdate" placeholder="Fecha de nacimiento" ng-required="true"></md-datepicker>
+                            <md-datepicker ng-model="involucrado.involved.natural.birthdate" placeholder="Fecha de nacimiento" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}"></md-datepicker>
                         </div>
                         <h4>Información de contacto</h4>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -105,8 +106,8 @@
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Estrato</label>
-                                <md-select ng-model="involucrado.involved.natural.strata" required>
-                                    <md-option ng-repeat="c in estratos" value="{{c.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.natural.strata" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="c in estratos" value="{{c.value}}">
                                         {{::c.value}}
                                     </md-option>
                                 </md-select>
@@ -116,7 +117,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>País de residencia</label>
                                 <md-select ng-model="involucrado.involved.country" required>
-                                    <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in countries" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -126,7 +127,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Departamento</label>
                                 <md-select ng-model="involucrado.involved.department" required>
-                                    <md-option ng-repeat="g in departments" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in departments" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -134,7 +135,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Ciudad</label>
                                 <md-select ng-model="involucrado.involved.city" required>
-                                    <md-option ng-repeat="g in cities" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in cities" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -143,17 +144,17 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Teléfono de contacto</label>
-                                <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                                <input input-num ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Celular de contacto</label>
-                                <input input-num ng-model="involucrado.involved.cellphone" data-ng-minlength=7 type="number" required>
+                                <input input-num ng-model="involucrado.involved.cellphone" data-ng-minlength=7 type="number" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
                             </md-input-container>
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>E-mail</label>
-                                <input data-ng-model="involucrado.involved.email" type="email" required>
+                                <input data-ng-model="involucrado.involved.email" type="email" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Página web</label>
@@ -164,8 +165,8 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Nivel escolar: </label>
-                                <md-select ng-model="involucrado.involved.natural.scholarly_level" required>
-                                    <md-option ng-repeat="c in level" value="{{::c.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.natural.scholarly_level" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="c in level" value="{{::c.value}}">
                                         {{::c.value}}
                                     </md-option>
                                 </md-select>
@@ -229,6 +230,7 @@
             </div>
             <div ng-if="involucrado.involved.nature == 'juridico'">
                  <fieldset>
+                    <md-checkbox ng-if="!esConvocante(involucrado) && !edit" ng-model="dont_know.value" aria-label="No sabe la cedula">No tengo los datos completos</md-checkbox>
                     <h4>Datos de identificación</h4>
                     <div ng-if="!showVerification()">
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -241,7 +243,7 @@
                             </md-input-container>
                         </div>
                     </div>
-                    <div ng-if="verify_click">
+                    <div ng-if="showContent()">
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Nombre</label>
@@ -251,16 +253,16 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Sector económico</label>
-                                <md-select ng-model="involucrado.involved.juridical.economic_sector" required>
-                                    <md-option ng-repeat="g in economic_sector" value="{{::g.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.juridical.economic_sector" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="g in economic_sector" value="{{::g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Tipo de organización</label>
-                                <md-select ng-model="involucrado.involved.juridical.organization_type" required>
-                                    <md-option ng-repeat="g in org_type" value="{{::g.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.juridical.organization_type" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="g in org_type" value="{{::g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -269,8 +271,8 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row" ng-if="involucrado.involved.juridical.organization_type == 'ORGANIZACIÓN PÚBLICA'">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Tipo de entidad publica</label>
-                                <md-select ng-model="involucrado.involved.juridical.type_of_public_entity" required>
-                                    <md-option ng-repeat="g in public_type" value="{{::g.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.juridical.type_of_public_entity" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="g in public_type" value="{{::g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -279,8 +281,8 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>País de origen</label>
-                                <md-select ng-model="involucrado.involved.juridical.origin_country" required>
-                                    <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                <md-select ng-model="involucrado.involved.juridical.origin_country" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
+                                    <md-option ng-repeat="g in countries" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -295,7 +297,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>País de residencia</label>
                                 <md-select ng-model="involucrado.involved.country" required>
-                                    <md-option ng-repeat="g in countries" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in countries" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -305,7 +307,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Departamento</label>
                                 <md-select ng-model="involucrado.involved.department" required>
-                                    <md-option ng-repeat="g in departments" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in departments" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -313,7 +315,7 @@
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Ciudad</label>
                                 <md-select ng-model="involucrado.involved.city" required>
-                                    <md-option ng-repeat="g in cities" value="{{g.value}}" requiered>
+                                    <md-option ng-repeat="g in cities" value="{{g.value}}">
                                         {{::g.value}}
                                     </md-option>
                                 </md-select>
@@ -322,11 +324,11 @@
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>E-mail</label>
-                                <input data-ng-model="involucrado.involved.email" type="email" required>
+                                <input data-ng-model="involucrado.involved.email" type="email" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
                             </md-input-container>
                             <md-input-container class="flex-gt-xs" flex-gt-xs>
                                 <label>Teléfono de contacto</label>
-                                <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" required>
+                                <input ng-model="involucrado.involved.phone" data-ng-minlength=7 type="number" ng-required="{{!dont_know.value || (edit && !verified && !esConvocante(involucrado))}}">
                             </md-input-container>
                         </div>
                         <div layout-gt-xs="row" class="layout-gt-xs-row">
@@ -343,5 +345,5 @@
 </md-dialog-content>
 <md-dialog-actions>
     <md-button class="md-raised btn-w-md" ng-click="cancel()">Cancelar</md-button>
-    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!convocadoForm.$valid || !verify_click">{{getButtonLable()}}</md-button>
+    <md-button class="md-raised btn-w-md md-primary" ng-click="save('Exito')" ng-disabled="!convocadoForm.$valid || (!verify_click && !dont_know.value)">{{getButtonLable()}}</md-button>
 </md-dialog-actions>
